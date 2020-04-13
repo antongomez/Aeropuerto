@@ -20,7 +20,7 @@ public class vAccederControlador implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // Cris non toques. EliPita pajas.
     }
 
 }
