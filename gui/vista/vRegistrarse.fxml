@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="464.0" prefWidth="447.0" styleClass="background" stylesheets="@ventaRegistrar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.vRegistrarseControlador">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="464.0" prefWidth="447.0" styleClass="background" stylesheets="@../css/ventaRegistrar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.vRegistrarseControlador">
    <children>
       <Label alignment="CENTER" layoutX="272.0" layoutY="31.0" prefHeight="50.0" styleClass="labTitulo" text="REGISTRARSE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <font>
@@ -21,7 +21,7 @@
          <children>
             <VBox prefHeight="348.0" prefWidth="127.0" spacing="10.0">
                <children>
-                  <Label prefHeight="23.0" prefWidth="24.0" text="DNI:" />
+                  <Label prefHeight="23.0" prefWidth="30.0" text="DNI:" />
                   <Label prefHeight="23.0" text="Id:" />
                   <Label prefHeight="23.0" text="Email:" />
                   <Label prefHeight="23.0" text="Contraseña:" />

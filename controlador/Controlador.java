@@ -26,7 +26,7 @@ public class Controlador {
     public void abrirVRegistrar() {
         try {
             Stage vR = new Stage();
-            FXMLLoader loader = new FXMLLoader(FachadaGui.class.getResource("/gui/vista/vAcceder.fxml"));
+            FXMLLoader loader = new FXMLLoader(FachadaGui.class.getResource("/gui/vista/vRegistrarse.fxml"));
             Pane root = (Pane) loader.load();
 
             vR.setTitle("Aeropuerto");
