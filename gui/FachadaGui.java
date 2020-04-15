@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 public class FachadaGui {
 
     FachadaAplicacion fa;
-    Controlador controlador;
 
     public FachadaGui(FachadaAplicacion fa) {
         this.fa = fa;
@@ -20,12 +19,13 @@ public class FachadaGui {
         FXMLLoader loader = new FXMLLoader(FachadaGui.class.getResource("/gui/vista/vAcceder.fxml"));
         Pane root = (Pane) loader.load();
 
-        controlador = new Controlador();
+        //Collemos o controlador de Acceder
+        Controlador contAcceder = loader.getController();
 
         primaryStage.setTitle("Aeropuerto");
         primaryStage.setScene(new Scene(root));
-        
-        controlador.setVenta(primaryStage);
+
+        contAcceder.setVenta(primaryStage);
 
         primaryStage.show();
     }

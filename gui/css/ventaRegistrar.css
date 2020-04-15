@@ -1,32 +1,63 @@
+*{
+    cor-texto: #d8d8d8;
+    cor-fondo-botons: #616161;
+}
+
 .background{
     -fx-background-color: #212121;
 }
 
 .label{
-    -fx-background-color: transparent;
+    -fx-font-size: 10pt;
+    -fx-font-family: "Century Schoolbook";
     -fx-text-fill: white;
 }
 
-.labTitulo{
+.text-field {
+    -fx-font-family: "Century Schoolbook";
+    -fx-font-size: 10pt;
+}
+
+.button:focused{
+    -fx-background-color: derive(cor-fondo-botons, -20%);
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+    -fx-background-insets: 0;
+}
+
+.button:hover{
     -fx-background-color: #424242;
 }
 
-.labDNI{
-    -fx-text-fill: red;
-}
-
-.botonRegistrarse:hover{
+.button:pressed{
     -fx-background-color: #424242;
+    -fx-text-fill: cor-texto;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
 }
 
-.botonRegistrarse{
-    -fx-background-color: #616161;
-    -fx-text-fill: white;
+.button{
+    -fx-background-color: cor-fondo-botons;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
+    -fx-padding: 5 7 5 7;
+    
+    -fx-font-family: "Century Schoolbook";
+    -fx-font-size: 9pt;
+    
+    -fx-text-fill: cor-texto;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+    
     -fx-cursor: HAND;
+    
 }
 
-.campos{
+#labTitulo{
+    -fx-font-size: 19pt;
+    -fx-background-color: #424242;
+}
 
+#labDniErro{
+    -fx-text-fill: red;
 }

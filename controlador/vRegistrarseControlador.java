@@ -7,7 +7,9 @@ package controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -15,6 +17,11 @@ import javafx.fxml.Initializable;
  * @author anton
  */
 public class vRegistrarseControlador implements Initializable {
+
+    @FXML
+    private Label labTitulo;
+    @FXML
+    private Label labDniErro;
 
     /**
      * Initializes the controller class.

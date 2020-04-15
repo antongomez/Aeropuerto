@@ -5,26 +5,14 @@
  */
 package controlador;
 
-import gui.FachadaGui;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author anton
- */
 public class vAccederControlador extends Controlador implements Initializable {
 
     @FXML
@@ -53,7 +41,12 @@ public class vAccederControlador extends Controlador implements Initializable {
 
     @FXML
     private void accionCancelar(ActionEvent event) {
-        getVenta().close();
+        if (getVenta() != null) {
+            getVenta().close();
+        } else {
+            System.out.println("Erro, a venta esta a null.");
+        }
+
     }
 
     @FXML

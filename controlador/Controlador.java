@@ -6,13 +6,8 @@
 package controlador;
 
 import gui.FachadaGui;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -27,10 +22,10 @@ public class Controlador {
         try {
             Stage vR = new Stage();
             FXMLLoader loader = new FXMLLoader(FachadaGui.class.getResource("/gui/vista/vRegistrarse.fxml"));
-            Pane root = (Pane) loader.load();
+            Scene root = (Scene) loader.load();
 
             vR.setTitle("Aeropuerto");
-            vR.setScene(new Scene(root));
+            vR.setScene(root);
 
             vR.show();
         } catch (Exception ex) {
