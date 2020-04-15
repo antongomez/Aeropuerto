@@ -1,7 +1,7 @@
 /*
  Clase de proba
  */
-package modelo;
+package gui.modelo;
 
 /**
  *
