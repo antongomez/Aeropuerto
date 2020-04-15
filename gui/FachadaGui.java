@@ -1,22 +1,32 @@
 package gui;
 
+import aeropuerto.FachadaAplicacion;
+import controlador.Controlador;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class FachadaGui {
 
-    aeropuerto.FachadaAplicacion fa;
+    FachadaAplicacion fa;
+    Controlador controlador;
 
-    public FachadaGui(aeropuerto.FachadaAplicacion fa) {
+    public FachadaGui(FachadaAplicacion fa) {
         this.fa = fa;
     }
 
     public void iniciarVista(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(FachadaGui.class.getResource("/gui/vista/vAcceder.fxml"));
-        primaryStage.setTitle("Aeroporto");
+        FXMLLoader loader = new FXMLLoader(FachadaGui.class.getResource("/gui/vista/vRegistrarse.fxml"));
+        Pane root = (Pane) loader.load();
+
+        controlador = new Controlador();
+
+        primaryStage.setTitle("Aeropuerto");
         primaryStage.setScene(new Scene(root));
+
+        controlador.setVenta(primaryStage);
+
         primaryStage.show();
     }
 

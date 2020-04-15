@@ -30,14 +30,14 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </VBox>
-            <Label fx:id="labErro" prefWidth="170.0" style="-fx-text-fill: red;" text="¡Autentificación incorrecta!" VBox.vgrow="SOMETIMES">
+            <Label fx:id="labErro" prefWidth="170.0" style="-fx-text-fill: red;" text="¡Autentificación incorrecta!" visible="false" VBox.vgrow="SOMETIMES">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
             <HBox alignment="TOP_CENTER" prefHeight="25.0" spacing="10.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="botonAC" text="CANCELAR" />
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#accionCancelar" prefHeight="25.0" prefWidth="100.0" styleClass="botonAC" text="CANCELAR" />
                   <Button mnemonicParsing="false" onAction="#accionBtnAcceder" prefHeight="25.0" prefWidth="100.0" styleClass="botonAC" text="ACCEDER &gt;" />
                </children>
                <VBox.margin>
@@ -51,7 +51,7 @@
                         <Insets bottom="-2.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="btnRegistrar" mnemonicParsing="false" styleClass="botonRegistrar" text="Regístrate">
+                  <Button fx:id="btnRegistrar" mnemonicParsing="false" onAction="#accionRegistrar" styleClass="botonRegistrar" text="Regístrate">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

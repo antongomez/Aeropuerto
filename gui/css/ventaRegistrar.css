@@ -1,0 +1,32 @@
+.background{
+    -fx-background-color: #212121;
+}
+
+.label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.labTitulo{
+    -fx-background-color: #424242;
+}
+
+.labDNI{
+    -fx-text-fill: red;
+}
+
+.botonRegistrarse:hover{
+    -fx-background-color: #424242;
+}
+
+.botonRegistrarse{
+    -fx-background-color: #616161;
+    -fx-text-fill: white;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-cursor: HAND;
+}
+
+.campos{
+
+}
