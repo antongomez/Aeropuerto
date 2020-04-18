@@ -12,10 +12,12 @@ public class FachadaAplicacion extends Application {
     
     gui.FachadaGui fgui;
     baseDatos.FachadaBaseDatos fbd;
+    GestionUsuarios gu;
 
     public FachadaAplicacion() {
         fgui = new gui.FachadaGui(this);
         fbd = new baseDatos.FachadaBaseDatos(this);
+        gu=new GestionUsuarios(fgui,fbd);
     }  
 
     public static void main(String[] args) {  
@@ -37,4 +39,11 @@ public class FachadaAplicacion extends Application {
             System.out.println(ex.getMessage());;
         }
     }
+    
+    public void registrarUsuario(Usuario us){
+        
+        gu.registrarUsuario(us);
+        
+    }
+                
 }

@@ -1,7 +1,8 @@
 package gui;
 
 import aeropuerto.FachadaAplicacion;
-import controlador.Controlador;
+import gui.controlador.Controlador;
+import gui.controlador.vAccederControlador;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -20,11 +21,13 @@ public class FachadaGui {
         Pane root = (Pane) loader.load();
 
         //Collemos o controlador de Acceder
-        Controlador contAcceder = loader.getController();
+        vAccederControlador contAcceder = loader.getController();
+        contAcceder.setFa(fa);
 
         primaryStage.setTitle("Aeropuerto");
         primaryStage.setScene(new Scene(root));
-
+        
+        
         contAcceder.setVenta(primaryStage);
 
         primaryStage.show();

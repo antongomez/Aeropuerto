@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador;
+package gui.controlador;
 
+import aeropuerto.FachadaAplicacion;
 import gui.FachadaGui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 public class Controlador {
 
     private Stage venta;
+    protected FachadaAplicacion fa;//acceso protected para que accedan direcamente sus hijos
 
     public void abrirVRegistrar() {
         try {
@@ -26,7 +28,7 @@ public class Controlador {
 
             vR.setTitle("Aeropuerto");
             vR.setScene(root);
-
+            ((vRegistrarseControlador)loader.getController()).setFa(fa);
             vR.show();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -42,5 +44,14 @@ public class Controlador {
     public void setVenta(Stage venta) {
         this.venta = venta;
     }
+    
+    public void setFa(FachadaAplicacion fa){
+        this.fa=fa;
+    }
+
+    public FachadaAplicacion getFa() {
+        return fa;
+    }
+    
 
 }

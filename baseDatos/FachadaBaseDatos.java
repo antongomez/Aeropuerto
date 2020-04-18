@@ -6,6 +6,7 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.Usuario;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -59,5 +60,9 @@ public class FachadaBaseDatos {
             //fa.muestraExcepcion(e.getMessage());
         }
 
+    }
+    
+    public void insertarUsuario(Usuario u){
+        daoUsuarios.insertarUsuario(u);
     }
 }
