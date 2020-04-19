@@ -16,7 +16,8 @@ public class FachadaGui {
 
     public FachadaGui(FachadaAplicacion fa) {
         this.fa = fa;
-        this.modelo = new Modelo(fa);
+        //Crease a instancia de modelo
+        this.modelo = Modelo.newModelo(fa);
     }
 
     public void iniciarVista(Stage primaryStage) throws Exception {
@@ -25,15 +26,15 @@ public class FachadaGui {
 
         //Collemos o controlador de Acceder
         vAccederControlador contAcceder = loader.getController();
-        contAcceder.setModelo(this.modelo);
 
         primaryStage.setTitle("Aeropuerto");
         primaryStage.setScene(new Scene(root));
         
         
         contAcceder.setVenta(primaryStage);
-
+        Controlador.setStageIcon(primaryStage);
         primaryStage.show();
+        
     }
 
 }

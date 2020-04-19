@@ -5,7 +5,6 @@
  */
 package gui.controlador;
 
-import aeropuerto.FachadaAplicacion;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -40,11 +39,13 @@ public class vAccederControlador extends Controlador implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
 
     @FXML
     private void accionBtnAcceder(ActionEvent event) {
-
+        //Abrese a venta. Falta a comprobacion das credenciais
+        loadWindow(getClass().getResource("/gui/vista/vPrincipal.fxml"), "AeroETSE", null);
+        //Pechase a venta de rexistro
+        getVenta().close();
     }
 
     @FXML
@@ -59,7 +60,7 @@ public class vAccederControlador extends Controlador implements Initializable {
 
     @FXML
     private void accionRegistrar(ActionEvent event) {
-        abrirVRegistrar(super.modelo); //Se usa super ya que el atributo está en controlador
+        loadWindow(getClass().getResource("/gui/vista/vRegistrarse.fxml"), "Registrarse", null); //Se usa super ya que el atributo está en controlador
     }
 
 }

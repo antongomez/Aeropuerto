@@ -5,12 +5,14 @@
  */
 package gui.controlador;
 
-import aeropuerto.FachadaAplicacion;
-import gui.FachadaGui;
-import gui.modelo.Modelo;
+import java.io.IOException;
+import java.net.URL;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -19,23 +21,47 @@ import javafx.stage.Stage;
 public abstract class Controlador { //Abstracta ya que no se instancia
 
     private Stage venta;
-    protected Modelo modelo;
-    
+    public static final String ICON_IMAGE_LOC = "/recursos/avion.png";
 
-    public void abrirVRegistrar(Modelo modelo) { //prueba de eli
+    //Funcion que aigna o icono da venta
+    public static void setStageIcon(Stage stage) {
+        stage.getIcons().add(new Image(ICON_IMAGE_LOC));
+    }
+
+    /**
+     *
+     * @param loc localizacion da venta (tipo URL)
+     * @param title
+     * @param parentStage utilizase no caso de querer pasarlle un stage
+     * existente, por exemplo, para non decoralo (StageStyle.UNDECORATED)
+     * @return devolve o controlador da venta que se abriu
+     */
+    public static Controlador loadWindow(URL loc, String title, Stage parentStage) {
+        Controlador controller = null;
         try {
-            Stage vR = new Stage();
-            FXMLLoader loader = new FXMLLoader(FachadaGui.class.getResource("/gui/vista/vRegistrarse.fxml"));
-            Scene root = (Scene) loader.load();
+            FXMLLoader loader = new FXMLLoader(loc);
+            Parent parent = loader.load();
+            controller = loader.getController();
+            Stage stage = null;
+            if (parentStage != null) {
+                stage = parentStage;
+            } else {
+                stage = new Stage(StageStyle.DECORATED);
+            }
+            stage.setTitle(title);
+            stage.setScene(new Scene(parent));
+            stage.show();
+            
+            //Ponhemoslle un icono
+            setStageIcon(stage);
+            
+            //Asignamoslle a venta ao controlador
+            controller.setVenta(stage);
 
-            vR.setTitle("Aeropuerto");
-            vR.setScene(root);
-            ((vRegistrarseControlador)loader.getController()).setModelo(modelo);
-            vR.show();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Error en la apertura de la ventana");
         }
-
+        return controller;
     }
 
     //Getters
@@ -46,12 +72,4 @@ public abstract class Controlador { //Abstracta ya que no se instancia
     public void setVenta(Stage venta) {
         this.venta = venta;
     }
-
-    public Modelo getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(Modelo modelo) {
-        this.modelo = modelo;
-    }    
 }

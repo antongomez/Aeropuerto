@@ -6,6 +6,7 @@
 package gui.controlador;
 
 import aeropuerto.Usuario;
+import gui.modelo.Modelo;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -67,7 +68,7 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
         ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia");
         comboBoxPais.setItems(opcionesPais);
         comboBoxPais.getSelectionModel().selectFirst();
-        // TODO
+
     }
 
     @FXML
@@ -80,7 +81,7 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
                     textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
                     Integer.parseInt(textFieldTelefono.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
        
-            modelo.registrarUsuario(us); //Llamamos a modelo en lugar de fachadaplicación
+            Modelo.getInstanceModelo().registrarUsuario(us); //Llamamos a modelo en lugar de fachadaplicación
         } else {
             //poner texto contraseña incorrecta
         }

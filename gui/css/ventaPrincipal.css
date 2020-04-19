@@ -1,0 +1,60 @@
+.btnMenu {
+    -fx-padding: 5 22 5 22;   
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: #1d1d1d;
+    -fx-background-insets: 0 0 0 0;
+    -fx-effect: innershadow( three-pass-box , #1d1d1d, 10 , 0 , 0 , 0 );
+}
+
+.btnMenu:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.btnMenu:focused {
+    -fx-background-color: #3a3a3a;
+}
+
+.btnMenu:selected {
+    -fx-background-color: #424242;
+}
+
+.btnMenu:pressed, .btnMenu:default:hover:pressed {
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: #d8d8d8;
+}
+
+/*Non o necesito creo*/
+
+.btnMenu:disabled, .btnMenu:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: white;
+}
+
+.btnMenu:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #ffffff;
+}
+
+.btnMenu:default:hover {
+    -fx-background-color: derive(-fx-focus-color,30%);
+}
+
+#panelTitulo {
+    -fx-background-color: black;
+}
+
+#panelLateral {
+    -fx-background-color: #757575;
+}
+
+#etqTitulo {
+    -fx-font-size: 14pt;
+    -fx-background-color: transparent;
+}
+
+#etqAeroEtse {
+    -fx-font-size: 14pt;
+    -fx-background-color: transparent;
+}
