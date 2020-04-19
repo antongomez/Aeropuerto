@@ -40,10 +40,17 @@ public class FachadaAplicacion extends Application {
         }
     }
     
-    public void registrarUsuario(Usuario us){
+    public Boolean registrarUsuario(Usuario us){//true si se registra y false si no
         
-        gu.registrarUsuario(us);
+        return gu.registrarUsuario(us);
         
+    }
+    
+    public void mostrarError(String menseje){
+        fgui.mostrarError(menseje);
+    }
+    public Usuario credencialesCorrectos(String id, String cont){
+        return gu.credencialesCorrectos(id,cont);
     }
                 
 }

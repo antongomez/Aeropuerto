@@ -1,6 +1,7 @@
 
 package gui.controlador;
 
+import aeropuerto.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
@@ -28,5 +29,13 @@ public class vPrincipalControlador extends Controlador{
     private ToggleGroup opVerVuelo2;
     @FXML
     private ToggleGroup opVerVuelo21;
+    
+    private Usuario usuario;//usuario que está usando la ventana
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+    
     
 }

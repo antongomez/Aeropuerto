@@ -9,6 +9,7 @@ import aeropuerto.FachadaAplicacion;
 import aeropuerto.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -22,9 +23,10 @@ public class daoUsuarios extends AbstractDAO {
         super.setFachadaAplicacion(fa);
     }
     
-    public void insertarUsuario(Usuario u){
+    public Boolean insertarUsuario(Usuario u){//true si se insertó y false si no
        Connection con;
         PreparedStatement stmUsuario = null;
+        Boolean correcto;
 
         con = super.getConexion();
 
@@ -43,15 +45,56 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setInt(9, u.getTelefono());
             stmUsuario.setString(10, u.getSexo());
             stmUsuario.executeUpdate();
+            correcto=true;
 
         } catch (SQLException e) {
+            getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto=false;
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+                correcto=false;
+            }
+        } 
+        return correcto;
+    }
+    
+    public Usuario comprobarCredenciales(String idUsuario, String clave) {
+        Usuario resultado = null;
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        ResultSet rsUsuario;
+
+        con = this.getConexion();
+
+        try {
+            stmUsuario = con.prepareStatement("select dni,id,correoElectronico,contrasenha, nombre,"
+                    + " primerApellido, segundoApellido, paisProcedencia, telefono, sexo "
+                    + "from usuario "
+                    + "where id = ? and contrasenha = ?");
+            stmUsuario.setString(1, idUsuario);
+            stmUsuario.setString(2, clave);
+            rsUsuario = stmUsuario.executeQuery();
+            if (rsUsuario.next()) {
+                resultado = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("id"),
+                        rsUsuario.getString("correoElectronico"), rsUsuario.getString("contrasenha"),
+                        rsUsuario.getString("nombre"),rsUsuario.getString("primerApellido"),
+                        rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
+                        rsUsuario.getInt("telefono") ,rsUsuario.getString("sexo"));
+
+            }
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
         } finally {
             try {
                 stmUsuario.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
-        } 
+        }
+        return resultado;
     }
 }

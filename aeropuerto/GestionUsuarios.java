@@ -20,10 +20,15 @@ public class GestionUsuarios {
         this.fgui = fgui;
         this.fbd = fbd;
     }
-    public void registrarUsuario(Usuario us){
+    public Boolean registrarUsuario(Usuario us){
         
-        fbd.insertarUsuario(us);
+        return fbd.insertarUsuario(us);
         
     }
+    public Usuario credencialesCorrectos(String id, String cont){
+        return fbd.comprobarCredenciales(id,cont);
+
+    }
+    }
       
-}
+

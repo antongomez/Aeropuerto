@@ -2,6 +2,9 @@ package gui.modelo;
 
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.Usuario;
+import static gui.controlador.Controlador.loadWindow;
+import gui.controlador.VErrorController;
+import gui.controlador.VNotificacionController;
 
 public class Modelo {
 
@@ -14,9 +17,10 @@ public class Modelo {
 
     //Desta forma, creamos unha vez a clase modelo e podemola ir obtendo a traves das clases
     public static Modelo newModelo(FachadaAplicacion fa) {
-        if (mod != null) {
+        if (mod == null) {
             mod = new Modelo(fa);
         }
+        
         return mod;
     }
 
@@ -24,8 +28,17 @@ public class Modelo {
         return mod;
     }
 
-    public void registrarUsuario(Usuario us) {
-        fa.registrarUsuario(us);
+    public Boolean registrarUsuario(Usuario us) {
+        return fa.registrarUsuario(us);
+    }
+    public void mostrarError(String mensaje){
+      ((VErrorController)loadWindow(getClass().getResource("/gui/vista/vError.fxml"), "Error", null)).mostrarMensaje(mensaje);
+    }
+    public Usuario credencialesCorrectos(String id, String cont){
+        return fa.credencialesCorrectos(id,cont);
+    }
+    public void mostrarNotificacion(String mensaje){
+        ((VNotificacionController)loadWindow(getClass().getResource("/gui/vista/vNotificacion.fxml"), "Notificación", null)).mostrarMensaje(mensaje);
     }
     
 }

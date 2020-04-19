@@ -8,6 +8,7 @@ package gui.controlador;
 import aeropuerto.Usuario;
 import gui.modelo.Modelo;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -75,15 +76,32 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
     private void accionBtnRegistrarse(ActionEvent event) {
 
         //Abría que poner una excepcion por si el dni es incorrecto?
-        if (textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
-            Usuario us = new Usuario(textFieldDni.getText(), textFieldId.getText(), textFieldEmail.getText(),
-                    textFieldContrasenha.getText(), textFieldNombre.getText(),
-                    textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                    Integer.parseInt(textFieldTelefono.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
-       
-            Modelo.getInstanceModelo().registrarUsuario(us); //Llamamos a modelo en lugar de fachadaplicación
+        if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
+            Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!");
+        } else if (textFieldDni.getText().isEmpty() || textFieldId.getText().isEmpty() || textFieldEmail.getText().isEmpty()
+                || textFieldContrasenha.getText().isEmpty() || textFieldNombre.getText().isEmpty()
+                || textFieldAp1.getText().isEmpty() || textFieldAp2.getText().isEmpty() || comboBoxPais.getSelectionModel().getSelectedItem().isEmpty()
+                || comboBoxSexo.getSelectionModel().getSelectedItem().isEmpty()) {
+            Modelo.getInstanceModelo().mostrarError("Debes rellenar todos los campos!");
         } else {
-            //poner texto contraseña incorrecta
+            try {
+                Usuario us = new Usuario(textFieldDni.getText(), textFieldId.getText(), textFieldEmail.getText(),
+                        textFieldContrasenha.getText(), textFieldNombre.getText(),
+                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                        Integer.parseInt(textFieldTelefono.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
+
+                if (Modelo.getInstanceModelo().registrarUsuario(us) == true) { //Llamamos a modelo en lugar de fachadaplicación y comprobamos si se registró correctamente
+                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente");
+                    //se cierra la ventana de registrar
+                    if (getVenta() != null) {
+                        getVenta().close();
+                    } else {
+                        System.out.println("Erro, a venta esta a null.");
+                    }
+                }
+            } catch (NumberFormatException e) {
+                Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto");
+            }
         }
     }
 

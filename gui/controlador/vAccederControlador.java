@@ -5,6 +5,8 @@
  */
 package gui.controlador;
 
+import aeropuerto.Usuario;
+import gui.modelo.Modelo;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -43,9 +45,16 @@ public class vAccederControlador extends Controlador implements Initializable {
     @FXML
     private void accionBtnAcceder(ActionEvent event) {
         //Abrese a venta. Falta a comprobacion das credenciais
-        loadWindow(getClass().getResource("/gui/vista/vPrincipal.fxml"), "AeroETSE", null);
+        Usuario usuario=Modelo.getInstanceModelo().credencialesCorrectos(textFieldId.getText(),textFieldContrasenha.getText());
+        if(usuario!=null){
+        ((vPrincipalControlador)loadWindow(getClass().getResource("/gui/vista/vPrincipal.fxml"), "AeroETSE", null)).setUsuario(usuario);
         //Pechase a venta de rexistro
         getVenta().close();
+        }
+        else{
+            Modelo.getInstanceModelo().mostrarError("Usuario o contraseña incorrectos");
+        }
+        
     }
 
     @FXML

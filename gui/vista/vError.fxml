@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="254.0" prefWidth="345.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.VErrorController">
+   <children>
+      <Label prefHeight="53.0" prefWidth="345.0" style="-fx-background-color: #424242; -fx-text-fill: #fafafa; -fx-alignment: center;" text="ERROR">
+         <font>
+            <Font name="Georgia" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="mensaje" layoutX="10.0" layoutY="73.0" prefHeight="165.0" prefWidth="325.0" style="-fx-text-fill: #fafafa; -fx-alignment: center;">
+         <font>
+            <Font name="Georgia" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
