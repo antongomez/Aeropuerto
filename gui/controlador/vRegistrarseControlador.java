@@ -80,7 +80,7 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
                     textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
                     Integer.parseInt(textFieldTelefono.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
        
-            fa.registrarUsuario(us);
+            modelo.registrarUsuario(us); //Llamamos a modelo en lugar de fachadaplicación
         } else {
             //poner texto contraseña incorrecta
         }

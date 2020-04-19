@@ -5,12 +5,22 @@
  */
 package gui.modelo;
 
+import aeropuerto.FachadaAplicacion;
+import aeropuerto.Usuario;
+
 /**
  *
  * @author Esther
  */
 public class Modelo {
     
+    private FachadaAplicacion fa; //Desde aqui llamaremos a la fachada
+
+    public Modelo(FachadaAplicacion fa) {
+        this.fa = fa;
+    }
     
-    
+    public void registrarUsuario(Usuario us){
+        fa.registrarUsuario(us);  
+    }
 }

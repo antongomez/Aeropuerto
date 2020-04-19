@@ -32,7 +32,6 @@ public class vAccederControlador extends Controlador implements Initializable {
     private TextField textFieldId;
     @FXML
     private PasswordField textFieldContrasenha;
-    private FachadaAplicacion fa;
 
     /**
      * Inicializa o controlador.
@@ -40,10 +39,6 @@ public class vAccederControlador extends Controlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }
-
-    public void setFa(FachadaAplicacion fa) {
-        this.fa = fa;
     }
     
 
@@ -64,7 +59,7 @@ public class vAccederControlador extends Controlador implements Initializable {
 
     @FXML
     private void accionRegistrar(ActionEvent event) {
-        abrirVRegistrar();
+        abrirVRegistrar(super.modelo); //Se usa super ya que el atributo está en controlador
     }
 
 }

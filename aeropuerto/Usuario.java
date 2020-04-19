@@ -20,7 +20,7 @@ public class Usuario {
     private String ap2;
     private String paisProcedencia;
     private Integer telefono;
-    private String sexo;
+    private String sexo; //Estaría mejor usar char, pero no se como pasar un char en el dao a la base de datos
 
     public Usuario(String dni, String id, String email, String contrasenha, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo) {
         
@@ -35,7 +35,15 @@ public class Usuario {
         this.ap2 = ap2;
         this.paisProcedencia = paisProcedencia;
         this.telefono = telefono;
-        this.sexo = sexo;
+        if(sexo.equals("Hombre")){
+            this.sexo = "h";
+        }
+        else if(sexo.equals("Mujer")){
+            this.sexo = "m";
+        }
+        else{
+            this.sexo = "-";
+        }
     }
 
     public String getDni() {
