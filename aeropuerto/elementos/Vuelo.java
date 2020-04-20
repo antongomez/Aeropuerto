@@ -1,19 +1,17 @@
 package aeropuerto.elementos;
 
+import aeropuerto.util.Time;
 import java.sql.Timestamp;
-
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 public class Vuelo {
 
     private Integer numVuelo;
     private String origen;
     private String destino;
-    private Timestamp fechasalidaTeo;
-    private Timestamp fechasalidaReal;
-    private Timestamp fechallegadaTeo;
-    private Timestamp fechallegadaReal;
+    private Time fechasalidaTeo;
+    private Time fechasalidaReal;
+    private Time fechallegadaTeo;
+    private Time fechallegadaReal;
     private Float precioActual;
     private Integer puertaEmbarque;
     private Boolean cancelado;
@@ -23,8 +21,8 @@ public class Vuelo {
     private Float precioPremium;
 
     public Vuelo(Integer numVuelo, String origen, String destino,
-            Timestamp fechasalidaTeo, Timestamp fechasalidaReal,
-            Timestamp fechallegadaTeo, Timestamp fechallegadaReal,
+            Time fechasalidaTeo, Time fechasalidaReal,
+            Time fechallegadaTeo, Time fechallegadaReal,
             Float precioActual, Integer puertaEmbarque, Boolean cancelado,
             Integer terminal, Integer avion) {
 
@@ -35,6 +33,28 @@ public class Vuelo {
         this.fechasalidaReal = fechasalidaReal;
         this.fechallegadaTeo = fechallegadaTeo;
         this.fechallegadaReal = fechallegadaReal;
+        this.precioActual = (float) (Math.round(precioActual * 100d) / 100d);
+        this.puertaEmbarque = puertaEmbarque;
+        this.cancelado = cancelado;
+        this.terminal = terminal;
+        this.avion = avion;
+
+        this.precioPremium = (float) (Math.round((precioActual * 1.2f) * 100d) / 100d);
+    }
+
+    public Vuelo(Integer numVuelo, String origen, String destino,
+            Timestamp fechasalidaTeo, Timestamp fechasalidaReal,
+            Timestamp fechallegadaTeo, Timestamp fechallegadaReal,
+            Float precioActual, Integer puertaEmbarque, Boolean cancelado,
+            Integer terminal, Integer avion) {
+
+        this.numVuelo = numVuelo;
+        this.origen = origen;
+        this.destino = destino;
+        this.fechasalidaTeo = new Time(fechasalidaTeo);
+        this.fechasalidaReal = new Time(fechasalidaReal);
+        this.fechallegadaTeo = new Time(fechallegadaTeo);
+        this.fechallegadaReal = new Time(fechallegadaReal);
         this.precioActual = (float) (Math.round(precioActual * 100d) / 100d);
         this.puertaEmbarque = puertaEmbarque;
         this.cancelado = cancelado;
@@ -68,35 +88,35 @@ public class Vuelo {
         this.destino = destino;
     }
 
-    public Timestamp getFechasalidaTeo() {
+    public Time getFechasalidaTeo() {
         return fechasalidaTeo;
     }
 
-    public void setFechasalidaTeo(Timestamp fechasalidaTeo) {
+    public void setFechasalidaTeo(Time fechasalidaTeo) {
         this.fechasalidaTeo = fechasalidaTeo;
     }
 
-    public Timestamp getFechasalidaReal() {
+    public Time getFechasalidaReal() {
         return fechasalidaReal;
     }
 
-    public void setFechasalidaReal(Timestamp fechasalidaReal) {
+    public void setFechasalidaReal(Time fechasalidaReal) {
         this.fechasalidaReal = fechasalidaReal;
     }
 
-    public Timestamp getFechallegadaTeo() {
+    public Time getFechallegadaTeo() {
         return fechallegadaTeo;
     }
 
-    public void setFechallegadaTeo(Timestamp fechallegadaTeo) {
+    public void setFechallegadaTeo(Time fechallegadaTeo) {
         this.fechallegadaTeo = fechallegadaTeo;
     }
 
-    public Timestamp getFechallegadaReal() {
+    public Time getFechallegadaReal() {
         return fechallegadaReal;
     }
 
-    public void setFechallegadaReal(Timestamp fechallegadaReal) {
+    public void setFechallegadaReal(Time fechallegadaReal) {
         this.fechallegadaReal = fechallegadaReal;
     }
 

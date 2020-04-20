@@ -32,10 +32,10 @@ public class daoVuelos extends AbstractDAO {
             stmVuelo.setInt(1, v.getNumVuelo());
             stmVuelo.setString(2, v.getOrigen());
             stmVuelo.setString(3, v.getDestino());
-            stmVuelo.setTimestamp(4, v.getFechasalidaTeo());
-            stmVuelo.setTimestamp(5, v.getFechasalidaReal());
-            stmVuelo.setTimestamp(6, v.getFechallegadaTeo());
-            stmVuelo.setTimestamp(7, v.getFechallegadaReal());
+            stmVuelo.setString(4, v.getFechasalidaTeo().getStringSql());
+            stmVuelo.setString(5, v.getFechasalidaReal().getStringSql());
+            stmVuelo.setString(6, v.getFechallegadaTeo().getStringSql());
+            stmVuelo.setString(7, v.getFechallegadaReal().getStringSql());
             stmVuelo.setFloat(8, v.getPrecioActual());
             stmVuelo.setInt(9, v.getPuertaEmbarque());
             stmVuelo.setBoolean(10, v.getCancelado());
