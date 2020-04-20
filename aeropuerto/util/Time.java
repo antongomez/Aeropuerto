@@ -3,6 +3,7 @@ package aeropuerto.util;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Time {
@@ -68,6 +69,16 @@ public class Time {
         this.milis = 0;
     }
 
+    public Time(Integer ano, Integer mes, Integer dia) {
+        this.ano = ano;
+        this.mes = mes;
+        this.dia = dia;
+        this.horas = 0;
+        this.minutos = 0;
+        this.segundos = 0;
+        this.milis = 0;
+    }
+
     public String getStringSql() {
         String data = "%04d-%02d-%02d %02d:%02d:%02d.%d";
 
@@ -79,6 +90,13 @@ public class Time {
         calendar.set(ano, mes, dia, horas, minutos, segundos);
 
         return new Timestamp(calendar.getTimeInMillis());
+    }
+
+    @Override
+    public String toString() {
+        String data = "%02d:%02d %02d/%02d/%04d";
+
+        return String.format(data, horas, minutos, dia, mes, ano);
     }
 
     //Getters
@@ -110,13 +128,12 @@ public class Time {
         return milis;
     }
 
-    @Override
-    public String toString() {
-        String data = "%02d:%02d %02d/%02d/%04d";
+    public static Boolean fechaMayorActual(Time fecha) {
+        Calendar calendar = Calendar.getInstance();
 
-        return String.format(data, horas, minutos, dia, mes, ano);
+        Time diaActual = new Time(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE));
+
+        return (fecha.toTimestamp().after(diaActual.toTimestamp()) || !fecha.toTimestamp().before(diaActual.toTimestamp()));
     }
-    
-
 
 }

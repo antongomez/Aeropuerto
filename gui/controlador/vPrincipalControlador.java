@@ -171,11 +171,19 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (dataPickLlegada.getValue() != null) {
             llegada = new Time(dataPickLlegada.getValue());
         }
-        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
-                getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(),
-                        txtDestino.getText(), salida, llegada));
 
-        tablaProximosVuelos.setItems(vuelos);
+        if (((salida != null) && (!Time.fechaMayorActual(salida)))
+                || ((llegada != null) && (!Time.fechaMayorActual(llegada)))) {
+            getInstanceModelo().mostrarError("Las fechas de salida y llegada deben ser mayores que la fecha actual");
+        } else {
+
+            ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
+                    getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(),
+                            txtDestino.getText(), salida, llegada));
+
+            tablaProximosVuelos.setItems(vuelos);
+        }
+
     }
 
     @FXML
