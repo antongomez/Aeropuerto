@@ -25,13 +25,7 @@ public class Usuario {
         this.ap2 = ap2;
         this.paisProcedencia = paisProcedencia;
         this.telefono = telefono;
-        if (sexo.equals("Hombre")) {
-            this.sexo = "h";
-        } else if (sexo.equals("Mujer")) {
-            this.sexo = "m";
-        } else {
-            this.sexo = "-";
-        }
+        this.sexo=sexoSQL(sexo);
     }
 
     public String getDni() {
@@ -110,5 +104,22 @@ public class Usuario {
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
-
+    
+    public String sexoSQL(String sexoJava){
+        String sexoSQL;
+        switch (sexoJava) {
+            case "Hombre":
+            case "h":
+                sexoSQL = "h";
+                break;
+            case "m":
+            case "Mujer":
+                sexoSQL = "m";
+                break;
+            default:
+                sexoSQL = "-";
+                break;
+        }
+        return sexoSQL;
+    }
 }

@@ -3,6 +3,7 @@ package gui.controlador;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.Time;
+import gui.modelo.Modelo;
 import static gui.modelo.Modelo.getInstanceModelo;
 import java.net.URL;
 import java.security.Timestamp;
@@ -13,8 +14,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -92,6 +95,24 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private ToggleGroup opVerVuelo2;
     @FXML
     private ToggleGroup opVerVuelo21;
+    
+    //Campos modificar datos
+    @FXML
+    private TextField textFieldID;
+    @FXML
+    private TextField textFieldEmail;
+    @FXML
+    private PasswordField textFieldContrasenha;
+    @FXML
+    private PasswordField textFieldRepetirContrasenha;
+    @FXML
+    private TextField textFieldAp1;
+    @FXML
+    private TextField textFieldAp2;
+    @FXML
+    private ComboBox<String> comboBoxPais;
+    @FXML
+    private TextField textFieldTlf;
 
     //TaboaProximosVoos
     @FXML
@@ -110,7 +131,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TableColumn<Vuelo, Float> columnaPrecio;
     @FXML
     private TableColumn<Vuelo, Float> columnaPrecioPremium;
-
+    @FXML
+    private TextField textFieldNombre;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BtnMenu.selectToggle(btnVuelos);
@@ -148,6 +172,20 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnAreaP(ActionEvent event) {
         panelAreaP.toFront();
         etqTitulo.setText(TITULO_AREAP);
+        
+        //Ponemos los datos del usuario
+        textFieldID.setText(usuario.getId());
+        textFieldEmail.setText(usuario.getEmail());
+        textFieldContrasenha.setText(usuario.getContrasenha());
+        textFieldRepetirContrasenha.setText(usuario.getContrasenha());
+        textFieldNombre.setText(usuario.getNombre());
+        textFieldAp1.setText(usuario.getAp1());
+        textFieldAp2.setText(usuario.getAp2());
+        textFieldTlf.setText(usuario.getTelefono().toString());
+        
+        ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia");
+        comboBoxPais.setItems(opcionesPais);
+        comboBoxPais.getSelectionModel().select(usuario.getPaisProcedencia());
     }
 
     @FXML
@@ -197,6 +235,32 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnGuardar(ActionEvent event) {
+       if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
+            Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!");
+        } else {
+           Usuario us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(),
+                        textFieldContrasenha.getText(), textFieldNombre.getText(),
+                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                        Integer.parseInt(textFieldTlf.getText()), usuario.getSexo());
+            try {
+                if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
+                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente");
+                    //No cambiamos los datos del usuario asociado a esta clase hasta que se cambien en la base
+                    usuario.setId(us.getId());
+                    usuario.setEmail(us.getEmail());
+                    usuario.setContrasenha(us.getContrasenha());
+                    usuario.setNombre(us.getNombre());
+                    usuario.setAp1(us.getAp1());
+                    usuario.setAp2(us.getAp2());
+                    usuario.setPaisProcedencia(us.getPaisProcedencia());
+                    usuario.setTelefono(us.getTelefono());
+                    usuario.setSexo(us.getSexo());
+                }
+            //Este error no llega aquí, el programa se para
+            } catch (NumberFormatException e) {
+                Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto");
+            }
+        }
     }
 
 }

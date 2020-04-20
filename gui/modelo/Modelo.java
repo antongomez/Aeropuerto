@@ -60,5 +60,10 @@ public class Modelo {
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return fa.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
+    
+    //Función cambiar datos
+    public boolean modificarUsuario(Usuario usuario){
+        return fa.modificarUsuario(usuario);
+    }
 
 }
