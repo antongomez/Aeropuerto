@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui.controlador;
 
 import aeropuerto.Usuario;
 import gui.modelo.Modelo;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,13 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-/**
- * FXML Controller class
- *
- * @author anton
- */
 public class vRegistrarseControlador extends Controlador implements Initializable {
-
+    
     @FXML
     private Label labTitulo;
     @FXML
@@ -54,13 +42,10 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
     private TextField textFieldTelefono;
     @FXML
     private ComboBox<String> comboBoxSexo;
-
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
         ObservableList<String> opcionesSexo = FXCollections.observableArrayList("Mujer", "Hombre", "Prefiero no contestar");
         comboBoxSexo.setItems(opcionesSexo);
         comboBoxSexo.getSelectionModel().selectFirst();
@@ -69,13 +54,15 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
         ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia");
         comboBoxPais.setItems(opcionesPais);
         comboBoxPais.getSelectionModel().selectFirst();
-
+        
+        labDniErro.setVisible(false);
+        
     }
-
+    
     @FXML
     private void accionBtnRegistrarse(ActionEvent event) {
 
-        //Abría que poner una excepcion por si el dni es incorrecto?
+        //Habría que poner una excepcion por si el dni es incorrecto?
         if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
             Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!");
         } else if (textFieldDni.getText().isEmpty() || textFieldId.getText().isEmpty() || textFieldEmail.getText().isEmpty()
@@ -89,20 +76,17 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
                         textFieldContrasenha.getText(), textFieldNombre.getText(),
                         textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
                         Integer.parseInt(textFieldTelefono.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
-
-                if (Modelo.getInstanceModelo().registrarUsuario(us) == true) { //Llamamos a modelo en lugar de fachadaplicación y comprobamos si se registró correctamente
+                
+                if (Modelo.getInstanceModelo().registrarUsuario(us) == true) {  //comprobamos si se registró correctamente
                     Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente");
+
                     //se cierra la ventana de registrar
-                    if (getVenta() != null) {
-                        getVenta().close();
-                    } else {
-                        System.out.println("Erro, a venta esta a null.");
-                    }
+                    getVenta().close();
                 }
             } catch (NumberFormatException e) {
                 Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto");
             }
         }
     }
-
+    
 }

@@ -1,34 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aeropuerto;
 
-import java.security.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 
-/**
- *
- * @author Esther
- */
 public class PersonalLaboral extends Usuario {
-    
+
     private String labor;
     private String descripcionTarea;
     private Date fechaInicio;
     //private ArrayList<ElemHistorial> historialTrabajo; creo que este atributo sobra
 
-    public PersonalLaboral(String dni, String id, String email, String contrasenha, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo,String labor, String descripcionTarea) {
+    public PersonalLaboral(String dni, String id, String email, String contrasenha, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo, String labor, String descripcionTarea) {
         super(dni, id, email, contrasenha, nombre, ap1, ap2, paisProcedencia, telefono, sexo);
         this.labor = labor;
         this.descripcionTarea = descripcionTarea;
-        this.fechaInicio=new Date(); //la fecha de inicio es la fecha de creación
+        this.fechaInicio = new Date(); //la fecha de inicio es la fecha de creación
         //this.historialTrabajo = new ArrayList<>(); //inicialmente no hay historial de trabajo
     }
-    
-    
+
     /*
     public void ficharEntrada(){
         
@@ -42,8 +30,7 @@ public class PersonalLaboral extends Usuario {
             System.out.println("Debes salir antes del turno anterior");
         }
     
-*/
-
+     */
     public String getLabor() {
         return labor;
     }
@@ -67,6 +54,5 @@ public class PersonalLaboral extends Usuario {
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-    
-    
+
 }

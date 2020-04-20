@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aeropuerto;
 
 import java.util.Date;
 
-/**
- *
- * @author Esther
- */
-public class Administrador extends Usuario{
-    
+public class Administrador extends Usuario {
+
     private Date fechaInicio;
     private String curriculum;
 
@@ -36,7 +27,5 @@ public class Administrador extends Usuario{
     public String getCurriculum() {
         return curriculum;
     }
-    
-    
-    
+
 }

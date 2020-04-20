@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
@@ -12,19 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- *
- * @author Esther
- */
 public class daoUsuarios extends AbstractDAO {
-    
+
     public daoUsuarios(Connection conexion, FachadaAplicacion fa) {
         super.setConexion(conexion);
         super.setFachadaAplicacion(fa);
     }
-    
-    public Boolean insertarUsuario(Usuario u){//true si se insertó y false si no
-       Connection con;
+
+    public Boolean insertarUsuario(Usuario u) {//true si se insertó y false si no
+        Connection con;
         PreparedStatement stmUsuario = null;
         Boolean correcto;
 
@@ -45,22 +36,22 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setInt(9, u.getTelefono());
             stmUsuario.setString(10, u.getSexo());
             stmUsuario.executeUpdate();
-            correcto=true;
+            correcto = true;
 
         } catch (SQLException e) {
             getFachadaAplicacion().mostrarError(e.getMessage());
-            correcto=false;
+            correcto = false;
         } finally {
             try {
                 stmUsuario.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
-                correcto=false;
+                correcto = false;
             }
-        } 
+        }
         return correcto;
     }
-    
+
     public Usuario comprobarCredenciales(String idUsuario, String clave) {
         Usuario resultado = null;
         Connection con;
@@ -80,9 +71,9 @@ public class daoUsuarios extends AbstractDAO {
             if (rsUsuario.next()) {
                 resultado = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("id"),
                         rsUsuario.getString("correoElectronico"), rsUsuario.getString("contrasenha"),
-                        rsUsuario.getString("nombre"),rsUsuario.getString("primerApellido"),
+                        rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
                         rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
-                        rsUsuario.getInt("telefono") ,rsUsuario.getString("sexo"));
+                        rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"));
 
             }
         } catch (SQLException e) {

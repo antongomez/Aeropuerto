@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
@@ -12,15 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- *
- * @author Esther
- */
 public class FachadaBaseDatos {
+
     private FachadaAplicacion fa;
     private java.sql.Connection conexion;
-    private daoUsuarios daoUsuarios; 
-
+    private daoUsuarios daoUsuarios;
 
     public FachadaBaseDatos(FachadaAplicacion fa) {
 
@@ -45,9 +36,7 @@ public class FachadaBaseDatos {
                     + configuracion.getProperty("baseDatos"),
                     usuario);
 
-
             daoUsuarios = new daoUsuarios(conexion, fa);
-
 
         } catch (FileNotFoundException f) {
             fa.mostrarError(f.getMessage());
@@ -58,11 +47,12 @@ public class FachadaBaseDatos {
         }
 
     }
-    
-    public Boolean insertarUsuario(Usuario u){
+
+    public Boolean insertarUsuario(Usuario u) {
         return daoUsuarios.insertarUsuario(u);
     }
-    public Usuario comprobarCredenciales(String id, String cont){
-       return daoUsuarios.comprobarCredenciales(id, cont);
+
+    public Usuario comprobarCredenciales(String id, String cont) {
+        return daoUsuarios.comprobarCredenciales(id, cont);
     }
 }

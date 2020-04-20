@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui.controlador;
 
 import java.io.IOException;
@@ -14,11 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-/**
- *
- * @author anton
- */
-public abstract class Controlador { //Abstracta ya que no se instancia
+public abstract class Controlador {
 
     private Stage venta;
     public static final String ICON_IMAGE_LOC = "/recursos/avion.png";
@@ -51,10 +42,10 @@ public abstract class Controlador { //Abstracta ya que no se instancia
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
             stage.show();
-            
+
             //Ponhemoslle un icono
             setStageIcon(stage);
-            
+
             //Asignamoslle a venta ao controlador
             controller.setVenta(stage);
 

@@ -1,21 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aeropuerto;
 
-import java.security.Timestamp;
 import java.util.Date;
-
-/**
- *
- * @author Esther
- */
 
 //clase creada para guardar el formato de los elementos del historial de trabajo del personal laboral
 public class ElemHistorial {
-    
+
     private Date fechaEntrada;
     private Date fechaSalida;
 
@@ -40,9 +29,5 @@ public class ElemHistorial {
     public void setFechaSalida(Date fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
-    
-    
-    
-    
-    
+
 }

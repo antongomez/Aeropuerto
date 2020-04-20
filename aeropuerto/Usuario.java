@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aeropuerto;
 
-/**
- *
- * @author Esther
- */
 public class Usuario {
-    
+
     private String dni;
     private String id;
     private String email;
@@ -23,9 +14,8 @@ public class Usuario {
     private String sexo; //Estaría mejor usar char, pero no se como pasar un char en el dao a la base de datos
 
     public Usuario(String dni, String id, String email, String contrasenha, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo) {
-        
-        //No sé si hay que poner comprobaciones de que no sean nulos, dni correcto y sexo m/h/- si ya lo hace sql
 
+        //No sé si hay que poner comprobaciones de que no sean nulos, dni correcto y sexo m/h/- si ya lo hace sql
         this.dni = dni;
         this.id = id;
         this.email = email;
@@ -35,13 +25,11 @@ public class Usuario {
         this.ap2 = ap2;
         this.paisProcedencia = paisProcedencia;
         this.telefono = telefono;
-        if(sexo.equals("Hombre")){
+        if (sexo.equals("Hombre")) {
             this.sexo = "h";
-        }
-        else if(sexo.equals("Mujer")){
+        } else if (sexo.equals("Mujer")) {
             this.sexo = "m";
-        }
-        else{
+        } else {
             this.sexo = "-";
         }
     }
@@ -87,7 +75,6 @@ public class Usuario {
     }
 
     //No hay setter para dni porque no se puede cambiar
-    
     public void setId(String id) {
         this.id = id;
     }
@@ -124,6 +111,4 @@ public class Usuario {
         this.sexo = sexo;
     }
 
-    
-    
 }
