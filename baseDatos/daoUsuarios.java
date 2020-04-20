@@ -57,6 +57,7 @@ public class daoUsuarios extends AbstractDAO {
         Connection con;
         PreparedStatement stmUsuario = null;
         ResultSet rsUsuario;
+        
 
         con = this.getConexion();
 
@@ -76,6 +77,7 @@ public class daoUsuarios extends AbstractDAO {
                         rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"));
 
             }
+            
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
@@ -88,4 +90,48 @@ public class daoUsuarios extends AbstractDAO {
         }
         return resultado;
     }
+    public Boolean modificarUsuario(Usuario us) {
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        PreparedStatement stmBorrado = null;
+        Boolean correcto;
+
+        con = super.getConexion();
+
+        try {
+
+            stmUsuario = con.prepareStatement("update usuario "
+                    + "set id=?,correoElectronico=?,contrasenha=?, nombre=?,"
+                    + "primerApellido=?, segundoApellido=?, paisProcedencia=?,"
+                    + "telefono=?,sexo=? " 
+                    + "where dni=?");
+            
+            stmUsuario.setString(1, us.getId());
+            stmUsuario.setString(2, us.getEmail());
+            stmUsuario.setString(3, us.getContrasenha());
+            stmUsuario.setString(4, us.getNombre());
+            stmUsuario.setString(5, us.getAp1());
+            stmUsuario.setString(6, us.getAp2());
+            stmUsuario.setString(7, us.getPaisProcedencia());
+            stmUsuario.setInt(8, us.getTelefono());
+            stmUsuario.setString(9, us.getSexo());
+            stmUsuario.setString(10, us.getDni());
+
+            stmUsuario.executeUpdate();
+            correcto=true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto=false;
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
 }
+

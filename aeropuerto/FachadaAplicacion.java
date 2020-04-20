@@ -52,6 +52,13 @@ public class FachadaAplicacion extends Application {
     public Usuario credencialesCorrectos(String id, String cont) {
         return gu.credencialesCorrectos(id, cont);
     }
+    public Boolean modificarUsuario(Usuario us){//no esta comprobado que funcione porque aun no hay interfaz
+        return gu.modificarUsuario(us);
+    }
+    //en la interfaz falta poner si está o no cancelado y cuánto falta para su salida
+    public List<Vuelo> obtenerVuelosUsuario(String dniUs){//no está probada
+        return gv.obtenerVuelosUsuario(dniUs);
+    }
 
     //Vuelos
     public Boolean insertarVuelo(Vuelo v) {
@@ -71,6 +78,8 @@ public class FachadaAplicacion extends Application {
     public FachadaGui getFgui() {
         return fgui;
     }
+    
+ 
     
     
 

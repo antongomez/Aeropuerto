@@ -3,6 +3,7 @@ package aeropuerto.gestion;
 import aeropuerto.elementos.Usuario;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
+import java.util.List;
 
 public class GestionUsuarios {
 
@@ -21,4 +22,8 @@ public class GestionUsuarios {
     public Usuario credencialesCorrectos(String id, String cont) {
         return fbd.comprobarCredenciales(id, cont);
     }
+    public Boolean modificarUsuario(Usuario us){
+        return fbd.modificarUsuario(us);
+    }
+    
 }

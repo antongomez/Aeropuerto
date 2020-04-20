@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 public class Vuelo {
 
-    private Integer numVuelo;
+    private String numVuelo;
     private String origen;
     private String destino;
     private Time fechasalidaTeo;
@@ -20,7 +20,7 @@ public class Vuelo {
 
     private Float precioPremium;
 
-    public Vuelo(Integer numVuelo, String origen, String destino,
+    public Vuelo(String numVuelo, String origen, String destino,
             Time fechasalidaTeo, Time fechasalidaReal,
             Time fechallegadaTeo, Time fechallegadaReal,
             Float precioActual, Integer puertaEmbarque, Boolean cancelado,
@@ -42,7 +42,7 @@ public class Vuelo {
         this.precioPremium = (float) (Math.round((precioActual * 1.2f) * 100d) / 100d);
     }
 
-    public Vuelo(Integer numVuelo, String origen, String destino,
+    public Vuelo(String numVuelo, String origen, String destino,
             Timestamp fechasalidaTeo, Timestamp fechasalidaReal,
             Timestamp fechallegadaTeo, Timestamp fechallegadaReal,
             Float precioActual, Integer puertaEmbarque, Boolean cancelado,
@@ -64,11 +64,11 @@ public class Vuelo {
         this.precioPremium = (float) (Math.round((precioActual * 1.2f) * 100d) / 100d);
     }
 
-    public Integer getNumVuelo() {
+    public String getNumVuelo() {
         return numVuelo;
     }
 
-    public void setNumVuelo(Integer numVuelo) {
+    public void setNumVuelo(String numVuelo) {
         this.numVuelo = numVuelo;
     }
 

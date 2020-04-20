@@ -1,6 +1,7 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.Time;
 import java.sql.Connection;
@@ -30,7 +31,7 @@ public class daoVuelos extends AbstractDAO {
                     + " fechallegadareal, precioactual, puertaembarque, cancelado,"
                     + "terminal,avion) "
                     + "values (?,?,?,?,?,?,?,?,?,?,?,?)");
-            stmVuelo.setInt(1, v.getNumVuelo());
+            stmVuelo.setString(1, v.getNumVuelo());
             stmVuelo.setString(2, v.getOrigen());
             stmVuelo.setString(3, v.getDestino());
             stmVuelo.setString(4, v.getFechasalidaTeo().getStringSql());
@@ -103,7 +104,7 @@ public class daoVuelos extends AbstractDAO {
 
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
-                vueloActual = new Vuelo(rsVuelo.getInt("numvuelo"), rsVuelo.getString("origen"),
+                vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"),
                         rsVuelo.getString("destino"), rsVuelo.getTimestamp("fechasalidateorica"),
                         rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadateorica"),
                         rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getFloat("precioactual"),
@@ -122,6 +123,44 @@ public class daoVuelos extends AbstractDAO {
                 System.out.println("Imposible cerrar cursores");
             }
         }
+        return resultado;
+    }
+
+    public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
+        java.util.List<Vuelo> resultado = new java.util.ArrayList<>();
+        Connection con;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+
+        con = super.getConexion();
+
+        try {
+            stmVuelo = con.prepareStatement("select v.numVuelo, v.origen, v.destino, v.salidareal, v.llegadareal, "
+                    + "c.preciobillete, v.cancelado "
+                    + "from usuario u, vuelo v, comprarBillete c "
+                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=?");
+            stmVuelo.setString(1, dniUs);
+            rsVuelo = stmVuelo.executeQuery();
+            while (rsVuelo.next()) {
+                Vuelo vuelo = new Vuelo(rsVuelo.getString("v.numVuelo"), rsVuelo.getString("v.origen"), rsVuelo.getString("v.destino"),
+                        null, rsVuelo.getTimestamp("v.salidareal"),null, rsVuelo.getTimestamp("v.llegadareal"),
+                        rsVuelo.getFloat("c.preciobillete"), null, rsVuelo.getBoolean("v.cancelado"),
+                        null, null);
+                
+                resultado.add(vuelo);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
         return resultado;
     }
 }

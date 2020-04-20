@@ -1,5 +1,6 @@
 package aeropuerto.gestion;
 
+import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
@@ -22,5 +23,8 @@ public class GestionVuelos {
 
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return fbd.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
+    }
+    public List<Vuelo> obtenerVuelosUsuario(String dniUs){
+        return fbd.obtenerVuelosUsuario(dniUs);
     }
 }
