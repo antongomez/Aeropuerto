@@ -1,8 +1,8 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
-import aeropuerto.Usuario;
-import aeropuerto.Vuelo;
+import aeropuerto.elementos.Usuario;
+import aeropuerto.elementos.Vuelo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,5 +1,6 @@
-package aeropuerto;
+package aeropuerto.gestion;
 
+import aeropuerto.elementos.Usuario;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 

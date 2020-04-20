@@ -1,7 +1,7 @@
 package gui.controlador;
 
-import aeropuerto.Usuario;
-import aeropuerto.Vuelo;
+import aeropuerto.elementos.Usuario;
+import aeropuerto.elementos.Vuelo;
 import static gui.modelo.Modelo.getInstanceModelo;
 import java.net.URL;
 import java.security.Timestamp;

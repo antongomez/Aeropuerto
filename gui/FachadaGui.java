@@ -1,7 +1,7 @@
 package gui;
 
 import aeropuerto.FachadaAplicacion;
-import aeropuerto.Vuelo;
+import aeropuerto.elementos.Vuelo;
 import gui.controlador.Controlador;
 import gui.controlador.vAccederControlador;
 import gui.modelo.Modelo;

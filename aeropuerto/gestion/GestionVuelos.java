@@ -1,5 +1,6 @@
-package aeropuerto;
+package aeropuerto.gestion;
 
+import aeropuerto.elementos.Vuelo;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;

@@ -1,6 +1,6 @@
 package gui.controlador;
 
-import aeropuerto.Usuario;
+import aeropuerto.elementos.Usuario;
 import gui.modelo.Modelo;
 import java.net.URL;
 import java.util.ResourceBundle;

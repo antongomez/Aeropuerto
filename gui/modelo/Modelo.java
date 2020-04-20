@@ -1,8 +1,8 @@
 package gui.modelo;
 
 import aeropuerto.FachadaAplicacion;
-import aeropuerto.Usuario;
-import aeropuerto.Vuelo;
+import aeropuerto.elementos.Usuario;
+import aeropuerto.elementos.Vuelo;
 import gui.FachadaGui;
 import static gui.controlador.Controlador.loadWindow;
 import gui.controlador.VErrorController;

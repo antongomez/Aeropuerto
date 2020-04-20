@@ -1,4 +1,4 @@
-package aeropuerto;
+package aeropuerto.elementos;
 
 public class PersonalExterno extends Usuario {
 

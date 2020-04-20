@@ -1,7 +1,7 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
-import aeropuerto.Usuario;
+import aeropuerto.elementos.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
