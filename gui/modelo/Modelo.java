@@ -32,13 +32,15 @@ public class Modelo {
         return fa.registrarUsuario(us);
     }
     public void mostrarError(String mensaje){
-      ((VErrorController)loadWindow(getClass().getResource("/gui/vista/vError.fxml"), "Error", null)).mostrarMensaje(mensaje);
+      ((VErrorController)loadWindow(getClass().
+              getResource("/gui/vista/vError.fxml"), "Error", null)).mostrarMensaje(mensaje);
     }
     public Usuario credencialesCorrectos(String id, String cont){
         return fa.credencialesCorrectos(id,cont);
     }
     public void mostrarNotificacion(String mensaje){
-        ((VNotificacionController)loadWindow(getClass().getResource("/gui/vista/vNotificacion.fxml"), "Notificación", null)).mostrarMensaje(mensaje);
+        ((VNotificacionController)loadWindow(getClass().
+                getResource("/gui/vista/vNotificacion.fxml"), "Notificación", null)).mostrarMensaje(mensaje);
     }
     
 }

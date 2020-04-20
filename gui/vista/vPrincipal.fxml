@@ -29,15 +29,15 @@
          <children>
             <VBox layoutX="105.0" layoutY="102.0" prefHeight="600.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ToggleButton minWidth="140.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" selected="true" styleClass="btnMenu" text="Vuelos">
+                  <ToggleButton fx:id="btnVuelos" minWidth="140.0" mnemonicParsing="false" onAction="#accionBtnVuelos" prefHeight="50.0" prefWidth="200.0" selected="true" styleClass="btnMenu" text="Vuelos">
                      <toggleGroup>
                         <ToggleGroup fx:id="BtnMenu" />
                      </toggleGroup>
                   </ToggleButton>
-                  <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Área personal" toggleGroup="$BtnMenu" />
-                  <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Servicios" toggleGroup="$BtnMenu" />
-                  <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Información" toggleGroup="$BtnMenu" />
-                  <ToggleButton mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Administrador" toggleGroup="$BtnMenu">
+                  <ToggleButton fx:id="btnAreaP" mnemonicParsing="false" onAction="#accionBtnAreaP" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Área personal" toggleGroup="$BtnMenu" />
+                  <ToggleButton fx:id="btnServicios" mnemonicParsing="false" onAction="#accionBtnServicios" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Servicios" toggleGroup="$BtnMenu" />
+                  <ToggleButton fx:id="btnInfo" mnemonicParsing="false" onAction="#accionBtnInfo" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Información" toggleGroup="$BtnMenu" />
+                  <ToggleButton fx:id="btnAdmin" mnemonicParsing="false" onAction="#accionBtnAdmin" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Administrador" toggleGroup="$BtnMenu">
                      <effect>
                         <InnerShadow height="0.0" radius="2.0" width="10.0" />
                      </effect>
@@ -61,7 +61,7 @@
                   </VBox>
                   <AnchorPane>
                      <children>
-                        <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="800.0" text="ÁREA PERSONAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="800.0" text="VUELOS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -72,7 +72,7 @@
    <center>
       <StackPane BorderPane.alignment="CENTER">
          <children>
-            <TabPane prefHeight="200.0" prefWidth="200.0" styleClass="root" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="panelAreaP" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab text="Modificar datos">
                      <content>
@@ -108,8 +108,8 @@
                                     </VBox>
                                  </children>
                               </HBox>
-                              <Button layoutX="25.0" layoutY="467.0" mnemonicParsing="false" text="Darse de baja" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" />
-                              <Button layoutX="605.0" layoutY="473.0" mnemonicParsing="false" text="Guardar" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
+                              <Button fx:id="btnDarseBaja" layoutX="25.0" layoutY="467.0" mnemonicParsing="false" onAction="#accionBtnDarseBaja" text="Darse de baja" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" />
+                              <Button fx:id="btnGuardar" layoutX="605.0" layoutY="473.0" mnemonicParsing="false" onAction="#aacionBtnGuardar" text="Guardar" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -214,7 +214,7 @@
                   </Tab>
                </tabs>
             </TabPane>
-            <AnchorPane prefHeight="550.0" prefWidth="800.0" styleClass="root">
+            <AnchorPane fx:id="panelVuelos" prefHeight="550.0" prefWidth="800.0" styleClass="root">
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                      <children>
@@ -229,9 +229,9 @@
                               </VBox>
                               <VBox prefWidth="150.0" spacing="10.0">
                                  <children>
-                                    <TextField />
-                                    <TextField />
-                                    <TextField />
+                                    <TextField fx:id="txtNumVuelo" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                    <TextField fx:id="txtOrigen" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                    <DatePicker fx:id="dataPickSalida" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
                                  </children>
                               </VBox>
                               <VBox prefWidth="140.0" spacing="10.0">
@@ -244,13 +244,13 @@
                               <VBox prefWidth="150.0" spacing="10.0">
                                  <children>
                                     <Label minHeight="35.0" prefHeight="35.0" />
-                                    <TextField minHeight="35.0" minWidth="0.0" prefHeight="25.0" />
-                                    <DatePicker minHeight="35.0" minWidth="0.0" prefHeight="25.0" />
+                                    <TextField fx:id="txtDestino" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                    <DatePicker fx:id="dataPickLlegada" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
                                  </children>
                               </VBox>
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" text="Buscar" />
+                        <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#accionBtnBuscar" text="Buscar" />
                         <TableView minHeight="200.0" minWidth="800.0" prefHeight="400.0">
                            <columns>
                               <TableColumn prefWidth="120.0" text="Número" />
@@ -265,7 +265,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Button mnemonicParsing="false" text="Comprar">
+                        <Button fx:id="btnComprar" mnemonicParsing="false" onAction="#accionBtnComprar" text="Comprar">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
