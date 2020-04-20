@@ -23,8 +23,8 @@
             <Label fx:id="labSubrayado" minHeight="5.0" minWidth="5.0" prefHeight="5.0" prefWidth="140.0" styleClass="labelSubrayado" />
             <VBox alignment="CENTER" spacing="20.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <TextField fx:id="textFieldId" maxHeight="30.0" maxWidth="230.0" minHeight="25.0" minWidth="120.0" prefHeight="28.0" prefWidth="150.0" promptText="Username" />
-                  <PasswordField fx:id="textFieldContrasenha" maxHeight="30.0" maxWidth="230.0" minHeight="25.0" minWidth="120.0" prefHeight="28.0" prefWidth="150.0" promptText="Password" />
+                  <TextField fx:id="textFieldId" maxHeight="30.0" maxWidth="230.0" minHeight="25.0" minWidth="120.0" onKeyPressed="#cambioCredenciais" prefHeight="28.0" prefWidth="150.0" promptText="Username" />
+                  <PasswordField fx:id="textFieldContrasenha" maxHeight="30.0" maxWidth="230.0" minHeight="25.0" minWidth="120.0" onKeyPressed="#cambioCredenciais" prefHeight="28.0" prefWidth="150.0" promptText="Password" />
                </children>
                <VBox.margin>
                   <Insets top="20.0" />
