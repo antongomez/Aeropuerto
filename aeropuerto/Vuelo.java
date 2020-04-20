@@ -35,13 +35,13 @@ public class Vuelo {
         this.fechasalidaReal = fechasalidaReal;
         this.fechallegadaTeo = fechallegadaTeo;
         this.fechallegadaReal = fechallegadaReal;
-        this.precioActual = precioActual;
+        this.precioActual = (float) (Math.round(precioActual * 100d) / 100d);
         this.puertaEmbarque = puertaEmbarque;
         this.cancelado = cancelado;
         this.terminal = terminal;
         this.avion = avion;
 
-        this.precioPremium = precioActual * 1.2f;
+        this.precioPremium = (float) (Math.round((precioActual * 1.2f) * 100d) / 100d);
     }
 
     public Integer getNumVuelo() {
@@ -106,7 +106,7 @@ public class Vuelo {
 
     public void setPrecioActual(Float precioActual) {
         this.precioActual = precioActual;
-        this.precioPremium = precioActual * 1.2f;
+        this.precioPremium = (float) (Math.round((precioActual * 1.2f) * 100d) / 100d);
     }
 
     public Integer getPuertaEmbarque() {
