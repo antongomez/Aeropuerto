@@ -129,7 +129,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
         columnaPrecioPremium.setCellValueFactory(new PropertyValueFactory<>("precioPremium"));
 
-        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(getInstanceModelo().buscarVuelos("", "", "", null, null));
+        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
+                getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
         tablaProximosVuelos.setItems(vuelos);
     }
 

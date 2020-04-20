@@ -2,6 +2,7 @@ package aeropuerto.util;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -69,16 +70,6 @@ public class Time {
         this.milis = 0;
     }
 
-    public Time(Integer ano, Integer mes, Integer dia) {
-        this.ano = ano;
-        this.mes = mes;
-        this.dia = dia;
-        this.horas = 0;
-        this.minutos = 0;
-        this.segundos = 0;
-        this.milis = 0;
-    }
-
     public String getStringSql() {
         String data = "%04d-%02d-%02d %02d:%02d:%02d.%d";
 
@@ -128,12 +119,13 @@ public class Time {
         return milis;
     }
 
+    public static Time diaActual() {
+        return new Time(LocalDate.now());
+    }
+
     public static Boolean fechaMayorActual(Time fecha) {
-        Calendar calendar = Calendar.getInstance();
-
-        Time diaActual = new Time(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE));
-
-        return (fecha.toTimestamp().after(diaActual.toTimestamp()) || !fecha.toTimestamp().before(diaActual.toTimestamp()));
+        return (fecha.toTimestamp().after(Time.diaActual().toTimestamp()) 
+                || !fecha.toTimestamp().before(Time.diaActual().toTimestamp()));
     }
 
 }
