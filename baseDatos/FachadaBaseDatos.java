@@ -3,6 +3,7 @@ package baseDatos;
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.Time;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class FachadaBaseDatos {
         return daoVuelos.insertarVuelo(v);
     }
 
-    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino) {
-        return daoVuelos.buscarVuelos(numVuelo, origen, destino);
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
+        return daoVuelos.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
 }

@@ -4,6 +4,7 @@ import aeropuerto.elementos.Vuelo;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.gestion.GestionVuelos;
 import aeropuerto.gestion.GestionUsuarios;
+import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;
@@ -57,8 +58,8 @@ public class FachadaAplicacion extends Application {
         return gv.insertarVuelo(v);
     }
 
-    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino) {
-        return gv.buscarVuelos(numVuelo, origen, destino);
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
+        return gv.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
 
     //Erros

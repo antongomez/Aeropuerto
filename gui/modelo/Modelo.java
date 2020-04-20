@@ -3,6 +3,7 @@ package gui.modelo;
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.Time;
 import gui.FachadaGui;
 import static gui.controlador.Controlador.loadWindow;
 import gui.controlador.VErrorController;
@@ -56,8 +57,8 @@ public class Modelo {
         return fa.insertarVuelo(v);
     }
 
-    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino) {
-        return fa.buscarVuelos(numVuelo, origen, destino);
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
+        return fa.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
 
 }

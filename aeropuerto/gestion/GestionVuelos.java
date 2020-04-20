@@ -1,6 +1,7 @@
 package aeropuerto.gestion;
 
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;
@@ -19,7 +20,7 @@ public class GestionVuelos {
         return fbd.insertarVuelo(v);
     }
 
-    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino) {
-        return fbd.buscarVuelos(numVuelo, origen, destino);
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
+        return fbd.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
 }

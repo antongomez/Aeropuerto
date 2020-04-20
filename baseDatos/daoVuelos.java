@@ -2,6 +2,7 @@ package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.Time;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,7 +60,7 @@ public class daoVuelos extends AbstractDAO {
         return correcto;
     }
 
-    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino) {
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         List<Vuelo> resultado = new ArrayList<>();
         Vuelo vueloActual;
         Connection con;
@@ -69,17 +70,33 @@ public class daoVuelos extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select numvuelo,origen,destino,fechasalidateorica, fechasalidareal,"
+            String consulta = "select numvuelo,origen,destino,fechasalidateorica, fechasalidareal,"
                     + " fechallegadateorica, fechallegadareal, precioactual, puertaembarque, cancelado,"
                     + " terminal, avion "
                     + "from vuelo "
                     + "where numvuelo like ? "
                     + "  and origen like ? "
-                    + "  and destino like ? ");
+                    + "  and destino like ? ";
 
+            if (fechaSalida != null) {
+                consulta += "  and fechasalidateorica >= ?";
+            }
+            if (fechaLlegada != null) {
+                consulta += "  and fechallegadateorica <= ?";
+            }
+
+            stmVuelo = con.prepareStatement(consulta);
             stmVuelo.setString(1, "%" + numVuelo + "%");
             stmVuelo.setString(2, "%" + origen + "%");
             stmVuelo.setString(3, "%" + destino + "%");
+            if ((fechaSalida != null) && (fechaLlegada != null)) {
+                stmVuelo.setString(4, "%" + fechaSalida.getStringSql() + "%");
+                stmVuelo.setString(5, "%" + fechaLlegada.getStringSql() + "%");
+            } else if ((fechaSalida != null) && (fechaLlegada == null)) {
+                stmVuelo.setString(4, "%" + fechaSalida.getStringSql() + "%");
+            } else if ((fechaSalida == null) && (fechaLlegada != null)) {
+                stmVuelo.setString(4, "%" + fechaLlegada.getStringSql() + "%");
+            }
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getInt("numvuelo"), rsVuelo.getString("origen"),
