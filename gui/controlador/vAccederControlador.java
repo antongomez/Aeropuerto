@@ -29,6 +29,8 @@ public class vAccederControlador extends Controlador implements Initializable {
     private TextField textFieldId;
     @FXML
     private PasswordField textFieldContrasenha;
+    @FXML
+    private Button btnAcceder;
 
     /**
      * Inicializa o controlador.
@@ -36,6 +38,7 @@ public class vAccederControlador extends Controlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         labErro.setVisible(false);
+        btnAcceder.setDisable(true);
     }
 
     @FXML
@@ -71,10 +74,21 @@ public class vAccederControlador extends Controlador implements Initializable {
         }
     }
 
+    //Key Pressed sobre os txt
     @FXML
     private void cambioCredenciais(KeyEvent event) {
         if (labErro.isVisible()) {
             labErro.setVisible(false);
+        }
+    }
+
+    //Key released sobre os txt
+    @FXML
+    private void activarAcceder(KeyEvent event) {
+        if (textFieldId.getText().isBlank() || textFieldContrasenha.getText().isBlank()) {
+            btnAcceder.setDisable(true);
+        } else {
+            btnAcceder.setDisable(false);
         }
     }
 
