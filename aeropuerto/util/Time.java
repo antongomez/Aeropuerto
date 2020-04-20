@@ -1,6 +1,8 @@
 package aeropuerto.util;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class Time {
@@ -56,10 +58,27 @@ public class Time {
         return datos;
     }
 
+    public Time(LocalDate fecha) {
+        this.ano = fecha.getYear();
+        this.mes = fecha.getMonthValue();
+        this.dia = fecha.getDayOfMonth();
+        this.horas = 0;
+        this.minutos = 0;
+        this.segundos = 0;
+        this.milis = 0;
+    }
+
     public String getStringSql() {
         String data = "%04d-%02d-%02d %02d:%02d:%02d.%d";
 
         return String.format(data, ano, mes, dia, horas, minutos, segundos, milis);
+    }
+
+    public Timestamp toTimestamp() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(ano, mes, dia, horas, minutos, segundos);
+
+        return new Timestamp(calendar.getTimeInMillis());
     }
 
     //Getters
@@ -97,5 +116,7 @@ public class Time {
 
         return String.format(data, horas, minutos, dia, mes, ano);
     }
+    
+
 
 }

@@ -82,21 +82,25 @@ public class daoVuelos extends AbstractDAO {
                 consulta += "  and fechasalidateorica >= ?";
             }
             if (fechaLlegada != null) {
-                consulta += "  and fechallegadateorica <= ?";
+                consulta += "  and fechallegadateorica >= ?";
             }
 
             stmVuelo = con.prepareStatement(consulta);
             stmVuelo.setString(1, "%" + numVuelo + "%");
             stmVuelo.setString(2, "%" + origen + "%");
             stmVuelo.setString(3, "%" + destino + "%");
+
             if ((fechaSalida != null) && (fechaLlegada != null)) {
-                stmVuelo.setString(4, "%" + fechaSalida.getStringSql() + "%");
-                stmVuelo.setString(5, "%" + fechaLlegada.getStringSql() + "%");
+                stmVuelo.setTimestamp(4, fechaSalida.toTimestamp());
+                stmVuelo.setTimestamp(5, fechaLlegada.toTimestamp());
+
             } else if ((fechaSalida != null) && (fechaLlegada == null)) {
-                stmVuelo.setString(4, "%" + fechaSalida.getStringSql() + "%");
+                stmVuelo.setTimestamp(4, fechaSalida.toTimestamp());
+
             } else if ((fechaSalida == null) && (fechaLlegada != null)) {
-                stmVuelo.setString(4, "%" + fechaLlegada.getStringSql() + "%");
+                stmVuelo.setTimestamp(4, fechaLlegada.toTimestamp());
             }
+
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getInt("numvuelo"), rsVuelo.getString("origen"),

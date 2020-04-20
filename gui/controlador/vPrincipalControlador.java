@@ -2,6 +2,7 @@ package gui.controlador;
 
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.Time;
 import static gui.modelo.Modelo.getInstanceModelo;
 import java.net.URL;
 import java.security.Timestamp;
@@ -162,7 +163,18 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnBuscar(ActionEvent event) {
-        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(), txtDestino.getText(), null, null));
+        Time salida = null, llegada = null;
+
+        if (dataPickSalida.getValue() != null) {
+            salida = new Time(dataPickSalida.getValue());
+        }
+        if (dataPickLlegada.getValue() != null) {
+            llegada = new Time(dataPickLlegada.getValue());
+        }
+        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
+                getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(),
+                        txtDestino.getText(), salida, llegada));
+
         tablaProximosVuelos.setItems(vuelos);
     }
 
