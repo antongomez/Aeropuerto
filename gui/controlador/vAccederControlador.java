@@ -39,22 +39,22 @@ public class vAccederControlador extends Controlador implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        labErro.setVisible(false);
     }
 
     @FXML
     private void accionBtnAcceder(ActionEvent event) {
         //Abrese a venta. Falta a comprobacion das credenciais
-        Usuario usuario=Modelo.getInstanceModelo().credencialesCorrectos(textFieldId.getText(),textFieldContrasenha.getText());
-        if(usuario!=null){
-        ((vPrincipalControlador)loadWindow(getClass().getResource("/gui/vista/vPrincipal.fxml"), "AeroETSE", null)).setUsuario(usuario);
-        //Pechase a venta de rexistro
-        getVenta().close();
+        Usuario usuario = Modelo.getInstanceModelo().credencialesCorrectos(textFieldId.getText(), textFieldContrasenha.getText());
+        if (usuario != null) {
+            ((vPrincipalControlador) loadWindow(getClass().getResource("/gui/vista/vPrincipal.fxml"), "AeroETSE", null)).setUsuario(usuario);
+            //Pechase a venta de rexistro
+            getVenta().close();
+        } else {
+            labErro.setVisible(true);
+            //Modelo.getInstanceModelo().mostrarError("Usuario o contraseña incorrectos");
         }
-        else{
-            Modelo.getInstanceModelo().mostrarError("Usuario o contraseña incorrectos");
-        }
-        
+
     }
 
     @FXML
