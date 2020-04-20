@@ -91,7 +91,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private ToggleGroup opVerVuelo2;
     @FXML
     private ToggleGroup opVerVuelo21;
-    
+
     //TaboaProximosVoos
     @FXML
     private TableView<Vuelo> tablaProximosVuelos;
@@ -127,7 +127,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaLlegada.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
         columnaPrecioPremium.setCellValueFactory(new PropertyValueFactory<>("precioPremium"));
-        
+
         ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(getInstanceModelo().buscarVuelos("", "", "", null, null));
         tablaProximosVuelos.setItems(vuelos);
     }
@@ -162,6 +162,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnBuscar(ActionEvent event) {
+        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(), txtDestino.getText(), null, null));
+        tablaProximosVuelos.setItems(vuelos);
     }
 
     @FXML
@@ -173,7 +175,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     @FXML
-    private void aacionBtnGuardar(ActionEvent event) {
+    private void accionBtnGuardar(ActionEvent event) {
     }
 
 }
