@@ -18,7 +18,7 @@ public class GestionVuelos {
         return fbd.insertarVuelo(v);
     }
 
-    public List<Vuelo> buscarVuelos(Integer numVuelo, String origen, String destino) {
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino) {
         return fbd.buscarVuelos(numVuelo, origen, destino);
     }
 }

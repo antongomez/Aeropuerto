@@ -1,18 +1,23 @@
 package aeropuerto;
 
+import baseDatos.FachadaBaseDatos;
+import gui.FachadaGui;
+import java.util.List;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class FachadaAplicacion extends Application {
 
-    gui.FachadaGui fgui;
-    baseDatos.FachadaBaseDatos fbd;
+    FachadaGui fgui;
+    FachadaBaseDatos fbd;
     GestionUsuarios gu;
+    GestionVuelos gv;
 
     public FachadaAplicacion() {
         fgui = new gui.FachadaGui(this);
         fbd = new baseDatos.FachadaBaseDatos(this);
         gu = new GestionUsuarios(fgui, fbd);
+        gv = new GestionVuelos(fgui, fbd);
     }
 
     public static void main(String[] args) {
@@ -34,16 +39,34 @@ public class FachadaAplicacion extends Application {
         }
     }
 
+    //Usuarios
     public Boolean registrarUsuario(Usuario us) {//true si se registra y false si no
         return gu.registrarUsuario(us);
-    }
-
-    public void mostrarError(String menseje) {
-        fgui.mostrarError(menseje);
     }
 
     public Usuario credencialesCorrectos(String id, String cont) {
         return gu.credencialesCorrectos(id, cont);
     }
+
+    //Vuelos
+    public Boolean insertarVuelo(Vuelo v) {
+        return gv.insertarVuelo(v);
+    }
+
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino) {
+        return gv.buscarVuelos(numVuelo, origen, destino);
+    }
+
+    //Erros
+    public void mostrarError(String menseje) {
+        fgui.mostrarError(menseje);
+    }
+
+    //Getters
+    public FachadaGui getFgui() {
+        return fgui;
+    }
+    
+    
 
 }

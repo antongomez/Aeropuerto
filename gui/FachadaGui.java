@@ -1,16 +1,15 @@
 package gui;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.Vuelo;
 import gui.controlador.Controlador;
-import static gui.controlador.Controlador.loadWindow;
 import gui.controlador.vAccederControlador;
 import gui.modelo.Modelo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import gui.controlador.VErrorController;
-import javafx.scene.control.Control;
+import java.util.List;
 
 public class FachadaGui {
 
@@ -32,18 +31,16 @@ public class FachadaGui {
 
         primaryStage.setTitle("Aeropuerto");
         primaryStage.setScene(new Scene(root));
-        
-        
+
         contAcceder.setVenta(primaryStage);
         Controlador.setStageIcon(primaryStage);
         primaryStage.show();
-        
+
     }
-    
-    public void mostrarError(String mensaje){
-        
+
+    public void mostrarError(String mensaje) {
         //((VErrorController)loadWindow(getClass().getResource("/gui/vista/vError.fxml"), "Error", null)).mostrarMensaje(mensaje);
- modelo.mostrarError(mensaje);
+        modelo.mostrarError(mensaje);
     }
 
 }

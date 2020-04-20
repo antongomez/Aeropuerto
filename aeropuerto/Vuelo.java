@@ -2,6 +2,9 @@ package aeropuerto;
 
 import java.sql.Timestamp;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Vuelo {
 
     private Integer numVuelo;
@@ -17,12 +20,14 @@ public class Vuelo {
     private Integer terminal;
     private Integer avion;
 
+    private Float precioPremium;
+
     public Vuelo(Integer numVuelo, String origen, String destino,
             Timestamp fechasalidaTeo, Timestamp fechasalidaReal,
             Timestamp fechallegadaTeo, Timestamp fechallegadaReal,
             Float precioActual, Integer puertaEmbarque, Boolean cancelado,
             Integer terminal, Integer avion) {
-        
+
         this.numVuelo = numVuelo;
         this.origen = origen;
         this.destino = destino;
@@ -35,6 +40,8 @@ public class Vuelo {
         this.cancelado = cancelado;
         this.terminal = terminal;
         this.avion = avion;
+
+        this.precioPremium = precioActual * 1.2f;
     }
 
     public Integer getNumVuelo() {
@@ -99,6 +106,7 @@ public class Vuelo {
 
     public void setPrecioActual(Float precioActual) {
         this.precioActual = precioActual;
+        this.precioPremium = precioActual * 1.2f;
     }
 
     public Integer getPuertaEmbarque() {
@@ -131,6 +139,10 @@ public class Vuelo {
 
     public void setAvion(Integer avion) {
         this.avion = avion;
+    }
+
+    public Float getPrecioPremium() {
+        return precioPremium;
     }
 
 }

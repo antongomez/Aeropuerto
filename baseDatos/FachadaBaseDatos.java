@@ -2,9 +2,11 @@ package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.Usuario;
+import aeropuerto.Vuelo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 public class FachadaBaseDatos {
@@ -12,6 +14,7 @@ public class FachadaBaseDatos {
     private FachadaAplicacion fa;
     private java.sql.Connection conexion;
     private daoUsuarios daoUsuarios;
+    private daoVuelos daoVuelos;
 
     public FachadaBaseDatos(FachadaAplicacion fa) {
 
@@ -37,6 +40,7 @@ public class FachadaBaseDatos {
                     usuario);
 
             daoUsuarios = new daoUsuarios(conexion, fa);
+            daoVuelos = new daoVuelos(conexion, fa);
 
         } catch (FileNotFoundException f) {
             fa.mostrarError(f.getMessage());
@@ -54,5 +58,13 @@ public class FachadaBaseDatos {
 
     public Usuario comprobarCredenciales(String id, String cont) {
         return daoUsuarios.comprobarCredenciales(id, cont);
+    }
+
+    public Boolean insertarVuelo(Vuelo v) {
+        return daoVuelos.insertarVuelo(v);
+    }
+
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino) {
+        return daoVuelos.buscarVuelos(numVuelo, origen, destino);
     }
 }

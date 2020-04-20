@@ -1,7 +1,6 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
-import aeropuerto.Usuario;
 import aeropuerto.Vuelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,7 +59,7 @@ public class daoVuelos extends AbstractDAO {
         return correcto;
     }
 
-    public List<Vuelo> buscarVuelos(Integer numVuelo, String origen, String destino) {
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino) {
         List<Vuelo> resultado = new ArrayList<>();
         Vuelo vueloActual;
         Connection con;
