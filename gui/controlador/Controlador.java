@@ -12,7 +12,7 @@ import javafx.stage.StageStyle;
 public abstract class Controlador {
 
     private Stage venta;
-    public static final String ICON_IMAGE_LOC = "/recursos/avion.png";
+    public static final String ICON_IMAGE_LOC = "/recursos/Logo_BarraTareas.png";
 
     //Funcion que aigna o icono da venta
     public static void setStageIcon(Stage stage) {

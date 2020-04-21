@@ -42,8 +42,8 @@
 
 /*Elementos concretos*/
 #labTitulo{
-    -fx-background-color: black;
-    -fx-font-size: 19pt;
+    -fx-background-color: #424242;
+    -fx-font-size: 16pt;
 }
 
 #labSubrayado{

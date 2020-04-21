@@ -51,10 +51,11 @@
 
 #etqTitulo {
     -fx-font-size: 14pt;
-    -fx-background-color: transparent;
 }
 
-#etqAeroEtse {
-    -fx-font-size: 14pt;
-    -fx-background-color: transparent;
+#etqFLC {
+    -fx-text-fill: #efedb8;
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
 }
+

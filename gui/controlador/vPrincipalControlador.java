@@ -31,7 +31,7 @@ import javafx.scene.layout.HBox;
 public class vPrincipalControlador extends Controlador implements Initializable {
 
     private final static String TITULO_VUELOS = "PRÓXIMOS VUELOS";
-    private final static String TITULO_AREAP = "AREA PERSONAL";
+    private final static String TITULO_AREAP = "ÁREA PERSONAL";
     private Usuario usuario;//usuario que está usando la ventana
 
     //Encabezado

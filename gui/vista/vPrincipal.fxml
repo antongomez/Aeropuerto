@@ -17,6 +17,8 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -54,11 +56,19 @@
          <children>
             <HBox fx:id="boxTitulo" alignment="CENTER_LEFT" layoutX="48.0" layoutY="6.0" prefHeight="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox prefHeight="80.0" prefWidth="200.0">
+                  <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Label fx:id="etqAeroEtse" alignment="CENTER" prefHeight="80.0" prefWidth="200.0" text="AEROETSE" />
+                        <ImageView fitHeight="74.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../recursos/Logotipo_DarkTheme.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="etqFLC" text="Folgoso do Courel" wrapText="true" />
                      </children>
-                  </VBox>
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                  </HBox>
                   <AnchorPane>
                      <children>
                         <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="800.0" text="VUELOS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
