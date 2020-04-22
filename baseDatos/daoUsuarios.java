@@ -64,7 +64,7 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario = con.prepareStatement("select dni,id,correoElectronico,contrasenha, nombre,"
                     + " primerApellido, segundoApellido, paisProcedencia, telefono, sexo "
                     + "from usuario "
-                    + "where id = ? and contrasenha = ?");
+                    + "where id = ? and contrasenha = crypt(?, contrasenha)");
             stmUsuario.setString(1, idUsuario);
             stmUsuario.setString(2, clave);
             rsUsuario = stmUsuario.executeQuery();
