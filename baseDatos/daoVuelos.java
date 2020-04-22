@@ -127,27 +127,29 @@ public class daoVuelos extends AbstractDAO {
     }
 
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
-        java.util.List<Vuelo> resultado = new java.util.ArrayList<>();
+        List<Vuelo> resultado = new ArrayList<>();
         Connection con;
+        Vuelo vueloActual;
         PreparedStatement stmVuelo = null;
         ResultSet rsVuelo;
 
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select v.numVuelo, v.origen, v.destino, v.salidareal, v.llegadareal, "
-                    + "c.preciobillete, v.cancelado "
+            stmVuelo = con.prepareStatement("select v.numvuelo as numvuelo, v.origen as origen, "
+                    + "v.destino as destino, v.fechasalidareal as fechasalidareal, v.fechallegadareal as fechallegadareal, "
+                    + "c.preciobillete as preciobillete, v.cancelado as cancelado "
                     + "from usuario u, vuelo v, comprarBillete c "
                     + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=?");
             stmVuelo.setString(1, dniUs);
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
-                Vuelo vuelo = new Vuelo(rsVuelo.getString("v.numVuelo"), rsVuelo.getString("v.origen"), rsVuelo.getString("v.destino"),
-                        null, rsVuelo.getTimestamp("v.salidareal"),null, rsVuelo.getTimestamp("v.llegadareal"),
-                        rsVuelo.getFloat("c.preciobillete"), null, rsVuelo.getBoolean("v.cancelado"),
+                vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
+                        rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechasalidareal"),rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getTimestamp("fechallegadareal"),
+                        rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
                         null, null);
                 
-                resultado.add(vuelo);
+                resultado.add(vueloActual);
             }
 
         } catch (SQLException e) {

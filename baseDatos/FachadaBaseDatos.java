@@ -56,8 +56,13 @@ public class FachadaBaseDatos {
     public Boolean insertarUsuario(Usuario u) {
         return daoUsuarios.insertarUsuario(u);
     }
+    
     public Boolean modificarUsuario(Usuario us){
         return daoUsuarios.modificarUsuario(us);
+    }
+    
+    public boolean eliminarUsuario(String dni){
+       return daoUsuarios.eliminarUsuario(dni);
     }
 
     public Usuario comprobarCredenciales(String id, String cont) {
@@ -71,6 +76,7 @@ public class FachadaBaseDatos {
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return daoVuelos.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
+    
     public List<Vuelo> obtenerVuelosUsuario(String dniUs){
         return daoVuelos.obtenerVuelosUsuario(dniUs);
     }

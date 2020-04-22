@@ -55,6 +55,11 @@ public class FachadaAplicacion extends Application {
     public Boolean modificarUsuario(Usuario us){//no esta comprobado que funcione porque aun no hay interfaz
         return gu.modificarUsuario(us);
     }
+    
+    public boolean eliminarUsuario(String dni){
+       return gu.eliminarUsuario(dni);
+    }
+    
     //en la interfaz falta poner si está o no cancelado y cuánto falta para su salida
     public List<Vuelo> obtenerVuelosUsuario(String dniUs){//no está probada
         return gv.obtenerVuelosUsuario(dniUs);

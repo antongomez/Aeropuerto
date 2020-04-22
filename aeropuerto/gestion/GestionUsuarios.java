@@ -22,8 +22,13 @@ public class GestionUsuarios {
     public Usuario credencialesCorrectos(String id, String cont) {
         return fbd.comprobarCredenciales(id, cont);
     }
+    
     public Boolean modificarUsuario(Usuario us){
         return fbd.modificarUsuario(us);
+    }
+    
+    public boolean eliminarUsuario(String dni){
+       return fbd.eliminarUsuario(dni);
     }
     
 }

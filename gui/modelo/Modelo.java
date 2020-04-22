@@ -8,6 +8,7 @@ import gui.FachadaGui;
 import static gui.controlador.Controlador.loadWindow;
 import gui.controlador.VErrorController;
 import gui.controlador.VNotificacionController;
+import gui.controlador.vConfirmacionControlador;
 import java.util.List;
 
 public class Modelo {
@@ -51,6 +52,10 @@ public class Modelo {
         ((VNotificacionController) loadWindow(getClass().
                 getResource("/gui/vista/vNotificacion.fxml"), "Notificación", null)).mostrarMensaje(mensaje);
     }
+    
+    public void mostrarConfirmacion(String mensaje){
+        ((vConfirmacionControlador) loadWindow(getClass().getResource("/gui/vista/vConfirmacion.fxml"), "Confirmación", null)).mostrarMensaje(mensaje);
+    }
 
     //Vuelos
     public Boolean insertarVuelo(Vuelo v) {
@@ -61,9 +66,18 @@ public class Modelo {
         return fa.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
     
+    public List<Vuelo> obtenerVuelosUsuario(String dniUs){
+        return fa.obtenerVuelosUsuario(dniUs);
+    }
+    
     //Función cambiar datos
     public boolean modificarUsuario(Usuario usuario){
         return fa.modificarUsuario(usuario);
     }
+    
+    
+   public boolean eliminarUsuario(String dni){
+       return fa.eliminarUsuario(dni);
+   }
 
 }

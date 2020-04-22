@@ -34,7 +34,7 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setString(7, u.getAp2());
             stmUsuario.setString(8, u.getPaisProcedencia());
             stmUsuario.setInt(9, u.getTelefono());
-            stmUsuario.setString(10, u.getSexo());
+            stmUsuario.setString(10, u.cambiarFormatoSexo(u.getSexo()));
             stmUsuario.executeUpdate();
             correcto = true;
 
@@ -57,7 +57,6 @@ public class daoUsuarios extends AbstractDAO {
         Connection con;
         PreparedStatement stmUsuario = null;
         ResultSet rsUsuario;
-        
 
         con = this.getConexion();
 
@@ -77,7 +76,7 @@ public class daoUsuarios extends AbstractDAO {
                         rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"));
 
             }
-            
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
@@ -90,6 +89,7 @@ public class daoUsuarios extends AbstractDAO {
         }
         return resultado;
     }
+
     public Boolean modificarUsuario(Usuario us) {
         Connection con;
         PreparedStatement stmUsuario = null;
@@ -103,9 +103,9 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario = con.prepareStatement("update usuario "
                     + "set id=?,correoElectronico=?,contrasenha=?, nombre=?,"
                     + "primerApellido=?, segundoApellido=?, paisProcedencia=?,"
-                    + "telefono=?,sexo=? " 
+                    + "telefono=?,sexo=? "
                     + "where dni=?");
-            
+
             stmUsuario.setString(1, us.getId());
             stmUsuario.setString(2, us.getEmail());
             stmUsuario.setString(3, us.getContrasenha());
@@ -118,12 +118,38 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setString(10, us.getDni());
 
             stmUsuario.executeUpdate();
-            correcto=true;
+            correcto = true;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
-            correcto=false;
+            correcto = false;
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
+
+    public Boolean eliminarUsuario(String dni) {
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        Boolean correcto;
+
+        con = super.getConexion();
+
+        try {
+            stmUsuario = con.prepareStatement("delete from usuario where dni = ?");
+            stmUsuario.setString(1, dni);
+            stmUsuario.executeUpdate();
+            correcto = true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto = false;
         } finally {
             try {
                 stmUsuario.close();
@@ -134,4 +160,3 @@ public class daoUsuarios extends AbstractDAO {
         return correcto;
     }
 }
-

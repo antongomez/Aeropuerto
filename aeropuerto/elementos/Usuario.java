@@ -25,7 +25,7 @@ public class Usuario {
         this.ap2 = ap2;
         this.paisProcedencia = paisProcedencia;
         this.telefono = telefono;
-        this.sexo=sexoSQL(sexo);
+        this.sexo = cambiarFormatoSexo(sexo);
     }
 
     public String getDni() {
@@ -104,22 +104,34 @@ public class Usuario {
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
-    
-    public String sexoSQL(String sexoJava){
-        String sexoSQL;
-        switch (sexoJava) {
-            case "Hombre":
-            case "h":
-                sexoSQL = "h";
-                break;
-            case "m":
-            case "Mujer":
-                sexoSQL = "m";
-                break;
-            default:
-                sexoSQL = "-";
-                break;
+
+    public String cambiarFormatoSexo(String sexoFormatoOriginal) {
+        String sexoFormatoFinal;
+        if (sexoFormatoOriginal.length() == 1) {
+            switch (sexoFormatoOriginal) {
+                case "h":
+                    sexoFormatoFinal = "Hombre";
+                    break;
+                case "m":
+                    sexoFormatoFinal = "Mujer";
+                    break;
+                default:
+                    sexoFormatoFinal = "Prefiero no contestar";
+                    break;
+            }
+        } else {
+            switch (sexoFormatoOriginal) {
+                case "Hombre":
+                    sexoFormatoFinal = "h";
+                    break;
+                case "Mujer":
+                    sexoFormatoFinal = "m";
+                    break;
+                default:
+                    sexoFormatoFinal = "-";
+                    break;
+            }
         }
-        return sexoSQL;
+        return sexoFormatoFinal;
     }
 }

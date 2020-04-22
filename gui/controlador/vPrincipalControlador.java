@@ -18,14 +18,17 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 public class vPrincipalControlador extends Controlador implements Initializable {
@@ -39,8 +42,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private AnchorPane panelTitulo;
     @FXML
     private HBox boxTitulo;
-    @FXML
-    private Label etqAeroEtse;
     @FXML
     private Label etqTitulo;
 
@@ -91,10 +92,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Button btnGuardar;
     @FXML
     private ToggleGroup opVerVuelo;
-    @FXML
-    private ToggleGroup opVerVuelo2;
-    @FXML
-    private ToggleGroup opVerVuelo21;
     
     //Campos modificar datos
     @FXML
@@ -113,6 +110,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private ComboBox<String> comboBoxPais;
     @FXML
     private TextField textFieldTlf;
+    @FXML
+    private ComboBox<String> comboBoxSexo;
+    @FXML
+    private TextField textFieldDni;
+    @FXML
+    private TextField textFieldFIngreso;
 
     //TaboaProximosVoos
     @FXML
@@ -134,6 +137,43 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private TextField textFieldNombre;
     
+    //TablaMisVuelos
+    @FXML
+    private TableView<Vuelo> tablaMisVuelos;
+    @FXML
+    private TableColumn<Vuelo, Integer> columnaNumMiVuelo;
+    @FXML
+    private TableColumn<Vuelo, String> columnaOrigenMiVuelo;
+    @FXML
+    private TableColumn<Vuelo, String> columnaDestinoMiVuelo;
+    @FXML
+    private TableColumn<Vuelo, Timestamp> columnaSalidaMiVuelo;
+    @FXML
+    private TableColumn<Vuelo, Timestamp> columnaLlegadaMiVuelo;
+    @FXML
+    private TableColumn<Vuelo, Float> columnaPrecioMiVuelo;
+    
+    @FXML
+    private Label etqFLC;
+    @FXML
+    private GridPane gridPane;
+    @FXML
+    private RadioButton btnMes;
+    @FXML
+    private RadioButton btnAno;
+    @FXML
+    private RadioButton btnEstacion;
+    @FXML
+    private TextArea txtAreaNumViajes;
+    @FXML
+    private Label etqAerolineaFav;
+    @FXML
+    private Label etqDestinoFav;
+    @FXML
+    private Label etqTarifaFav;
+    @FXML
+    private TabPane panelServicios;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -144,7 +184,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         btnComprar.setDisable(true);
 
-        //Definimos o tipo de dato de cada columna
+        //Definimos o tipo de dato de cada columna da TaboaProximosVoos
         columnaNumVuelo.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
         columnaOrigen.setCellValueFactory(new PropertyValueFactory<>("origen"));
         columnaDestino.setCellValueFactory(new PropertyValueFactory<>("destino"));
@@ -152,10 +192,20 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaLlegada.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
         columnaPrecioPremium.setCellValueFactory(new PropertyValueFactory<>("precioPremium"));
+        
+        //Definimos el tipo de dato de cada columna de la TablaMisVuelos
+        columnaNumMiVuelo.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
+        columnaOrigenMiVuelo.setCellValueFactory(new PropertyValueFactory<>("origen"));
+        columnaDestinoMiVuelo.setCellValueFactory(new PropertyValueFactory<>("destino"));
+        columnaSalidaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
+        columnaLlegadaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
+        columnaPrecioMiVuelo.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
+        
 
         ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
                 getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
         tablaProximosVuelos.setItems(vuelos);
+      
     }
 
     public void setUsuario(Usuario usuario) {
@@ -174,6 +224,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         etqTitulo.setText(TITULO_AREAP);
         
         //Ponemos los datos del usuario
+        textFieldDni.setText(usuario.getDni());
         textFieldID.setText(usuario.getId());
         textFieldEmail.setText(usuario.getEmail());
         textFieldContrasenha.setText(usuario.getContrasenha());
@@ -186,6 +237,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia");
         comboBoxPais.setItems(opcionesPais);
         comboBoxPais.getSelectionModel().select(usuario.getPaisProcedencia());
+        
+        ObservableList<String> opcionesSexo = FXCollections.observableArrayList("Mujer", "Hombre", "Prefiero no contestar");
+        comboBoxSexo.setItems(opcionesSexo);
+        comboBoxSexo.getSelectionModel().select(usuario.getSexo());
+        
+        ObservableList<Vuelo> vuelosUsuario = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosUsuario("48116361Q"));
+        tablaMisVuelos.setItems(vuelosUsuario);
     }
 
     @FXML
@@ -231,6 +289,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnDarseBaja(ActionEvent event) {
+        if(Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true){
+            Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente");
+        }
+        super.getVenta().close();
     }
 
     @FXML
@@ -241,7 +303,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
            Usuario us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(),
                         textFieldContrasenha.getText(), textFieldNombre.getText(),
                         textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                        Integer.parseInt(textFieldTlf.getText()), usuario.getSexo());
+                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
             try {
                 if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
                     Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente");
