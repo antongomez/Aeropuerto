@@ -92,7 +92,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Button btnGuardar;
     @FXML
     private ToggleGroup opVerVuelo;
-    
+
     //Campos modificar datos
     @FXML
     private TextField textFieldID;
@@ -136,7 +136,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TableColumn<Vuelo, Float> columnaPrecioPremium;
     @FXML
     private TextField textFieldNombre;
-    
+
     //TablaMisVuelos
     @FXML
     private TableView<Vuelo> tablaMisVuelos;
@@ -152,7 +152,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TableColumn<Vuelo, Timestamp> columnaLlegadaMiVuelo;
     @FXML
     private TableColumn<Vuelo, Float> columnaPrecioMiVuelo;
-    
+
     @FXML
     private Label etqFLC;
     @FXML
@@ -173,8 +173,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Label etqTarifaFav;
     @FXML
     private TabPane panelServicios;
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BtnMenu.selectToggle(btnVuelos);
@@ -192,7 +191,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaLlegada.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
         columnaPrecioPremium.setCellValueFactory(new PropertyValueFactory<>("precioPremium"));
-        
+
         //Definimos el tipo de dato de cada columna de la TablaMisVuelos
         columnaNumMiVuelo.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
         columnaOrigenMiVuelo.setCellValueFactory(new PropertyValueFactory<>("origen"));
@@ -200,12 +199,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaSalidaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
         columnaLlegadaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         columnaPrecioMiVuelo.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
-        
 
         ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
                 getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
         tablaProximosVuelos.setItems(vuelos);
-      
+
     }
 
     public void setUsuario(Usuario usuario) {
@@ -222,7 +220,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnAreaP(ActionEvent event) {
         panelAreaP.toFront();
         etqTitulo.setText(TITULO_AREAP);
-        
+
         //Ponemos los datos del usuario
         textFieldDni.setText(usuario.getDni());
         textFieldID.setText(usuario.getId());
@@ -233,15 +231,15 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldAp1.setText(usuario.getAp1());
         textFieldAp2.setText(usuario.getAp2());
         textFieldTlf.setText(usuario.getTelefono().toString());
-        
+
         ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia");
         comboBoxPais.setItems(opcionesPais);
         comboBoxPais.getSelectionModel().select(usuario.getPaisProcedencia());
-        
+
         ObservableList<String> opcionesSexo = FXCollections.observableArrayList("Mujer", "Hombre", "Prefiero no contestar");
         comboBoxSexo.setItems(opcionesSexo);
         comboBoxSexo.getSelectionModel().select(usuario.getSexo());
-        
+
         ObservableList<Vuelo> vuelosUsuario = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosUsuario("48116361Q"));
         tablaMisVuelos.setItems(vuelosUsuario);
     }
@@ -260,13 +258,17 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnBuscar(ActionEvent event) {
-        Time salida = null, llegada = null;
+        Time salida, llegada;
 
         if (dataPickSalida.getValue() != null) {
             salida = new Time(dataPickSalida.getValue());
+        } else {
+            salida = Time.diaActual();
         }
         if (dataPickLlegada.getValue() != null) {
             llegada = new Time(dataPickLlegada.getValue());
+        } else {
+            llegada = Time.diaActual();
         }
 
         if (((salida != null) && (!Time.fechaMayorActual(salida)))
@@ -289,7 +291,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnDarseBaja(ActionEvent event) {
-        if(Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true){
+        if (Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true) {
             Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente");
         }
         super.getVenta().close();
@@ -297,13 +299,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnGuardar(ActionEvent event) {
-       if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
+        if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
             Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!");
         } else {
-           Usuario us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(),
-                        textFieldContrasenha.getText(), textFieldNombre.getText(),
-                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
+            Usuario us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(),
+                    textFieldContrasenha.getText(), textFieldNombre.getText(),
+                    textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                    Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
             try {
                 if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
                     Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente");
@@ -318,7 +320,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     usuario.setTelefono(us.getTelefono());
                     usuario.setSexo(us.getSexo());
                 }
-            //Este error no llega aquí, el programa se para
+                //Este error no llega aquí, el programa se para
             } catch (NumberFormatException e) {
                 Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto");
             }
