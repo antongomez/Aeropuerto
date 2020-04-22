@@ -225,8 +225,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldDni.setText(usuario.getDni());
         textFieldID.setText(usuario.getId());
         textFieldEmail.setText(usuario.getEmail());
-        textFieldContrasenha.setText(usuario.getContrasenha());
-        textFieldRepetirContrasenha.setText(usuario.getContrasenha());
         textFieldNombre.setText(usuario.getNombre());
         textFieldAp1.setText(usuario.getAp1());
         textFieldAp2.setText(usuario.getAp2());
@@ -302,8 +300,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
             Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!");
         } else {
-            Usuario us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(),
-                    textFieldContrasenha.getText(), textFieldNombre.getText(),
+            Usuario us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
                     textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
                     Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
             try {
@@ -312,7 +309,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     //No cambiamos los datos del usuario asociado a esta clase hasta que se cambien en la base
                     usuario.setId(us.getId());
                     usuario.setEmail(us.getEmail());
-                    usuario.setContrasenha(us.getContrasenha());
                     usuario.setNombre(us.getNombre());
                     usuario.setAp1(us.getAp1());
                     usuario.setAp2(us.getAp2());
@@ -323,6 +319,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 //Este error no llega aquí, el programa se para
             } catch (NumberFormatException e) {
                 Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto");
+            }
+            if(!textFieldContrasenha.getText().isEmpty()){
+                Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
             }
         }
     }

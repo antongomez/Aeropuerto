@@ -15,8 +15,11 @@ public class GestionUsuarios {
         this.fbd = fbd;
     }
 
-    public Boolean registrarUsuario(Usuario us) {
-        return fbd.insertarUsuario(us);
+    public Boolean registrarUsuario(Usuario us, String clave) {
+        return fbd.insertarUsuario(us,clave);
+    }
+    public Boolean modificarContrasenha(String idUsuario, String clave){
+        return fbd.modificarContrasenha(idUsuario, clave);
     }
 
     public Usuario credencialesCorrectos(String id, String cont) {

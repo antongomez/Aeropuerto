@@ -5,7 +5,6 @@ public class Usuario {
     private String dni;
     private String id;
     private String email;
-    private String contrasenha;
     private String nombre;
     private String ap1;
     private String ap2;
@@ -13,19 +12,22 @@ public class Usuario {
     private Integer telefono;
     private String sexo; //Estaría mejor usar char, pero no se como pasar un char en el dao a la base de datos
 
-    public Usuario(String dni, String id, String email, String contrasenha, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo) {
+    public Usuario(String dni, String id, String email,String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo) {
 
         //No sé si hay que poner comprobaciones de que no sean nulos, dni correcto y sexo m/h/- si ya lo hace sql
         this.dni = dni;
         this.id = id;
         this.email = email;
-        this.contrasenha = contrasenha;
         this.nombre = nombre;
         this.ap1 = ap1;
         this.ap2 = ap2;
         this.paisProcedencia = paisProcedencia;
         this.telefono = telefono;
-        this.sexo = cambiarFormatoSexo(sexo);
+        this.sexo = sexo;
+        if(sexo.length()==1){
+            this.sexo=cambiarFormatoSexo(sexo);
+        }
+        
     }
 
     public String getDni() {
@@ -40,9 +42,6 @@ public class Usuario {
         return email;
     }
 
-    public String getContrasenha() {
-        return contrasenha;
-    }
 
     public String getNombre() {
         return nombre;
@@ -77,9 +76,6 @@ public class Usuario {
         this.email = email;
     }
 
-    public void setContrasenha(String contrasenha) {
-        this.contrasenha = contrasenha;
-    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

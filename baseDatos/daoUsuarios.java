@@ -14,21 +14,22 @@ public class daoUsuarios extends AbstractDAO {
         super.setFachadaAplicacion(fa);
     }
 
-    public Boolean insertarUsuario(Usuario u) {//true si se insertó y false si no
+    public Boolean insertarUsuario(Usuario u, String clave) {//true si se insertó y false si no
         Connection con;
         PreparedStatement stmUsuario = null;
         Boolean correcto;
 
         con = super.getConexion();
-
+        
         try {
             stmUsuario = con.prepareStatement("insert into usuario(dni,id,correoElectronico,contrasenha, nombre,"
                     + " primerApellido, segundoApellido, paisProcedencia, telefono, sexo) "
-                    + "values (?,?,?,?,?,?,?,?,?,?)");
+                    + "values (?,?,?,crypt(?, gen_salt('md5')),?,?,?,?,?,?)");
+            
             stmUsuario.setString(1, u.getDni());
             stmUsuario.setString(2, u.getId());
             stmUsuario.setString(3, u.getEmail());
-            stmUsuario.setString(4, u.getContrasenha());
+            stmUsuario.setString(4, clave);
             stmUsuario.setString(5, u.getNombre());
             stmUsuario.setString(6, u.getAp1());
             stmUsuario.setString(7, u.getAp2());
@@ -70,7 +71,7 @@ public class daoUsuarios extends AbstractDAO {
             rsUsuario = stmUsuario.executeQuery();
             if (rsUsuario.next()) {
                 resultado = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("id"),
-                        rsUsuario.getString("correoElectronico"), rsUsuario.getString("contrasenha"),
+                        rsUsuario.getString("correoElectronico"),
                         rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
                         rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
                         rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"));
@@ -89,6 +90,40 @@ public class daoUsuarios extends AbstractDAO {
         }
         return resultado;
     }
+    
+    public Boolean modificarContrasenha(String idUsuario, String clave){
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        PreparedStatement stmBorrado = null;
+        Boolean correcto;
+
+        con = super.getConexion();
+
+        try {
+
+            stmUsuario = con.prepareStatement("update usuario "
+                    + "set contrasenha=crypt(?,gen_salt('md5')) "
+                    + "where id=?");
+
+            stmUsuario.setString(1, clave);
+            stmUsuario.setString(2, idUsuario);
+
+            stmUsuario.executeUpdate();
+            correcto = true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto = false;
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
 
     public Boolean modificarUsuario(Usuario us) {
         Connection con;
@@ -101,21 +136,20 @@ public class daoUsuarios extends AbstractDAO {
         try {
 
             stmUsuario = con.prepareStatement("update usuario "
-                    + "set id=?,correoElectronico=?,contrasenha=?, nombre=?,"
+                    + "set id=?,correoElectronico=?, nombre=?,"
                     + "primerApellido=?, segundoApellido=?, paisProcedencia=?,"
                     + "telefono=?,sexo=? "
                     + "where dni=?");
 
             stmUsuario.setString(1, us.getId());
             stmUsuario.setString(2, us.getEmail());
-            stmUsuario.setString(3, us.getContrasenha());
-            stmUsuario.setString(4, us.getNombre());
-            stmUsuario.setString(5, us.getAp1());
-            stmUsuario.setString(6, us.getAp2());
-            stmUsuario.setString(7, us.getPaisProcedencia());
-            stmUsuario.setInt(8, us.getTelefono());
-            stmUsuario.setString(9, us.getSexo());
-            stmUsuario.setString(10, us.getDni());
+            stmUsuario.setString(3, us.getNombre());
+            stmUsuario.setString(4, us.getAp1());
+            stmUsuario.setString(5, us.getAp2());
+            stmUsuario.setString(6, us.getPaisProcedencia());
+            stmUsuario.setInt(7, us.getTelefono());
+            stmUsuario.setString(8, us.cambiarFormatoSexo(us.getSexo()));
+            stmUsuario.setString(9, us.getDni());
 
             stmUsuario.executeUpdate();
             correcto = true;

@@ -45,8 +45,11 @@ public class FachadaAplicacion extends Application {
     }
 
     //Usuarios
-    public Boolean registrarUsuario(Usuario us) {//true si se registra y false si no
-        return gu.registrarUsuario(us);
+    public Boolean registrarUsuario(Usuario us, String clave) {//true si se registra y false si no
+        return gu.registrarUsuario(us, clave);
+    }
+    public Boolean modificarContrasenha(String idUsuario, String clave){
+        return gu.modificarContrasenha(idUsuario, clave);
     }
 
     public Usuario credencialesCorrectos(String id, String cont) {

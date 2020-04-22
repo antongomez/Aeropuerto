@@ -9,8 +9,8 @@ public class PersonalLaboral extends Usuario {
     private Date fechaInicio;
     //private ArrayList<ElemHistorial> historialTrabajo; creo que este atributo sobra
 
-    public PersonalLaboral(String dni, String id, String email, String contrasenha, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo, String labor, String descripcionTarea) {
-        super(dni, id, email, contrasenha, nombre, ap1, ap2, paisProcedencia, telefono, sexo);
+    public PersonalLaboral(String dni, String id, String email, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo, String labor, String descripcionTarea) {
+        super(dni, id, email, nombre, ap1, ap2, paisProcedencia, telefono, sexo);
         this.labor = labor;
         this.descripcionTarea = descripcionTarea;
         this.fechaInicio = new Date(); //la fecha de inicio es la fecha de creación

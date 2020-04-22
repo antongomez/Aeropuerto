@@ -35,8 +35,11 @@ public class Modelo {
         return mod;
     }
 
-    public Boolean registrarUsuario(Usuario us) {
-        return fa.registrarUsuario(us);
+    public Boolean registrarUsuario(Usuario us, String clave) {
+        return fa.registrarUsuario(us, clave);
+    }
+    public Boolean modificarContrasenha(String idUsuario, String clave){
+        return fa.modificarContrasenha(idUsuario, clave);
     }
 
     public void mostrarError(String mensaje) {

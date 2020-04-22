@@ -74,11 +74,10 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
         } else {
             try {
                 Usuario us = new Usuario(textFieldDni.getText(), textFieldId.getText(), textFieldEmail.getText(),
-                        textFieldContrasenha.getText(), textFieldNombre.getText(),
-                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                         textFieldNombre.getText(),textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
                         Integer.parseInt(textFieldTelefono.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
 
-                if (Modelo.getInstanceModelo().registrarUsuario(us) == true) {  //comprobamos si se registró correctamente
+                if (Modelo.getInstanceModelo().registrarUsuario(us, textFieldContrasenha.getText()) == true) {  //comprobamos si se registró correctamente
                     Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente");
 
                     //se cierra la ventana de registrar

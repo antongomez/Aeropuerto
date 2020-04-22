@@ -53,13 +53,17 @@ public class FachadaBaseDatos {
 
     }
 
-    public Boolean insertarUsuario(Usuario u) {
-        return daoUsuarios.insertarUsuario(u);
+    public Boolean insertarUsuario(Usuario u, String clave) {
+        return daoUsuarios.insertarUsuario(u,clave);
     }
     
     public Boolean modificarUsuario(Usuario us){
         return daoUsuarios.modificarUsuario(us);
     }
+    public Boolean modificarContrasenha(String idUsuario, String clave){
+        return daoUsuarios.modificarContrasenha(idUsuario, clave);
+    }
+    
     
     public boolean eliminarUsuario(String dni){
        return daoUsuarios.eliminarUsuario(dni);
