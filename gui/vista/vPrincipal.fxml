@@ -406,7 +406,7 @@
                            <children>
                               <TableView fx:id="tablaMisVuelos" layoutX="6.0" layoutY="35.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0">
                                  <columns>
-                                    <TableColumn fx:id="columnaNumVueloMiVuelos" minWidth="120.0" prefWidth="-1.0" text="Número" />
+                                    <TableColumn fx:id="columnaNumMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Número" />
                                     <TableColumn fx:id="columnaOrigenMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Origen" />
                                     <TableColumn fx:id="columnaDestinoMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Destino" />
                                     <TableColumn fx:id="columnaSalidaMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Salida" />
