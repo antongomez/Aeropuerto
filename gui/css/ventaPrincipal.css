@@ -59,3 +59,8 @@
     -fx-font-weight: bold;
 }
 
+.etqInfo{
+    -fx-font-size: 10pt;
+    -fx-text-fill: #dbdbdb;
+}
+
