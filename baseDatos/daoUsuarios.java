@@ -2,6 +2,7 @@ package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Usuario;
+import aeropuerto.util.EstadisticasUsuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -192,5 +193,84 @@ public class daoUsuarios extends AbstractDAO {
             }
         }
         return correcto;
+    }
+    
+    /*El tipo debe ser mes, estacion o anho*/
+    public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num){
+        EstadisticasUsuario resultado = null;
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        ResultSet rsUsuario;
+        String consulta;
+        String aux;
+        con = this.getConexion();
+        
+        //Parte de la consulta que varía en función de los argumentos
+        if(tipo.equals("anho")){
+            aux="EXTRACT(YEAR FROM cast(v.fechaSalidaReal as date))";
+        }
+        else if(tipo.equals("mes")){
+            aux="EXTRACT(MONTH FROM cast(v.fechaSalidaReal as date))";
+        }
+        else{
+            aux="Estacion(v.fechaSalidaReal)";
+        }
+        
+        consulta="select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa, billete.vecesViajadas as veces from "+
+                "(select a.aerolinea as aerolineaFav from comprarbillete cb, vuelo v, avion a "+
+                "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and "+aux+"=?"+
+                "group by a.aerolinea having count(*)>=all "+
+                "(select count(*) from comprarbillete cb, vuelo v, avion a "+
+                "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and "+aux+"=?"+
+                "group by a.aerolinea)) as aerolinea, "+
+                "(select v.destino as destinoFav from comprarbillete cb, vuelo v "+
+                "where cb.usuario=? and cb.vuelo=v.numvuelo and "+aux+"=?"+
+                "group by v.destino having count(*)>=all "+
+                "(select count(*) from comprarbillete cb, vuelo v "+
+                "where cb.usuario=? and cb.vuelo=v.numvuelo and "+aux+"=? group by v.destino)) as destino, "+
+                "(select tipoAsiento as tarifaFav from comprarbillete cb, vuelo v "+
+                "where cb.usuario=? and cb.vuelo=v.numvuelo and "+aux+"=?"+
+                "group by tipoAsiento having count(*)>=all "+
+                "(select count(*) from comprarbillete cb, vuelo v "+
+                "where cb.usuario=? and cb.vuelo=v.numvuelo and "+aux+"=? group by cb.tipoAsiento)) as tarifa, "+
+                "(select count(*) as vecesViajadas from comprarBillete cb, vuelo v "+
+                "where usuario=? and cb.vuelo=v.numvuelo and +aux"+"=2020) as billete";
+
+        try{
+            stmUsuario = con.prepareStatement(consulta);
+            stmUsuario.setString(1, dniUs);
+            stmUsuario.setInt(2, num);
+            stmUsuario.setString(3, dniUs);
+            stmUsuario.setInt(4, num);
+            stmUsuario.setString(5, dniUs);
+            stmUsuario.setInt(6, num);
+            stmUsuario.setString(7, dniUs);
+            stmUsuario.setInt(8, num);
+            stmUsuario.setString(9, dniUs);
+            stmUsuario.setInt(10, num);
+            stmUsuario.setString(11, dniUs);
+            stmUsuario.setInt(12, num);
+            stmUsuario.setString(13, dniUs);
+            stmUsuario.setInt(14, num);
+            rsUsuario = stmUsuario.executeQuery();
+            if (rsUsuario.next()) {
+                resultado = new EstadisticasUsuario(rsUsuario.getInt("veces"));
+                resultado.anadirAerolinea(rsUsuario.getString("aeroliea"));
+                resultado.anadirDestino(rsUsuario.getString("destino"));
+                resultado.anadirTarifa(rsUsuario.getString("tarifa"));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return resultado;
     }
 }

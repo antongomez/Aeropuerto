@@ -1,6 +1,7 @@
 package aeropuerto.gestion;
 
 import aeropuerto.elementos.Usuario;
+import aeropuerto.util.EstadisticasUsuario;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;
@@ -32,6 +33,15 @@ public class GestionUsuarios {
     
     public boolean eliminarUsuario(String dni){
        return fbd.eliminarUsuario(dni);
+    }
+    public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num){
+        if(tipo.equals("estacion") || tipo.equals("mes") || tipo.equals("anho")){
+        return fbd.obtenerEstadisticasUsuario(dniUs, tipo, num);
+        }
+        else{
+            System.out.println("Error en los parámetros de entrada");
+            return null;
+        }
     }
     
 }

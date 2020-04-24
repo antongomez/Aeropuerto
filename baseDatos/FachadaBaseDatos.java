@@ -3,6 +3,7 @@ package baseDatos;
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.Time;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -83,5 +84,8 @@ public class FachadaBaseDatos {
     
     public List<Vuelo> obtenerVuelosUsuario(String dniUs){
         return daoVuelos.obtenerVuelosUsuario(dniUs);
+    }
+    public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num){
+        return daoUsuarios.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
 }

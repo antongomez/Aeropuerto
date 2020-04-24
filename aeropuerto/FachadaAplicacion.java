@@ -4,6 +4,7 @@ import aeropuerto.elementos.Vuelo;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.gestion.GestionVuelos;
 import aeropuerto.gestion.GestionUsuarios;
+import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
@@ -55,7 +56,7 @@ public class FachadaAplicacion extends Application {
     public Usuario credencialesCorrectos(String id, String cont) {
         return gu.credencialesCorrectos(id, cont);
     }
-    public Boolean modificarUsuario(Usuario us){//no esta comprobado que funcione porque aun no hay interfaz
+    public Boolean modificarUsuario(Usuario us){
         return gu.modificarUsuario(us);
     }
     
@@ -66,6 +67,13 @@ public class FachadaAplicacion extends Application {
     //en la interfaz falta poner si está o no cancelado y cuánto falta para su salida
     public List<Vuelo> obtenerVuelosUsuario(String dniUs){//no está probada
         return gv.obtenerVuelosUsuario(dniUs);
+    }
+    /*tipo: año/mes/estación
+    tipo=anho => num= año concreto
+    tipo=mes => num=1,...,12 dependiendo del mes concreto
+    tipo= estacion => num=1,...,4 dependiendo de la estación concreta en este orden: primavera, verano, otoño, invierno*/
+    public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num){
+        return gu.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
 
     //Vuelos
