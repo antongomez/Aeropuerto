@@ -4,6 +4,7 @@ import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,6 +18,7 @@ public class FachadaBaseDatos {
     private java.sql.Connection conexion;
     private daoUsuarios daoUsuarios;
     private daoVuelos daoVuelos;
+    private daoReservas daoReservas;
 
     public FachadaBaseDatos(FachadaAplicacion fa) {
 
@@ -43,6 +45,7 @@ public class FachadaBaseDatos {
 
             daoUsuarios = new daoUsuarios(conexion, fa);
             daoVuelos = new daoVuelos(conexion, fa);
+            daoReservas = new daoReservas(conexion,fa);
 
         } catch (FileNotFoundException f) {
             fa.mostrarError(f.getMessage());
@@ -88,5 +91,7 @@ public class FachadaBaseDatos {
     public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num){
         return daoUsuarios.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
-    
+    public List<Reserva> obtenerReservasUsuario(String dniUs){
+        return daoReservas.obtenerReservasUsuario(dniUs);
+    }
 }

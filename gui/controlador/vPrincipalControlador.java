@@ -3,6 +3,7 @@ package gui.controlador;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import gui.modelo.Modelo;
 import static gui.modelo.Modelo.getInstanceModelo;
@@ -23,6 +24,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SortEvent;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -172,6 +174,17 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Label etqDestinoFav;
     @FXML
     private Label etqTarifaFav;
+    //Reservas
+    @FXML
+    private TableView<Reserva> tablaMisReservas;
+    @FXML
+    private TableColumn<Reserva, Time> colInicioReserva;
+    @FXML
+    private TableColumn<Reserva, Time> colFinReserva;
+    @FXML
+    private TableColumn<Reserva, String> colTipoReserva;
+    @FXML
+    private Button btnCancelarReserva;
     
     
     @FXML
@@ -186,6 +199,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TabPane panelServicios;
     @FXML
     private AnchorPane checkBoxEstacion;
+    
+    
+    
+    
+    
     
     
 
@@ -215,10 +233,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaSalidaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
         columnaLlegadaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         columnaPrecioMiVuelo.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
-
         ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
                 getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
         tablaProximosVuelos.setItems(vuelos);
+        
+        //Definimos el tipo de dato de cada columna de la tablaMisReservas
+        colInicioReserva.setCellValueFactory(new PropertyValueFactory<>("inicio"));
+        colFinReserva.setCellValueFactory(new PropertyValueFactory<>("fin"));
+        colTipoReserva.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         
         //Definimos el panel de estadísticas
         btnMes.setSelected(true);
@@ -426,5 +448,25 @@ public class vPrincipalControlador extends Controlador implements Initializable 
          mostrarEstadisticas();
         }
     }
+
+    @FXML
+    private void accionAbrirMisReservas(Event event) {
+        ObservableList<Reserva> res= FXCollections.observableArrayList(
+        getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
+        tablaMisReservas.setItems(res);
+        if(!tablaMisReservas.getItems().isEmpty()){
+        tablaMisReservas.getSelectionModel().selectFirst();
+        }
+    }
+
+   
+
+    @FXML
+    private void accionBtnCancelarReserva(ActionEvent event) {
+        
+    }
+
+   
+    
 
 }

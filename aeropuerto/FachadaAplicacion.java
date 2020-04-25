@@ -2,9 +2,11 @@ package aeropuerto;
 
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.elementos.Usuario;
+import aeropuerto.gestion.GestionReservas;
 import aeropuerto.gestion.GestionVuelos;
 import aeropuerto.gestion.GestionUsuarios;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
@@ -18,12 +20,14 @@ public class FachadaAplicacion extends Application {
     FachadaBaseDatos fbd;
     GestionUsuarios gu;
     GestionVuelos gv;
+    GestionReservas gr;
 
     public FachadaAplicacion() {
         fgui = new gui.FachadaGui(this);
         fbd = new baseDatos.FachadaBaseDatos(this);
         gu = new GestionUsuarios(fgui, fbd);
         gv = new GestionVuelos(fgui, fbd);
+        gr = new GestionReservas(fgui, fbd);
     }
 
     public static void main(String[] args) {
@@ -83,6 +87,12 @@ public class FachadaAplicacion extends Application {
 
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return gv.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
+    }
+    
+    //Reservas
+    /*Muestra las reservas de un usuario que aún no han sido vencidas*/
+    public List<Reserva> obtenerReservasUsuario(String dniUs){
+        return gr.obtenerReservasUsuario(dniUs);
     }
     
 

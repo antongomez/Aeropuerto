@@ -4,6 +4,7 @@ import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import gui.FachadaGui;
 import static gui.controlador.Controlador.loadWindow;
@@ -86,6 +87,8 @@ public class Modelo {
    public EstadisticasUsuario mostrarEstadisticasUsuario(String dniUs,String tipo,Integer num){
        return fa.obtenerEstadisticasUsuario(dniUs, tipo, num);
    }
-   
+   public List<Reserva> obtenerReservasUsuario(String dniUs){
+       return fa.obtenerReservasUsuario(dniUs);
+   }
 
 }
