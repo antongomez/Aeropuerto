@@ -2,15 +2,19 @@ package gui.controlador;
 
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.Time;
 import gui.modelo.Modelo;
 import static gui.modelo.Modelo.getInstanceModelo;
+import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.security.Timestamp;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -27,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -152,11 +157,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TableColumn<Vuelo, Timestamp> columnaLlegadaMiVuelo;
     @FXML
     private TableColumn<Vuelo, Float> columnaPrecioMiVuelo;
-
-    @FXML
-    private Label etqFLC;
-    @FXML
-    private GridPane gridPane;
+    //Estadisticas
     @FXML
     private RadioButton btnMes;
     @FXML
@@ -164,15 +165,30 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private RadioButton btnEstacion;
     @FXML
-    private TextArea txtAreaNumViajes;
+    private ComboBox<String> comboBoxEstUsu;
     @FXML
     private Label etqAerolineaFav;
     @FXML
     private Label etqDestinoFav;
     @FXML
     private Label etqTarifaFav;
+    
+    
+    @FXML
+    private Label etqFLC;
+    @FXML
+    private GridPane gridPane;
+    
+    @FXML
+    private TextArea txtAreaNumViajes;
+    
     @FXML
     private TabPane panelServicios;
+    @FXML
+    private AnchorPane checkBoxEstacion;
+    
+    
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -203,6 +219,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
                 getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
         tablaProximosVuelos.setItems(vuelos);
+        
+        //Definimos el panel de estadísticas
+        btnMes.setSelected(true);
+        ObservableList<String> meses = FXCollections.observableArrayList("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        comboBoxEstUsu.setItems(meses);
+        comboBoxEstUsu.getSelectionModel().selectFirst();
+     
+        
 
     }
 
@@ -323,6 +347,83 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             if(!textFieldContrasenha.getText().isEmpty()){
                 Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
             }
+        }
+    }
+    @FXML
+    void accionEstacion(ActionEvent event) {
+        //comboBoxEstUsu.setVisible(true);
+        ObservableList<String> estaciones = FXCollections.observableArrayList("Primavera", "Verano", "Otoño","Invierno");
+        comboBoxEstUsu.setItems(estaciones);
+        comboBoxEstUsu.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    void accionMes(ActionEvent event) {
+        //comboBoxEstUsu.setVisible(true);
+        ObservableList<String> meses = FXCollections.observableArrayList("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        comboBoxEstUsu.setItems(meses);
+        comboBoxEstUsu.getSelectionModel().selectFirst();
+    }
+    
+    @FXML
+    void accionAnho(ActionEvent event) {
+        
+        ArrayList<String> anos=new ArrayList<>();
+        for(Vuelo v: Modelo.getInstanceModelo().obtenerVuelosUsuario(usuario.getDni())){
+            String v_ano=v.getFechasalidaReal().getAno().toString();
+            if(!anos.contains(v_ano)){
+            anos.add(v_ano);
+            }
+        }
+        ObservableList<String> anos1= FXCollections.observableArrayList(anos);
+        comboBoxEstUsu.setItems(anos1);
+        if(!comboBoxEstUsu.getItems().isEmpty()){
+        comboBoxEstUsu.getSelectionModel().selectFirst();
+        }
+
+    }
+    private void mostrarEstadisticas(){
+        String tipo;
+        Integer num;
+        EstadisticasUsuario est;
+
+        
+        if(btnEstacion.isSelected()) tipo="estacion";
+        else if(btnMes.isSelected()) tipo="mes";
+        else tipo="anho";
+        if(tipo.equals("anho")){
+            num=parseInt(comboBoxEstUsu.getSelectionModel().getSelectedItem());
+        }
+        else{
+        num=comboBoxEstUsu.getSelectionModel().getSelectedIndex()+1;
+        }
+        
+        est=Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
+        txtAreaNumViajes.setText("Has viajado "+est.getVecesViajadas()+
+                " veces en "+comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase()+"!" );
+        etqAerolineaFav.setText("");
+        etqDestinoFav.setText("");
+        for(String aer: est.getAerolineasFav()){
+            etqAerolineaFav.setText(etqAerolineaFav.getText()+"  "+aer);
+        }
+        for(String de: est.getDestinosFav()){
+            etqDestinoFav.setText(etqDestinoFav.getText()+"  "+de);
+        }
+        
+        etqTarifaFav.setText("  "+est.getTarifaFav());
+        
+    }
+
+    @FXML
+    private void accionAbrirEstadisticas(Event event) {
+        mostrarEstadisticas();
+    }
+
+    @FXML
+    private void accionComboBox(ActionEvent event){
+ 
+        if(!comboBoxEstUsu.getSelectionModel().isEmpty()){
+         mostrarEstadisticas();
         }
     }
 

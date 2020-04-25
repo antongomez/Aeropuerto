@@ -422,32 +422,32 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Estadísticas">
+                  <Tab onSelectionChanged="#accionAbrirEstadisticas" text="Estadísticas">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                        <AnchorPane fx:id="checkBoxEstacion" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
                            <children>
                               <VBox alignment="CENTER" layoutX="115.0" layoutY="44.0" spacing="40.0" AnchorPane.topAnchor="40.0">
                                  <children>
                                     <HBox alignment="CENTER" prefWidth="500.0" spacing="20.0">
                                        <children>
                                           <Label prefWidth="120.0" text="Ver vuelos por " />
-                                          <RadioButton fx:id="btnMes" mnemonicParsing="false" text="mes">
+                                          <RadioButton fx:id="btnMes" mnemonicParsing="false" onAction="#accionMes" text="mes">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="opVerVuelo" />
                                              </toggleGroup>
                                           </RadioButton>
-                                          <RadioButton fx:id="btnAno" mnemonicParsing="false" text="año" toggleGroup="$opVerVuelo" />
-                                          <RadioButton fx:id="btnEstacion" mnemonicParsing="false" selected="true" text="estación" toggleGroup="$opVerVuelo" />
+                                          <RadioButton fx:id="btnAno" mnemonicParsing="false" onAction="#accionAnho" text="año" toggleGroup="$opVerVuelo" />
+                                          <RadioButton fx:id="btnEstacion" mnemonicParsing="false" onAction="#accionEstacion" selected="true" text="estación" toggleGroup="$opVerVuelo" />
                                        </children>
                                     </HBox>
                                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="500.0" spacing="100.0">
                                        <children>
-                                          <ComboBox minHeight="25.0" minWidth="150.0" prefHeight="28.0" prefWidth="150.0">
+                                          <ComboBox fx:id="comboBoxEstUsu" minHeight="25.0" minWidth="150.0" onAction="#accionComboBox" prefHeight="28.0" prefWidth="150.0">
                                              <HBox.margin>
                                                 <Insets left="20.0" right="20.0" />
                                              </HBox.margin>
                                           </ComboBox>
-                                          <TextArea fx:id="txtAreaNumViajes" editable="false" minWidth="180.0" prefWidth="200.0" styleClass="enfasis" text="Has viajado 3&#10;veces en verano!" wrapText="true" />
+                                          <TextArea fx:id="txtAreaNumViajes" editable="false" minWidth="180.0" prefWidth="200.0" style="-fx-background-color: #212121;" styleClass="enfasis" wrapText="true" />
                                        </children>
                                     </HBox>
                                     <GridPane hgap="5.0" vgap="5.0">
@@ -464,9 +464,9 @@
                                           <Label text="Aerolínea favorita:" />
                                           <Label text="Destino máis popular:" GridPane.rowIndex="1" />
                                           <Label text="Tarifa favorita:" GridPane.rowIndex="2" />
-                                          <Label fx:id="etqAerolineaFav" text="Vueling" GridPane.columnIndex="1" />
-                                          <Label fx:id="etqDestinoFav" text="Alemania" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label fx:id="etqTarifaFav" text="Premium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label fx:id="etqAerolineaFav" GridPane.columnIndex="1" />
+                                          <Label fx:id="etqDestinoFav" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label fx:id="etqTarifaFav" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                        </children>
                                     </GridPane>
                                  </children>

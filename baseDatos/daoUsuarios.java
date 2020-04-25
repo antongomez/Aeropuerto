@@ -234,7 +234,7 @@ public class daoUsuarios extends AbstractDAO {
                 "(select count(*) from comprarbillete cb, vuelo v "+
                 "where cb.usuario=? and cb.vuelo=v.numvuelo and "+aux+"=? group by cb.tipoAsiento)) as tarifa, "+
                 "(select count(*) as vecesViajadas from comprarBillete cb, vuelo v "+
-                "where usuario=? and cb.vuelo=v.numvuelo and +aux"+"=2020) as billete";
+                "where usuario=? and cb.vuelo=v.numvuelo and "+aux+"=?) as billete";
 
         try{
             stmUsuario = con.prepareStatement(consulta);
@@ -253,12 +253,22 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setString(13, dniUs);
             stmUsuario.setInt(14, num);
             rsUsuario = stmUsuario.executeQuery();
+            
             if (rsUsuario.next()) {
                 resultado = new EstadisticasUsuario(rsUsuario.getInt("veces"));
-                resultado.anadirAerolinea(rsUsuario.getString("aeroliea"));
+                resultado.anadirAerolinea(rsUsuario.getString("aerolinea"));
                 resultado.anadirDestino(rsUsuario.getString("destino"));
                 resultado.anadirTarifa(rsUsuario.getString("tarifa"));
-
+                
+            }
+            else{
+                resultado= new EstadisticasUsuario(0);
+            }
+            /*Si se encuentra más de una tupla*/
+            while(rsUsuario.next()){
+                resultado.anadirAerolinea(rsUsuario.getString("aerolinea"));
+                resultado.anadirDestino(rsUsuario.getString("destino"));
+                resultado.anadirTarifa(rsUsuario.getString("tarifa"));
             }
 
         } catch (SQLException e) {

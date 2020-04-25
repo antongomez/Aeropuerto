@@ -84,6 +84,7 @@ public class FachadaAplicacion extends Application {
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return gv.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
+    
 
     //Erros
     public void mostrarError(String menseje) {

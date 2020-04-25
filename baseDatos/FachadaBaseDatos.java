@@ -88,4 +88,5 @@ public class FachadaBaseDatos {
     public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num){
         return daoUsuarios.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
+    
 }

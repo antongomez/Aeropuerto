@@ -24,7 +24,8 @@ public class EstadisticasUsuario {
     public EstadisticasUsuario(Integer vecesViajadas) {
         this.vecesViajadas=vecesViajadas;
         aerolineasFav=new ArrayList<>();
-        destinosFav=new ArrayList<>();   
+        destinosFav=new ArrayList<>(); 
+        tarifaFav="";
     }
     
     public void anadirAerolinea(String a){
@@ -43,7 +44,7 @@ public class EstadisticasUsuario {
     
     public void anadirTarifa(String t){
         
-        if(tarifaFav==null || tarifaFav.equals(t)){
+        if(tarifaFav.isEmpty() || tarifaFav.equals(t)){
             tarifaFav=t;
         }
         else{

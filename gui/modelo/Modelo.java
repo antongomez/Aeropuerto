@@ -3,6 +3,7 @@ package gui.modelo;
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.Time;
 import gui.FachadaGui;
 import static gui.controlador.Controlador.loadWindow;
@@ -82,5 +83,9 @@ public class Modelo {
    public boolean eliminarUsuario(String dni){
        return fa.eliminarUsuario(dni);
    }
+   public EstadisticasUsuario mostrarEstadisticasUsuario(String dniUs,String tipo,Integer num){
+       return fa.obtenerEstadisticasUsuario(dniUs, tipo, num);
+   }
+   
 
 }
