@@ -85,69 +85,6 @@
    <center>
       <StackPane BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="panelVuelos" prefHeight="550.0" prefWidth="800.0" styleClass="root">
-               <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                     <children>
-                        <HBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="500.0" spacing="15.0">
-                           <children>
-                              <VBox prefWidth="140.0" spacing="10.0">
-                                 <children>
-                                    <Label prefHeight="35.0" text="Número de vuelo:" />
-                                    <Label prefHeight="35.0" text="Origen:" />
-                                    <Label prefHeight="35.0" text="Salida:" />
-                                 </children>
-                              </VBox>
-                              <VBox prefWidth="150.0" spacing="10.0">
-                                 <children>
-                                    <TextField fx:id="txtNumVuelo" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                    <TextField fx:id="txtOrigen" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                    <DatePicker fx:id="dataPickSalida" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                 </children>
-                              </VBox>
-                              <VBox prefWidth="140.0" spacing="10.0">
-                                 <children>
-                                    <Label minHeight="35.0" prefHeight="35.0" />
-                                    <Label minHeight="35.0" prefHeight="35.0" text="Destino:" />
-                                    <Label minHeight="35.0" prefHeight="35.0" text="Llegada:" />
-                                 </children>
-                              </VBox>
-                              <VBox prefWidth="150.0" spacing="10.0">
-                                 <children>
-                                    <Label minHeight="35.0" prefHeight="35.0" />
-                                    <TextField fx:id="txtDestino" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                    <DatePicker fx:id="dataPickLlegada" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#accionBtnBuscar" text="Buscar" />
-                        <TableView fx:id="tablaProximosVuelos" minHeight="200.0" minWidth="800.0" prefHeight="400.0">
-                           <columns>
-                              <TableColumn fx:id="columnaNumVuelo" prefWidth="120.0" text="Número" />
-                              <TableColumn fx:id="columnaOrigen" prefWidth="120.0" text="Origen" />
-                              <TableColumn fx:id="columnaDestino" prefWidth="120.0" text="Destino" />
-                              <TableColumn fx:id="columnaSalida" prefWidth="120.0" text="Salida" />
-                              <TableColumn fx:id="columnaLlegada" prefWidth="120.0" text="Llegada" />
-                              <TableColumn fx:id="columnaPrecio" prefWidth="120.0" text="Precio" />
-                              <TableColumn fx:id="columnaPrecioPremium" prefWidth="120.0" text="Premium" />
-                           </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
-                        </TableView>
-                        <Button fx:id="btnComprar" mnemonicParsing="false" onAction="#accionBtnComprar" text="Comprar">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Button>
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" top="10.0" />
-                     </padding>
-                  </VBox>
-               </children>
-            </AnchorPane>
             <TabPane fx:id="panelServicios" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab text="Parking">
@@ -496,6 +433,69 @@
                   </Tab>
                </tabs>
             </TabPane>
+            <AnchorPane fx:id="panelVuelos" prefHeight="550.0" prefWidth="800.0" styleClass="root">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <children>
+                        <HBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="500.0" spacing="15.0">
+                           <children>
+                              <VBox prefWidth="140.0" spacing="10.0">
+                                 <children>
+                                    <Label prefHeight="35.0" text="Número de vuelo:" />
+                                    <Label prefHeight="35.0" text="Origen:" />
+                                    <Label prefHeight="35.0" text="Salida:" />
+                                 </children>
+                              </VBox>
+                              <VBox prefWidth="150.0" spacing="10.0">
+                                 <children>
+                                    <TextField fx:id="txtNumVuelo" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                    <TextField fx:id="txtOrigen" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                    <DatePicker fx:id="dataPickSalida" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                 </children>
+                              </VBox>
+                              <VBox prefWidth="140.0" spacing="10.0">
+                                 <children>
+                                    <Label minHeight="35.0" prefHeight="35.0" />
+                                    <Label minHeight="35.0" prefHeight="35.0" text="Destino:" />
+                                    <Label minHeight="35.0" prefHeight="35.0" text="Llegada:" />
+                                 </children>
+                              </VBox>
+                              <VBox prefWidth="150.0" spacing="10.0">
+                                 <children>
+                                    <Label minHeight="35.0" prefHeight="35.0" />
+                                    <TextField fx:id="txtDestino" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                    <DatePicker fx:id="dataPickLlegada" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#accionBtnBuscar" text="Buscar" />
+                        <TableView fx:id="tablaProximosVuelos" minHeight="200.0" minWidth="800.0" onMouseClicked="#seleccionarVuelo" prefHeight="400.0">
+                           <columns>
+                              <TableColumn fx:id="columnaNumVuelo" prefWidth="120.0" text="Número" />
+                              <TableColumn fx:id="columnaOrigen" prefWidth="120.0" text="Origen" />
+                              <TableColumn fx:id="columnaDestino" prefWidth="120.0" text="Destino" />
+                              <TableColumn fx:id="columnaSalida" prefWidth="120.0" text="Salida" />
+                              <TableColumn fx:id="columnaLlegada" prefWidth="120.0" text="Llegada" />
+                              <TableColumn fx:id="columnaPrecio" prefWidth="120.0" text="Precio" />
+                              <TableColumn fx:id="columnaPrecioPremium" prefWidth="120.0" text="Premium" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Button fx:id="btnComprar" mnemonicParsing="false" onAction="#accionBtnComprar" text="Comprar">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
          </children>
       </StackPane>
    </center>

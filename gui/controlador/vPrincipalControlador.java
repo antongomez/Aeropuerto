@@ -159,6 +159,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TableColumn<Vuelo, Timestamp> columnaLlegadaMiVuelo;
     @FXML
     private TableColumn<Vuelo, Float> columnaPrecioMiVuelo;
+    
     //Estadisticas
     @FXML
     private RadioButton btnMes;
@@ -225,6 +226,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaLlegada.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
         columnaPrecioPremium.setCellValueFactory(new PropertyValueFactory<>("precioPremium"));
+        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
+                getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
+        tablaProximosVuelos.setItems(vuelos);
 
         //Definimos el tipo de dato de cada columna de la TablaMisVuelos
         columnaNumMiVuelo.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
@@ -233,9 +237,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaSalidaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
         columnaLlegadaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         columnaPrecioMiVuelo.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
-        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
-                getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
-        tablaProximosVuelos.setItems(vuelos);
+        
         
         //Definimos el tipo de dato de cada columna de la tablaMisReservas
         colInicioReserva.setCellValueFactory(new PropertyValueFactory<>("inicio"));
@@ -276,7 +278,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldAp2.setText(usuario.getAp2());
         textFieldTlf.setText(usuario.getTelefono().toString());
 
-        ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia");
+        ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia", "Noruega");
         comboBoxPais.setItems(opcionesPais);
         comboBoxPais.getSelectionModel().select(usuario.getPaisProcedencia());
 
@@ -331,6 +333,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnComprar(ActionEvent event) {
+        Vuelo vuelo = tablaProximosVuelos.getSelectionModel().getSelectedItem();
+        ((vComprarControlador) loadWindow(getClass().getResource("/gui/vista/vComprar.fxml"), 
+                "AeroETSE", null)).setVuelo(tablaProximosVuelos.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -464,6 +469,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private void accionBtnCancelarReserva(ActionEvent event) {
         
+    }
+
+    @FXML
+    private void seleccionarVuelo(MouseEvent event) {
+        this.btnComprar.setDisable(false);
     }
 
    
