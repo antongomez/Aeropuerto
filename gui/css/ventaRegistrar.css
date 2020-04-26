@@ -174,3 +174,38 @@
 .combo-box-popup > .list-view > .placeholder > .label {
     -fx-text-fill: white;
 }
+
+/*
+
+    PROPIEDADES DOS TEXTFIELDS
+
+*/
+
+.text-field{
+    -fx-background-color: cor-secundaria, derive(white, -60%);
+    -fx-background-insets: 0, 1 1 2 1;
+    -fx-background-radius: 0, 0;
+
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: derive(white, -20%);
+}
+
+.text-field:hover{
+    -fx-background-color: derive(cor-secundaria, -50%), derive(white, -60%);
+    -fx-background-insets: 0, 1 1 2 1;
+    -fx-background-radius: 0, 0;
+}
+
+.text-field:focused{
+    -fx-background-color: lightblue, derive(white, -60%);
+    -fx-background-insets: 0, 1 1 2 1;
+    -fx-background-radius: 0, 0;
+}
+
+.text-field:readonly{
+    -fx-background-color: red, derive(white, -60%);
+    -fx-background-insets: 0, 0 0 2 0;
+    -fx-background-radius: 0, 0;
+}

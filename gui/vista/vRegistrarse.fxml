@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="475.0" styleClass="background" stylesheets="@../css/ventaRegistrar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.vRegistrarseControlador">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0" prefWidth="475.0" styleClass="background" stylesheets="@../css/ventaRegistrar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.vRegistrarseControlador">
    <children>
       <Label fx:id="labTitulo" alignment="CENTER" layoutX="272.0" layoutY="31.0" prefHeight="60.0" styleClass="labTitulo" text="REGISTRARSE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <font>
@@ -22,7 +22,7 @@
       </Label>
       <VBox alignment="CENTER" fillWidth="false" layoutX="42.0" layoutY="140.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
          <children>
-            <GridPane hgap="5.0" vgap="5.0">
+            <GridPane hgap="5.0" vgap="7.0">
               <columnConstraints>
                 <ColumnConstraints />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
@@ -43,28 +43,28 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="DNI:" GridPane.columnIndex="1" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="Id:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="Email:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="Contraseña:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="Repetir contraseña:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="Primer apellido:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="Segundo apellido:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="País:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="Telefono:" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="30.0" prefWidth="130.0" text="Sexo:" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <TextField fx:id="textFieldDni" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" />
-                  <TextField fx:id="textFieldId" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="textFieldEmail" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <PasswordField fx:id="textFieldContrasenha" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <PasswordField fx:id="textFieldRepetirContrasenha" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <TextField fx:id="textFieldNombre" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <TextField fx:id="textFieldAp1" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <TextField fx:id="textFieldAp2" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                  <ComboBox fx:id="comboBoxPais" minHeight="-Infinity" minWidth="120.0" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                  <TextField fx:id="textFieldTelefono" minHeight="-Infinity" minWidth="120.0" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                  <ComboBox fx:id="comboBoxSexo" minHeight="-Infinity" minWidth="120.0" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="DNI:" GridPane.columnIndex="1" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="Id:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="Email:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="Contraseña:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="Repetir contraseña:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="Primer apellido:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="Segundo apellido:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="País:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="Telefono:" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Label minHeight="-Infinity" minWidth="125.0" prefHeight="32.0" prefWidth="130.0" text="Sexo:" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField fx:id="textFieldDni" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" />
+                  <TextField fx:id="textFieldId" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="textFieldEmail" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <PasswordField fx:id="textFieldContrasenha" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <PasswordField fx:id="textFieldRepetirContrasenha" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <TextField fx:id="textFieldNombre" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <TextField fx:id="textFieldAp1" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <TextField fx:id="textFieldAp2" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <ComboBox fx:id="comboBoxPais" minHeight="-Infinity" minWidth="120.0" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                  <TextField fx:id="textFieldTelefono" minHeight="-Infinity" minWidth="120.0" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                  <ComboBox fx:id="comboBoxSexo" minHeight="-Infinity" minWidth="120.0" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
                   <Label fx:id="labDniErro" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" styleClass="labDNI" text="¡DNI incorrecto!" textFill="RED" GridPane.columnIndex="3" />
                </children>
             </GridPane>
