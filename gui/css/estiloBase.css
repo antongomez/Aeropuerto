@@ -47,10 +47,10 @@
     -fx-size: 35;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
-    -fx-border-color: 
+    -fx-border-color:
         transparent
         transparent
-        derive(-fx-base, 80%) 
+        derive(-fx-base, 80%)
         transparent;
     -fx-border-insets: 0 10 1 0;
 }
@@ -101,7 +101,7 @@
 }
 
 .button {
-    -fx-padding: 5 22 5 22;   
+    -fx-padding: 5 22 5 22;
     -fx-border-color: #e2e2e2;
     -fx-border-width: 2;
     -fx-background-radius: 0;
@@ -145,7 +145,7 @@
 }
 
 .toggle-button {
-    -fx-padding: 5 22 5 22;   
+    -fx-padding: 5 22 5 22;
     -fx-border-color: #e2e2e2;
     -fx-border-width: 2;
     -fx-background-radius: 0;
@@ -213,7 +213,9 @@
 
 .combo-box:hover,
 .combo-box:editable > .arrow-button:hover {
-    -fx-color: derive(cor-secundaria, -20%);
+    -fx-background-color: derive(cor-secundaria, -30%), derive(white, -80%);
+    -fx-background-insets: 0, 0 0 2 0;
+    -fx-background-radius: 0, 0;
 }
 
 .combo-box:showing,
@@ -246,21 +248,21 @@
 }
 
 .combo-box:editable > .arrow-button{
-    -fx-background-color: cor-secundaria, 
+    -fx-background-color: cor-secundaria,
         linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box:editable > .text-field{
-    -fx-background-color: cor-secundaria, 
+    -fx-background-color: cor-secundaria,
         linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box:editable:focused{
-    -fx-background-color: lightblue, 
+    -fx-background-color: lightblue,
         linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
@@ -268,14 +270,14 @@
 
 .combo-box:editable:focused > .text-field,
 .combo-box:editable > .text-field:focused {
-    -fx-background-color: lightblue, 
+    -fx-background-color: lightblue,
         linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box:editable:focused > .arrow-button{
-    -fx-background-color: lightblue, 
+    -fx-background-color: lightblue,
         linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
@@ -318,7 +320,7 @@
 */
 .text-field{
     -fx-background-color: cor-secundaria, derive(white, -60%);
-    -fx-background-insets: 0, 1 1 2 1;
+    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
     -fx-background-radius: 0, 0;
 
     -fx-font-size: 11pt;
@@ -328,19 +330,19 @@
 }
 
 .text-field:hover{
-    -fx-background-color: derive(cor-secundaria, -50%), derive(white, -60%);
-    -fx-background-insets: 0, 1 1 2 1;
+    -fx-background-color: derive(cor-secundaria, -30%), derive(white, -60%);
+    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
     -fx-background-radius: 0, 0;
 }
 
 .text-field:focused{
     -fx-background-color: lightblue, derive(white, -60%);
-    -fx-background-insets: 0, 1 1 2 1;
+    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
     -fx-background-radius: 0, 0;
 }
 
 .text-field:readonly{
-    -fx-background-color: red, derive(white, -60%);
-    -fx-background-insets: 0, 0 0 2 0;
+    -fx-background-color: lightgray, derive(white, -60%);
+    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
     -fx-background-radius: 0, 0;
 }
