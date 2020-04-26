@@ -31,6 +31,9 @@ public class Time {
     private HashMap<String, Integer> obtenerDatos(Timestamp fecha) {
         HashMap<String, Integer> datos = new HashMap<>();
         String[] dias_horas = fecha.toString().split(" ");
+        
+        datos.put("segundos", 0);
+        datos.put("milis", 0);
 
         if (dias_horas.length == 2) {
             String[] ano_mes_dia = dias_horas[0].split("-");

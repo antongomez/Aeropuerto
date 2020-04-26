@@ -94,4 +94,11 @@ public class FachadaBaseDatos {
     public List<Reserva> obtenerReservasUsuario(String dniUs){
         return daoReservas.obtenerReservasUsuario(dniUs);
     }
+    
+    public Boolean cancelarReservaParking(Reserva res,String dniUs){
+        return daoReservas.cancelarReservaParking(res, dniUs);
+    }
+    public Boolean cancelarReservaCoche(Reserva res, String dniUs){
+        return daoReservas.cancelarReservaCoche(res, dniUs);
+    }
 }

@@ -37,6 +37,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -189,6 +190,18 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TableColumn<Reserva, String> colTipoReserva;
     @FXML
     private Button btnCancelarReserva;
+    @FXML
+    private TableColumn<Reserva, String> colMatricula;
+    @FXML
+    private Pane panelInfoParking;
+    @FXML
+    private Label etqPlaza;
+    @FXML
+    private Label etqPiso;
+    @FXML
+    private Label etqTerminal;
+    
+    
 
     @FXML
     private Label etqFLC;
@@ -202,6 +215,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TabPane panelServicios;
     @FXML
     private AnchorPane checkBoxEstacion;
+    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -236,6 +251,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         colInicioReserva.setCellValueFactory(new PropertyValueFactory<>("inicio"));
         colFinReserva.setCellValueFactory(new PropertyValueFactory<>("fin"));
         colTipoReserva.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        colMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        panelInfoParking.setVisible(false);
+        btnCancelarReserva.setDisable(true);
 
         //Definimos el panel de estadísticas
         btnMes.setSelected(true);
@@ -459,19 +477,41 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<Reserva> res = FXCollections.observableArrayList(
                 getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
         tablaMisReservas.setItems(res);
-        if (!tablaMisReservas.getItems().isEmpty()) {
-            tablaMisReservas.getSelectionModel().selectFirst();
-        }
+        
     }
 
     @FXML
     private void accionBtnCancelarReserva(ActionEvent event) {
+        Reserva resSelect=tablaMisReservas.getSelectionModel().getSelectedItem();
+        Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
+        Modelo.getInstanceModelo().mostrarConfirmacion("Su reserva ha sido cancelada con éxito");
+        btnCancelarReserva.setDisable(true);
+        panelInfoParking.setVisible(false);
+        ObservableList<Reserva> res = FXCollections.observableArrayList(
+                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
+        tablaMisReservas.setItems(res);
 
     }
 
     @FXML
     private void seleccionarVuelo(MouseEvent event) {
         this.btnComprar.setDisable(false);
+    }
+
+    @FXML
+    private void seleccionarReserva(MouseEvent event) {
+        
+        Reserva resSelect=tablaMisReservas.getSelectionModel().getSelectedItem();//reserva seleccionada
+        btnCancelarReserva.setDisable(false);
+        if(resSelect.getTipo().equals("Parking")){
+           panelInfoParking.setVisible(true);
+           etqTerminal.setText(resSelect.getTerminal().toString());
+           etqPiso.setText(resSelect.getPiso().toString());
+           etqPlaza.setText(resSelect.getNumPlaza().toString());
+        }
+        else{
+            panelInfoParking.setVisible(false);
+        }
     }
 
 }

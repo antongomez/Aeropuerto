@@ -90,5 +90,8 @@ public class Modelo {
    public List<Reserva> obtenerReservasUsuario(String dniUs){
        return fa.obtenerReservasUsuario(dniUs);
    }
+   public Boolean cancelarReserva(Reserva res, String dniUs){
+       return fa.cancelarReserva(res, dniUs);
+   }
 
 }

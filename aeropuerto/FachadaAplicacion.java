@@ -94,6 +94,9 @@ public class FachadaAplicacion extends Application {
     public List<Reserva> obtenerReservasUsuario(String dniUs){
         return gr.obtenerReservasUsuario(dniUs);
     }
+    public Boolean cancelarReserva(Reserva res, String dniUs){
+        return gr.cancelarReserva(res,dniUs);
+    }
     
 
     //Erros

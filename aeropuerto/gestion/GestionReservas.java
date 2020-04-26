@@ -6,6 +6,7 @@
 package aeropuerto.gestion;
 
 import aeropuerto.util.Reserva;
+import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;
@@ -25,4 +26,15 @@ public class GestionReservas {
     public List<Reserva> obtenerReservasUsuario(String dniUs){
         return fbd.obtenerReservasUsuario(dniUs);
     }
+    public Boolean cancelarReserva(Reserva res, String dniUs){
+        
+        if(res.getTipo().equals("Parking")){
+            return fbd.cancelarReservaParking(res,dniUs);
+        }
+        else{
+            return fbd.cancelarReservaCoche(res,dniUs);
+        }
+        
+    }
+    
 }

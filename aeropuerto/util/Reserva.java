@@ -17,13 +17,42 @@ public class Reserva {
     private Time fin;
     private String tipo;
     private String matricula;
-
+    /*Atributos solo válidos para reserva de parking*/
+    Integer terminal;
+    Integer piso;
+    Integer numPlaza;
+    
+/*Constructor reserva coche*/
     public Reserva(String tipo, Timestamp inicio, Timestamp fin, String matricula) {
         this.inicio = new Time(inicio);
         this.fin = new Time(fin);
         this.tipo=tipo;
         this.matricula=matricula;
     }
+/*Constructor reserva parking*/
+    public Reserva(String tipo, Timestamp inicio, Timestamp fin, String matricula, Integer terminal, Integer piso, Integer numPlaza) {
+        this.inicio = new Time(inicio);
+        this.fin = new Time(fin);
+        this.tipo = tipo;
+        this.matricula = matricula;
+        this.terminal = terminal;
+        this.piso = piso;
+        this.numPlaza = numPlaza;
+    }
+
+    public Integer getTerminal() {
+        return terminal;
+    }
+
+    public Integer getPiso() {
+        return piso;
+    }
+
+    public Integer getNumPlaza() {
+        return numPlaza;
+    }
+    
+    
 
     public String getMatricula() {
         return matricula;
