@@ -484,12 +484,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnCancelarReserva(ActionEvent event) {
         Reserva resSelect=tablaMisReservas.getSelectionModel().getSelectedItem();
         Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
-        Modelo.getInstanceModelo().mostrarConfirmacion("Su reserva ha sido cancelada con éxito");
+        
         btnCancelarReserva.setDisable(true);
         panelInfoParking.setVisible(false);
         ObservableList<Reserva> res = FXCollections.observableArrayList(
-                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
+               getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
         tablaMisReservas.setItems(res);
+        Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada con éxito");
 
     }
 
