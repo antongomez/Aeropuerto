@@ -31,9 +31,6 @@ public class Time {
     private HashMap<String, Integer> obtenerDatos(Timestamp fecha) {
         HashMap<String, Integer> datos = new HashMap<>();
         String[] dias_horas = fecha.toString().split(" ");
-        
-        datos.put("segundos", 0);
-        datos.put("milis", 0);
 
         if (dias_horas.length == 2) {
             String[] ano_mes_dia = dias_horas[0].split("-");
@@ -48,11 +45,14 @@ public class Time {
                     datos.put("horas", Integer.parseInt(hora_min_seg[0]));
                     datos.put("minutos", Integer.parseInt(hora_min_seg[1]));
 
-                    String[] seg_milis = hora_min_seg[2].split(".");
+                    String[] seg_milis = hora_min_seg[2].split("."); //Non está funcionando
 
                     if (seg_milis.length == 2) {
                         datos.put("segundos", Integer.parseInt(seg_milis[0]));
                         datos.put("milis", Integer.parseInt(seg_milis[1]));
+                    } else {
+                        datos.put("segundos", 0);
+                        datos.put("milis", 0);
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Erro, no tipo de dato int\n");
@@ -127,7 +127,7 @@ public class Time {
     }
 
     public static Boolean fechaMayorActual(Time fecha) {
-        return (fecha.toTimestamp().after(Time.diaActual().toTimestamp()) 
+        return (fecha.toTimestamp().after(Time.diaActual().toTimestamp())
                 || !fecha.toTimestamp().before(Time.diaActual().toTimestamp()));
     }
 

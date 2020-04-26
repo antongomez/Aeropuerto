@@ -154,7 +154,7 @@
     -fx-background-color: #1d1d1d;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: white;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
@@ -175,7 +175,7 @@
 
 .radio-button .radio {
     -fx-border-width: 2;
-    -fx-border-color: #efedb8;
+    -fx-border-color: cor-bordes;
     -fx-background-color: white;
     -fx-border-radius: 15;
     -fx-padding: 4;
@@ -183,7 +183,7 @@
 }
 .radio-button:focused .radio {
     -fx-border-width: 2;
-    -fx-border-color: #8ab9ff;
+    -fx-border-color: cor-accent;
 }
 
 .radio-button .dot {

@@ -4,7 +4,7 @@
 
 #labTitulo{
     -fx-font-size: 19pt;
-    -fx-background-color: #424242;
+    -fx-background-color: derive(white, -80%);
 }
 
 #labDniErro{

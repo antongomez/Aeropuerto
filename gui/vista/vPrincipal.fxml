@@ -393,8 +393,8 @@
                                     <ComboBox fx:id="comboBoxSexo" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                                     <Label prefHeight="30.0" prefWidth="150.0" text="Fecha de ingreso:" GridPane.rowIndex="1" />
                                     <Label prefHeight="30.0" prefWidth="150.0" text="DNI:" />
-                                    <TextField fx:id="textFieldDni" editable="false" minHeight="-Infinity" minWidth="-Infinity" opacity="0.5" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" />
-                                    <TextField fx:id="textFieldFIngreso" editable="false" minHeight="-Infinity" minWidth="-Infinity" opacity="0.5" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="textFieldDni" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                    <TextField fx:id="textFieldFIngreso" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
