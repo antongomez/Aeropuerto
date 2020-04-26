@@ -45,12 +45,12 @@ public class Time {
                     datos.put("horas", Integer.parseInt(hora_min_seg[0]));
                     datos.put("minutos", Integer.parseInt(hora_min_seg[1]));
 
-                    String[] seg_milis = hora_min_seg[2].split("."); //Non está funcionando
+                    String[] seg_milis = hora_min_seg[2].split(hora_min_seg[2].charAt(2) + ""); //Non está funcionando
 
                     if (seg_milis.length == 2) {
                         datos.put("segundos", Integer.parseInt(seg_milis[0]));
                         datos.put("milis", Integer.parseInt(seg_milis[1]));
-                    } else {
+                    } else { //Estamos utilizando isto, polo que se suprimen os segundos e os milis
                         datos.put("segundos", 0);
                         datos.put("milis", 0);
                     }

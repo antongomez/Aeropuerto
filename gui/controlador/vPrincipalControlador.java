@@ -25,7 +25,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.SortEvent;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -286,8 +285,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldAp1.setText(usuario.getAp1());
         textFieldAp2.setText(usuario.getAp2());
         textFieldTlf.setText(usuario.getTelefono().toString());
+        //gridPane.getRowConstraints().remove(1);
 
-        ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia", "Noruega");
+        ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia", "Noruega", "Galicia");
         comboBoxPais.setItems(opcionesPais);
         comboBoxPais.getSelectionModel().select(usuario.getPaisProcedencia());
 
