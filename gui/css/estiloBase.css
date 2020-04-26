@@ -1,5 +1,7 @@
 *{
     cor-secundaria: #efedb8;
+    cor-bordes: lightgray;
+    cor-accent: lightblue;
 }
 
 .root{
@@ -203,7 +205,7 @@
 
 .combo-box,
 .combo-box:editable > .arrow-button {
-    -fx-background-color: cor-secundaria, derive(white, -80%);
+    -fx-background-color: cor-bordes, derive(white, -80%);
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
     -fx-text-fill: white;
@@ -213,24 +215,26 @@
 
 .combo-box:hover,
 .combo-box:editable > .arrow-button:hover {
-    -fx-background-color: derive(cor-secundaria, -30%), derive(white, -80%);
+    -fx-background-color: cor-accent, derive(white, -80%);
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box:showing,
 .combo-box:editable:showing > .arrow-button{
-    -fx-color: cor-secundaria;
+    -fx-background-color: cor-secundaria, derive(white, -80%);
+    -fx-background-insets: 0, 0 0 2 0;
+    -fx-background-radius: 0, 0;
 }
 
 .combo-box:focused{
-    -fx-background-color: lightblue, derive(white, -80%);
+    -fx-background-color: cor-secundaria, derive(white, -80%);
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box > .arrow-button > .arrow{
-    -fx-background-color: cor-secundaria;
+    -fx-background-color: cor-bordes;
     -fx-background-insets: 0;
 }
 
@@ -248,64 +252,48 @@
 }
 
 .combo-box:editable > .arrow-button{
-    -fx-background-color: cor-secundaria,
-        linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
+    -fx-background-color: cor-bordes, derive(white, -80%);
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box:editable > .text-field{
-    -fx-background-color: cor-secundaria,
-        linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
+    -fx-background-color: cor-bordes, derive(white, -80%);
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box:editable:focused{
-    -fx-background-color: lightblue,
-        linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
+    -fx-background-color: cor-secundaria, derive(white, -80%);
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box:editable:focused > .text-field,
 .combo-box:editable > .text-field:focused {
-    -fx-background-color: lightblue,
-        linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
+    -fx-background-color: cor-secundaria, derive(white, -80%);
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box:editable:focused > .arrow-button{
-    -fx-background-color: lightblue,
-        linear-gradient(to bottom, derive(white, -70%), derive(white, -80%));
+    -fx-background-color: cor-secundaria, derive(white, -80%);
     -fx-background-insets: 0, 0 0 2 0;
     -fx-background-radius: 0, 0;
 }
 
 .combo-box-popup > .list-view {
-    -fx-background-color:
-        linear-gradient(to bottom,
-        derive(white,-60%),
-        derive(-fx-color,-80%)
-        ),
-        blue;
-    -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 12, 0.0 , 0 , 8 );
 }
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
-    -fx-padding: 4 0 4 5;
-    /* No alternate highlighting */
     -fx-background: derive(white, -80%);
 }
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover {
-    -fx-background: cor-secundaria;
     -fx-background-color: cor-secundaria;
 }
 .combo-box-popup  > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected,
 .combo-box-popup  > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected:hover {
-    -fx-background: lightblue;
-    -fx-background-color: lightblue;
+    -fx-background-color: derive(cor-secundaria, -30%);
     -fx-background-insets: 0;
     -fx-background-radius: 0;
 }
@@ -319,7 +307,7 @@
 
 */
 .text-field{
-    -fx-background-color: cor-secundaria, derive(white, -60%);
+    -fx-background-color: cor-bordes, derive(white, -80%);
     -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
     -fx-background-radius: 0, 0;
 
@@ -330,19 +318,19 @@
 }
 
 .text-field:hover{
-    -fx-background-color: derive(cor-secundaria, -30%), derive(white, -60%);
+    -fx-background-color: cor-accent, derive(white, -80%);
     -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
     -fx-background-radius: 0, 0;
 }
 
 .text-field:focused{
-    -fx-background-color: lightblue, derive(white, -60%);
+    -fx-background-color: cor-secundaria, derive(white, -80%);
     -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
     -fx-background-radius: 0, 0;
 }
 
 .text-field:readonly{
-    -fx-background-color: lightgray, derive(white, -60%);
-    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
+    -fx-background-color: cor-secundaria, derive(white, -80%);
+    -fx-background-insets: 0, 0 0 2.5 0;
     -fx-background-radius: 0, 0;
 }

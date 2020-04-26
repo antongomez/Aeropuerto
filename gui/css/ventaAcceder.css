@@ -1,48 +1,9 @@
-*{
-    cor-texto: #d8d8d8;
-    cor-fondo-botons: #616161;
+.botonAC{
+    -fx-padding: 5 12 5 12;
 }
 
-.label{
-    -fx-font-family: "Century Schoolbook";
-    -fx-font-size: 10pt;
-}
-
-.button{
-    -fx-background-color: cor-fondo-botons;
-    -fx-padding: 5 7 5 7;
-    -fx-radius: 0;
-    -fx-border-width: 0;
-    -fx-cursor: HAND;
-    -fx-font-family: "Century Schoolbook";
-    -fx-font-size: 9pt;
-}
-
-.text-field {
-    -fx-font-family: "Century Schoolbook";
-    -fx-font-size: 10pt;
-}
-
-/*Efectos Base*/
-.button:focused{
-    -fx-background-color: derive(cor-fondo-botons, -20%);
-    -fx-border-width: 0;
-    -fx-border-insets: 0;
-}
-
-.button:hover{
-    -fx-background-color: #424242;
-}
-
-.button:pressed{
-    -fx-background-color: #424242;
-    -fx-text-fill: cor-texto;
-    -fx-border-width: 0;
-}
-
-/*Elementos concretos*/
 #labTitulo{
-    -fx-background-color: #424242;
+    -fx-background-color: derive(white, -80%);
     -fx-font-size: 16pt;
 }
 
@@ -61,13 +22,14 @@
 
 #btnRegistrar:focused{
     -fx-underline: true;
+    -fx-border-insets: 0;
 }
 
 #btnRegistrar{
     -fx-background-color: transparent;
-    -fx-text-fill: #b2ebf2;
+    -fx-border-width: 0;
+    -fx-text-fill: lightblue;
     -fx-padding: 0;
-    -fx-font-size: 10pt;
 }
 
 

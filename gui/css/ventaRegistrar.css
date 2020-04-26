@@ -10,3 +10,10 @@
 #labDniErro{
     -fx-text-fill: red;
 }
+
+.text-field-erro{
+    -fx-background-color: red, derive(white, -80%);
+    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
+    -fx-background-radius: 0, 0;
+
+}
