@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class vAccederControlador extends Controlador implements Initializable {
 
@@ -46,7 +48,14 @@ public class vAccederControlador extends Controlador implements Initializable {
         //Abrese a venta. Falta a comprobacion das credenciais
         Usuario usuario = Modelo.getInstanceModelo().credencialesCorrectos(textFieldId.getText(), textFieldContrasenha.getText());
         if (usuario != null) {
-            ((vPrincipalControlador) loadWindow(getClass().getResource("/gui/vista/vPrincipal.fxml"), "AeroETSE", null)).setUsuario(usuario);
+            //Creamos unha venta para asignarlla ao controlador
+            Stage stage = new Stage(StageStyle.DECORATED);
+
+            vPrincipalControlador controlador = ((vPrincipalControlador) loadWindow(getClass().getResource("/gui/vista/vPrincipal.fxml"), "AeroETSE", stage));
+
+            //Asignamoslle o usuario e a venta
+            controlador.setUsuario(usuario);
+            controlador.setVenta(stage);
             //Pechase a venta de rexistro
             getVenta().close();
         } else {
@@ -58,17 +67,16 @@ public class vAccederControlador extends Controlador implements Initializable {
 
     @FXML
     private void accionCancelar(ActionEvent event) {
-        if (getVenta() != null) {
-            getVenta().close();
-        } else {
-            System.out.println("Erro, a venta esta a null.");
-        }
+        getVenta().close();
 
     }
 
     @FXML
     private void accionRegistrar(ActionEvent event) {
-        loadWindow(getClass().getResource("/gui/vista/vRegistrarse.fxml"), "Registrarse", null);
+        //Creamos unha venta filla de vAcceder
+        Stage vRexistrarse = new Stage(StageStyle.DECORATED);
+        vRexistrarse.initOwner(getVenta());
+        loadWindow(getClass().getResource("/gui/vista/vRegistrarse.fxml"), "Registrarse", vRexistrarse);
         if (labErro.isVisible()) {
             labErro.setVisible(false);
         }

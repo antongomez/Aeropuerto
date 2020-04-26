@@ -23,19 +23,19 @@ public abstract class Controlador {
      *
      * @param loc localizacion da venta (tipo URL)
      * @param title
-     * @param parentStage utilizase no caso de querer pasarlle un stage
+     * @param stageCreado utilizase no caso de querer pasarlle un stage
      * existente, por exemplo, para non decoralo (StageStyle.UNDECORATED)
      * @return devolve o controlador da venta que se abriu
      */
-    public static Controlador loadWindow(URL loc, String title, Stage parentStage) {
+    public static Controlador loadWindow(URL loc, String title, Stage stageCreado) {
         Controlador controller = null;
         try {
             FXMLLoader loader = new FXMLLoader(loc);
             Parent parent = loader.load();
             controller = loader.getController();
-            Stage stage = null;
-            if (parentStage != null) {
-                stage = parentStage;
+            Stage stage;
+            if (stageCreado != null) {
+                stage = stageCreado;
             } else {
                 stage = new Stage(StageStyle.DECORATED);
             }
