@@ -39,6 +39,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -138,6 +139,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private GridPane gridPaneModificarDatos;
     @FXML
     private Label etqFechaIngreso;
+    @FXML
+    private Pane paneCurriculum;
+    @FXML
+    private TextArea txtAreaCurriculum;
 
     //TaboaProximosVoos
     @FXML
@@ -220,6 +225,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TabPane panelServicios;
     @FXML
     private AnchorPane checkBoxEstacion;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -302,11 +308,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldTlf.setText(usuario.getTelefono().toString());
         if (usuario instanceof Administrador) {
             textFieldFIngreso.setText(((Administrador) usuario).getFechaInicio().toString());
+            txtAreaCurriculum.setText(((Administrador)usuario).getCurriculum());
         } else if (usuario instanceof PersonalLaboral) {
             textFieldFIngreso.setText(((PersonalLaboral) usuario).getFechaInicio().toString());
+            paneCurriculum.setVisible(false);
         } else {
             textFieldFIngreso.setVisible(false);
             etqFechaIngreso.setVisible(false);
+            paneCurriculum.setVisible(false);
         }
 
         ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia", "Noruega", "Galicia");
@@ -371,7 +380,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //Seleccionamos o voo que se vai comprar
         Vuelo vuelo = tablaProximosVuelos.getSelectionModel().getSelectedItem();
         vComprarControlador controlador = ((vComprarControlador) loadWindow(getClass().getResource("/gui/vista/vComprar.fxml"), "AeroETSE", stage));
-
         controlador.setVuelo(vuelo);
     }
 
@@ -388,9 +396,18 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
             Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!");
         } else {
-            Usuario us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
+            Usuario us;
+            if(usuario instanceof Administrador){
+                us= new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
+                    textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                    Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem(),txtAreaCurriculum.getText());
+            }
+            else{
+                us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
                     textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
                     Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
+            }
+            
             try {
                 if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
                     Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente");
@@ -403,6 +420,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     usuario.setPaisProcedencia(us.getPaisProcedencia());
                     usuario.setTelefono(us.getTelefono());
                     usuario.setSexo(us.getSexo());
+                    if(usuario instanceof Administrador){
+                        ((Administrador)usuario).setCurriculum(((Administrador)us).getCurriculum());
+                    }
                 }
                 //Este error no llega aquí, el programa se para
             } catch (NumberFormatException e) {

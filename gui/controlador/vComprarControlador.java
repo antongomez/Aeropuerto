@@ -6,6 +6,7 @@
 package gui.controlador;
 
 import aeropuerto.elementos.Vuelo;
+import gui.modelo.Modelo;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -38,8 +39,6 @@ public class vComprarControlador extends Controlador implements Initializable {
     @FXML
     private TextField textFieldTerminal;
     @FXML
-    private TextField textFieldCompanhia;
-    @FXML
     private TextField textFieldDestino;
     @FXML
     private TextField textFieldLlegada;
@@ -49,6 +48,12 @@ public class vComprarControlador extends Controlador implements Initializable {
     private TextField textFieldPlazasNormales;
     @FXML
     private TextField textFieldPlazasPremium;
+    @FXML
+    private TextField textFieldAerolinea;
+    @FXML
+    private TextField textFieldPrecioNormal;
+    @FXML
+    private TextField textFieldPrecioPremium;
     
     //Tabla de pasajeros
     @FXML
@@ -79,6 +84,8 @@ public class vComprarControlador extends Controlador implements Initializable {
     private Button btnPagar;
     @FXML
     private Label etqTitulo;
+    
+    
 
     /**
      * Initializes the controller class.
@@ -88,23 +95,30 @@ public class vComprarControlador extends Controlador implements Initializable {
         
         //Aqui habría que poner al usuario que compra el vuelo en la tabla
         
+        
     }
 
     public void setVuelo(Vuelo vuelo) {
         this.vuelo = vuelo;
+        Modelo.getInstanceModelo().obtenerDatosAvionVuelo(vuelo);
         datosVuelo();
     }
     
     public void datosVuelo(){
         //Ponemos los datos del vuelo
         textFieldNumero.setText(this.vuelo.getNumVuelo());
-        textFieldCodAvion.setText(this.vuelo.getAvion().toString());
+        textFieldCodAvion.setText(this.vuelo.getAvion());
         textFieldOrigen.setText(this.vuelo.getOrigen());
         textFieldSalida.setText(this.vuelo.getFechasalidaTeo().toString());
         textFieldTerminal.setText(this.vuelo.getTerminal().toString()); 
-        //textFieldCompanhia.setText(this.vuelo.getAerolinea());
+        textFieldAerolinea.setText(this.vuelo.getAerolinea());
         textFieldDestino.setText(this.vuelo.getDestino());
         textFieldLlegada.setText(this.vuelo.getFechallegadaTeo().toString());
+        textFieldPlazasNormales.setText(this.vuelo.getPlazasNormal().toString());
+        textFieldPlazasPremium.setText(this.vuelo.getPlazasPremium().toString());
+        textFieldPrecioNormal.setText(this.vuelo.getPrecioActual().toString());
+        textFieldPrecioPremium.setText(vuelo.getPrecioPremium().toString());
+        
         //Calcular plazas disponibles
     }
          

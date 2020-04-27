@@ -42,7 +42,7 @@ public class daoVuelos extends AbstractDAO {
             stmVuelo.setInt(9, v.getPuertaEmbarque());
             stmVuelo.setBoolean(10, v.getCancelado());
             stmVuelo.setInt(11, v.getTerminal());
-            stmVuelo.setInt(12, v.getAvion());
+            stmVuelo.setString(12, v.getAvion());
 
             stmVuelo.executeUpdate();
             correcto = true;
@@ -111,7 +111,7 @@ public class daoVuelos extends AbstractDAO {
                         rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadateorica"),
                         rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getFloat("precioactual"),
                         rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
-                        rsVuelo.getInt("terminal"), rsVuelo.getInt("avion"));
+                        rsVuelo.getInt("terminal"), rsVuelo.getString("avion"));
 
                 resultado.add(vueloActual);
             }
@@ -166,6 +166,50 @@ public class daoVuelos extends AbstractDAO {
         }
 
         return resultado;
+    }
+    
+    public void obtenerDatosAvionVuelo(Vuelo v){
+        String aer;
+        Connection con;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+
+        con = super.getConexion();
+
+        try {
+            stmVuelo = con.prepareStatement("select distinct vuelo.aerolinea as aerolinea, "
+                    + "cN-nN as plazasNormal, cP-nP as plazasPremium from "
+                    + "(select count(*) as nN from vuelo v, comprarbillete c " +
+                    "where v.numvuelo=c.vuelo and v.numvuelo=? and tipoasiento='normal') as nN,"
+                    + "(select count(*) as nP from vuelo v, comprarbillete c " +
+                        "where v.numvuelo=c.vuelo and v.numvuelo=? and tipoasiento='premium') as nP,"
+                    + "(select aerolinea, m.capacidadnormal as cN, m.capacidadPremium as cP " +
+                    "from vuelo v, aerolinea a, avion av, modeloAvion m "
+                    + "where avion=av.codigo and av.aerolinea=a.nombre and m.nombre=av.modeloavion " +
+                    "and v.numvuelo=?) as vuelo");
+            stmVuelo.setString(1, v.getNumVuelo());
+            stmVuelo.setString(2, v.getNumVuelo());
+            stmVuelo.setString(3, v.getNumVuelo());
+            rsVuelo = stmVuelo.executeQuery();
+            if(rsVuelo.next()){
+            v.setAerolinea(rsVuelo.getString("aerolinea"));
+            v.setPlazasNormal(rsVuelo.getInt("plazasNormal"));
+            v.setPlazasPremium(rsVuelo.getInt("plazasPremium"));
+        }
+            
+  
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        
     }
 
 }

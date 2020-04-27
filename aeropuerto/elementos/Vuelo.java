@@ -16,15 +16,18 @@ public class Vuelo {
     private Integer puertaEmbarque;
     private Boolean cancelado;
     private Integer terminal;
-    private Integer avion;
+    private String avion;
+    private String aerolinea;
+    private Integer plazasNormal;
+    private Integer plazasPremium;
 
-    private Float precioPremium;
 
-    public Vuelo(String numVuelo, String origen, String destino,
+ 
+        public Vuelo(String numVuelo, String origen, String destino,
             Time fechasalidaTeo, Time fechasalidaReal,
             Time fechallegadaTeo, Time fechallegadaReal,
             Float precioActual, Integer puertaEmbarque, Boolean cancelado,
-            Integer terminal, Integer avion) {
+            Integer terminal, String avion) {
 
         this.numVuelo = numVuelo;
         this.origen = origen;
@@ -39,14 +42,13 @@ public class Vuelo {
         this.terminal = terminal;
         this.avion = avion;
 
-        this.precioPremium = (float) (Math.round((precioActual * 1.2f) * 100d) / 100d);
     }
 
     public Vuelo(String numVuelo, String origen, String destino,
             Timestamp fechasalidaTeo, Timestamp fechasalidaReal,
             Timestamp fechallegadaTeo, Timestamp fechallegadaReal,
             Float precioActual, Integer puertaEmbarque, Boolean cancelado,
-            Integer terminal, Integer avion) {
+            Integer terminal, String avion) {
 
         this.numVuelo = numVuelo;
         this.origen = origen;
@@ -61,7 +63,18 @@ public class Vuelo {
         this.terminal = terminal;
         this.avion = avion;
 
-        this.precioPremium = (float) (Math.round((precioActual * 1.2f) * 100d) / 100d);
+    }
+
+    public String getAerolinea() {
+        return aerolinea;
+    }
+
+    public Integer getPlazasNormal() {
+        return plazasNormal;
+    }
+
+    public Integer getPlazasPremium() {
+        return plazasPremium;
     }
 
     public String getNumVuelo() {
@@ -126,7 +139,6 @@ public class Vuelo {
 
     public void setPrecioActual(Float precioActual) {
         this.precioActual = precioActual;
-        this.precioPremium = (float) (Math.round((precioActual * 1.2f) * 100d) / 100d);
     }
 
     public Integer getPuertaEmbarque() {
@@ -153,16 +165,28 @@ public class Vuelo {
         this.terminal = terminal;
     }
 
-    public Integer getAvion() {
+    public void setAerolinea(String aerolinea) {
+        this.aerolinea = aerolinea;
+    }
+
+    public void setPlazasNormal(Integer plazasNormal) {
+        this.plazasNormal = plazasNormal;
+    }
+
+    public void setPlazasPremium(Integer plazasPremium) {
+        this.plazasPremium = plazasPremium;
+    }
+
+    public String getAvion() {
         return avion;
     }
 
-    public void setAvion(Integer avion) {
+    public void setAvion(String avion) {
         this.avion = avion;
     }
 
     public Float getPrecioPremium() {
-        return precioPremium;
+        return ((float) (Math.round((precioActual * 1.2f) * 100d) / 100d));
     }
 
 }

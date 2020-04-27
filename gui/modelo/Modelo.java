@@ -93,5 +93,8 @@ public class Modelo {
    public Boolean cancelarReserva(Reserva res, String dniUs){
        return fa.cancelarReserva(res, dniUs);
    }
+   public void obtenerDatosAvionVuelo(Vuelo v){
+      fa.obtenerDatosAvionVuelo(v);
+   }
 
 }

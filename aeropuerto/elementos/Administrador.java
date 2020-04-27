@@ -19,11 +19,10 @@ public class Administrador extends Usuario {
 
     public Administrador(String dni, String id, String email, String nombre,
             String ap1, String ap2, String paisProcedencia, Integer telefono,
-            String sexo, Timestamp fechainicio) {
+            String sexo, String curriculum) {
 
         super(dni, id, email, nombre, ap1, ap2, paisProcedencia, telefono, sexo);
-        this.fechaInicio = new Time(fechainicio);
-        this.curriculum = null;
+        this.curriculum = curriculum;
     }
 
     public void setFechaInicio(Time fechaInicio) {

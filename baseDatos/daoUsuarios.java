@@ -79,8 +79,8 @@ public class daoUsuarios extends AbstractDAO {
             //Se existe un usuario, comprobamos se e administrador ou persoal laboral
             if (rsUsuario.next()) {
 
-                //Aministrador
-                stmAdmin_PL = con.prepareStatement("select usuario,fechainicio "
+                //Administrador
+                stmAdmin_PL = con.prepareStatement("select usuario,fechainicio,curriculum "
                         + "from administrador "
                         + "where usuario = ? ");
                 stmAdmin_PL.setString(1, rsUsuario.getString("dni"));
@@ -88,12 +88,13 @@ public class daoUsuarios extends AbstractDAO {
 
                 //Comprobamos se e admin
                 if (rsAdmin_PL.next()) {
-                    resultado = new Administrador(rsUsuario.getString("dni"), rsAdmin_PL.getString("usuario"),
+                    resultado = new Administrador(rsUsuario.getString("dni"), rsUsuario.getString("id"),
                             rsUsuario.getString("correoElectronico"),
                             rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
                             rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
                             rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"),
-                            rsAdmin_PL.getTimestamp("fechainicio"));
+                            rsAdmin_PL.getTimestamp("fechainicio"),rsAdmin_PL.getString("curriculum"));
+                    
                 } else {
                     //Personal Laboral
                     stmAdmin_PL = con.prepareStatement("select usuario, labor, descripciontarea, fechainicio "
@@ -104,7 +105,7 @@ public class daoUsuarios extends AbstractDAO {
 
                     //Comprobamos se e PL
                     if (rsAdmin_PL.next()) {
-                        resultado = new PersonalLaboral(rsUsuario.getString("dni"), rsAdmin_PL.getString("usuario"),
+                        resultado = new PersonalLaboral(rsUsuario.getString("dni"), rsUsuario.getString("id"),
                                 rsUsuario.getString("correoElectronico"),
                                 rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
                                 rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
@@ -216,7 +217,16 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setString(9, us.getDni());
 
             stmUsuario.executeUpdate();
+            /*Si es admin se actualiza el curriculum*/
+            if(us instanceof Administrador){
+            stmUsuario=con.prepareStatement("update administrador set curriculum=? where usuario=?");
+            stmUsuario.setString(1, ((Administrador)us).getCurriculum());
+            stmUsuario.setString(2, us.getDni());
+            stmUsuario.executeUpdate();
+            }
+            
             correcto = true;
+            
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

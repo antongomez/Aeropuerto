@@ -101,4 +101,8 @@ public class FachadaBaseDatos {
     public Boolean cancelarReservaCoche(Reserva res, String dniUs){
         return daoReservas.cancelarReservaCoche(res, dniUs);
     }
+    public void obtenerDatosAvionVuelo(Vuelo v){
+        
+        daoVuelos.obtenerDatosAvionVuelo(v);
+    }
 }

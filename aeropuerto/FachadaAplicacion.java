@@ -109,7 +109,12 @@ public class FachadaAplicacion extends Application {
         return fgui;
     }
     
- 
+    public void obtenerDatosAvionVuelo(Vuelo v){
+        
+        gv.obtenerDatosAvionVuelo(v);
+    }
+    
+    
     
     
 
