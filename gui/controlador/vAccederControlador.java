@@ -1,5 +1,6 @@
 package gui.controlador;
 
+import aeropuerto.elementos.Administrador;
 import aeropuerto.elementos.Usuario;
 import gui.modelo.Modelo;
 import java.net.URL;
@@ -47,6 +48,7 @@ public class vAccederControlador extends Controlador implements Initializable {
     private void accionBtnAcceder(ActionEvent event) {
         //Abrese a venta. Falta a comprobacion das credenciais
         Usuario usuario = Modelo.getInstanceModelo().credencialesCorrectos(textFieldId.getText(), textFieldContrasenha.getText());
+
         if (usuario != null) {
             //Creamos unha venta para asignarlla ao controlador
             Stage stage = new Stage(StageStyle.DECORATED);
@@ -60,7 +62,6 @@ public class vAccederControlador extends Controlador implements Initializable {
             getVenta().close();
         } else {
             labErro.setVisible(true);
-            //Modelo.getInstanceModelo().mostrarError("Usuario o contraseña incorrectos");
         }
 
     }

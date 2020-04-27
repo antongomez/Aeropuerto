@@ -1,18 +1,32 @@
 package aeropuerto.elementos;
 
-import java.util.Date;
+import aeropuerto.util.Time;
+import java.sql.Timestamp;
 
 public class Administrador extends Usuario {
 
-    private Date fechaInicio;
+    private Time fechaInicio;
     private String curriculum;
 
-    public Administrador(String dni, String id, String email, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo, String curriculum) {
+    public Administrador(String dni, String id, String email, String nombre,
+            String ap1, String ap2, String paisProcedencia, Integer telefono,
+            String sexo, Timestamp fechainicio, String curriculum) {
+
         super(dni, id, email, nombre, ap1, ap2, paisProcedencia, telefono, sexo);
+        this.fechaInicio = new Time(fechainicio);
         this.curriculum = curriculum;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public Administrador(String dni, String id, String email, String nombre,
+            String ap1, String ap2, String paisProcedencia, Integer telefono,
+            String sexo, Timestamp fechainicio) {
+
+        super(dni, id, email, nombre, ap1, ap2, paisProcedencia, telefono, sexo);
+        this.fechaInicio = new Time(fechainicio);
+        this.curriculum = null;
+    }
+
+    public void setFechaInicio(Time fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
@@ -20,7 +34,7 @@ public class Administrador extends Usuario {
         this.curriculum = curriculum;
     }
 
-    public Date getFechaInicio() {
+    public Time getFechaInicio() {
         return fechaInicio;
     }
 

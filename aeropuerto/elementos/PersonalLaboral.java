@@ -1,19 +1,23 @@
 package aeropuerto.elementos;
 
-import java.util.Date;
+import aeropuerto.util.Time;
+import java.sql.Timestamp;
 
 public class PersonalLaboral extends Usuario {
 
     private String labor;
     private String descripcionTarea;
-    private Date fechaInicio;
+    private Time fechaInicio;
     //private ArrayList<ElemHistorial> historialTrabajo; creo que este atributo sobra
 
-    public PersonalLaboral(String dni, String id, String email, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo, String labor, String descripcionTarea) {
+    public PersonalLaboral(String dni, String id, String email, String nombre,
+            String ap1, String ap2, String paisProcedencia, Integer telefono,
+            String sexo, String labor, String descripcionTarea, Timestamp fechaInicio) {
+
         super(dni, id, email, nombre, ap1, ap2, paisProcedencia, telefono, sexo);
         this.labor = labor;
         this.descripcionTarea = descripcionTarea;
-        this.fechaInicio = new Date(); //la fecha de inicio es la fecha de creación
+        this.fechaInicio = new Time(fechaInicio); //la fecha de inicio es la fecha de creación
         //this.historialTrabajo = new ArrayList<>(); //inicialmente no hay historial de trabajo
     }
 
@@ -39,7 +43,7 @@ public class PersonalLaboral extends Usuario {
         return descripcionTarea;
     }
 
-    public Date getFechaInicio() {
+    public Time getFechaInicio() {
         return fechaInicio;
     }
 
@@ -51,7 +55,7 @@ public class PersonalLaboral extends Usuario {
         this.descripcionTarea = descripcionTarea;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(Time fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 

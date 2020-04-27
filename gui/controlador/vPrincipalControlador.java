@@ -1,5 +1,7 @@
 package gui.controlador;
 
+import aeropuerto.elementos.Administrador;
+import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasUsuario;
@@ -37,7 +39,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -45,7 +46,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     private final static String TITULO_VUELOS = "PRÓXIMOS VUELOS";
     private final static String TITULO_AREAP = "ÁREA PERSONAL";
-    private final static String SERVICIOS = "SERVICIOS";
+    private final static String TITULO_SERV = "SERVICIOS";
+
+    private final static String TXT_BTN_ADMIN = "Administrador";
+    private final static String TXT_BTN_PL = "Personal";
+
     private Usuario usuario;//usuario que está usando la ventana
 
     //Encabezado
@@ -131,6 +136,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TextField textFieldFIngreso;
     @FXML
     private GridPane gridPaneModificarDatos;
+    @FXML
+    private Label etqFechaIngreso;
 
     //TaboaProximosVoos
     @FXML
@@ -264,6 +271,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+
+        if (usuario instanceof Administrador) {
+            btnAdmin.setText(TXT_BTN_ADMIN);
+        } else if (usuario instanceof PersonalLaboral) {
+            btnAdmin.setText(TXT_BTN_PL);
+        } else {
+            btnAdmin.setVisible(false);
+        }
     }
 
     @FXML
@@ -285,7 +300,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldAp1.setText(usuario.getAp1());
         textFieldAp2.setText(usuario.getAp2());
         textFieldTlf.setText(usuario.getTelefono().toString());
-        //gridPane.getRowConstraints().remove(1);
+        if (usuario instanceof Administrador) {
+            textFieldFIngreso.setText(((Administrador) usuario).getFechaInicio().toString());
+        } else if (usuario instanceof PersonalLaboral) {
+            textFieldFIngreso.setText(((PersonalLaboral) usuario).getFechaInicio().toString());
+        } else {
+            textFieldFIngreso.setVisible(false);
+            etqFechaIngreso.setVisible(false);
+        }
 
         ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia", "Noruega", "Galicia");
         comboBoxPais.setItems(opcionesPais);

@@ -80,11 +80,13 @@ public class daoVuelos extends AbstractDAO {
                     + "  and destino like ? ";
 
             if (fechaSalida != null) {
-                consulta += "  and fechasalidateorica >= ?";
+                consulta += "  and fechasalidateorica >= ? ";
             }
             if (fechaLlegada != null) {
-                consulta += "  and fechallegadateorica >= ?";
+                consulta += "  and fechallegadateorica >= ? ";
             }
+            //Ordenamos os voos por data de saida ascendente
+            consulta += "order by fechasalidateorica asc ";
 
             stmVuelo = con.prepareStatement(consulta);
             stmVuelo.setString(1, "%" + numVuelo + "%");
@@ -145,10 +147,10 @@ public class daoVuelos extends AbstractDAO {
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
-                        rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechasalidareal"),rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getTimestamp("fechallegadareal"),
+                        rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getTimestamp("fechallegadareal"),
                         rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
                         null, null);
-                
+
                 resultado.add(vueloActual);
             }
 
@@ -165,5 +167,5 @@ public class daoVuelos extends AbstractDAO {
 
         return resultado;
     }
-   
+
 }

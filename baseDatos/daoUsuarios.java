@@ -1,6 +1,9 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Administrador;
+import aeropuerto.elementos.PersonalExterno;
+import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.util.EstadisticasUsuario;
 import java.sql.Connection;
@@ -21,12 +24,12 @@ public class daoUsuarios extends AbstractDAO {
         Boolean correcto;
 
         con = super.getConexion();
-        
+
         try {
             stmUsuario = con.prepareStatement("insert into usuario(dni,id,correoElectronico,contrasenha, nombre,"
                     + " primerApellido, segundoApellido, paisProcedencia, telefono, sexo) "
                     + "values (?,?,?,crypt(?, gen_salt('md5')),?,?,?,?,?,?)");
-            
+
             stmUsuario.setString(1, u.getDni());
             stmUsuario.setString(2, u.getId());
             stmUsuario.setString(3, u.getEmail());
@@ -58,7 +61,9 @@ public class daoUsuarios extends AbstractDAO {
         Usuario resultado = null;
         Connection con;
         PreparedStatement stmUsuario = null;
+        PreparedStatement stmAdmin_PL;
         ResultSet rsUsuario;
+        ResultSet rsAdmin_PL;
 
         con = this.getConexion();
 
@@ -70,12 +75,70 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setString(1, idUsuario);
             stmUsuario.setString(2, clave);
             rsUsuario = stmUsuario.executeQuery();
+
+            //Se existe un usuario, comprobamos se e administrador ou persoal laboral
             if (rsUsuario.next()) {
-                resultado = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("id"),
-                        rsUsuario.getString("correoElectronico"),
-                        rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
-                        rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
-                        rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"));
+
+                //Aministrador
+                stmAdmin_PL = con.prepareStatement("select usuario,fechainicio "
+                        + "from administrador "
+                        + "where usuario = ? ");
+                stmAdmin_PL.setString(1, rsUsuario.getString("dni"));
+                rsAdmin_PL = stmAdmin_PL.executeQuery();
+
+                //Comprobamos se e admin
+                if (rsAdmin_PL.next()) {
+                    resultado = new Administrador(rsUsuario.getString("dni"), rsAdmin_PL.getString("usuario"),
+                            rsUsuario.getString("correoElectronico"),
+                            rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
+                            rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
+                            rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"),
+                            rsAdmin_PL.getTimestamp("fechainicio"));
+                } else {
+                    //Personal Laboral
+                    stmAdmin_PL = con.prepareStatement("select usuario, labor, descripciontarea, fechainicio "
+                            + "from personallaboral "
+                            + "where usuario = ? ");
+                    stmAdmin_PL.setString(1, rsUsuario.getString("dni"));
+                    rsAdmin_PL = stmAdmin_PL.executeQuery();
+
+                    //Comprobamos se e PL
+                    if (rsAdmin_PL.next()) {
+                        resultado = new PersonalLaboral(rsUsuario.getString("dni"), rsAdmin_PL.getString("usuario"),
+                                rsUsuario.getString("correoElectronico"),
+                                rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
+                                rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
+                                rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"),
+                                rsAdmin_PL.getString("labor"), rsAdmin_PL.getString("descripciontarea"),
+                                rsAdmin_PL.getTimestamp("fechainicio"));
+
+                    } else {
+                         System.out.println("user");
+                        //Personal Externo
+                        stmAdmin_PL = con.prepareStatement("select usuario, estardentro "
+                                + "from personalexterno "
+                                + "where usuario = ? ");
+                        stmAdmin_PL.setString(1, rsUsuario.getString("dni"));
+                        rsAdmin_PL = stmAdmin_PL.executeQuery();
+
+                        //Comprobamos se e persoal Externo
+                        if (rsAdmin_PL.next()) {
+                            resultado = new PersonalExterno(rsUsuario.getString("dni"), rsAdmin_PL.getString("usuario"),
+                                    rsUsuario.getString("correoElectronico"),
+                                    rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
+                                    rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
+                                    rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"),
+                                    rsAdmin_PL.getBoolean("estardentro"));
+                            //Noutro caso tomamolo como usuario normal
+                        } else {
+                            resultado = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("id"),
+                                    rsUsuario.getString("correoElectronico"),
+                                    rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
+                                    rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
+                                    rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"));
+                        }
+                    }
+                }
 
             }
 
@@ -91,8 +154,8 @@ public class daoUsuarios extends AbstractDAO {
         }
         return resultado;
     }
-    
-    public Boolean modificarContrasenha(String idUsuario, String clave){
+
+    public Boolean modificarContrasenha(String idUsuario, String clave) {
         Connection con;
         PreparedStatement stmUsuario = null;
         PreparedStatement stmBorrado = null;
@@ -194,9 +257,9 @@ public class daoUsuarios extends AbstractDAO {
         }
         return correcto;
     }
-    
+
     /*El tipo debe ser mes, estacion o anho*/
-    public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num){
+    public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num) {
         EstadisticasUsuario resultado = null;
         Connection con;
         PreparedStatement stmUsuario = null;
@@ -204,39 +267,37 @@ public class daoUsuarios extends AbstractDAO {
         String consulta;
         String aux;
         con = this.getConexion();
-        
-        //Parte de la consulta que varía en función de los argumentos
-        if(tipo.equals("anho")){
-            aux="EXTRACT(YEAR FROM cast(v.fechaSalidaReal as date))";
-        }
-        else if(tipo.equals("mes")){
-            aux="EXTRACT(MONTH FROM cast(v.fechaSalidaReal as date))";
-        }
-        else{
-            aux="Estacion(v.fechaSalidaReal)";
-        }
-        
-        consulta="select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa, billete.vecesViajadas as veces from "+
-                "(select a.aerolinea as aerolineaFav from comprarbillete cb, vuelo v, avion a "+
-                "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and "+aux+"=?"+
-                "group by a.aerolinea having count(*)>=all "+
-                "(select count(*) from comprarbillete cb, vuelo v, avion a "+
-                "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and "+aux+"=?"+
-                "group by a.aerolinea)) as aerolinea, "+
-                "(select v.destino as destinoFav from comprarbillete cb, vuelo v "+
-                "where cb.usuario=? and cb.vuelo=v.numvuelo and "+aux+"=?"+
-                "group by v.destino having count(*)>=all "+
-                "(select count(*) from comprarbillete cb, vuelo v "+
-                "where cb.usuario=? and cb.vuelo=v.numvuelo and "+aux+"=? group by v.destino)) as destino, "+
-                "(select tipoAsiento as tarifaFav from comprarbillete cb, vuelo v "+
-                "where cb.usuario=? and cb.vuelo=v.numvuelo and "+aux+"=?"+
-                "group by tipoAsiento having count(*)>=all "+
-                "(select count(*) from comprarbillete cb, vuelo v "+
-                "where cb.usuario=? and cb.vuelo=v.numvuelo and "+aux+"=? group by cb.tipoAsiento)) as tarifa, "+
-                "(select count(*) as vecesViajadas from comprarBillete cb, vuelo v "+
-                "where usuario=? and cb.vuelo=v.numvuelo and "+aux+"=?) as billete";
 
-        try{
+        //Parte de la consulta que varía en función de los argumentos
+        if (tipo.equals("anho")) {
+            aux = "EXTRACT(YEAR FROM cast(v.fechaSalidaReal as date))";
+        } else if (tipo.equals("mes")) {
+            aux = "EXTRACT(MONTH FROM cast(v.fechaSalidaReal as date))";
+        } else {
+            aux = "Estacion(v.fechaSalidaReal)";
+        }
+
+        consulta = "select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa, billete.vecesViajadas as veces from "
+                + "(select a.aerolinea as aerolineaFav from comprarbillete cb, vuelo v, avion a "
+                + "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and " + aux + "=?"
+                + "group by a.aerolinea having count(*)>=all "
+                + "(select count(*) from comprarbillete cb, vuelo v, avion a "
+                + "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and " + aux + "=?"
+                + "group by a.aerolinea)) as aerolinea, "
+                + "(select v.destino as destinoFav from comprarbillete cb, vuelo v "
+                + "where cb.usuario=? and cb.vuelo=v.numvuelo and " + aux + "=?"
+                + "group by v.destino having count(*)>=all "
+                + "(select count(*) from comprarbillete cb, vuelo v "
+                + "where cb.usuario=? and cb.vuelo=v.numvuelo and " + aux + "=? group by v.destino)) as destino, "
+                + "(select tipoAsiento as tarifaFav from comprarbillete cb, vuelo v "
+                + "where cb.usuario=? and cb.vuelo=v.numvuelo and " + aux + "=?"
+                + "group by tipoAsiento having count(*)>=all "
+                + "(select count(*) from comprarbillete cb, vuelo v "
+                + "where cb.usuario=? and cb.vuelo=v.numvuelo and " + aux + "=? group by cb.tipoAsiento)) as tarifa, "
+                + "(select count(*) as vecesViajadas from comprarBillete cb, vuelo v "
+                + "where usuario=? and cb.vuelo=v.numvuelo and " + aux + "=?) as billete";
+
+        try {
             stmUsuario = con.prepareStatement(consulta);
             stmUsuario.setString(1, dniUs);
             stmUsuario.setInt(2, num);
@@ -253,19 +314,18 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setString(13, dniUs);
             stmUsuario.setInt(14, num);
             rsUsuario = stmUsuario.executeQuery();
-            
+
             if (rsUsuario.next()) {
                 resultado = new EstadisticasUsuario(rsUsuario.getInt("veces"));
                 resultado.anadirAerolinea(rsUsuario.getString("aerolinea"));
                 resultado.anadirDestino(rsUsuario.getString("destino"));
                 resultado.anadirTarifa(rsUsuario.getString("tarifa"));
-                
-            }
-            else{
-                resultado= new EstadisticasUsuario(0);
+
+            } else {
+                resultado = new EstadisticasUsuario(0);
             }
             /*Si se encuentra más de una tupla*/
-            while(rsUsuario.next()){
+            while (rsUsuario.next()) {
                 resultado.anadirAerolinea(rsUsuario.getString("aerolinea"));
                 resultado.anadirDestino(rsUsuario.getString("destino"));
                 resultado.anadirTarifa(rsUsuario.getString("tarifa"));
