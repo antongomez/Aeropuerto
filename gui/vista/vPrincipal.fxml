@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane minHeight="600.0" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="root" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.vPrincipalControlador">
+   <left>
+      <AnchorPane fx:id="panelLateral" prefHeight="600.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox layoutX="105.0" layoutY="102.0" prefHeight="600.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ToggleButton fx:id="btnVuelos" minWidth="140.0" mnemonicParsing="false" onAction="#accionBtnVuelos" prefHeight="50.0" prefWidth="200.0" selected="true" styleClass="btnMenu" text="Vuelos">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="BtnMenu" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton fx:id="btnAreaP" mnemonicParsing="false" onAction="#accionBtnAreaP" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Área personal" toggleGroup="$BtnMenu" />
+                  <ToggleButton fx:id="btnServicios" mnemonicParsing="false" onAction="#accionBtnServicios" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Servicios" toggleGroup="$BtnMenu" />
+                  <ToggleButton fx:id="btnInfo" mnemonicParsing="false" onAction="#accionBtnInfo" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Información" toggleGroup="$BtnMenu" />
+                  <ToggleButton fx:id="btnAdmin" mnemonicParsing="false" onAction="#accionBtnAdmin" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Administrador" toggleGroup="$BtnMenu">
+                     <effect>
+                        <InnerShadow height="0.0" radius="2.0" width="10.0" />
+                     </effect>
+                  </ToggleButton>
+               </children>
+               <padding>
+                  <Insets top="35.5" />
+               </padding>
+            </VBox>
+         </children></AnchorPane>
+   </left>
+   <top>
+      <AnchorPane fx:id="panelTitulo" prefHeight="80.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox fx:id="boxTitulo" alignment="CENTER_LEFT" layoutX="48.0" layoutY="6.0" prefHeight="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <ImageView fitHeight="74.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../recursos/Logotipo_DarkTheme.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="etqFLC" text="Folgoso do Courel" wrapText="true" />
+                     </children>
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                  </HBox>
+                  <AnchorPane>
+                     <children>
+                        <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="800.0" text="VUELOS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <TabPane fx:id="panelServicios" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="Parking">
+                     <content>
+                        <AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background">
+                           <children>
+                              <VBox alignment="TOP_CENTER" layoutX="38.0" layoutY="75.0" prefHeight="584.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox spacing="125.0">
+                                       <children>
+                                          <VBox alignment="TOP_CENTER" spacing="40.0">
+                                             <children>
+                                                <VBox alignment="TOP_CENTER" spacing="15.0">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" spacing="10.0">
+                                                         <children>
+                                                            <HBox alignment="TOP_CENTER" spacing="20.0">
+                                                               <children>
+                                                                  <HBox spacing="10.0">
+                                                                     <children>
+                                                                        <Label minHeight="28.0" prefHeight="28.0" text="Terminal:" />
+                                                                        <ComboBox minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="130.0" />
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <HBox spacing="10.0">
+                                                                     <children>
+                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de llegada:" />
+                                                                        <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <HBox spacing="10.0">
+                                                                     <children>
+                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de retorno:" />
+                                                                        <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
+                                                                     </children>
+                                                                  </HBox>
+                                                               </children>
+                                                            </HBox>
+                                                            <Label styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
+                                                         </children>
+                                                      </VBox>
+                                                      <Button mnemonicParsing="false" text="Buscar" />
+                                                   </children>
+                                                </VBox>
+                                                <HBox alignment="CENTER" spacing="120.0">
+                                                   <children>
+                                                      <HBox spacing="10.0">
+                                                         <children>
+                                                            <Label prefHeight="28.0" text="Plazas libres:" />
+                                                            <TextField editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="60.0" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox spacing="10.0">
+                                                         <children>
+                                                            <Label prefHeight="28.0" text="Precio:" />
+                                                            <TextField editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="60.0" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <HBox alignment="CENTER" spacing="200.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" text="Reservar" />
+                                                <HBox spacing="10.0">
+                                                   <children>
+                                                      <Label minHeight="25.0" prefHeight="28.0" text="Matrícula:" />
+                                                      <TextField minHeight="25.0" minWidth="120.0" prefHeight="28.0" prefWidth="150.0" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Coches">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <VBox alignment="TOP_CENTER" layoutX="234.0" layoutY="23.0" prefHeight="584.0" prefWidth="810.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" minHeight="485.0" spacing="40.0">
+                                       <children>
+                                          <VBox alignment="TOP_CENTER" spacing="15.0">
+                                             <children>
+                                                <VBox alignment="TOP_CENTER" spacing="10.0">
+                                                   <children>
+                                                      <HBox alignment="TOP_CENTER" spacing="20.0">
+                                                         <children>
+                                                            <HBox spacing="10.0">
+                                                               <children>
+                                                                  <Label minHeight="25.0" prefHeight="28.0" text="Fecha de llegada:" />
+                                                                  <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox spacing="10.0">
+                                                               <children>
+                                                                  <Label minHeight="25.0" prefHeight="28.0" text="Fecha de retorno:" />
+                                                                  <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox spacing="10.0">
+                                                               <children>
+                                                                  <Label minHeight="28.0" prefHeight="28.0" text="Número de plazas:" />
+                                                               </children>
+                                                            </HBox>
+                                                            <TextField minHeight="25.0" minWidth="30.0" prefHeight="28.0" prefWidth="60.0" />
+                                                         </children>
+                                                      </HBox>
+                                                      <Label styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
+                                                   </children>
+                                                </VBox>
+                                                <Button mnemonicParsing="false" text="Buscar" />
+                                             </children>
+                                          </VBox>
+                                          <TableView maxHeight="340.0" minHeight="300.0" prefHeight="320.0">
+                                            <columns>
+                                              <TableColumn minWidth="120.0" prefWidth="120.0" text="Matrícula" />
+                                              <TableColumn minWidth="120.0" prefWidth="120.0" text="Modelo" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Caballos" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Precio/Día" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Combustible" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Plazas" />
+                                                <TableColumn minWidth="120.0" prefWidth="-1.0" text="Puertas" />
+                                                <TableColumn minWidth="120.0" prefWidth="-1.0" text="Precio Total" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                    <Button mnemonicParsing="false" text="Reservar" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
+                                 </padding>
+                              </VBox>
+                           </children></AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Tiendas">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <VBox alignment="TOP_CENTER" layoutX="230.0" layoutY="79.0" prefHeight="584.0" prefWidth="1000.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
+                                 </padding>
+                                 <children>
+                                    <GridPane alignment="CENTER_LEFT" hgap="10.0" vgap="10.0">
+                                      <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label minHeight="25.0" prefHeight="28.0" text="Nombre:" />
+                                          <Label minHeight="25.0" prefHeight="28.0" text="Terminal:" GridPane.rowIndex="1" />
+                                          <Label minHeight="25.0" prefHeight="28.0" text="Tipo de ventas:" GridPane.columnIndex="2" />
+                                          <Button mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowSpan="2" />
+                                          <TextField maxWidth="160.0" minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="140.0" GridPane.columnIndex="1" />
+                                          <ComboBox minHeight="25.0" prefHeight="28.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ComboBox minHeight="25.0" prefHeight="28.0" prefWidth="140.0" GridPane.columnIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <AnchorPane fx:id="panelVuelos" prefHeight="550.0" prefWidth="800.0" styleClass="root">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <children>
+                        <HBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="500.0" spacing="15.0">
+                           <children>
+                              <VBox prefWidth="140.0" spacing="10.0">
+                                 <children>
+                                    <Label prefHeight="35.0" text="Número de vuelo:" />
+                                    <Label prefHeight="35.0" text="Origen:" />
+                                    <Label prefHeight="35.0" text="Salida:" />
+                                 </children>
+                              </VBox>
+                              <VBox prefWidth="150.0" spacing="10.0">
+                                 <children>
+                                    <TextField fx:id="txtNumVuelo" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                    <TextField fx:id="txtOrigen" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                    <DatePicker fx:id="dataPickSalida" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                 </children>
+                              </VBox>
+                              <VBox prefWidth="140.0" spacing="10.0">
+                                 <children>
+                                    <Label minHeight="35.0" prefHeight="35.0" />
+                                    <Label minHeight="35.0" prefHeight="35.0" text="Destino:" />
+                                    <Label minHeight="35.0" prefHeight="35.0" text="Llegada:" />
+                                 </children>
+                              </VBox>
+                              <VBox prefWidth="150.0" spacing="10.0">
+                                 <children>
+                                    <Label minHeight="35.0" prefHeight="35.0" />
+                                    <TextField fx:id="txtDestino" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                    <DatePicker fx:id="dataPickLlegada" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#accionBtnBuscar" text="Buscar" />
+                        <TableView fx:id="tablaProximosVuelos" minHeight="200.0" minWidth="800.0" onMouseClicked="#seleccionarVuelo" prefHeight="400.0">
+                           <columns>
+                              <TableColumn fx:id="columnaNumVuelo" prefWidth="120.0" text="Número" />
+                              <TableColumn fx:id="columnaOrigen" prefWidth="120.0" text="Origen" />
+                              <TableColumn fx:id="columnaDestino" prefWidth="120.0" text="Destino" />
+                              <TableColumn fx:id="columnaSalida" prefWidth="120.0" text="Salida" />
+                              <TableColumn fx:id="columnaLlegada" prefWidth="120.0" text="Llegada" />
+                              <TableColumn fx:id="columnaPrecio" prefWidth="120.0" text="Precio" />
+                              <TableColumn fx:id="columnaPrecioPremium" prefWidth="120.0" text="Premium" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Button fx:id="btnComprar" mnemonicParsing="false" onAction="#accionBtnComprar" text="Comprar">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <TabPane fx:id="panelAreaP" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="Modificar datos">
+                     <content>
+                        <AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background">
+                           <children>
+                              <Button fx:id="btnDarseBaja" layoutX="25.0" layoutY="467.0" mnemonicParsing="false" onAction="#accionBtnDarseBaja" text="Darse de baja" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" />
+                              <Button fx:id="btnGuardar" layoutX="605.0" layoutY="473.0" mnemonicParsing="false" onAction="#accionBtnGuardar" text="Guardar" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
+                              <GridPane fx:id="gridPaneModificarDatos" hgap="5.0" layoutX="399.0" layoutY="140.0" minWidth="350.0" vgap="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints fillHeight="false" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="Id:" GridPane.rowIndex="2" />
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="Email:" GridPane.rowIndex="3" />
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="Contraseña:" GridPane.rowIndex="4" />
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="Repetir contraseña:" GridPane.rowIndex="5" />
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="Nombre:" GridPane.rowIndex="6" />
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="Primer apellido:" GridPane.rowIndex="7" />
+                                    <Label prefHeight="30.0" text="Segundo apellido:" GridPane.rowIndex="8" />
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="País:" GridPane.rowIndex="9" />
+                                    <Label prefHeight="23.0" prefWidth="150.0" text="Teléfono:" GridPane.rowIndex="10" />
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="Sexo:" GridPane.rowIndex="11" />
+                                    <TextField fx:id="textFieldID" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="textFieldEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <PasswordField fx:id="textFieldContrasenha" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <PasswordField fx:id="textFieldRepetirContrasenha" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <TextField fx:id="textFieldNombre" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <TextField fx:id="textFieldAp1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <TextField fx:id="textFieldAp2" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                    <ComboBox fx:id="comboBoxPais" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                    <TextField fx:id="textFieldTlf" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                    <ComboBox fx:id="comboBoxSexo" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="Fecha de ingreso:" GridPane.rowIndex="1" />
+                                    <Label prefHeight="30.0" prefWidth="150.0" text="DNI:" />
+                                    <TextField fx:id="textFieldDni" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                    <TextField fx:id="textFieldFIngreso" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Mis de vuelos">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <TableView fx:id="tablaMisVuelos" layoutX="6.0" layoutY="35.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0">
+                                 <columns>
+                                    <TableColumn fx:id="columnaNumMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Número" />
+                                    <TableColumn fx:id="columnaOrigenMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Origen" />
+                                    <TableColumn fx:id="columnaDestinoMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Destino" />
+                                    <TableColumn fx:id="columnaSalidaMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Salida" />
+                                    <TableColumn fx:id="columnaLlegadaMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Llegada" />
+                                    <TableColumn fx:id="columnaPrecioMiVuelo" minWidth="120.0" prefWidth="-1.0" text="Precio" />
+                                 </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <Button disable="true" layoutX="81.0" layoutY="445.0" mnemonicParsing="false" text="Cancelar" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab onSelectionChanged="#accionAbrirEstadisticas" text="Estadísticas">
+                     <content>
+                        <AnchorPane fx:id="checkBoxEstacion" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <VBox alignment="CENTER" layoutX="115.0" layoutY="44.0" spacing="40.0" AnchorPane.topAnchor="40.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefWidth="500.0" spacing="20.0">
+                                       <children>
+                                          <Label prefWidth="120.0" text="Ver vuelos por " />
+                                          <RadioButton fx:id="btnMes" mnemonicParsing="false" onAction="#accionMes" text="mes">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="opVerVuelo" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="btnAno" mnemonicParsing="false" onAction="#accionAnho" text="año" toggleGroup="$opVerVuelo" />
+                                          <RadioButton fx:id="btnEstacion" mnemonicParsing="false" onAction="#accionEstacion" selected="true" text="estación" toggleGroup="$opVerVuelo" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="500.0" spacing="100.0">
+                                       <children>
+                                          <ComboBox fx:id="comboBoxEstUsu" minHeight="25.0" minWidth="150.0" onAction="#accionComboBox" prefHeight="28.0" prefWidth="150.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" right="20.0" />
+                                             </HBox.margin>
+                                          </ComboBox>
+                                          <TextArea fx:id="txtAreaNumViajes" editable="false" minWidth="180.0" prefWidth="200.0" style="-fx-background-color: #212121;" styleClass="enfasis" wrapText="true" />
+                                       </children>
+                                    </HBox>
+                                    <GridPane hgap="5.0" vgap="5.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="160.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Aerolínea favorita:" />
+                                          <Label text="Destino máis popular:" GridPane.rowIndex="1" />
+                                          <Label text="Tarifa favorita:" GridPane.rowIndex="2" />
+                                          <Label fx:id="etqAerolineaFav" GridPane.columnIndex="1" />
+                                          <Label fx:id="etqDestinoFav" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label fx:id="etqTarifaFav" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab onSelectionChanged="#accionAbrirMisReservas" text="Reservas">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <VBox alignment="TOP_CENTER" layoutX="50.0" layoutY="40.0" prefHeight="584.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="20.0">
+                                       <children>
+                                          <TableView fx:id="tablaMisReservas" onMouseClicked="#seleccionarReserva" prefHeight="350.0">
+                                             <columns>
+                                                <TableColumn fx:id="colInicioReserva" minWidth="180.0" prefWidth="200.0" text="Inicio de reserva" />
+                                                <TableColumn fx:id="colFinReserva" minWidth="180.0" prefWidth="200.0" text="Fin de reserva" />
+                                                <TableColumn fx:id="colTipoReserva" minWidth="100.0" prefWidth="120.0" text="Tipo" />
+                                                <TableColumn fx:id="colMatricula" minWidth="120.0" prefWidth="140.0" text="Matrícula" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                          <GridPane fx:id="panelInfoParking" hgap="5.0" vgap="15.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="27.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="27.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="27.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label fx:id="etqPlaza" prefHeight="21.0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="etqPiso" prefHeight="21.0" prefWidth="56.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="etqTerminal" prefHeight="21.0" prefWidth="58.0" GridPane.columnIndex="1" />
+                                                <Label prefHeight="27.0" prefWidth="67.0" text="Terminal:" />
+                                                <Label text="Piso:" GridPane.rowIndex="1" />
+                                                <Label text="Plaza:" GridPane.rowIndex="2" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="30.0" right="10.0" top="40.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Button fx:id="btnCancelarReserva" layoutX="671.0" layoutY="426.0" mnemonicParsing="false" onAction="#accionBtnCancelarReserva" text="Cancelar" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </children>
+      </StackPane>
+   </center>
+   <stylesheets>
+      <URL value="@../css/estiloBase.css" />
+      <URL value="@../css/ventaPrincipal.css" />
+   </stylesheets>
+</BorderPane>
