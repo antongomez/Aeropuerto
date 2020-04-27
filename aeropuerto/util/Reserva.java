@@ -7,10 +7,6 @@ package aeropuerto.util;
 
 import java.sql.Timestamp;
 
-/**
- *
- * @author Esther
- */
 public class Reserva {
 
     private Time inicio;

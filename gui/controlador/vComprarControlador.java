@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -76,6 +77,8 @@ public class vComprarControlador extends Controlador implements Initializable {
     private GridPane labelPrecio;
     @FXML
     private Button btnPagar;
+    @FXML
+    private Label etqTitulo;
 
     /**
      * Initializes the controller class.

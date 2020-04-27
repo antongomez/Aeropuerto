@@ -45,6 +45,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     private final static String TITULO_VUELOS = "PRÓXIMOS VUELOS";
     private final static String TITULO_AREAP = "ÁREA PERSONAL";
+    private final static String SERVICIOS = "SERVICIOS";
     private Usuario usuario;//usuario que está usando la ventana
 
     //Encabezado
@@ -54,6 +55,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private HBox boxTitulo;
     @FXML
     private Label etqTitulo;
+    @FXML
+    private Label etqFLC;
 
     //MenuLateral
     @FXML
@@ -126,6 +129,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TextField textFieldDni;
     @FXML
     private TextField textFieldFIngreso;
+    @FXML
+    private GridPane gridPaneModificarDatos;
 
     //TaboaProximosVoos
     @FXML
@@ -178,6 +183,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Label etqDestinoFav;
     @FXML
     private Label etqTarifaFav;
+    @FXML
+    private TextArea txtAreaNumViajes;
 
     //Reservas
     @FXML
@@ -193,7 +200,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private TableColumn<Reserva, String> colMatricula;
     @FXML
-    private Pane panelInfoParking;
+    private GridPane panelInfoParking;
     @FXML
     private Label etqPlaza;
     @FXML
@@ -201,14 +208,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private Label etqTerminal;
 
-    @FXML
-    private Label etqFLC;
-    @FXML
-    private GridPane gridPane;
-
-    @FXML
-    private TextArea txtAreaNumViajes;
-
+    //Servicios
     @FXML
     private TabPane panelServicios;
     @FXML
@@ -301,6 +301,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnServicios(ActionEvent event) {
+        panelServicios.toFront();
     }
 
     @FXML

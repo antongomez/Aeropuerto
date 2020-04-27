@@ -2,9 +2,8 @@ package aeropuerto.util;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 public class Time {
@@ -80,10 +79,61 @@ public class Time {
     }
 
     public Timestamp toTimestamp() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(ano, mes, dia, horas, minutos, segundos);
+        Long miliseg = (long) milis;
+        miliseg += (long) segundos * 1000;
+        miliseg += (long) (minutos * 60) * 1000;
+        miliseg += (long) (((horas - 1) * 60) * 60) * 1000;
+        miliseg += (long) ((((dia - 1) * 24) * 60) * 60) * 1000;
 
-        return new Timestamp(calendar.getTimeInMillis());
+        Integer anos = 1970;
+        GregorianCalendar calendar = new GregorianCalendar();
+        while (anos < ano) {
+            if (calendar.isLeapYear(anos)) {
+                miliseg += (long) (366 * 24) * 60 * 60 * 1000;
+                anos++;
+            } else {
+                miliseg += (long) (365 * 24) * 60 * 60 * 1000;
+                anos++;
+            }
+        }
+
+        Integer meses = 1;
+        while (meses < mes) {
+            switch (meses) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    miliseg += (long) (31 * 24) * 60 * 60 * 1000;
+                    meses++;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    miliseg += (long) (30 * 24) * 60 * 60 * 1000;
+                    meses++;
+                    break;
+                case 2:
+                    if (calendar.isLeapYear(ano)) {
+                        miliseg += (long) (29 * 24) * 60 * 60 * 1000;
+                        meses++;
+                    } else {
+                        miliseg += (long) (28 * 24) * 60 * 60 * 1000;
+                        meses++;
+                    }
+                    break;
+
+            }
+            
+        }
+        miliseg -= 60*60*1000; //Apaño
+        System.out.println("Data real: " + getStringSql() + ".Data nova: " + (new Timestamp(miliseg)).toString());
+
+        return new Timestamp(miliseg);
     }
 
     @Override
