@@ -1,6 +1,7 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasUsuario;
@@ -19,6 +20,7 @@ public class FachadaBaseDatos {
     private daoUsuarios daoUsuarios;
     private daoVuelos daoVuelos;
     private daoReservas daoReservas;
+    private daoTerminal daoTerminal;
 
     public FachadaBaseDatos(FachadaAplicacion fa) {
 
@@ -46,6 +48,7 @@ public class FachadaBaseDatos {
             daoUsuarios = new daoUsuarios(conexion, fa);
             daoVuelos = new daoVuelos(conexion, fa);
             daoReservas = new daoReservas(conexion,fa);
+            daoTerminal = new daoTerminal(conexion,fa);
 
         } catch (FileNotFoundException f) {
             fa.mostrarError(f.getMessage());
@@ -108,5 +111,16 @@ public class FachadaBaseDatos {
     
     public Usuario obtenerUsuario(String dni){
         return daoUsuarios.obtenerUsuario(dni);
+    }
+    public Parking buscarParking(Integer terminal, Time inicio, Time fin){
+        return daoTerminal.buscarParking(terminal, inicio, fin);
+    }
+    
+    public List<Integer> buscarTerminais(){
+        return daoTerminal.buscarTerminais();
+    }
+    
+    public Boolean reservarParking(Reserva reserva, String dniUsuario){
+        return daoReservas.reservarParking(reserva, dniUsuario);
     }
 }

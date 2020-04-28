@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Parking;
 import aeropuerto.util.Reserva;
+import aeropuerto.util.Time;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -126,4 +123,37 @@ public class daoReservas extends AbstractDAO {
         return correcto;
     }
 
+    public Boolean reservarParking(Reserva res, String dniUsu) {
+        Connection con;
+        PreparedStatement stmRes = null;
+        con = super.getConexion();
+        Boolean correcto = true;
+
+        try {
+            stmRes = con.prepareStatement("insert into reservarParking values"
+                    + "(?, ?, ?, ?, ?, ?, ?)");
+            stmRes.setString(1, dniUsu);
+            stmRes.setInt(2, res.getTerminal());
+            stmRes.setInt(3, res.getPiso());
+            stmRes.setInt(4, res.getNumPlaza());
+            stmRes.setTimestamp(5, res.getInicio().toTimestamp());
+            stmRes.setTimestamp(6, res.getFin().toTimestamp());
+            stmRes.setString(7, res.getMatricula());
+            stmRes.executeUpdate();
+
+        } catch (SQLException e) {
+            correcto = false;
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmRes.close();
+            } catch (SQLException e) {
+                correcto = false;
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
+    
 }

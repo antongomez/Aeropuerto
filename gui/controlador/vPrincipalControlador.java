@@ -1,6 +1,7 @@
 package gui.controlador;
 
 import aeropuerto.elementos.Administrador;
+import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
@@ -51,6 +52,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     private final static String TXT_BTN_ADMIN = "Administrador";
     private final static String TXT_BTN_PL = "Personal";
+
+    private final static String TEXTO_INFO_PARKING = "Introduce los datos de tu vuelo o de tu estancia";
+    private final static String TEXTO_ERROR_PARKING = "Los datos de búsqueda son incorrectos";
 
     private Usuario usuario;//usuario que está usando la ventana
 
@@ -225,7 +229,24 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TabPane panelServicios;
     @FXML
     private AnchorPane checkBoxEstacion;
-    
+    @FXML
+    private Button btnBuscarParking;
+    @FXML
+    private Button btnReservarParking;
+    @FXML
+    private ComboBox<Integer> cboxTerminalParking;
+    @FXML
+    private DatePicker dataFLlegadaParking;
+    @FXML
+    private DatePicker dataFRetornoParking;
+    @FXML
+    private Label etqInfoParking;
+    @FXML
+    private TextField txtPlazasParking;
+    @FXML
+    private TextField txtPrecioParking;
+    @FXML
+    private TextField txtMatriculaParking;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -273,6 +294,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         comboBoxEstUsu.setItems(meses);
         comboBoxEstUsu.getSelectionModel().selectFirst();
 
+        ObservableList<Integer> terminais = FXCollections.observableArrayList(getInstanceModelo().buscarTerminais());
+        cboxTerminalParking.setItems(terminais);
+
     }
 
     public void setUsuario(Usuario usuario) {
@@ -308,7 +332,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldTlf.setText(usuario.getTelefono().toString());
         if (usuario instanceof Administrador) {
             textFieldFIngreso.setText(((Administrador) usuario).getFechaInicio().toString());
-            txtAreaCurriculum.setText(((Administrador)usuario).getCurriculum());
+            txtAreaCurriculum.setText(((Administrador) usuario).getCurriculum());
         } else if (usuario instanceof PersonalLaboral) {
             textFieldFIngreso.setText(((PersonalLaboral) usuario).getFechaInicio().toString());
             paneCurriculum.setVisible(false);
@@ -332,7 +356,44 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnServicios(ActionEvent event) {
+        //PARKING
+        btnReservarParking.setDisable(true);
+        //Borramos os txt
+        txtMatriculaParking.clear();
+        txtPrecioParking.clear();
+        //cboxTerminalParking;
+        dataFRetornoParking.setValue(null);
+        dataFLlegadaParking.setValue(null);
+        etqInfoParking.setText(TEXTO_INFO_PARKING);
+
+        //COCHES
+        //Poñemos o panel diante
         panelServicios.toFront();
+
+    }
+
+    @FXML
+    private void accionBtnBuscarParking(ActionEvent event) {
+        Parking parking = getInstanceModelo().buscarParking(
+                cboxTerminalParking.getSelectionModel().getSelectedItem(),
+                new Time(dataFLlegadaParking.getValue()),
+                new Time(dataFRetornoParking.getValue()));
+        txtPlazasParking.setText(parking.getNumPrazas().toString());
+        txtPrecioParking.setText("?");
+    }
+
+    private Boolean asignarPrazaParking(Reserva reserva) {
+        if (reserva == null) {
+            return false;
+        }
+        Boolean exito = true;
+
+        return exito;
+    }
+
+    @FXML
+    private void accionBtnReservarParking(ActionEvent event) {
+
     }
 
     @FXML
@@ -399,17 +460,16 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!");
         } else {
             Usuario us;
-            if(usuario instanceof Administrador){
-                us= new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
-                    textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                    Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem(),txtAreaCurriculum.getText());
-            }
-            else{
+            if (usuario instanceof Administrador) {
+                us = new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
+                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem(), txtAreaCurriculum.getText());
+            } else {
                 us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
-                    textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                    Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
+                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
             }
-            
+
             try {
                 if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
                     Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente");
@@ -422,8 +482,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     usuario.setPaisProcedencia(us.getPaisProcedencia());
                     usuario.setTelefono(us.getTelefono());
                     usuario.setSexo(us.getSexo());
-                    if(usuario instanceof Administrador){
-                        ((Administrador)usuario).setCurriculum(((Administrador)us).getCurriculum());
+                    if (usuario instanceof Administrador) {
+                        ((Administrador) usuario).setCurriculum(((Administrador) us).getCurriculum());
                     }
                 }
                 //Este error no llega aquí, el programa se para

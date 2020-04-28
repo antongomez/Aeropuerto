@@ -86,198 +86,6 @@
    <center>
       <StackPane BorderPane.alignment="CENTER">
          <children>
-            <TabPane fx:id="panelServicios" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
-               <tabs>
-                  <Tab text="Parking">
-                     <content>
-                        <AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background">
-                           <children>
-                              <VBox alignment="TOP_CENTER" layoutX="38.0" layoutY="75.0" prefHeight="584.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <VBox spacing="125.0">
-                                       <children>
-                                          <VBox alignment="TOP_CENTER" spacing="40.0">
-                                             <children>
-                                                <VBox alignment="TOP_CENTER" spacing="15.0">
-                                                   <children>
-                                                      <VBox alignment="TOP_CENTER" spacing="10.0">
-                                                         <children>
-                                                            <HBox alignment="TOP_CENTER" spacing="20.0">
-                                                               <children>
-                                                                  <HBox spacing="10.0">
-                                                                     <children>
-                                                                        <Label minHeight="28.0" prefHeight="28.0" text="Terminal:" />
-                                                                        <ComboBox minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="130.0" />
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox spacing="10.0">
-                                                                     <children>
-                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de llegada:" />
-                                                                        <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox spacing="10.0">
-                                                                     <children>
-                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de retorno:" />
-                                                                        <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
-                                                                     </children>
-                                                                  </HBox>
-                                                               </children>
-                                                            </HBox>
-                                                            <Label styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
-                                                         </children>
-                                                      </VBox>
-                                                      <Button mnemonicParsing="false" text="Buscar" />
-                                                   </children>
-                                                </VBox>
-                                                <HBox alignment="CENTER" spacing="120.0">
-                                                   <children>
-                                                      <HBox spacing="10.0">
-                                                         <children>
-                                                            <Label prefHeight="28.0" text="Plazas libres:" />
-                                                            <TextField editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="60.0" />
-                                                         </children>
-                                                      </HBox>
-                                                      <HBox spacing="10.0">
-                                                         <children>
-                                                            <Label prefHeight="28.0" text="Precio:" />
-                                                            <TextField editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="60.0" />
-                                                         </children>
-                                                      </HBox>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <HBox alignment="CENTER" spacing="200.0">
-                                             <children>
-                                                <Button mnemonicParsing="false" text="Reservar" />
-                                                <HBox spacing="10.0">
-                                                   <children>
-                                                      <Label minHeight="25.0" prefHeight="28.0" text="Matrícula:" />
-                                                      <TextField minHeight="25.0" minWidth="120.0" prefHeight="28.0" prefWidth="150.0" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
-                                 </padding>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab text="Coches">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
-                           <children>
-                              <VBox alignment="TOP_CENTER" layoutX="234.0" layoutY="23.0" prefHeight="584.0" prefWidth="810.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <children>
-                                    <VBox alignment="TOP_CENTER" minHeight="485.0" spacing="40.0">
-                                       <children>
-                                          <VBox alignment="TOP_CENTER" spacing="15.0">
-                                             <children>
-                                                <VBox alignment="TOP_CENTER" spacing="10.0">
-                                                   <children>
-                                                      <HBox alignment="TOP_CENTER" spacing="20.0">
-                                                         <children>
-                                                            <HBox spacing="10.0">
-                                                               <children>
-                                                                  <Label minHeight="25.0" prefHeight="28.0" text="Fecha de llegada:" />
-                                                                  <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
-                                                               </children>
-                                                            </HBox>
-                                                            <HBox spacing="10.0">
-                                                               <children>
-                                                                  <Label minHeight="25.0" prefHeight="28.0" text="Fecha de retorno:" />
-                                                                  <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
-                                                               </children>
-                                                            </HBox>
-                                                            <HBox spacing="10.0">
-                                                               <children>
-                                                                  <Label minHeight="28.0" prefHeight="28.0" text="Número de plazas:" />
-                                                               </children>
-                                                            </HBox>
-                                                            <TextField minHeight="25.0" minWidth="30.0" prefHeight="28.0" prefWidth="60.0" />
-                                                         </children>
-                                                      </HBox>
-                                                      <Label styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
-                                                   </children>
-                                                </VBox>
-                                                <Button mnemonicParsing="false" text="Buscar" />
-                                             </children>
-                                          </VBox>
-                                          <TableView maxHeight="340.0" minHeight="300.0" prefHeight="320.0">
-                                            <columns>
-                                              <TableColumn minWidth="120.0" prefWidth="120.0" text="Matrícula" />
-                                              <TableColumn minWidth="120.0" prefWidth="120.0" text="Modelo" />
-                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Caballos" />
-                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Precio/Día" />
-                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Combustible" />
-                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Plazas" />
-                                                <TableColumn minWidth="120.0" prefWidth="-1.0" text="Puertas" />
-                                                <TableColumn minWidth="120.0" prefWidth="-1.0" text="Precio Total" />
-                                            </columns>
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                       </children>
-                                    </VBox>
-                                    <Button mnemonicParsing="false" text="Reservar" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
-                                 </padding>
-                              </VBox>
-                           </children></AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab text="Tiendas">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
-                           <children>
-                              <VBox alignment="TOP_CENTER" layoutX="230.0" layoutY="79.0" prefHeight="584.0" prefWidth="1000.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
-                                 </padding>
-                                 <children>
-                                    <GridPane alignment="CENTER_LEFT" hgap="10.0" vgap="10.0">
-                                      <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label minHeight="25.0" prefHeight="28.0" text="Nombre:" />
-                                          <Label minHeight="25.0" prefHeight="28.0" text="Terminal:" GridPane.rowIndex="1" />
-                                          <Label minHeight="25.0" prefHeight="28.0" text="Tipo de ventas:" GridPane.columnIndex="2" />
-                                          <Button mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowSpan="2" />
-                                          <TextField maxWidth="160.0" minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="140.0" GridPane.columnIndex="1" />
-                                          <ComboBox minHeight="25.0" prefHeight="28.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <ComboBox minHeight="25.0" prefHeight="28.0" prefWidth="140.0" GridPane.columnIndex="3" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </VBox>
-                           </children></AnchorPane>
-                     </content>
-                  </Tab>
-               </tabs>
-            </TabPane>
             <AnchorPane fx:id="panelVuelos" prefHeight="550.0" prefWidth="800.0" styleClass="root">
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
@@ -530,6 +338,198 @@
                               <Button fx:id="btnCancelarReserva" layoutX="671.0" layoutY="426.0" mnemonicParsing="false" onAction="#accionBtnCancelarReserva" text="Cancelar" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="50.0" />
                            </children>
                         </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <TabPane fx:id="panelServicios" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="Parking">
+                     <content>
+                        <AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background">
+                           <children>
+                              <VBox alignment="TOP_CENTER" layoutX="38.0" layoutY="75.0" prefHeight="584.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox spacing="125.0">
+                                       <children>
+                                          <VBox alignment="TOP_CENTER" spacing="40.0">
+                                             <children>
+                                                <VBox alignment="TOP_CENTER" spacing="15.0">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" spacing="10.0">
+                                                         <children>
+                                                            <HBox alignment="TOP_CENTER" spacing="20.0">
+                                                               <children>
+                                                                  <HBox spacing="10.0">
+                                                                     <children>
+                                                                        <Label minHeight="28.0" prefHeight="28.0" text="Terminal:" />
+                                                                        <ComboBox fx:id="cboxTerminalParking" minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="130.0" />
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <HBox spacing="10.0">
+                                                                     <children>
+                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de llegada:" />
+                                                                        <DatePicker fx:id="dataFLlegadaParking" minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <HBox spacing="10.0">
+                                                                     <children>
+                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de retorno:" />
+                                                                        <DatePicker fx:id="dataFRetornoParking" minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
+                                                                     </children>
+                                                                  </HBox>
+                                                               </children>
+                                                            </HBox>
+                                                            <Label fx:id="etqInfoParking" styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
+                                                         </children>
+                                                      </VBox>
+                                                      <Button fx:id="btnBuscarParking" mnemonicParsing="false" onAction="#accionBtnBuscarParking" text="Buscar" />
+                                                   </children>
+                                                </VBox>
+                                                <HBox alignment="CENTER" spacing="120.0">
+                                                   <children>
+                                                      <HBox spacing="10.0">
+                                                         <children>
+                                                            <Label prefHeight="28.0" text="Plazas libres:" />
+                                                            <TextField fx:id="txtPlazasParking" editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="60.0" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox spacing="10.0">
+                                                         <children>
+                                                            <Label prefHeight="28.0" text="Precio:" />
+                                                            <TextField fx:id="txtPrecioParking" editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="60.0" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <HBox alignment="CENTER" spacing="200.0">
+                                             <children>
+                                                <Button fx:id="btnReservarParking" mnemonicParsing="false" onAction="#accionBtnReservarParking" text="Reservar" />
+                                                <HBox spacing="10.0">
+                                                   <children>
+                                                      <Label minHeight="25.0" prefHeight="28.0" text="Matrícula:" />
+                                                      <TextField fx:id="txtMatriculaParking" minHeight="25.0" minWidth="120.0" prefHeight="28.0" prefWidth="150.0" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Coches">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <VBox alignment="TOP_CENTER" layoutX="234.0" layoutY="23.0" prefHeight="584.0" prefWidth="810.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" minHeight="485.0" spacing="40.0">
+                                       <children>
+                                          <VBox alignment="TOP_CENTER" spacing="15.0">
+                                             <children>
+                                                <VBox alignment="TOP_CENTER" spacing="10.0">
+                                                   <children>
+                                                      <HBox alignment="TOP_CENTER" spacing="20.0">
+                                                         <children>
+                                                            <HBox spacing="10.0">
+                                                               <children>
+                                                                  <Label minHeight="25.0" prefHeight="28.0" text="Fecha de llegada:" />
+                                                                  <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox spacing="10.0">
+                                                               <children>
+                                                                  <Label minHeight="25.0" prefHeight="28.0" text="Fecha de retorno:" />
+                                                                  <DatePicker minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="120.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox spacing="10.0">
+                                                               <children>
+                                                                  <Label minHeight="28.0" prefHeight="28.0" text="Número de plazas:" />
+                                                               </children>
+                                                            </HBox>
+                                                            <TextField minHeight="25.0" minWidth="30.0" prefHeight="28.0" prefWidth="60.0" />
+                                                         </children>
+                                                      </HBox>
+                                                      <Label styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
+                                                   </children>
+                                                </VBox>
+                                                <Button mnemonicParsing="false" text="Buscar" />
+                                             </children>
+                                          </VBox>
+                                          <TableView maxHeight="340.0" minHeight="300.0" prefHeight="320.0">
+                                            <columns>
+                                              <TableColumn minWidth="120.0" prefWidth="120.0" text="Matrícula" />
+                                              <TableColumn minWidth="120.0" prefWidth="120.0" text="Modelo" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Caballos" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Precio/Día" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Combustible" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Plazas" />
+                                                <TableColumn minWidth="120.0" prefWidth="-1.0" text="Puertas" />
+                                                <TableColumn minWidth="120.0" prefWidth="-1.0" text="Precio Total" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                    <Button mnemonicParsing="false" text="Reservar" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
+                                 </padding>
+                              </VBox>
+                           </children></AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Tiendas">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <VBox alignment="TOP_CENTER" layoutX="230.0" layoutY="79.0" prefHeight="584.0" prefWidth="1000.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
+                                 </padding>
+                                 <children>
+                                    <GridPane alignment="CENTER_LEFT" hgap="10.0" vgap="10.0">
+                                      <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label minHeight="25.0" prefHeight="28.0" text="Nombre:" />
+                                          <Label minHeight="25.0" prefHeight="28.0" text="Terminal:" GridPane.rowIndex="1" />
+                                          <Label minHeight="25.0" prefHeight="28.0" text="Tipo de ventas:" GridPane.columnIndex="2" />
+                                          <Button mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowSpan="2" />
+                                          <TextField maxWidth="160.0" minHeight="25.0" minWidth="100.0" prefHeight="28.0" prefWidth="140.0" GridPane.columnIndex="1" />
+                                          <ComboBox minHeight="25.0" prefHeight="28.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ComboBox minHeight="25.0" prefHeight="28.0" prefWidth="140.0" GridPane.columnIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
                      </content>
                   </Tab>
                </tabs>
