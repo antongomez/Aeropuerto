@@ -81,27 +81,6 @@ public class Modelo {
     public boolean modificarUsuario(Usuario usuario) {
         return fa.modificarUsuario(usuario);
     }
-<<<<<<< HEAD
-    
-    
-   public boolean eliminarUsuario(String dni){
-       return fa.eliminarUsuario(dni);
-   }
-   public EstadisticasUsuario mostrarEstadisticasUsuario(String dniUs,String tipo,Integer num){
-       return fa.obtenerEstadisticasUsuario(dniUs, tipo, num);
-   }
-   public List<Reserva> obtenerReservasUsuario(String dniUs){
-       return fa.obtenerReservasUsuario(dniUs);
-   }
-   public Boolean cancelarReserva(Reserva res, String dniUs){
-       return fa.cancelarReserva(res, dniUs);
-   }
-   public void obtenerDatosAvionVuelo(Vuelo v){
-      fa.obtenerDatosAvionVuelo(v);
-   }
-   public Usuario obtenerUsuario(String dni){
-        return fa.obtenerUsuario(dni);
-=======
 
     public boolean eliminarUsuario(String dni) {
         return fa.eliminarUsuario(dni);
@@ -123,6 +102,10 @@ public class Modelo {
         fa.obtenerDatosAvionVuelo(v);
     }
 
+    public Usuario obtenerUsuario(String dni) {
+        return fa.obtenerUsuario(dni);
+    }
+
     public List<Integer> buscarTerminais() {
         return fa.buscarTerminais();
     }
@@ -133,7 +116,6 @@ public class Modelo {
 
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return fa.reservarParking(reserva, dniUsuario);
->>>>>>> Funcionalidade Buscar Parking
     }
 
 }

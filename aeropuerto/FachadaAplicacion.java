@@ -70,15 +70,11 @@ public class FachadaAplicacion extends Application {
     public boolean eliminarUsuario(String dni) {
         return gu.eliminarUsuario(dni);
     }
-<<<<<<< HEAD
     /*Rellena los campos dni y nombre del usuario encontrado. Si no se encuentra devuelve null*/
     public Usuario obtenerUsuario(String dni){
         return gu.obtenerUsuario(dni);
     }
-    
-=======
 
->>>>>>> Funcionalidade Buscar Parking
     //en la interfaz falta poner si está o no cancelado y cuánto falta para su salida
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {//no está probada
         return gv.obtenerVuelosUsuario(dniUs);
