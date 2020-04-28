@@ -37,6 +37,16 @@ public class Reserva {
         this.numPlaza = numPlaza;
     }
 
+    public Reserva(Time inicio, Time fin, String tipo, String matricula, Integer terminal, Integer piso, Integer numPlaza) {
+        this.inicio = inicio;
+        this.fin = fin;
+        this.tipo = tipo;
+        this.matricula = matricula;
+        this.terminal = terminal;
+        this.piso = piso;
+        this.numPlaza = numPlaza;
+    }
+
     public Integer getTerminal() {
         return terminal;
     }

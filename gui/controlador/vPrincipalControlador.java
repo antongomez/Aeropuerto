@@ -39,7 +39,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -60,6 +59,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TEXTO_ERROR_PARKING = "La fecha de regreso debe ser mayor que la de llegada";
 
     private Usuario usuario;//usuario que está usando la ventana
+    private Parking parking;//parking a reservar
 
     //Encabezado
     @FXML
@@ -372,17 +372,17 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //cboxTerminalParking;
         dataFRetornoParking.setValue(null);
         dataFLlegadaParking.setValue(null);
-        etqInfoParking.setText(TEXTO_INFO_PARKING);
 
         //COCHES
         //Poñemos o panel diante
+        etqTitulo.setText(TITULO_SERV);
         panelServicios.toFront();
 
     }
 
     @FXML
     private void accionBtnBuscarParking(ActionEvent event) {
-        Parking parking = getInstanceModelo().buscarParking(
+        parking = getInstanceModelo().buscarParking(
                 cboxTerminalParking.getSelectionModel().getSelectedItem(),
                 new Time(dataFLlegadaParking.getValue()),
                 new Time(dataFRetornoParking.getValue()));
@@ -401,18 +401,24 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
     }
 
-    private Boolean asignarPrazaParking(Reserva reserva) {
-        if (reserva == null) {
-            return false;
-        }
-        Boolean exito = true;
-
-        return exito;
+    private Integer asignarPlazaParking(Time llegada, Time retorno) {
+        Integer numPlaza = 0;
+        //Facer código
+        return numPlaza;
     }
 
     @FXML
     private void accionBtnReservarParking(ActionEvent event) {
-
+        Time llegada = new Time(dataFRetornoParking.getValue());
+        Time retorno = new Time(dataFRetornoParking.getValue());
+        Reserva reserva = new Reserva(llegada,
+                retorno,
+                "parking",
+                txtMatriculaParking.getText(),
+                parking.getTerminal(),
+                parking.getNumPrazas(),
+                asignarPlazaParking(llegada, retorno));
+        getInstanceModelo().reservarParking(reserva, TITULO_AREAP);
     }
 
     @FXML
