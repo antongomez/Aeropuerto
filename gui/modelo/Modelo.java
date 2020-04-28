@@ -5,6 +5,7 @@ import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import gui.FachadaGui;
@@ -113,6 +114,10 @@ public class Modelo {
 
     public List<Integer> buscarTerminais() {
         return fa.buscarTerminais();
+    }
+    
+    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin){
+        return fa.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
     }
 
     public Parking buscarParking(Integer terminal, Time inicio, Time fin) {

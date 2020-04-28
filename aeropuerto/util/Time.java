@@ -128,9 +128,9 @@ public class Time {
                     break;
 
             }
-            
+
         }
-        miliseg -= 60*60*1000; //Apaño
+        miliseg -= 60 * 60 * 1000; //Apaño
         System.out.println("Data real: " + getStringSql() + ".Data nova: " + (new Timestamp(miliseg)).toString());
 
         return new Timestamp(miliseg);
@@ -176,9 +176,13 @@ public class Time {
         return new Time(LocalDate.now());
     }
 
-    public static Boolean fechaMayorActual(Time fecha) {
+    public static Boolean fechaMayorIgualActual(Time fecha) {
         return (fecha.toTimestamp().after(Time.diaActual().toTimestamp())
                 || !fecha.toTimestamp().before(Time.diaActual().toTimestamp()));
+    }
+
+    public static Boolean compararMayor(Time fecha1, Time fecha2) {
+        return (fecha1.toTimestamp().after(fecha2.toTimestamp()));
     }
 
 }

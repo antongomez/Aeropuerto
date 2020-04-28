@@ -7,6 +7,7 @@ package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Parking;
+import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Time;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -64,6 +65,44 @@ public class daoTerminal extends AbstractDAO {
             }
         }
         return parking;
+    }
+
+    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin) {
+        Connection con;
+        PreparedStatement stmRes = null;
+        ResultSet rsRes;
+        con = super.getConexion();
+        PorcentajeDisponibilidad per = null;
+
+        try {
+            stmRes = con.prepareStatement("select sum(numPlazas) as totalPlazas, sum(p.numplazas - coalesce(c.plazasOc, 0)) as plazasLibres\n"
+                    + "from parking as p natural left outer join (select terminal, piso, count(*) as plazasOc\n"
+                    + "								from reservarParking\n"
+                    + "								where fechaentrada <= ?\n"
+                    + "								  and fechafin >= ?\n"
+                    + "								group by terminal, piso) as c\n"
+                    + "where terminal = ?");
+            stmRes.setTimestamp(1, fin.toTimestamp());
+            stmRes.setTimestamp(2, inicio.toTimestamp());
+            stmRes.setInt(3, numTerminal);
+
+            rsRes = stmRes.executeQuery();
+            if (rsRes.next()) {
+                per = new PorcentajeDisponibilidad(rsRes.getInt("totalPlazas"), rsRes.getInt("plazasLibres"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmRes.close();
+            } catch (SQLException e) {
+
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return per;
     }
 
     public List<Integer> buscarTerminais() {

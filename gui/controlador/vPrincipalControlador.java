@@ -6,6 +6,7 @@ import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import gui.modelo.Modelo;
@@ -36,7 +37,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -54,7 +57,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TXT_BTN_PL = "Personal";
 
     private final static String TEXTO_INFO_PARKING = "Introduce los datos de tu vuelo o de tu estancia";
-    private final static String TEXTO_ERROR_PARKING = "Los datos de búsqueda son incorrectos";
+    private final static String TEXTO_ERROR_PARKING = "La fecha de regreso debe ser mayor que la de llegada";
 
     private Usuario usuario;//usuario que está usando la ventana
 
@@ -247,6 +250,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TextField txtPrecioParking;
     @FXML
     private TextField txtMatriculaParking;
+    @FXML
+    private Label etqErroMatricula;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -294,6 +299,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         comboBoxEstUsu.setItems(meses);
         comboBoxEstUsu.getSelectionModel().selectFirst();
 
+        //Lista de terminais para mostrar no comboBox da venta reservar parking
         ObservableList<Integer> terminais = FXCollections.observableArrayList(getInstanceModelo().buscarTerminais());
         cboxTerminalParking.setItems(terminais);
 
@@ -358,6 +364,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnServicios(ActionEvent event) {
         //PARKING
         btnReservarParking.setDisable(true);
+        btnBuscarParking.setDisable(true);
+        etqErroMatricula.setVisible(false);
         //Borramos os txt
         txtMatriculaParking.clear();
         txtPrecioParking.clear();
@@ -378,8 +386,19 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 cboxTerminalParking.getSelectionModel().getSelectedItem(),
                 new Time(dataFLlegadaParking.getValue()),
                 new Time(dataFRetornoParking.getValue()));
-        txtPlazasParking.setText(parking.getNumPrazas().toString());
-        txtPrecioParking.setText("?");
+        PorcentajeDisponibilidad pd = getInstanceModelo()
+                .obterPrazasRestantesParkingTerminal(
+                        cboxTerminalParking.getSelectionModel().getSelectedItem(),
+                        new Time(dataFLlegadaParking.getValue()),
+                        new Time(dataFRetornoParking.getValue()));
+        if (pd != null) {
+            txtPlazasParking.setText(pd.getPlazasLibres().toString());
+            txtPrecioParking.setText("?");
+        } else {
+            getInstanceModelo().mostrarError("No se pudo obtener el número de "
+                    + "plazas disponibles en el parking de la terminal. "
+                    + "Inténtelo en otro momento.");
+        }
     }
 
     private Boolean asignarPrazaParking(Reserva reserva) {
@@ -393,6 +412,64 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnReservarParking(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void comprobarBuscarParking(Event event) {
+        if ((cboxTerminalParking.getSelectionModel().getSelectedItem() != null)
+                && (dataFLlegadaParking.getValue() != null)
+                && (dataFRetornoParking.getValue() != null)) {
+            if (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue()))) {
+                etqInfoParking.setText(TEXTO_ERROR_PARKING);
+                etqInfoParking.getStyleClass().add("etqErro");
+                btnBuscarParking.setDisable(true);
+            } else {
+                etqInfoParking.setText(TEXTO_INFO_PARKING);
+                btnBuscarParking.setDisable(false);
+                etqInfoParking.getStyleClass().remove("etqErro");
+            }
+        } else if ((dataFLlegadaParking.getValue() != null)
+                && (dataFRetornoParking.getValue() != null)) {
+            if (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue()))) {
+                etqInfoParking.setText(TEXTO_ERROR_PARKING);
+                etqInfoParking.getStyleClass().add("etqErro");
+            } else {
+                etqInfoParking.setText(TEXTO_INFO_PARKING);
+                etqInfoParking.getStyleClass().remove("etqErro");
+            }
+        } else {
+            btnBuscarParking.setDisable(true);
+            etqInfoParking.setText(TEXTO_INFO_PARKING);
+            etqInfoParking.getStyleClass().remove("etqErro");
+        }
+    }
+
+    @FXML
+    private void comprobarReservarParking(KeyEvent event) {
+        String matricula = txtMatriculaParking.getText();
+        if (matricula.length() == 7) {
+            for (int i = 0; i < 4; i++) {
+                if (!Character.isDigit(matricula.charAt(i))) {
+                    etqErroMatricula.setVisible(true);
+                    return;
+                }
+            }
+            for (int i = 4; i < 7; i++) {
+                if (!Character.isLetter(matricula.charAt(i))) {
+                    etqErroMatricula.setVisible(true);
+                    return;
+                }
+            }
+            btnReservarParking.setDisable(false);
+            etqErroMatricula.setVisible(false);
+        } else if (matricula.length() > 7) {
+            etqErroMatricula.setVisible(true);
+            btnReservarParking.setDisable(true);
+        } else {
+            etqErroMatricula.setVisible(false);
+            btnReservarParking.setDisable(true);
+        }
 
     }
 
@@ -419,8 +496,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             llegada = Time.diaActual();
         }
 
-        if (((salida != null) && (!Time.fechaMayorActual(salida)))
-                || ((llegada != null) && (!Time.fechaMayorActual(llegada)))) {
+        if (((salida != null) && (!Time.fechaMayorIgualActual(salida)))
+                || ((llegada != null) && (!Time.fechaMayorIgualActual(llegada)))) {
             getInstanceModelo().mostrarError("Las fechas de salida y llegada deben ser mayores que la fecha actual");
         } else {
 

@@ -12,10 +12,6 @@ import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;
 
-/**
- *
- * @author Esther
- */
 public class GestionReservas {
 
     FachadaGui fgui;
@@ -38,14 +34,6 @@ public class GestionReservas {
             return fbd.cancelarReservaCoche(res, dniUs);
         }
 
-    }
-    
-    public List<Integer> buscarTerminais() {
-        return fbd.buscarTerminais();
-    }
-
-    public Parking buscarParking(Integer terminal, Time inicio, Time fin) {
-        return fbd.buscarParking(terminal, inicio, fin);
     }
 
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {

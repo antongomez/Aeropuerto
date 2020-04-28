@@ -3,10 +3,12 @@ package aeropuerto;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.elementos.Usuario;
+import aeropuerto.gestion.GestionParking;
 import aeropuerto.gestion.GestionReservas;
 import aeropuerto.gestion.GestionVuelos;
 import aeropuerto.gestion.GestionUsuarios;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
@@ -23,6 +25,7 @@ public class FachadaAplicacion extends Application {
     GestionUsuarios gu;
     GestionVuelos gv;
     GestionReservas gr;
+    GestionParking gp;
 
     public FachadaAplicacion() {
         fgui = new gui.FachadaGui(this);
@@ -30,6 +33,7 @@ public class FachadaAplicacion extends Application {
         gu = new GestionUsuarios(fgui, fbd);
         gv = new GestionVuelos(fgui, fbd);
         gr = new GestionReservas(fgui, fbd);
+        gp = new GestionParking(fgui, fbd);
     }
 
     public static void main(String[] args) {
@@ -127,11 +131,15 @@ public class FachadaAplicacion extends Application {
     }
     
     public List<Integer> buscarTerminais() {
-        return gr.buscarTerminais();
+        return gp.buscarTerminais();
     }
     
     public Parking buscarParking(Integer terminal, Time inicio, Time fin) {
-        return gr.buscarParking(terminal, inicio, fin);
+        return gp.buscarParking(terminal, inicio, fin);
+    }
+    
+    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin){
+        return gp.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
     }
     
     public Boolean reservarParking(Reserva reserva, String dniUsuario){

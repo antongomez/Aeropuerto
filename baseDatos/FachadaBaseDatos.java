@@ -5,6 +5,7 @@ import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import java.io.FileInputStream;
@@ -123,6 +124,10 @@ public class FachadaBaseDatos {
     
     public List<Integer> buscarTerminais(){
         return daoTerminal.buscarTerminais();
+    }
+    
+    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin){
+        return daoTerminal.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
     }
     
     public Boolean reservarParking(Reserva reserva, String dniUsuario){
