@@ -381,6 +381,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Vuelo vuelo = tablaProximosVuelos.getSelectionModel().getSelectedItem();
         vComprarControlador controlador = ((vComprarControlador) loadWindow(getClass().getResource("/gui/vista/vComprar.fxml"), "AeroETSE", stage));
         controlador.setVuelo(vuelo);
+        controlador.setUsuario(usuario);
+
     }
 
     @FXML

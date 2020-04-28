@@ -105,4 +105,8 @@ public class FachadaBaseDatos {
         
         daoVuelos.obtenerDatosAvionVuelo(v);
     }
+    
+    public Usuario obtenerUsuario(String dni){
+        return daoUsuarios.obtenerUsuario(dni);
+    }
 }

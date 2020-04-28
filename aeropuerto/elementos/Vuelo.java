@@ -17,7 +17,7 @@ public class Vuelo {
     private Boolean cancelado;
     private Integer terminal;
     private String avion;
-    private String aerolinea;
+    private Aerolinea aerolinea;
     private Integer plazasNormal;
     private Integer plazasPremium;
 
@@ -65,7 +65,7 @@ public class Vuelo {
 
     }
 
-    public String getAerolinea() {
+    public Aerolinea getAerolinea() {
         return aerolinea;
     }
 
@@ -165,8 +165,8 @@ public class Vuelo {
         this.terminal = terminal;
     }
 
-    public void setAerolinea(String aerolinea) {
-        this.aerolinea = aerolinea;
+    public void setAerolinea(String nombre, Float precioMaleta, Float pesoMaleta) {
+        this.aerolinea = new Aerolinea(nombre, precioMaleta, pesoMaleta);
     }
 
     public void setPlazasNormal(Integer plazasNormal) {

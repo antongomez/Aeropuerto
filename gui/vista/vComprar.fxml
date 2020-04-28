@@ -39,12 +39,12 @@
                            <children>
                               <Label text="DNI:" />
                               <TextField fx:id="textFieldDNI" maxWidth="160.0" prefHeight="160.0" GridPane.columnIndex="1" />
-                              <Button fx:id="btnAnhadir" mnemonicParsing="false" text="Añadir" GridPane.columnIndex="3" />
+                              <Button fx:id="btnAnhadir" mnemonicParsing="false" onAction="#anhadirPasajero" text="Añadir" GridPane.columnIndex="3" />
                            </children>
                         </GridPane>
                         <HBox fillHeight="false" minWidth="-Infinity" spacing="20.0">
                            <children>
-                              <TableView fx:id="tablaPasajeros" prefHeight="200.0">
+                              <TableView fx:id="tablaPasajeros" onMouseClicked="#cambioUsuario" prefHeight="200.0">
                                 <columns>
                                   <TableColumn fx:id="columnaDNI" prefWidth="125.0" text="DNI" />
                                     <TableColumn fx:id="columnaNombre" prefWidth="125.0" text="Nombre" />
@@ -55,7 +55,7 @@
                                     <Label alignment="CENTER" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #757575;" text="Nombre" />
                                     <VBox spacing="12.0">
                                        <children>
-                                          <RadioButton fx:id="radioBtnAcompanhante" mnemonicParsing="false" prefHeight="28.0" text="Acompañante" textFill="WHITE">
+                                          <RadioButton fx:id="radioBtnAcompanhante" mnemonicParsing="false" onAction="#selectAcompanhante" prefHeight="28.0" text="Acompañante" textFill="WHITE">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -75,10 +75,10 @@
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <ComboBox fx:id="comboBoxNumMaletas" prefHeight="28.0" GridPane.columnIndex="2" />
+                                                <ComboBox fx:id="comboBoxNumMaletas" onAction="#cambioNumMaletas" prefHeight="28.0" GridPane.columnIndex="2" />
                                              </children>
                                           </GridPane>
-                                          <RadioButton fx:id="radioBtnPremium" mnemonicParsing="false" prefHeight="28.0" text="Premium" textFill="WHITE">
+                                          <RadioButton fx:id="radioBtnPremium" mnemonicParsing="false" onAction="#selectPremium" prefHeight="28.0" text="Premium" textFill="WHITE">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -114,6 +114,7 @@
                               <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label minHeight="30.0" minWidth="-Infinity" prefHeight="32.0" text="Número:" />
@@ -140,6 +141,10 @@
                               <Label prefHeight="21.0" prefWidth="113.0" text="Precio premium:" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                               <TextField fx:id="textFieldPrecioNormal" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <TextField fx:id="textFieldPrecioPremium" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                              <Label prefHeight="21.0" prefWidth="113.0" text="Precio maleta:" GridPane.rowIndex="6" />
+                              <Label prefHeight="21.0" prefWidth="114.0" text="Peso maleta kg:" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                              <TextField fx:id="textFieldPrecioMaleta" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="textFieldPesoMaleta" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                            </children>
                         </GridPane>
                         <GridPane fx:id="labelPrecio" hgap="5.0" prefHeight="33.0" prefWidth="266.0">
@@ -155,7 +160,7 @@
                            <children>
                               <Label prefHeight="34.0" text="Precio:" />
                               <Button fx:id="btnPagar" mnemonicParsing="false" text="Pagar" GridPane.columnIndex="3" />
-                              <TextField editable="false" minHeight="30.0" minWidth="70.0" prefHeight="34.0" prefWidth="80.0" GridPane.columnIndex="1" />
+                              <TextField fx:id="txtFieldPrecioTotal" editable="false" minHeight="30.0" minWidth="70.0" prefHeight="34.0" prefWidth="80.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>

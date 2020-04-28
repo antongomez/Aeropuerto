@@ -11,7 +11,10 @@ public class Usuario {
     private String paisProcedencia;
     private Integer telefono;
     private String sexo; //Estaría mejor usar char, pero no se como pasar un char en el dao a la base de datos
+    /*este atributo sirve para guardar los datos de un vuelo concreto de un usuario(confirmado o en proceso)*/
+    private CompraVuelo vueloEnEspera;
 
+    
     public Usuario(String dni, String id, String email,String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo) {
 
         //No sé si hay que poner comprobaciones de que no sean nulos, dni correcto y sexo m/h/- si ya lo hace sql
@@ -28,6 +31,11 @@ public class Usuario {
             this.sexo=cambiarFormatoSexo(sexo);
         }
         
+    }
+
+    public Usuario(String dni, String nombre) {
+        this.dni = dni;
+        this.nombre = nombre;
     }
 
     public String getDni() {
@@ -129,5 +137,12 @@ public class Usuario {
             }
         }
         return sexoFormatoFinal;
+    }
+
+    public CompraVuelo getVueloEnEspera() {
+        return vueloEnEspera;
+    }
+    public void comprarVuelo(){
+        vueloEnEspera=new CompraVuelo();
     }
 }

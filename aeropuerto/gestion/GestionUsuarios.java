@@ -43,5 +43,7 @@ public class GestionUsuarios {
             return null;
         }
     }
-    
+    public Usuario obtenerUsuario(String dni){
+        return fbd.obtenerUsuario(dni);
+    }
 }

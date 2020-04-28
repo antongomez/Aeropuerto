@@ -96,5 +96,8 @@ public class Modelo {
    public void obtenerDatosAvionVuelo(Vuelo v){
       fa.obtenerDatosAvionVuelo(v);
    }
+   public Usuario obtenerUsuario(String dni){
+        return fa.obtenerUsuario(dni);
+    }
 
 }

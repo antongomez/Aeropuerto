@@ -178,12 +178,13 @@ public class daoVuelos extends AbstractDAO {
 
         try {
             stmVuelo = con.prepareStatement("select distinct vuelo.aerolinea as aerolinea, "
+                    + "vuelo.preciobasemaleta as precioMaleta, vuelo.pesoBaseMaleta as pesoMaleta, "
                     + "cN-nN as plazasNormal, cP-nP as plazasPremium from "
                     + "(select count(*) as nN from vuelo v, comprarbillete c " +
                     "where v.numvuelo=c.vuelo and v.numvuelo=? and tipoasiento='normal') as nN,"
                     + "(select count(*) as nP from vuelo v, comprarbillete c " +
                         "where v.numvuelo=c.vuelo and v.numvuelo=? and tipoasiento='premium') as nP,"
-                    + "(select aerolinea, m.capacidadnormal as cN, m.capacidadPremium as cP " +
+                    + "(select aerolinea, precioBaseMaleta, pesoBaseMaleta, m.capacidadnormal as cN, m.capacidadPremium as cP " +
                     "from vuelo v, aerolinea a, avion av, modeloAvion m "
                     + "where avion=av.codigo and av.aerolinea=a.nombre and m.nombre=av.modeloavion " +
                     "and v.numvuelo=?) as vuelo");
@@ -192,7 +193,7 @@ public class daoVuelos extends AbstractDAO {
             stmVuelo.setString(3, v.getNumVuelo());
             rsVuelo = stmVuelo.executeQuery();
             if(rsVuelo.next()){
-            v.setAerolinea(rsVuelo.getString("aerolinea"));
+            v.setAerolinea(rsVuelo.getString("aerolinea"),rsVuelo.getFloat("precioMaleta"),rsVuelo.getFloat("pesoMaleta"));
             v.setPlazasNormal(rsVuelo.getInt("plazasNormal"));
             v.setPlazasPremium(rsVuelo.getInt("plazasPremium"));
         }
