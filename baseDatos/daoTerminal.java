@@ -32,14 +32,14 @@ public class daoTerminal extends AbstractDAO {
 
         try {
             stmParking = con.prepareStatement("select p.piso, p.numplazas\n"
-                    + "from parking as p natural join (select terminal, piso, count(*) as plazasOc\n"
+                    + "from parking as p natural left outer join (select terminal, piso, count(*) as plazasOc\n"
                     + "								from reservarParking\n"
                     + "								where fechaentrada <= ?\n"
                     + "  								  and fechafin >= ?\n"
                     + "								group by terminal, piso) as c\n"
                     + "where terminal = ?\n"
                     + "group by p.piso, p.numplazas, c.plazasOc\n"
-                    + "having (p.numplazas - c.plazasOc) = max(p.numplazas - c.plazasOc)");
+                    + "having (p.numplazas - coalesce(c.plazasOc, 0)) = max(p.numplazas - coalesce(c.plazasOc, 0))");
             stmParking.setTimestamp(1, fin.toTimestamp());
             stmParking.setTimestamp(2, inicio.toTimestamp());
             stmParking.setInt(3, terminal);

@@ -405,6 +405,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     private Integer asignarPlazaParking(Time llegada, Time retorno) {
+        if(parking == null){
+            System.out.println("0");
+        }
         return getInstanceModelo().obterPrazaLibre(parking.getTerminal(),
                 parking.getNumPrazas(), llegada, retorno);
     }
@@ -413,14 +416,20 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnReservarParking(ActionEvent event) {
         Time llegada = new Time(dataFRetornoParking.getValue());
         Time retorno = new Time(dataFRetornoParking.getValue());
+        Integer numPraza = asignarPlazaParking(llegada, retorno);
         Reserva reserva = new Reserva(llegada,
                 retorno,
                 "parking",
                 txtMatriculaParking.getText(),
                 parking.getTerminal(),
                 parking.getNumPrazas(),
-                asignarPlazaParking(llegada, retorno));
-        getInstanceModelo().reservarParking(reserva, TITULO_AREAP);
+                numPraza);
+        if (getInstanceModelo().reservarParking(reserva, usuario.getDni())) {
+            getInstanceModelo().mostrarNotificacion("Reserva realizada con éxito.\n"
+                    + "Tiene reservada la plaza " + numPraza + " en el parking de la terminal "
+            + parking.getTerminal() + " en el piso " + parking.getPiso() + " entre los días "
+            + llegada + " y " + retorno + ".");
+        }
     }
 
     @FXML
