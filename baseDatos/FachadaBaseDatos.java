@@ -49,8 +49,8 @@ public class FachadaBaseDatos {
 
             daoUsuarios = new daoUsuarios(conexion, fa);
             daoVuelos = new daoVuelos(conexion, fa);
-            daoReservas = new daoReservas(conexion,fa);
-            daoTerminal = new daoTerminal(conexion,fa);
+            daoReservas = new daoReservas(conexion, fa);
+            daoTerminal = new daoTerminal(conexion, fa);
 
         } catch (FileNotFoundException f) {
             fa.mostrarError(f.getMessage());
@@ -63,19 +63,19 @@ public class FachadaBaseDatos {
     }
 
     public Boolean insertarUsuario(Usuario u, String clave) {
-        return daoUsuarios.insertarUsuario(u,clave);
+        return daoUsuarios.insertarUsuario(u, clave);
     }
-    
-    public Boolean modificarUsuario(Usuario us){
+
+    public Boolean modificarUsuario(Usuario us) {
         return daoUsuarios.modificarUsuario(us);
     }
-    public Boolean modificarContrasenha(String idUsuario, String clave){
+
+    public Boolean modificarContrasenha(String idUsuario, String clave) {
         return daoUsuarios.modificarContrasenha(idUsuario, clave);
     }
-    
-    
-    public boolean eliminarUsuario(String dni){
-       return daoUsuarios.eliminarUsuario(dni);
+
+    public boolean eliminarUsuario(String dni) {
+        return daoUsuarios.eliminarUsuario(dni);
     }
 
     public Usuario comprobarCredenciales(String id, String cont) {
@@ -89,48 +89,61 @@ public class FachadaBaseDatos {
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return daoVuelos.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
-    
-    public List<Vuelo> obtenerVuelosUsuario(String dniUs){
+
+    public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
         return daoVuelos.obtenerVuelosUsuario(dniUs);
     }
-    public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num){
+
+    public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num) {
         return daoUsuarios.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
-    public List<Reserva> obtenerReservasUsuario(String dniUs){
+
+    public List<Reserva> obtenerReservasUsuario(String dniUs) {
         return daoReservas.obtenerReservasUsuario(dniUs);
     }
-    
-    public Boolean cancelarReservaParking(Reserva res,String dniUs){
+
+    public Boolean cancelarReservaParking(Reserva res, String dniUs) {
         return daoReservas.cancelarReservaParking(res, dniUs);
     }
-    public Boolean cancelarReservaCoche(Reserva res, String dniUs){
+
+    public Boolean cancelarReservaCoche(Reserva res, String dniUs) {
         return daoReservas.cancelarReservaCoche(res, dniUs);
     }
-    public void obtenerDatosAvionVuelo(Vuelo v){
-        
+
+    public void obtenerDatosAvionVuelo(Vuelo v) {
+
         daoVuelos.obtenerDatosAvionVuelo(v);
     }
     
     public void comprarBilletes(ObservableList<Usuario> usuarios){
         daoVuelos.comprarBilletes(usuarios);
     }
-    
-    public Usuario obtenerUsuario(String dni){
+
+    public Usuario obtenerUsuario(String dni) {
         return daoUsuarios.obtenerUsuario(dni);
     }
-    public Parking buscarParking(Integer terminal, Time inicio, Time fin){
+
+    public Parking buscarParking(Integer terminal, Time inicio, Time fin) {
         return daoTerminal.buscarParking(terminal, inicio, fin);
     }
-    
-    public List<Integer> buscarTerminais(){
+
+    public Integer obterNumPlazasParking(Integer numTerminal, Integer piso) {
+        return daoTerminal.obterNumPlazasParking(numTerminal, piso);
+    }
+
+    public List<Integer> obterPlazasOcupadas(Integer numTerminal, Integer piso, Time inicio, Time fin) {
+        return daoTerminal.obterPlazasOcupadas(numTerminal, piso, inicio, fin);
+    }
+
+    public List<Integer> buscarTerminais() {
         return daoTerminal.buscarTerminais();
     }
-    
-    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin){
+
+    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin) {
         return daoTerminal.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
     }
-    
-    public Boolean reservarParking(Reserva reserva, String dniUsuario){
+
+    public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return daoReservas.reservarParking(reserva, dniUsuario);
     }
 }

@@ -75,8 +75,9 @@ public class FachadaAplicacion extends Application {
     public boolean eliminarUsuario(String dni) {
         return gu.eliminarUsuario(dni);
     }
+
     /*Rellena los campos dni y nombre del usuario encontrado. Si no se encuentra devuelve null*/
-    public Usuario obtenerUsuario(String dni){
+    public Usuario obtenerUsuario(String dni) {
         return gu.obtenerUsuario(dni);
     }
 
@@ -125,24 +126,32 @@ public class FachadaAplicacion extends Application {
     public void obtenerDatosAvionVuelo(Vuelo v) {
         gv.obtenerDatosAvionVuelo(v);
     }
+<<<<<<< HEAD
     
     public void comprarBilletes(ObservableList<Usuario> usuarios){
         gv.comprarBilletes(usuarios);
     }
     
+=======
+
+>>>>>>> Reservar Parking
     public List<Integer> buscarTerminais() {
         return gp.buscarTerminais();
     }
-    
+
     public Parking buscarParking(Integer terminal, Time inicio, Time fin) {
         return gp.buscarParking(terminal, inicio, fin);
     }
-    
-    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin){
+
+    public Integer obterPrazaLibre(Integer numTerminal, Integer piso, Time inicio, Time fin) {
+        return gp.obterPrazaLibre(numTerminal, piso, inicio, fin);
+    }
+
+    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin) {
         return gp.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
     }
-    
-    public Boolean reservarParking(Reserva reserva, String dniUsuario){
+
+    public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return gr.reservarParking(reserva, dniUsuario);
     }
 

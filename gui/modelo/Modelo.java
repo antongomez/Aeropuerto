@@ -123,6 +123,10 @@ public class Modelo {
     public Parking buscarParking(Integer terminal, Time inicio, Time fin) {
         return fa.buscarParking(terminal, inicio, fin);
     }
+    
+    public Integer obterPrazaLibre(Integer numTerminal, Integer piso, Time inicio, Time fin) {
+        return fa.obterPrazaLibre(numTerminal, piso, inicio, fin);
+    }
 
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return fa.reservarParking(reserva, dniUsuario);

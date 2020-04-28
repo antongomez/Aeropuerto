@@ -399,12 +399,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     + "plazas disponibles en el parking de la terminal. "
                     + "Inténtelo en otro momento.");
         }
+        if (comprobarMatricula()) {
+            btnReservarParking.setDisable(false);
+        }
     }
 
     private Integer asignarPlazaParking(Time llegada, Time retorno) {
-        Integer numPlaza = 0;
-        //Facer código
-        return numPlaza;
+        return getInstanceModelo().obterPrazaLibre(parking.getTerminal(),
+                parking.getNumPrazas(), llegada, retorno);
     }
 
     @FXML
@@ -449,26 +451,41 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             etqInfoParking.setText(TEXTO_INFO_PARKING);
             etqInfoParking.getStyleClass().remove("etqErro");
         }
+        btnReservarParking.setDisable(true);
     }
 
-    @FXML
-    private void comprobarReservarParking(KeyEvent event) {
+    private Boolean comprobarMatricula() {
         String matricula = txtMatriculaParking.getText();
+
         if (matricula.length() == 7) {
             for (int i = 0; i < 4; i++) {
                 if (!Character.isDigit(matricula.charAt(i))) {
                     etqErroMatricula.setVisible(true);
-                    return;
+                    return false;
                 }
             }
             for (int i = 4; i < 7; i++) {
                 if (!Character.isLetter(matricula.charAt(i))) {
                     etqErroMatricula.setVisible(true);
-                    return;
+                    return false;
                 }
             }
-            btnReservarParking.setDisable(false);
+            return true;
+        }
+        return false;
+
+    }
+
+    @FXML
+    private void comprobarReservarParking(KeyEvent event) {
+        String matricula = txtMatriculaParking.getText();
+        if (comprobarMatricula()) {
             etqErroMatricula.setVisible(false);
+            if ((cboxTerminalParking.getSelectionModel().getSelectedItem() != null)
+                    && (dataFLlegadaParking.getValue() != null)
+                    && (dataFRetornoParking.getValue() != null)) {
+                btnReservarParking.setDisable(false);
+            }
         } else if (matricula.length() > 7) {
             etqErroMatricula.setVisible(true);
             btnReservarParking.setDisable(true);
