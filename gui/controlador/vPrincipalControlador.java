@@ -409,7 +409,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             System.out.println("0");
         }
         return getInstanceModelo().obterPrazaLibre(parking.getTerminal(),
-                parking.getNumPrazas(), llegada, retorno);
+                parking.getPiso(), llegada, retorno);
     }
 
     @FXML
@@ -422,7 +422,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 "parking",
                 txtMatriculaParking.getText(),
                 parking.getTerminal(),
-                parking.getNumPrazas(),
+                parking.getPiso(),
                 numPraza);
         if (getInstanceModelo().reservarParking(reserva, usuario.getDni())) {
             getInstanceModelo().mostrarNotificacion("Reserva realizada con éxito.\n"

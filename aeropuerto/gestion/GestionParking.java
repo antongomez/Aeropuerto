@@ -5,7 +5,6 @@ import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GestionParking {

@@ -147,7 +147,7 @@ public class daoTerminal extends AbstractDAO {
         Integer numPlazas = null;
 
         try {
-            stmParking = con.prepareStatement("selet numPlazas \n"
+            stmParking = con.prepareStatement("select numPlazas \n"
                     + "from parking \n"
                     + "where terminal = ? \n"
                     + "  and piso = ? \n");
@@ -156,7 +156,7 @@ public class daoTerminal extends AbstractDAO {
 
             rsRes = stmParking.executeQuery();
             if (rsRes.next()) {
-                numPlazas = rsRes.getInt("plazasOcupadas");
+                numPlazas = rsRes.getInt("numPlazas");
             }
 
         } catch (SQLException e) {

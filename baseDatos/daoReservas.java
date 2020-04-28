@@ -140,7 +140,7 @@ public class daoReservas extends AbstractDAO {
             stmRes.setTimestamp(6, res.getFin().toTimestamp());
             stmRes.setString(7, res.getMatricula());
             stmRes.executeUpdate();
-
+            System.out.println(res.getNumPlaza() + " T:"+ res.getTerminal() +" P:"+ res.getPiso());
         } catch (SQLException e) {
             correcto = false;
             System.out.println(e.getMessage());
