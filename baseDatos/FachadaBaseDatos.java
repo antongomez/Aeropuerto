@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import javafx.collections.ObservableList;
 
 public class FachadaBaseDatos {
 
@@ -107,6 +108,10 @@ public class FachadaBaseDatos {
     public void obtenerDatosAvionVuelo(Vuelo v){
         
         daoVuelos.obtenerDatosAvionVuelo(v);
+    }
+    
+    public void comprarBilletes(ObservableList<Usuario> usuarios){
+        daoVuelos.comprarBilletes(usuarios);
     }
     
     public Usuario obtenerUsuario(String dni){

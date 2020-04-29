@@ -13,6 +13,7 @@ import gui.controlador.VErrorController;
 import gui.controlador.VNotificacionController;
 import gui.controlador.vConfirmacionControlador;
 import java.util.List;
+import javafx.collections.ObservableList;
 
 public class Modelo {
 
@@ -100,6 +101,10 @@ public class Modelo {
 
     public void obtenerDatosAvionVuelo(Vuelo v) {
         fa.obtenerDatosAvionVuelo(v);
+    }
+    
+    public void comprarBilletes(ObservableList<Usuario> usuarios){
+        fa.comprarBilletes(usuarios);
     }
 
     public Usuario obtenerUsuario(String dni) {

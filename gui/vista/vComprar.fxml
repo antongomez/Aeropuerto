@@ -75,7 +75,7 @@
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <ComboBox fx:id="comboBoxNumMaletas" onAction="#cambioNumMaletas" prefHeight="28.0" GridPane.columnIndex="2" />
+                                                <ComboBox fx:id="comboBoxNumMaletas" onAction="#cambiarNumMaletas" prefHeight="28.0" GridPane.columnIndex="2" />
                                              </children>
                                           </GridPane>
                                           <RadioButton fx:id="radioBtnPremium" mnemonicParsing="false" onAction="#selectPremium" prefHeight="28.0" text="Premium" textFill="WHITE">
@@ -159,7 +159,7 @@
                           </rowConstraints>
                            <children>
                               <Label prefHeight="34.0" text="Precio:" />
-                              <Button fx:id="btnPagar" mnemonicParsing="false" text="Pagar" GridPane.columnIndex="3" />
+                              <Button fx:id="btnPagar" mnemonicParsing="false" onMouseClicked="#pagar" text="Pagar" GridPane.columnIndex="3" />
                               <TextField fx:id="txtFieldPrecioTotal" editable="false" minHeight="30.0" minWidth="70.0" prefHeight="34.0" prefWidth="80.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>

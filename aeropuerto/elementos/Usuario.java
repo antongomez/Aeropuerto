@@ -142,7 +142,19 @@ public class Usuario {
     public CompraVuelo getVueloEnEspera() {
         return vueloEnEspera;
     }
-    public void comprarVuelo(){
-        vueloEnEspera=new CompraVuelo();
+    
+    public void comprarVuelo(String numVuelo){
+        vueloEnEspera=new CompraVuelo(numVuelo);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Usuario){
+            return((Usuario) obj).getDni().equals(this.dni);
+        }
+        return super.equals(obj); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
 }

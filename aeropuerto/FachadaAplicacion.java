@@ -13,6 +13,7 @@ import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
 public class FachadaAplicacion extends Application {
@@ -119,6 +120,10 @@ public class FachadaAplicacion extends Application {
 
     public void obtenerDatosAvionVuelo(Vuelo v) {
         gv.obtenerDatosAvionVuelo(v);
+    }
+    
+    public void comprarBilletes(ObservableList<Usuario> usuarios){
+        gv.comprarBilletes(usuarios);
     }
     
     public List<Integer> buscarTerminais() {

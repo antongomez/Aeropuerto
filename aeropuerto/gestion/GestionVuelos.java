@@ -6,6 +6,7 @@ import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;
+import javafx.collections.ObservableList;
 
 public class GestionVuelos {
 
@@ -31,5 +32,9 @@ public class GestionVuelos {
     public void obtenerDatosAvionVuelo(Vuelo v){
         
         fbd.obtenerDatosAvionVuelo(v);
+    }
+    
+    public void comprarBilletes(ObservableList<Usuario> usuarios){
+        fbd.comprarBilletes(usuarios);
     }
 }

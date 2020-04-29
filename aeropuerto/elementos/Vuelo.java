@@ -16,18 +16,16 @@ public class Vuelo {
     private Integer puertaEmbarque;
     private Boolean cancelado;
     private Integer terminal;
-    private String avion;
+    private Avion avion;
     private Aerolinea aerolinea;
     private Integer plazasNormal;
     private Integer plazasPremium;
 
-
- 
-        public Vuelo(String numVuelo, String origen, String destino,
+    public Vuelo(String numVuelo, String origen, String destino,
             Time fechasalidaTeo, Time fechasalidaReal,
             Time fechallegadaTeo, Time fechallegadaReal,
             Float precioActual, Integer puertaEmbarque, Boolean cancelado,
-            Integer terminal, String avion) {
+            Integer terminal, String codigoAvion) {
 
         this.numVuelo = numVuelo;
         this.origen = origen;
@@ -40,7 +38,7 @@ public class Vuelo {
         this.puertaEmbarque = puertaEmbarque;
         this.cancelado = cancelado;
         this.terminal = terminal;
-        this.avion = avion;
+        this.avion = new Avion(codigoAvion);
 
     }
 
@@ -48,7 +46,7 @@ public class Vuelo {
             Timestamp fechasalidaTeo, Timestamp fechasalidaReal,
             Timestamp fechallegadaTeo, Timestamp fechallegadaReal,
             Float precioActual, Integer puertaEmbarque, Boolean cancelado,
-            Integer terminal, String avion) {
+            Integer terminal, String codigoAvion) {
 
         this.numVuelo = numVuelo;
         this.origen = origen;
@@ -61,7 +59,7 @@ public class Vuelo {
         this.puertaEmbarque = puertaEmbarque;
         this.cancelado = cancelado;
         this.terminal = terminal;
-        this.avion = avion;
+        this.avion = new Avion(codigoAvion);
 
     }
 
@@ -177,11 +175,11 @@ public class Vuelo {
         this.plazasPremium = plazasPremium;
     }
 
-    public String getAvion() {
+    public Avion getAvion() {
         return avion;
     }
 
-    public void setAvion(String avion) {
+    public void setAvion(Avion avion) {
         this.avion = avion;
     }
 
