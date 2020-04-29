@@ -126,15 +126,11 @@ public class FachadaAplicacion extends Application {
     public void obtenerDatosAvionVuelo(Vuelo v) {
         gv.obtenerDatosAvionVuelo(v);
     }
-<<<<<<< HEAD
     
     public void comprarBilletes(ObservableList<Usuario> usuarios){
         gv.comprarBilletes(usuarios);
     }
-    
-=======
 
->>>>>>> Reservar Parking
     public List<Integer> buscarTerminais() {
         return gp.buscarTerminais();
     }
