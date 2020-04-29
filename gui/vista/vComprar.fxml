@@ -53,7 +53,7 @@
                               <VBox style="-fx-background-color: #424242;">
                                  <children>
                                     <Label alignment="CENTER" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #757575;" text="Nombre" />
-                                    <VBox spacing="12.0">
+                                    <VBox prefHeight="180.0" prefWidth="250.0" spacing="12.0">
                                        <children>
                                           <RadioButton fx:id="radioBtnAcompanhante" mnemonicParsing="false" onAction="#selectAcompanhante" prefHeight="28.0" text="Acompañante" textFill="WHITE">
                                              <font>
@@ -83,6 +83,24 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </RadioButton>
+                                          <GridPane>
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="21.0" minWidth="21.0" prefWidth="21.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="-Infinity" prefWidth="119.5" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="-Infinity" prefWidth="79.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label prefHeight="28.0" text="Asiento:" GridPane.columnIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <ComboBox fx:id="comboBoxAsiento" onAction="#cambiarAsiento" prefHeight="28.0" GridPane.columnIndex="2" />
+                                             </children>
+                                          </GridPane>
                                        </children>
                                        <padding>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

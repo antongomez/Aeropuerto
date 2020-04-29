@@ -34,7 +34,11 @@ public class GestionVuelos {
         fbd.obtenerDatosAvionVuelo(v);
     }
     
-    public void comprarBilletes(ObservableList<Usuario> usuarios){
-        fbd.comprarBilletes(usuarios);
+    public void obtenerAsientos(Vuelo vuelo){
+        fbd.obtenerAsientos(vuelo);
+    }
+    
+    public Boolean comprarBilletes(ObservableList<Usuario> usuarios){
+        return fbd.comprarBilletes(usuarios);
     }
 }

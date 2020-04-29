@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javafx.collections.ObservableList;
 
@@ -200,6 +201,12 @@ public class daoVuelos extends AbstractDAO {
                 v.setPlazasPremium(rsVuelo.getInt("plazasRestantesPremium"));
                 v.getAvion().setAsientosNormales(rsVuelo.getInt("plazasNormal"));
                 v.getAvion().setAsientosPremium(rsVuelo.getInt("plazasPremium"));
+                for(int i=1; i<=rsVuelo.getInt("plazasNormal"); i++){
+                    v.getAsientosNormalesDisponibles().put(i, true);
+                }
+                for(int i=rsVuelo.getInt("plazasNormal")+1; i<=rsVuelo.getInt("plazasNormal")+rsVuelo.getInt("plazasPremium"); i++){
+                    v.getAsientosPremiumDisponibles().put(i, true);
+                }
             }
 
         } catch (SQLException e) {
@@ -214,10 +221,48 @@ public class daoVuelos extends AbstractDAO {
         }
 
     }
+    
+    public void obtenerAsientos(Vuelo vuelo){
+        Connection con;
+        PreparedStatement stmAsientos = null;
+        ResultSet rsAsientos;
 
-    public void comprarBilletes(ObservableList<Usuario> usuarios) {
+        con = super.getConexion();
+
+        try {
+            stmAsientos = con.prepareStatement("select numAsiento "
+                    + "from comprarbillete "
+                    + "where vuelo = ? and tipoAsiento = 'normal' ");
+            stmAsientos.setString(1, vuelo.getNumVuelo());
+            rsAsientos = stmAsientos.executeQuery();
+            while (rsAsientos.next()) {
+                vuelo.getAsientosNormalesDisponibles().replace(rsAsientos.getInt("numAsiento"), false);
+            }
+            stmAsientos = con.prepareStatement("select numAsiento "
+                    + "from comprarbillete "
+                    + "where vuelo = ? and tipoAsiento = 'premium' ");
+            stmAsientos.setString(1, vuelo.getNumVuelo());
+            rsAsientos = stmAsientos.executeQuery();
+            while (rsAsientos.next()) {
+                vuelo.getAsientosPremiumDisponibles().replace(rsAsientos.getInt("numAsiento"), false);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmAsientos.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    }
+
+    public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         Connection con;
         PreparedStatement stmBillete = null;
+        Boolean correcto;
 
         con = super.getConexion();
 
@@ -242,16 +287,19 @@ public class daoVuelos extends AbstractDAO {
 
                 stmBillete.executeUpdate();
             }
-
+            correcto = true;
         } catch (SQLException e) {
             getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto = false;
         } finally {
             try {
                 stmBillete.close();
             } catch (SQLException e) {
+                correcto = false;
                 System.out.println("Imposible cerrar cursores");
             }
         }
+        return correcto;
     }
 
 }

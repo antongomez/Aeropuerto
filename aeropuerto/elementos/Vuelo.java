@@ -2,6 +2,7 @@ package aeropuerto.elementos;
 
 import aeropuerto.util.Time;
 import java.sql.Timestamp;
+import java.util.HashMap;
 
 public class Vuelo {
 
@@ -20,6 +21,8 @@ public class Vuelo {
     private Aerolinea aerolinea;
     private Integer plazasNormal;
     private Integer plazasPremium;
+    private HashMap<Integer,Boolean> asientosNormalesDisponibles;
+    private HashMap<Integer,Boolean> asientosPremiumDisponibles;
 
     public Vuelo(String numVuelo, String origen, String destino,
             Time fechasalidaTeo, Time fechasalidaReal,
@@ -39,6 +42,8 @@ public class Vuelo {
         this.cancelado = cancelado;
         this.terminal = terminal;
         this.avion = new Avion(codigoAvion);
+        this.asientosNormalesDisponibles=new HashMap<>();
+        this.asientosPremiumDisponibles=new HashMap<>();
 
     }
 
@@ -60,6 +65,8 @@ public class Vuelo {
         this.cancelado = cancelado;
         this.terminal = terminal;
         this.avion = new Avion(codigoAvion);
+        this.asientosNormalesDisponibles=new HashMap<>();
+        this.asientosPremiumDisponibles=new HashMap<>();
 
     }
 
@@ -187,4 +194,20 @@ public class Vuelo {
         return ((float) (Math.round((precioActual * 1.2f) * 100d) / 100d));
     }
 
+    public HashMap<Integer, Boolean> getAsientosNormalesDisponibles() {
+        return asientosNormalesDisponibles;
+    }
+
+    public void setAsientosNormalesDisponibles(HashMap<Integer, Boolean> asientosNormalesDisponibles) {
+        this.asientosNormalesDisponibles = asientosNormalesDisponibles;
+    }
+
+    public HashMap<Integer, Boolean> getAsientosPremiumDisponibles() {
+        return asientosPremiumDisponibles;
+    }
+
+    public void setAsientosPremiumDisponibles(HashMap<Integer, Boolean> asientosPremiumDisponibles) {
+        this.asientosPremiumDisponibles = asientosPremiumDisponibles;
+    }
+    
 }

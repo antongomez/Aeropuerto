@@ -115,8 +115,11 @@ public class FachadaBaseDatos {
         daoVuelos.obtenerDatosAvionVuelo(v);
     }
     
-    public void comprarBilletes(ObservableList<Usuario> usuarios){
-        daoVuelos.comprarBilletes(usuarios);
+    public void obtenerAsientos(Vuelo vuelo){
+        daoVuelos.obtenerAsientos(vuelo);
+    }
+    public Boolean comprarBilletes(ObservableList<Usuario> usuarios){
+        return daoVuelos.comprarBilletes(usuarios);
     }
 
     public Usuario obtenerUsuario(String dni) {

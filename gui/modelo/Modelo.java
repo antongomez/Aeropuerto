@@ -104,8 +104,12 @@ public class Modelo {
         fa.obtenerDatosAvionVuelo(v);
     }
     
-    public void comprarBilletes(ObservableList<Usuario> usuarios){
-        fa.comprarBilletes(usuarios);
+    public void obtenerAsientos(Vuelo vuelo){
+        fa.obtenerAsientos(vuelo);
+    }
+    
+    public Boolean comprarBilletes(ObservableList<Usuario> usuarios){
+        return fa.comprarBilletes(usuarios);
     }
 
     public Usuario obtenerUsuario(String dni) {

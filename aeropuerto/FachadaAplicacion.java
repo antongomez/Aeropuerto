@@ -127,8 +127,12 @@ public class FachadaAplicacion extends Application {
         gv.obtenerDatosAvionVuelo(v);
     }
     
-    public void comprarBilletes(ObservableList<Usuario> usuarios){
-        gv.comprarBilletes(usuarios);
+    public void obtenerAsientos(Vuelo vuelo){
+        gv.obtenerAsientos(vuelo);
+    }
+    
+    public Boolean comprarBilletes(ObservableList<Usuario> usuarios){
+        return gv.comprarBilletes(usuarios);
     }
 
     public List<Integer> buscarTerminais() {

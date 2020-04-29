@@ -101,13 +101,14 @@ public class vComprarControlador extends Controlador implements Initializable {
     private Button btnPagar;
     @FXML
     private Label etqTitulo;
+    @FXML
+    private ComboBox<Integer> comboBoxAsiento;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         ObservableList<Integer> opcionesMaleta = FXCollections.observableArrayList(0, 1, 2, 3, 4);
         comboBoxNumMaletas.setItems(opcionesMaleta);
         comboBoxNumMaletas.getSelectionModel().selectFirst();
@@ -120,15 +121,50 @@ public class vComprarControlador extends Controlador implements Initializable {
     public void inicializarVComprar(Vuelo vuelo, Usuario usuario) {
         this.vuelo = vuelo;
         Modelo.getInstanceModelo().obtenerDatosAvionVuelo(vuelo);
+        Modelo.getInstanceModelo().obtenerAsientos(vuelo);
         datosVuelo();
-        if (comprobarAsientos()) {
+        usuario.comprarVuelo(vuelo.getNumVuelo());
+        if (comprobarAsientos(usuario)) {
             pasajeros.add(usuario);
             tablaPasajeros.getSelectionModel().selectFirst();
-            usuario.comprarVuelo(vuelo.getNumVuelo());
             actualizarDatosUsu();
             actualizarPrecio();
         } else {
             getVenta().close();
+        }
+    }
+    
+    //Función pone los asientos disponibles en el comboBox
+    public void asientosDisponibles() {
+        ArrayList<Integer> asientosDisponibles = new ArrayList<Integer>();
+        Usuario usuario=tablaPasajeros.getSelectionModel().getSelectedItem();
+        if (usuario.getVueloEnEspera().getAsiento() != null) {
+            asientosDisponibles.add(tablaPasajeros.getSelectionModel().getSelectedItem().getVueloEnEspera().getAsiento());
+        }
+        if (!usuario.getVueloEnEspera().getPremium()) {
+            for (int i = 1; i <= vuelo.getAvion().getAsientosNormales(); i++) {
+                if (vuelo.getAsientosNormalesDisponibles().get(i)) {
+                    asientosDisponibles.add(i);
+                }
+            }
+        } else {
+            for (int i = vuelo.getAvion().getAsientosNormales() + 1; i <= vuelo.getAvion().getAsientosNormales() + vuelo.getAvion().getAsientosPremium(); i++) {
+                if (vuelo.getAsientosPremiumDisponibles().get(i)) {
+                    asientosDisponibles.add(i);
+                }
+            }
+        }
+        ObservableList<Integer> asientos = FXCollections.observableArrayList(asientosDisponibles);
+        comboBoxAsiento.setItems(asientos);
+        comboBoxAsiento.getSelectionModel().selectFirst();
+        if (usuario.getVueloEnEspera().getAsiento() == null) {
+            usuario.getVueloEnEspera().setAsiento(comboBoxAsiento.getSelectionModel().getSelectedItem());
+            if(!usuario.getVueloEnEspera().getPremium()){
+                vuelo.getAsientosNormalesDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), false);
+            }
+            else {
+                vuelo.getAsientosPremiumDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), false);
+            }
         }
     }
 
@@ -154,12 +190,13 @@ public class vComprarControlador extends Controlador implements Initializable {
     private void anhadirPasajero(ActionEvent event) {
         Usuario us = Modelo.getInstanceModelo().obtenerUsuario(textFieldDNI.getText());
         if (us != null) {
+            us.comprarVuelo(vuelo.getNumVuelo());
             if (pasajeros.contains(us)) {
                 Modelo.getInstanceModelo().mostrarError("El usuario ya figura como pasajero");
-            } else if (comprobarAsientos()) {
+            } else if (comprobarAsientos(us)) {
                 pasajeros.add(us);
-                us.comprarVuelo(vuelo.getNumVuelo());
                 tablaPasajeros.getSelectionModel().selectLast();
+                actualizarDatosUsu();
                 actualizarPrecio();
             }
         } else {
@@ -179,30 +216,53 @@ public class vComprarControlador extends Controlador implements Initializable {
         //Comprobamos como activar el btn de Premium en función de la disponibilidad
         if (plazasNormalesEnEspera == 0 && plazasPremiumEnEspera == 0) {
             if (us.getVueloEnEspera().getPremium()) {
+                asientosDisponibles();
                 radioBtnPremium.setSelected(true);
                 radioBtnPremium.setDisable(true);
+                radioBtnPremium.setVisible(true);
             } else {
+                asientosDisponibles();
                 radioBtnPremium.setSelected(false);
                 radioBtnPremium.setVisible(false);
                 radioBtnPremium.setDisable(true);
             }
         } else if (plazasNormalesEnEspera == 0) {
             if (us.getVueloEnEspera().getPremium()) {
+                asientosDisponibles();
                 radioBtnPremium.setSelected(true);
                 radioBtnPremium.setDisable(true);
+                radioBtnPremium.setVisible(true);
             } else {
+                asientosDisponibles();
                 radioBtnPremium.setSelected(false);
                 radioBtnPremium.setDisable(false);
+                radioBtnPremium.setVisible(true);
             }
         } else if (plazasPremiumEnEspera == 0) {
             if (us.getVueloEnEspera().getPremium()) {
+                asientosDisponibles();
                 radioBtnPremium.setSelected(true);
                 radioBtnPremium.setDisable(false);
+                radioBtnPremium.setVisible(true);
             } else {
+                asientosDisponibles();
                 radioBtnPremium.setSelected(false);
                 radioBtnPremium.setVisible(false);
                 radioBtnPremium.setDisable(true);
             }
+        } else {
+            if (us.getVueloEnEspera().getPremium()) {
+                asientosDisponibles();
+                radioBtnPremium.setSelected(true);
+                radioBtnPremium.setDisable(false);
+                radioBtnPremium.setVisible(true);
+            } else {
+                asientosDisponibles();
+                radioBtnPremium.setSelected(false);
+                radioBtnPremium.setVisible(true);
+                radioBtnPremium.setDisable(false);
+            }
+
         }
         if (us.getVueloEnEspera().getAcompanante()) {
             radioBtnAcompanhante.setSelected(true);
@@ -225,18 +285,24 @@ public class vComprarControlador extends Controlador implements Initializable {
 
     @FXML
     private void selectPremium(ActionEvent event) {
+        Usuario usuario = tablaPasajeros.getSelectionModel().getSelectedItem();
         if (radioBtnPremium.isSelected()) {
-            tablaPasajeros.getSelectionModel().getSelectedItem().getVueloEnEspera().setPremium(true);
+            vuelo.getAsientosNormalesDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), true);
+            usuario.getVueloEnEspera().setAsiento(null);
+            usuario.getVueloEnEspera().setPremium(true);
+            asientosDisponibles();
             plazasNormalesEnEspera += 1;
             plazasPremiumEnEspera -= 1;
         } else {
-            tablaPasajeros.getSelectionModel().getSelectedItem().getVueloEnEspera().setPremium(false);
+            vuelo.getAsientosPremiumDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), true);
+            usuario.getVueloEnEspera().setAsiento(null);
+            usuario.getVueloEnEspera().setPremium(false);
+            asientosDisponibles();
             plazasNormalesEnEspera += 1;
             plazasPremiumEnEspera -= 1;
         }
         actualizarPrecio();
     }
-
 
     private Float actualizarPrecio() {
         Float precio = (float) 0;
@@ -262,8 +328,9 @@ public class vComprarControlador extends Controlador implements Initializable {
         txtFieldPrecioTotal.setText(precio.toString());
         return precio;
     }
-
-    public boolean comprobarAsientos() {
+    
+    //Función que comprueba disponibilidad de asientos 
+    public boolean comprobarAsientos(Usuario usuario) {
         if (vuelo.getPlazasPremium() == 0 && vuelo.getPlazasNormal() == 0) {
             Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan más plazas para este vuelo");
             return false;
@@ -271,6 +338,7 @@ public class vComprarControlador extends Controlador implements Initializable {
             radioBtnPremium.setSelected(false);
             radioBtnPremium.setVisible(false);
             radioBtnPremium.setDisable(true);
+            usuario.getVueloEnEspera().setPremium(false);
             plazasNormalesEnEspera -= 1;
             textFieldPlazasNormales.setText(plazasNormalesEnEspera.toString());
             textFieldPlazasPremium.setText(plazasPremiumEnEspera.toString());
@@ -278,11 +346,14 @@ public class vComprarControlador extends Controlador implements Initializable {
         } else if (plazasNormalesEnEspera == 0) {
             radioBtnPremium.setSelected(true);
             radioBtnPremium.setDisable(true);
+            radioBtnPremium.setVisible(true);
+            usuario.getVueloEnEspera().setPremium(true);
             plazasPremiumEnEspera -= 1;
             textFieldPlazasNormales.setText(plazasNormalesEnEspera.toString());
             textFieldPlazasPremium.setText(plazasPremiumEnEspera.toString());
             return true;
         } else {
+            usuario.getVueloEnEspera().setPremium(false);
             plazasNormalesEnEspera -= 1;
             textFieldPlazasNormales.setText(plazasNormalesEnEspera.toString());
             textFieldPlazasPremium.setText(plazasPremiumEnEspera.toString());
@@ -298,26 +369,15 @@ public class vComprarControlador extends Controlador implements Initializable {
         this.vuelo = vuelo;
     }
 
-
     @FXML
     private void pagar(MouseEvent event) {
-        generarAsientos();
-    }
-
-    public void generarAsientos() {
-        Integer primerAsientoNormal = vuelo.getAvion().getAsientosNormales() - vuelo.getPlazasNormal() + 1;
-        Integer primerAsientoPremium = vuelo.getAvion().getAsientosNormales() + 1
-                + (vuelo.getAvion().getAsientosPremium() - vuelo.getPlazasPremium());
-        for (Usuario u : pasajeros) {
-            if (u.getVueloEnEspera().getPremium()) {
-                u.getVueloEnEspera().setAsiento(primerAsientoPremium);
-                primerAsientoPremium++;
-            } else {
-                u.getVueloEnEspera().setAsiento(primerAsientoNormal);
-                primerAsientoNormal++;
-            }
+        if(Modelo.getInstanceModelo().comprarBilletes(pasajeros)){
+            getVenta().close();
+            Modelo.getInstanceModelo().mostrarNotificacion("Vuelo comprado con éxito. Precio total: "+actualizarPrecio().toString());
+        }else{
+            Modelo.getInstanceModelo().mostrarError("Hubo un error en la compra, lo sentimos.");
+            getVenta().close();
         }
-        Modelo.getInstanceModelo().comprarBilletes(pasajeros);
     }
 
     @FXML
@@ -326,7 +386,19 @@ public class vComprarControlador extends Controlador implements Initializable {
         actualizarPrecio();
     }
 
-
-    
+    @FXML
+    private void cambiarAsiento(ActionEvent event) {
+        Usuario usuario = tablaPasajeros.getSelectionModel().getSelectedItem();
+        if(usuario.getVueloEnEspera().getPremium()){
+            vuelo.getAsientosPremiumDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), true);
+            usuario.getVueloEnEspera().setAsiento(comboBoxAsiento.getSelectionModel().getSelectedItem());
+            vuelo.getAsientosPremiumDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), false);
+        }
+        else{
+            vuelo.getAsientosNormalesDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), true);
+            usuario.getVueloEnEspera().setAsiento(comboBoxAsiento.getSelectionModel().getSelectedItem());
+            vuelo.getAsientosNormalesDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), false);
+        }
+    }
 
 }
