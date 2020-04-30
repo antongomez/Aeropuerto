@@ -552,12 +552,45 @@
               <tabs>
                 <Tab text="Vuelos">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="1000.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="1000.0" styleClass="root">
+                           <children>
+                              <VBox alignment="CENTER" fillWidth="false" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox alignment="CENTER" fillWidth="false" spacing="50.0">
+                                       <children>
+                                          <HBox spacing="90.0">
+                                             <children>
+                                                <RadioButton mnemonicParsing="false" text="Salidas">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="infoVuelos" />
+                                                   </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton mnemonicParsing="false" text="Llegadas" toggleGroup="$infoVuelos" />
+                                             </children>
+                                          </HBox>
+                                          <TableView prefHeight="400.0">
+                                            <columns>
+                                              <TableColumn minWidth="120.0" prefWidth="120.0" text="Vuelo" />
+                                              <TableColumn minWidth="120.0" prefWidth="120.0" text="Origen" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Destino" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Terminal" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Puerta" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Salida" />
+                                                <TableColumn minWidth="120.0" prefWidth="120.0" text="Estado" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </children></VBox>
+                           </children></AnchorPane>
                   </content>
                 </Tab>
                 <Tab text="Estadísticas Aerolíneas">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root" />
                   </content>
                 </Tab>
               </tabs>
