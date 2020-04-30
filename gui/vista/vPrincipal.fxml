@@ -397,7 +397,12 @@
                                                       <HBox spacing="10.0">
                                                          <children>
                                                             <Label prefHeight="28.0" text="Precio:" />
-                                                            <TextField fx:id="txtPrecioParking" editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="60.0" />
+                                                            <HBox spacing="3.0">
+                                                               <children>
+                                                                  <TextField fx:id="txtPrecioParking" editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="65.0" />
+                                                                  <Label minHeight="25.0" prefHeight="28.0" text="€" />
+                                                               </children>
+                                                            </HBox>
                                                          </children>
                                                       </HBox>
                                                    </children>
