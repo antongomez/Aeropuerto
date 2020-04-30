@@ -301,5 +301,47 @@ public class daoVuelos extends AbstractDAO {
         }
         return correcto;
     }
+    public List<Vuelo> verSalidas(){
+        List<Vuelo> resultado = new ArrayList<>();
+        Connection con;
+        Vuelo vueloActual;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+
+        con = super.getConexion();
+
+        try {
+            stmVuelo = con.prepareStatement("select v.numvuelo as numvuelo, v.origen as origen, "
+                    + "v.destino as destino, v.fechasalidareal as fechasalidareal, v.fechallegadareal as fechallegadareal, "
+                    + "c.preciobillete as preciobillete, v.cancelado as cancelado "
+                    + "from usuario u, vuelo v, comprarBillete c "
+                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=?");
+            stmVuelo.setString(1, dniUs);
+            rsVuelo = stmVuelo.executeQuery();
+            while (rsVuelo.next()) {
+                vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
+                        rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getTimestamp("fechallegadareal"),
+                        rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
+                        null, null);
+
+                resultado.add(vueloActual);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
+    }
+    public List<Vuelo> verLlegadas(){
+        return fbd.verLlegadas();
+    }
 
 }

@@ -331,7 +331,7 @@ public class vComprarControlador extends Controlador implements Initializable {
     
     //Función que comprueba disponibilidad de asientos 
     public boolean comprobarAsientos(Usuario usuario) {
-        if (vuelo.getPlazasPremium() == 0 && vuelo.getPlazasNormal() == 0) {
+        if (plazasPremiumEnEspera== 0 && plazasNormalesEnEspera == 0) {
             Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan más plazas para este vuelo");
             return false;
         } else if (plazasPremiumEnEspera == 0) {

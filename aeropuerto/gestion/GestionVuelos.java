@@ -41,4 +41,10 @@ public class GestionVuelos {
     public Boolean comprarBilletes(ObservableList<Usuario> usuarios){
         return fbd.comprarBilletes(usuarios);
     }
+    public List<Vuelo> verSalidas(){
+        return fbd.verSalidas();
+    }
+    public List<Vuelo> verLlegadas(){
+        return fbd.verLlegadas();
+    }
 }

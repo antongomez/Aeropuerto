@@ -184,5 +184,59 @@ public class Time {
     public static Boolean compararMayor(Time fecha1, Time fecha2) {
         return (fecha1.toTimestamp().after(fecha2.toTimestamp()));
     }
+    
+    @Override
+    
+    public boolean equals(Object fecha){
+        
+        return (((Time)fecha).toTimestamp().equals(this.toTimestamp()));
+    }
+    /*Diferencia entre dos fechas en horas, minutos y segundos. Si las fechas son iguales devuelve false*/
+    public Boolean diferencia(Time fecha, Integer dias, Integer horas, Integer minutos){
+        
+        Time fechaMay;
+        Time fechaMen;
+        long dif;
+        Float min;
+        Float hor;
+        Float di;
+        
+        if(fecha.toTimestamp().after(this.toTimestamp())){
+            fechaMay=this;
+            fechaMen=fecha;
+        }
+        else if(this.toTimestamp().after(fecha.toTimestamp())){
+            fechaMay=fecha;
+            fechaMen=this;
+        }
+        else{
+            dias=0;
+            horas=0;
+            minutos=0;
+            return false;
+        }
+        dif=fechaMay.toTimestamp().getTime()-fechaMen.toTimestamp().getTime();
+        min=dif/(float)(60000);
+        if(min>=60){
+            hor=min/60;
+            if(hor>24){
+                di=hor/24;
+                dias=di.intValue();
+                hor=hor-dias*24;
+                horas=hor.intValue();
+                min=hor*60;
+                minutos=Math.round(min-60*horas);
+            }
+            else{
+               horas=hor.intValue();
+               minutos=Math.round(min-60*horas);
+            }
+        }
+        else{
+            minutos=Math.round(min);
+        }
+        
+        return true;
+    }
 
 }

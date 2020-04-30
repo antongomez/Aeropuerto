@@ -209,5 +209,8 @@ public class Vuelo {
     public void setAsientosPremiumDisponibles(HashMap<Integer, Boolean> asientosPremiumDisponibles) {
         this.asientosPremiumDisponibles = asientosPremiumDisponibles;
     }
+    public Integer tieneRetraso(){
+        if(fechasalidaTeo.e)
+    }
     
 }

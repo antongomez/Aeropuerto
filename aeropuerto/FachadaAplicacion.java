@@ -102,6 +102,12 @@ public class FachadaAplicacion extends Application {
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return gv.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
+    public List<Vuelo> verSalidas(){
+        return gv.verSalidas();
+    }
+    public List<Vuelo> verLlegadas(){
+        return gv.verLlegadas();
+    }
 
     //Reservas
     /*Muestra las reservas de un usuario que aún no han sido vencidas*/

@@ -149,4 +149,10 @@ public class FachadaBaseDatos {
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return daoReservas.reservarParking(reserva, dniUsuario);
     }
+    public List<Vuelo> verSalidas(){
+        return daoVuelos.verSalidas();
+    }
+    public List<Vuelo> verLlegadas(){
+        return daoVuelos.verLlegadas();
+    }
 }
