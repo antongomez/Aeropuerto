@@ -142,6 +142,12 @@ public class Time {
         return String.format(data, horas, minutos, dia, mes, ano);
     }
 
+    public String toStringFecha() {
+        String data = "%02d/%02d/%04d";
+
+        return String.format(data, dia, mes, ano);
+    }
+
     //Getters
     public Integer getAno() {
         return ano;

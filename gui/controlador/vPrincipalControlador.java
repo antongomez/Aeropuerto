@@ -437,8 +437,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     + "- Terminal: " + parking.getTerminal() + "\n"
                     + "- Piso: " + parking.getPiso() + "\n"
                     + "- Número de plaza: " + numPraza + "\n"
-                    + "- Fecha de inicio: " + llegada + "\n"
-                    + "- Fecha de abandono: " + retorno + "\n"
+                    + "- Fecha de inicio: " + llegada.toStringFecha() + "\n"
+                    + "- Fecha de abandono: " + retorno.toStringFecha() + "\n"
                     + "- Precio: " + obterPrecioParking() + " €.");
         }
     }
