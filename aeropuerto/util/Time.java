@@ -2,7 +2,6 @@ package aeropuerto.util;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -131,7 +130,7 @@ public class Time {
 
         }
         miliseg -= 60 * 60 * 1000; //Apaño
-        System.out.println("Data real: " + getStringSql() + ".Data nova: " + (new Timestamp(miliseg)).toString());
+        //System.out.println("Data real: " + getStringSql() + ".Data nova: " + (new Timestamp(miliseg)).toString());
 
         return new Timestamp(miliseg);
     }
@@ -237,6 +236,22 @@ public class Time {
         }
         
         return true;
+    }
+
+    public static Integer obtenerDias(LocalDate fecha1, LocalDate fecha2) {
+        Timestamp f1 = (new Time(fecha1)).toTimestamp();
+        Timestamp f2 = (new Time(fecha2)).toTimestamp();
+
+        Timestamp nDiasMilis;
+        if (f1.getTime() >= f2.getTime()) {
+            nDiasMilis = new Timestamp(f1.getTime() - f2.getTime());
+        } else {
+            nDiasMilis = new Timestamp(f2.getTime() - f1.getTime());
+        }
+
+        Integer dias = (int) (nDiasMilis.getTime() / 86400000); //Quedamos coa parte enteira
+
+        return dias;
     }
 
 }
