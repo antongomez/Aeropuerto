@@ -422,7 +422,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnReservarParking(ActionEvent event) {
-        Time llegada = new Time(dataFRetornoParking.getValue());
+        Time llegada = new Time(dataFLlegadaParking.getValue());
         Time retorno = new Time(dataFRetornoParking.getValue());
         Integer numPraza = asignarPlazaParking(llegada, retorno);
         Reserva reserva = new Reserva(llegada,
