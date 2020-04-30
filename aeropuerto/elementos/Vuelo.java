@@ -23,6 +23,7 @@ public class Vuelo {
     private Integer plazasPremium;
     private HashMap<Integer,Boolean> asientosNormalesDisponibles;
     private HashMap<Integer,Boolean> asientosPremiumDisponibles;
+    private String retraso;//Es un string que viene de un interval en java (hh:mm:ss)
 
     public Vuelo(String numVuelo, String origen, String destino,
             Time fechasalidaTeo, Time fechasalidaReal,
@@ -173,6 +174,15 @@ public class Vuelo {
     public void setAerolinea(String nombre, Float precioMaleta, Float pesoMaleta) {
         this.aerolinea = new Aerolinea(nombre, precioMaleta, pesoMaleta);
     }
+    public void setAerolinea(String nombre) {
+        this.aerolinea = new Aerolinea(nombre);
+    }
+    public void setRetraso(String retraso){
+        this.retraso=retraso;
+    }
+    public String getRetraso(){
+        return retraso;
+    }
 
     public void setPlazasNormal(Integer plazasNormal) {
         this.plazasNormal = plazasNormal;
@@ -209,8 +219,6 @@ public class Vuelo {
     public void setAsientosPremiumDisponibles(HashMap<Integer, Boolean> asientosPremiumDisponibles) {
         this.asientosPremiumDisponibles = asientosPremiumDisponibles;
     }
-    public Integer tieneRetraso(){
-        if(fechasalidaTeo.e)
-    }
+    
     
 }

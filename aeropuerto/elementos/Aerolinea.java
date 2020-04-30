@@ -28,6 +28,9 @@ public class Aerolinea {
         this.precioBaseMaleta = (float) (Math.round(precioBaseMaleta * 100d) / 100d);
         this.pesoBaseMaleta = (float) (Math.round(pesoBaseMaleta * 100d) / 100d);
     }
+    public Aerolinea(String nombre){
+        this.nombre=nombre;
+    }
 
     public String getNombre() {
         return nombre;

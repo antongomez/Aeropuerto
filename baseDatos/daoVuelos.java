@@ -311,18 +311,19 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select v.numvuelo as numvuelo, v.origen as origen, "
-                    + "v.destino as destino, v.fechasalidareal as fechasalidareal, v.fechallegadareal as fechallegadareal, "
-                    + "c.preciobillete as preciobillete, v.cancelado as cancelado "
-                    + "from usuario u, vuelo v, comprarBillete c "
-                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=?");
-            stmVuelo.setString(1, dniUs);
+            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaSalidaReal, fechaLlegadaReal, "
+                    + "fechaSalidaReal-fechaSalidaTeorica as retraso,terminal, puertaembarque, aerolinea, cancelado " +
+                    "from vuelo v, avion a " +
+                    "where v.avion=a.codigo and fechaSalidaReal>NOW() and v.origen=?");
+            stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
-                        rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getTimestamp("fechallegadareal"),
-                        rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
-                        null, null);
+                        null, rsVuelo.getTimestamp("fechasalidareal"), null, rsVuelo.getTimestamp("fechallegadareal"),
+                        null, rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
+                        rsVuelo.getInt("terminal"), null);
+                vueloActual.setAerolinea(rsVuelo.getString("aerolinea"));
+                vueloActual.setRetraso(rsVuelo.getString("retraso"));
 
                 resultado.add(vueloActual);
             }
@@ -341,7 +342,48 @@ public class daoVuelos extends AbstractDAO {
         return resultado;
     }
     public List<Vuelo> verLlegadas(){
-        return fbd.verLlegadas();
+        List<Vuelo> resultado = new ArrayList<>();
+        Connection con;
+        Vuelo vueloActual;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+
+        con = super.getConexion();
+
+        try {
+            stmVuelo = con.prepareStatement("select v.numVuelo, v.origen, v.destino, v.fechaSalidaReal, v.fechaLlegadaReal,"
+                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, a.aerolinea, v.cancelado" +
+                      "from vuelo v, avion a " +
+                      "where v.avion=a.codigo and EXTRACT(YEAR FROM cast(v.fechaLlegadaReal as date))= EXTRACT(YEAR FROM cast(NOW()as date) ) and " +
+                      "EXTRACT(MONTH FROM cast(v.fechaLlegadaReal as date))=EXTRACT(MONTH FROM cast(NOW()as date) ) " +
+                      "and EXTRACT(DAY FROM cast(v.fechaLlegadaReal as date))=EXTRACT(DAY FROM cast(NOW()as date) ) " +
+                      "and v.destino=?");
+            stmVuelo.setString(1, "Folgoso do Courel");
+            rsVuelo = stmVuelo.executeQuery();
+            while (rsVuelo.next()) {
+                vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
+                        null, rsVuelo.getTimestamp("fechasalidareal"), null, rsVuelo.getTimestamp("fechallegadareal"),
+                        null, rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
+                        rsVuelo.getInt("terminal"), null);
+                vueloActual.setAerolinea(rsVuelo.getString("aerolinea"));
+                vueloActual.setRetraso(rsVuelo.getString("retraso"));
+
+                resultado.add(vueloActual);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
+    }
     }
 
-}
+
