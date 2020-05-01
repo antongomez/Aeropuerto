@@ -135,5 +135,10 @@ public class Modelo {
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return fa.reservarParking(reserva, dniUsuario);
     }
-
+    public List<Vuelo> mostrarSalidas(){
+        return fa.verSalidas();
+    }
+public List<Vuelo> mostrarLlegadas(){
+        return fa.verLlegadas();
+    }
 }

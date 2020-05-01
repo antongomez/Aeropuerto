@@ -51,6 +51,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TITULO_VUELOS = "PRÓXIMOS VUELOS";
     private final static String TITULO_AREAP = "ÁREA PERSONAL";
     private final static String TITULO_SERV = "SERVICIOS";
+    private final static String TITULO_INFO= "INFORMACIÓN";
 
     private final static String TXT_BTN_ADMIN = "Administrador";
     private final static String TXT_BTN_PL = "Personal";
@@ -255,6 +256,36 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TextField txtMatriculaParking;
     @FXML
     private Label etqErroMatricula;
+    @FXML
+    private ToggleGroup infoVuelos;
+    
+    //Informacion
+    @FXML
+    private TableView<Vuelo> tablaSalidasLlegadas;
+    @FXML
+    private TableColumn<Vuelo, String> colVueloSL;
+    @FXML
+    private TableColumn<Vuelo, String> colOrigenSL;
+    @FXML
+    private TableColumn<Vuelo, String> colDestinoSL;
+    @FXML
+    private TableColumn<Vuelo, Integer> colTerminalSL;
+    @FXML
+    private TableColumn<Vuelo, Integer> colPuertaSL;
+    @FXML
+    private TableColumn<Vuelo, Time>  colFechaSL;
+    @FXML
+    private TableColumn<Vuelo, String> colEstadoSL;
+    @FXML
+    private TabPane panelInfo;
+    @FXML
+    private RadioButton radioBtnSalidas;
+    @FXML
+    private RadioButton radioBtnLlegadas;
+    @FXML
+    private Button btnActualizarSL;
+    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -301,6 +332,15 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         comboBoxEstUsu.setItems(meses);
         comboBoxEstUsu.getSelectionModel().selectFirst();
+        
+        //Definimos tabla salidas-llegadas
+        colVueloSL.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
+        colOrigenSL.setCellValueFactory(new PropertyValueFactory<>("origen"));
+        colDestinoSL.setCellValueFactory(new PropertyValueFactory<>("destino"));
+        colTerminalSL.setCellValueFactory(new PropertyValueFactory<>("terminal"));
+        colPuertaSL.setCellValueFactory(new PropertyValueFactory<>("puertaEmbarque"));
+        colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
+        colEstadoSL.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
         //Lista de terminais para mostrar no comboBox da venta reservar parking
         ObservableList<Integer> terminais = FXCollections.observableArrayList(getInstanceModelo().buscarTerminais());
@@ -576,6 +616,39 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnInfo(ActionEvent event) {
+        panelInfo.toFront();
+        etqTitulo.setText(TITULO_INFO);
+        accionSalidas(); 
+    }
+     @FXML
+    private void pulsarSalidas(ActionEvent event) {
+        accionSalidas();
+    }
+
+    @FXML
+    private void pulsarLlegadas(ActionEvent event) {
+        accionLlegadas();
+    }
+    @FXML
+    private void actualizarSL(ActionEvent event) {
+        if(radioBtnSalidas.isSelected()){
+            accionSalidas();
+        }
+        else{
+            accionLlegadas();
+        }
+    }
+    private void accionSalidas(){
+        colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
+        ObservableList<Vuelo> salidas = FXCollections.observableArrayList(
+                getInstanceModelo().mostrarSalidas());
+        tablaSalidasLlegadas.setItems(salidas);
+    }
+    private void accionLlegadas(){
+        colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
+        ObservableList<Vuelo> llegadas = FXCollections.observableArrayList(
+                getInstanceModelo().mostrarLlegadas());
+        tablaSalidasLlegadas.setItems(llegadas);
     }
 
     @FXML
@@ -795,5 +868,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             panelInfoParking.setVisible(false);
         }
     }
+
+    
+
+   
 
 }

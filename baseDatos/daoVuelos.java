@@ -311,19 +311,18 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaSalidaReal, fechaLlegadaReal, "
-                    + "fechaSalidaReal-fechaSalidaTeorica as retraso,terminal, puertaembarque, aerolinea, cancelado " +
-                    "from vuelo v, avion a " +
-                    "where v.avion=a.codigo and fechaSalidaReal>NOW() and v.origen=?");
+            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaSalidaReal, "
+                    + "fechaSalidaReal-fechaSalidaTeorica as retraso,terminal, puertaembarque, cancelado " +
+                    "from vuelo v " +
+                    "where fechaSalidaReal>NOW() and v.origen=? "
+                    + "ORDER BY fechaSalidaReal asc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
-                        null, rsVuelo.getTimestamp("fechasalidareal"), null, rsVuelo.getTimestamp("fechallegadareal"),
-                        null, rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
-                        rsVuelo.getInt("terminal"), null);
-                vueloActual.setAerolinea(rsVuelo.getString("aerolinea"));
-                vueloActual.setRetraso(rsVuelo.getString("retraso"));
+                        rsVuelo.getTimestamp("fechaSalidaReal"), null,rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
+                        rsVuelo.getInt("terminal"), rsVuelo.getString("retraso"));;
+                
 
                 resultado.add(vueloActual);
             }
@@ -351,22 +350,20 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select v.numVuelo, v.origen, v.destino, v.fechaSalidaReal, v.fechaLlegadaReal,"
-                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, a.aerolinea, v.cancelado" +
-                      "from vuelo v, avion a " +
-                      "where v.avion=a.codigo and EXTRACT(YEAR FROM cast(v.fechaLlegadaReal as date))= EXTRACT(YEAR FROM cast(NOW()as date) ) and " +
+            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaLlegadaReal,"
+                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado " +
+                      "from vuelo v " +
+                      "where EXTRACT(YEAR FROM cast(v.fechaLlegadaReal as date))= EXTRACT(YEAR FROM cast(NOW()as date) ) and " +
                       "EXTRACT(MONTH FROM cast(v.fechaLlegadaReal as date))=EXTRACT(MONTH FROM cast(NOW()as date) ) " +
                       "and EXTRACT(DAY FROM cast(v.fechaLlegadaReal as date))=EXTRACT(DAY FROM cast(NOW()as date) ) " +
-                      "and v.destino=?");
+                      "and v.destino=? "
+                    + "ORDER BY fechaLlegadaReal desc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
-                        null, rsVuelo.getTimestamp("fechasalidareal"), null, rsVuelo.getTimestamp("fechallegadareal"),
-                        null, rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
-                        rsVuelo.getInt("terminal"), null);
-                vueloActual.setAerolinea(rsVuelo.getString("aerolinea"));
-                vueloActual.setRetraso(rsVuelo.getString("retraso"));
+                        null, rsVuelo.getTimestamp("fechallegadareal"),rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
+                        rsVuelo.getInt("terminal"), rsVuelo.getString("retraso"));
 
                 resultado.add(vueloActual);
             }

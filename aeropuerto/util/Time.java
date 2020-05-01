@@ -190,12 +190,7 @@ public class Time {
         return (fecha1.toTimestamp().after(fecha2.toTimestamp()));
     }
     
-    @Override
     
-    public boolean equals(Object fecha){
-        
-        return (((Time)fecha).toTimestamp().equals(this.toTimestamp()));
-    }
     /*Diferencia entre dos fechas en horas, minutos y segundos. Si las fechas son iguales devuelve false*/
     public Boolean diferencia(Time fecha, Integer dias, Integer horas, Integer minutos){
         

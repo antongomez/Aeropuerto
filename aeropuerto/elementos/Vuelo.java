@@ -24,6 +24,7 @@ public class Vuelo {
     private HashMap<Integer,Boolean> asientosNormalesDisponibles;
     private HashMap<Integer,Boolean> asientosPremiumDisponibles;
     private String retraso;//Es un string que viene de un interval en java (hh:mm:ss)
+   // private String estado;//Atributo para la tabla de Salidas-Llegadas
 
     public Vuelo(String numVuelo, String origen, String destino,
             Time fechasalidaTeo, Time fechasalidaReal,
@@ -70,6 +71,25 @@ public class Vuelo {
         this.asientosPremiumDisponibles=new HashMap<>();
 
     }
+    /*Constructor para tabla salidas-llegadas*/
+
+    public Vuelo(String numVuelo, String origen, String destino, Timestamp fechaSalidaReal,Timestamp fechaLlegadaReal, Integer puertaEmbarque, Boolean cancelado, Integer terminal, String retraso) {
+        this.numVuelo = numVuelo;
+        this.origen = origen;
+        this.destino = destino;
+        if(fechaSalidaReal!=null){
+        this.fechasalidaReal = new Time(fechaSalidaReal);
+        }
+        else{
+            this.fechallegadaReal= new Time(fechaLlegadaReal);
+        }
+        this.puertaEmbarque = puertaEmbarque;
+        this.cancelado = cancelado;
+        this.terminal = terminal;
+        this.retraso = retraso;
+    }
+   
+    
 
     public Aerolinea getAerolinea() {
         return aerolinea;
@@ -220,5 +240,20 @@ public class Vuelo {
         this.asientosPremiumDisponibles = asientosPremiumDisponibles;
     }
     
+    public String getEstado(){
+    
+        String estado;
+        if(cancelado==true){
+            estado="Cancelado";
+        }
+        else if(retraso.equals("00:00:00")){
+            estado="Puntual";
+        }
+        else{
+            estado="Con retraso de:\n"+retraso+" (h,min,seg)";
+        }
+        
+        return estado;
+}
     
 }
