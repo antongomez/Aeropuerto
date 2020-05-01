@@ -591,7 +591,34 @@
                 </Tab>
                 <Tab text="Estadísticas Aerolíneas">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <AnchorPane layoutX="82.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="829.0" styleClass="background" stylesheets="@../../../../../../../../Downloads/ventaAcceder.css">
+                                 <children>
+                                    <ComboBox layoutX="27.0" layoutY="26.0" prefHeight="26.0" prefWidth="195.0" promptText="Aerolínea" styleClass="campos" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="26.0" layoutY="93.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00%" styleClass="labTitulo" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="550.0" layoutY="93.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00" styleClass="labTitulo" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="26.0" layoutY="146.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00%" styleClass="labTitulo" />
+                                    <Label layoutX="124.0" layoutY="98.0" styleClass="labelRegistrar" text="Vuelos con retraso" />
+                                    <Label layoutX="367.0" layoutY="98.0" prefHeight="21.0" prefWidth="162.0" styleClass="labelRegistrar" text="Tiempo medio retraso:" />
+                                    <Label layoutX="124.0" layoutY="151.0" styleClass="labelRegistrar" text="Ocupación vuelo normal" />
+                                    <Label layoutX="121.0" layoutY="207.0" styleClass="labelRegistrar" text="Ocupación vuelo premium" />
+                                    <Label layoutX="14.0" layoutY="356.0" styleClass="labelRegistrar" text="Plazas medias por avión:" />
+                                    <Label layoutX="14.0" layoutY="405.0" styleClass="labelRegistrar" text="Año fabricación medio avión:" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="26.0" layoutY="202.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00%" styleClass="labTitulo" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="304.0" layoutY="351.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00" styleClass="labTitulo" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="304.0" layoutY="400.0" prefHeight="26.0" prefWidth="63.0" promptText="2000" styleClass="labTitulo" />
+                                    <Label layoutX="14.0" layoutY="450.0" styleClass="labelRegistrar" text="Nacionalidad predominante pasajeros:" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="304.0" layoutY="445.0" prefHeight="26.0" prefWidth="172.0" promptText="España" styleClass="labTitulo" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="550.0" layoutY="202.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00" styleClass="labTitulo" />
+                                    <Label layoutX="367.0" layoutY="207.0" styleClass="labelRegistrar" text="Precio facturar maleta:" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="550.0" layoutY="147.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00" styleClass="labTitulo" />
+                                    <Label layoutX="367.0" layoutY="152.0" styleClass="labelRegistrar" text="Peso base maleta:" />
+                                    <TextField alignment="CENTER" editable="false" layoutX="300.0" layoutY="298.0" prefHeight="26.0" prefWidth="93.0" promptText="España" styleClass="labTitulo" />
+                                    <Label layoutX="14.0" layoutY="303.0" styleClass="labelRegistrar" text="País sede:" />
+                                 </children>
+                              </AnchorPane>
+                           </children></AnchorPane>
                   </content>
                 </Tab>
               </tabs>
