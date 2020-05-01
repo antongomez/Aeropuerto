@@ -2,14 +2,16 @@
     cor-secundaria: #efedb8;
     cor-bordes: lightgray;
     cor-accent: lightblue;
+    -cor-fondo: #1d1d1d;
+    
 }
 
 .root{
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: -cor-fondo;
 }
 
 .background {
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: -cor-fondo;
 }
 
 .label {

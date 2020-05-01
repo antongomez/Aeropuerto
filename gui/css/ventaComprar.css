@@ -1,5 +1,21 @@
+*{
+    -cor-secundaria: #efedb8;
+    -cor-bordes: lightgray;
+    -cor-accent: lightblue;
+    -cor-fondo: #1d1d1d;
+}
 #etqTitulo{
     -fx-font-size: 16pt;
+    -fx-background-color: black;
+}
+
+#etqDatosExtra{
+    -fx-background-color: -cor-secundaria;
+    -fx-text-fill: #1d1d1d;
+}
+
+#vBoxDatosExtra{
+    -fx-background-color: derive(white, -90%);
 }
 
 
