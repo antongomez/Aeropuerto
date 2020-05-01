@@ -444,13 +444,13 @@
                                                                   <HBox spacing="10.0">
                                                                      <children>
                                                                         <Label minHeight="25.0" prefHeight="28.0" text="Fecha de llegada:" />
-                                                                        <DatePicker fx:id="dataFLlegadaParking" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="120.0" />
+                                                                        <DatePicker fx:id="dataFLlegadaParking" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="120.0" />
                                                                      </children>
                                                                   </HBox>
                                                                   <HBox spacing="10.0">
                                                                      <children>
                                                                         <Label minHeight="25.0" prefHeight="28.0" text="Fecha de retorno:" />
-                                                                        <DatePicker fx:id="dataFRetornoParking" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="120.0" />
+                                                                        <DatePicker fx:id="dataFRetornoParking" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="120.0" />
                                                                      </children>
                                                                   </HBox>
                                                                </children>
@@ -535,19 +535,19 @@
                                                             <HBox alignment="CENTER" spacing="10.0">
                                                                <children>
                                                                   <Label minHeight="25.0" prefHeight="30.0" text="Fecha de llegada:" />
-                                                                  <DatePicker fx:id="dataFLlegadaCoches" minHeight="25.0" minWidth="100.0" prefHeight="30.0" prefWidth="120.0" />
+                                                                  <DatePicker fx:id="dataFLlegadaCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCoches" prefHeight="30.0" prefWidth="120.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox alignment="CENTER" prefHeight="30.0" spacing="10.0">
                                                                <children>
                                                                   <Label minHeight="25.0" prefHeight="30.0" text="Fecha de retorno:" />
-                                                                  <DatePicker fx:id="dataFRetornoCoches" minHeight="25.0" minWidth="100.0" prefHeight="30.0" prefWidth="120.0" />
+                                                                  <DatePicker fx:id="dataFRetornoCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCoches" prefHeight="30.0" prefWidth="120.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox alignment="CENTER" prefHeight="30.0" spacing="10.0">
                                                                <children>
                                                                   <Label minHeight="28.0" prefHeight="30.0" text="Número de plazas:" />
-                                                                  <TextField fx:id="textNPrazas" minHeight="25.0" minWidth="30.0" prefHeight="30.0" prefWidth="60.0" />
+                                                                  <TextField fx:id="textNPrazas" minHeight="25.0" minWidth="30.0" onKeyReleased="#comprobarBuscarCoches" prefHeight="30.0" prefWidth="60.0" />
                                                                </children>
                                                             </HBox>
                                                          </children>
@@ -555,7 +555,7 @@
                                                       <Label fx:id="etqInfoCoches" styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
                                                    </children>
                                                 </VBox>
-                                                <Button fx:id="btnBuscarCoches" mnemonicParsing="false" text="Buscar" />
+                                                <Button fx:id="btnBuscarCoches" mnemonicParsing="false" onAction="#accionBtnBuscarCoches" text="Buscar" />
                                              </children>
                                           </VBox>
                                           <TableView fx:id="taboaReservarCoche" maxHeight="340.0" minHeight="300.0" prefHeight="320.0">
@@ -587,7 +587,7 @@
                                                 </HBox>
                                              </children>
                                           </HBox>
-                                          <Button fx:id="btnReservarCoches" mnemonicParsing="false" text="Reservar" />
+                                          <Button fx:id="btnReservarCoches" mnemonicParsing="false" onAction="#accionBtnReservarCoches" text="Reservar" />
                                        </children>
                                     </HBox>
                                  </children>

@@ -56,9 +56,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TXT_BTN_ADMIN = "Administrador";
     private final static String TXT_BTN_PL = "Personal";
 
-    private final static String TEXTO_INFO_PARKING = "Introduce los datos de tu vuelo o de tu estancia";
-    private final static String TEXTO_ERROR_PARKING = "La fecha de regreso debe ser mayor que la de llegada";
-    private final static String TEXTO_ERROR_PARKING_2 = "Las fechas de llegada y de retorno deben ser mayores que la actual";
+    private final static String TEXTO_INFO_PARKING_COCHES = "Introduce los datos de tu vuelo o de tu estancia";
+    private final static String TEXTO_ERROR_PARKING_COCHES = "La fecha de regreso debe ser mayor que la de llegada";
+    private final static String TEXTO_ERROR_PARKING_COCHES_2 = "Las fechas de llegada y de retorno deben ser mayores que la actual";
 
     private final static Float PRECIO_DIA_PARKING = 10.0f;
 
@@ -433,6 +433,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         tablaMisVuelos.setItems(vuelosUsuario);
     }
 
+    /*
+    
+        SERVICIOS
+    
+     */
     @FXML
     private void accionBtnServicios(ActionEvent event) {
         //PARKING
@@ -442,11 +447,26 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //Borramos os txt
         txtMatriculaParking.clear();
         txtPrecioParking.clear();
-        //cboxTerminalParking;
+        cboxTerminalParking.getSelectionModel().clearSelection();
         dataFRetornoParking.setValue(null);
         dataFLlegadaParking.setValue(null);
+        //Configuramos a etiqueta de informacion
+        etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
+        etqInfoParking.getStyleClass().remove("etqErro");
 
         //COCHES
+        //Desactivamos os botons
+        btnBuscarCoches.setDisable(true);
+        btnReservarCoches.setDisable(true);
+        //Configuramos a etiqueta de informacion
+        etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
+        etqInfoCoches.getStyleClass().remove("etqErro");
+        //Borramos os txt
+        textNPrazas.clear();
+        txtPrecioTotalCoches.clear();
+        dataFRetornoCoches.setValue(null);
+        dataFLlegadaCoches.setValue(null);
+
         //Poñemos o panel diante
         etqTitulo.setText(TITULO_SERV);
         panelServicios.toFront();
@@ -483,9 +503,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     private Integer asignarPlazaParking(Time llegada, Time retorno) {
-        if (parking == null) {
-            System.out.println("0");
-        }
         return getInstanceModelo().obterPrazaLibre(parking.getTerminal(),
                 parking.getPiso(), llegada, retorno);
     }
@@ -531,13 +548,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
                 //A data de chegada e maior que a de retorno
                 if (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue()))) {
-                    etqInfoParking.setText(TEXTO_ERROR_PARKING);
+                    etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
-                    etqInfoParking.setText(TEXTO_ERROR_PARKING_2);
+                    etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES_2);
                 }
 
             } else {
-                etqInfoParking.setText(TEXTO_INFO_PARKING);
+                etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarParking.setDisable(false);
                 etqInfoParking.getStyleClass().remove("etqErro");
             }
@@ -555,46 +572,46 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
                 //A data de chegada e maior que a de retorno
                 if (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue()))) {
-                    etqInfoParking.setText(TEXTO_ERROR_PARKING);
+                    etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
-                    etqInfoParking.setText(TEXTO_ERROR_PARKING_2);
+                    etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES_2);
                 }
 
             } else {
-                etqInfoParking.setText(TEXTO_INFO_PARKING);
+                etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarParking.setDisable(true);
                 etqInfoParking.getStyleClass().remove("etqErro");
             }
 
         } else if (dataFLlegadaParking.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFLlegadaParking.getValue()))) {
-                etqInfoParking.setText(TEXTO_ERROR_PARKING_2);
+                etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES_2);
                 btnBuscarParking.setDisable(true);
 
                 if (etqInfoParking.getStyleClass().size() == 2) {
                     etqInfoParking.getStyleClass().add("etqErro");
                 }
             } else {
-                etqInfoParking.setText(TEXTO_INFO_PARKING);
+                etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarParking.setDisable(true);
                 etqInfoParking.getStyleClass().remove("etqErro");
             }
 
         } else if (dataFRetornoParking.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue()))) {
-                etqInfoParking.setText(TEXTO_ERROR_PARKING_2);
+                etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES_2);
                 btnBuscarParking.setDisable(true);
                 if (etqInfoParking.getStyleClass().size() == 2) {
                     etqInfoParking.getStyleClass().add("etqErro");
                 }
             } else {
-                etqInfoParking.setText(TEXTO_INFO_PARKING);
+                etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarParking.setDisable(true);
                 etqInfoParking.getStyleClass().remove("etqErro");
             }
 
         } else {
-            etqInfoParking.setText(TEXTO_INFO_PARKING);
+            etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
             btnBuscarParking.setDisable(true);
             etqInfoParking.getStyleClass().remove("etqErro");
         }
@@ -644,6 +661,117 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     }
 
+    //COCHES
+    private void comprobarBuscarCoches() {
+        if ((!textNPrazas.getText().isBlank())
+                && (dataFLlegadaCoches.getValue() != null)
+                && (dataFRetornoCoches.getValue() != null)) {
+
+            if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue())))
+                    || (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue())))
+                    || (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue())))) {
+                btnBuscarCoches.setDisable(true);
+
+                //Ao inicializarse ten dúas clases css: label e etqInfo
+                if (etqInfoCoches.getStyleClass().size() == 2) {
+                    etqInfoCoches.getStyleClass().add("etqErro");
+                }
+
+                //A data de chegada e maior que a de retorno
+                if (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue()))) {
+                    etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES);
+                } else { //As datas son menores que a actual
+                    etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                }
+
+            } else {
+                etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
+                btnBuscarCoches.setDisable(false);
+                etqInfoCoches.getStyleClass().remove("etqErro");
+            }
+
+        } else if ((dataFLlegadaCoches.getValue() != null)
+                && (dataFRetornoCoches.getValue() != null)) {
+
+            if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue())))
+                    || (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue())))
+                    || (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue())))) {
+                btnBuscarCoches.setDisable(true);
+                if (etqInfoCoches.getStyleClass().size() == 2) {
+                    etqInfoCoches.getStyleClass().add("etqErro");
+                }
+
+                //A data de chegada e maior que a de retorno
+                if (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue()))) {
+                    etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES);
+                } else { //As datas son menores que a actual
+                    etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                }
+
+            } else {
+                etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
+                btnBuscarCoches.setDisable(true);
+                etqInfoCoches.getStyleClass().remove("etqErro");
+            }
+        } else if (dataFRetornoCoches.getValue() != null) {
+            if (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue()))) {
+                etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                btnBuscarCoches.setDisable(true);
+                if (etqInfoCoches.getStyleClass().size() == 2) {
+                    etqInfoCoches.getStyleClass().add("etqErro");
+                }
+            } else {
+                etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
+                btnBuscarCoches.setDisable(true);
+                etqInfoCoches.getStyleClass().remove("etqErro");
+            }
+
+        }  else if (dataFLlegadaCoches.getValue() != null) {
+            if (!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue()))) {
+                etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                btnBuscarCoches.setDisable(true);
+                if (etqInfoCoches.getStyleClass().size() == 2) {
+                    etqInfoCoches.getStyleClass().add("etqErro");
+                }
+            } else {
+                etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
+                btnBuscarCoches.setDisable(true);
+                etqInfoCoches.getStyleClass().remove("etqErro");
+            }
+
+        } else {
+            etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
+            btnBuscarCoches.setDisable(true);
+            etqInfoCoches.getStyleClass().remove("etqErro");
+        }
+
+        btnReservarCoches.setDisable(true);
+    }
+
+    @FXML
+    private void comprobarBuscarCoches(Event event) {
+        comprobarBuscarCoches();
+    }
+
+    @FXML
+    private void comprobarBuscarCoches(KeyEvent event) {
+        //Comprobar numero e se e corecto
+        comprobarBuscarCoches();
+    }
+
+    @FXML
+    private void accionBtnBuscarCoches(ActionEvent event) {
+    }
+
+    @FXML
+    private void accionBtnReservarCoches(ActionEvent event) {
+    }
+
+    /*
+    
+        INFROMACION
+    
+     */
     @FXML
     private void accionBtnInfo(ActionEvent event) {
         panelInfo.toFront();
