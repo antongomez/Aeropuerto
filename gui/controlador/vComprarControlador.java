@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui.controlador;
 
 import aeropuerto.elementos.Usuario;
@@ -24,15 +19,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
-/**
- * FXML Controller class
- *
- * @author eliseopitavilarino
- */
 public class vComprarControlador extends Controlador implements Initializable {
 
     private Vuelo vuelo;
@@ -104,6 +94,12 @@ public class vComprarControlador extends Controlador implements Initializable {
     @FXML
     private ComboBox<Integer> comboBoxAsiento;
 
+    //DatosExtra (usase para o css)
+    @FXML
+    private VBox vBoxDatosExtra;
+    @FXML
+    private Label etqDatosExtra;
+
     /**
      * Initializes the controller class.
      */
@@ -133,11 +129,11 @@ public class vComprarControlador extends Controlador implements Initializable {
             getVenta().close();
         }
     }
-    
+
     //Función pone los asientos disponibles en el comboBox
     public void asientosDisponibles() {
         ArrayList<Integer> asientosDisponibles = new ArrayList<Integer>();
-        Usuario usuario=tablaPasajeros.getSelectionModel().getSelectedItem();
+        Usuario usuario = tablaPasajeros.getSelectionModel().getSelectedItem();
         if (usuario.getVueloEnEspera().getAsiento() != null) {
             asientosDisponibles.add(tablaPasajeros.getSelectionModel().getSelectedItem().getVueloEnEspera().getAsiento());
         }
@@ -159,10 +155,9 @@ public class vComprarControlador extends Controlador implements Initializable {
         comboBoxAsiento.getSelectionModel().selectFirst();
         if (usuario.getVueloEnEspera().getAsiento() == null) {
             usuario.getVueloEnEspera().setAsiento(comboBoxAsiento.getSelectionModel().getSelectedItem());
-            if(!usuario.getVueloEnEspera().getPremium()){
+            if (!usuario.getVueloEnEspera().getPremium()) {
                 vuelo.getAsientosNormalesDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), false);
-            }
-            else {
+            } else {
                 vuelo.getAsientosPremiumDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), false);
             }
         }
@@ -328,10 +323,10 @@ public class vComprarControlador extends Controlador implements Initializable {
         txtFieldPrecioTotal.setText(precio.toString());
         return precio;
     }
-    
+
     //Función que comprueba disponibilidad de asientos 
     public boolean comprobarAsientos(Usuario usuario) {
-        if (plazasPremiumEnEspera== 0 && plazasNormalesEnEspera == 0) {
+        if (plazasPremiumEnEspera == 0 && plazasNormalesEnEspera == 0) {
             Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan más plazas para este vuelo");
             return false;
         } else if (plazasPremiumEnEspera == 0) {
@@ -371,10 +366,10 @@ public class vComprarControlador extends Controlador implements Initializable {
 
     @FXML
     private void pagar(MouseEvent event) {
-        if(Modelo.getInstanceModelo().comprarBilletes(pasajeros)){
+        if (Modelo.getInstanceModelo().comprarBilletes(pasajeros)) {
             getVenta().close();
-            Modelo.getInstanceModelo().mostrarNotificacion("Vuelo comprado con éxito. Precio total: "+actualizarPrecio().toString());
-        }else{
+            Modelo.getInstanceModelo().mostrarNotificacion("Vuelo comprado con éxito. Precio total: " + actualizarPrecio().toString());
+        } else {
             Modelo.getInstanceModelo().mostrarError("Hubo un error en la compra, lo sentimos.");
             getVenta().close();
         }
@@ -389,12 +384,11 @@ public class vComprarControlador extends Controlador implements Initializable {
     @FXML
     private void cambiarAsiento(ActionEvent event) {
         Usuario usuario = tablaPasajeros.getSelectionModel().getSelectedItem();
-        if(usuario.getVueloEnEspera().getPremium()){
+        if (usuario.getVueloEnEspera().getPremium()) {
             vuelo.getAsientosPremiumDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), true);
             usuario.getVueloEnEspera().setAsiento(comboBoxAsiento.getSelectionModel().getSelectedItem());
             vuelo.getAsientosPremiumDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), false);
-        }
-        else{
+        } else {
             vuelo.getAsientosNormalesDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), true);
             usuario.getVueloEnEspera().setAsiento(comboBoxAsiento.getSelectionModel().getSelectedItem());
             vuelo.getAsientosNormalesDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), false);

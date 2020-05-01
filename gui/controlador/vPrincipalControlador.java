@@ -51,7 +51,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TITULO_VUELOS = "PRÓXIMOS VUELOS";
     private final static String TITULO_AREAP = "ÁREA PERSONAL";
     private final static String TITULO_SERV = "SERVICIOS";
-    private final static String TITULO_INFO= "INFORMACIÓN";
+    private final static String TITULO_INFO = "INFORMACIÓN";
 
     private final static String TXT_BTN_ADMIN = "Administrador";
     private final static String TXT_BTN_PL = "Personal";
@@ -258,7 +258,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Label etqErroMatricula;
     @FXML
     private ToggleGroup infoVuelos;
-    
+
     //Informacion
     @FXML
     private TableView<Vuelo> tablaSalidasLlegadas;
@@ -273,7 +273,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private TableColumn<Vuelo, Integer> colPuertaSL;
     @FXML
-    private TableColumn<Vuelo, Time>  colFechaSL;
+    private TableColumn<Vuelo, Time> colFechaSL;
     @FXML
     private TableColumn<Vuelo, String> colEstadoSL;
     @FXML
@@ -284,8 +284,38 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private RadioButton radioBtnLlegadas;
     @FXML
     private Button btnActualizarSL;
-    
-    
+
+    //Reservar Coches
+    @FXML
+    private DatePicker dataFLlegadaCoches;
+    @FXML
+    private DatePicker dataFRetornoCoches;
+    @FXML
+    private TextField textNPrazas;
+    @FXML
+    private Label etqInfoCoches;
+    @FXML
+    private Button btnBuscarCoches;
+    @FXML
+    private TableView<?> taboaReservarCoche;
+    @FXML
+    private TableColumn<?, ?> columnaMatriculaCoche;
+    @FXML
+    private TableColumn<?, ?> columnaModeloCoche;
+    @FXML
+    private TableColumn<?, ?> columnaPlazasCoche;
+    @FXML
+    private TableColumn<?, ?> columnaPuertasCoche;
+    @FXML
+    private TableColumn<?, ?> columnaCombustibleCoche;
+    @FXML
+    private TableColumn<?, ?> columnaCaballosCoche;
+    @FXML
+    private TableColumn<?, ?> columnaPrecioDiaCoche;
+    @FXML
+    private TextField txtPrecioTotalCoches;
+    @FXML
+    private Button btnReservarCoches;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -332,7 +362,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         comboBoxEstUsu.setItems(meses);
         comboBoxEstUsu.getSelectionModel().selectFirst();
-        
+
         //Definimos tabla salidas-llegadas
         colVueloSL.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
         colOrigenSL.setCellValueFactory(new PropertyValueFactory<>("origen"));
@@ -618,9 +648,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnInfo(ActionEvent event) {
         panelInfo.toFront();
         etqTitulo.setText(TITULO_INFO);
-        accionSalidas(); 
+        accionSalidas();
     }
-     @FXML
+
+    @FXML
     private void pulsarSalidas(ActionEvent event) {
         accionSalidas();
     }
@@ -629,23 +660,25 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void pulsarLlegadas(ActionEvent event) {
         accionLlegadas();
     }
+
     @FXML
     private void actualizarSL(ActionEvent event) {
-        if(radioBtnSalidas.isSelected()){
+        if (radioBtnSalidas.isSelected()) {
             accionSalidas();
-        }
-        else{
+        } else {
             accionLlegadas();
         }
     }
-    private void accionSalidas(){
+
+    private void accionSalidas() {
         colFechaSL.setText("Salida");
         colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
         ObservableList<Vuelo> salidas = FXCollections.observableArrayList(
                 getInstanceModelo().mostrarSalidas());
         tablaSalidasLlegadas.setItems(salidas);
     }
-    private void accionLlegadas(){
+
+    private void accionLlegadas() {
         colFechaSL.setText("Llegada");
         colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         ObservableList<Vuelo> llegadas = FXCollections.observableArrayList(
@@ -870,9 +903,5 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             panelInfoParking.setVisible(false);
         }
     }
-
-    
-
-   
 
 }
