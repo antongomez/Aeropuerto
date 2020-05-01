@@ -2,6 +2,9 @@ package aeropuerto.elementos;
 
 import aeropuerto.util.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Vuelo {
@@ -242,15 +245,38 @@ public class Vuelo {
     
     public String getEstado(){
     
-        String estado;
+        String estado="";
+
         if(cancelado==true){
             estado="Cancelado";
         }
         else if(retraso.equals("00:00:00")){
             estado="Puntual";
         }
+        else if(retraso.contains("day")){
+            estado="Aplazado";
+        }
         else{
-            estado="Con retraso de:\n"+retraso+" (h,min,seg)";
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            try{
+            Calendar fecha= Calendar.getInstance();
+            Date tiempo=sdf.parse(retraso);
+            fecha.setTime(tiempo);
+            if(fecha.get(Calendar.HOUR)<=1){
+                int minutos=fecha.get(Calendar.MINUTE)+fecha.get(Calendar.HOUR)*60;
+                estado="Retraso:\n"+minutos+" min";
+            }
+            else{
+                
+                estado="Retraso:\n"+fecha.get(Calendar.HOUR)+" h "+fecha.get(Calendar.MINUTE)+" min";
+            }
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            
+            
         }
         
         return estado;

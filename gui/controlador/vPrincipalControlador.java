@@ -639,12 +639,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
     }
     private void accionSalidas(){
+        colFechaSL.setText("Salida");
         colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
         ObservableList<Vuelo> salidas = FXCollections.observableArrayList(
                 getInstanceModelo().mostrarSalidas());
         tablaSalidasLlegadas.setItems(salidas);
     }
     private void accionLlegadas(){
+        colFechaSL.setText("Llegada");
         colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         ObservableList<Vuelo> llegadas = FXCollections.observableArrayList(
                 getInstanceModelo().mostrarLlegadas());
