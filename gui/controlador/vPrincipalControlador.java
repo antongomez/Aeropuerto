@@ -1,6 +1,7 @@
 package gui.controlador;
 
 import aeropuerto.elementos.Administrador;
+import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
@@ -298,21 +299,21 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private Button btnBuscarCoches;
     @FXML
-    private TableView<?> taboaReservarCoche;
+    private TableView<Coche> taboaReservarCoche;
     @FXML
-    private TableColumn<?, ?> columnaMatriculaCoche;
+    private TableColumn<Coche, String> columnaMatriculaCoche;
     @FXML
-    private TableColumn<?, ?> columnaModeloCoche;
+    private TableColumn<Coche, String> columnaModeloCoche;
     @FXML
-    private TableColumn<?, ?> columnaPlazasCoche;
+    private TableColumn<Coche, Integer> columnaPlazasCoche;
     @FXML
-    private TableColumn<?, ?> columnaPuertasCoche;
+    private TableColumn<Coche, Integer> columnaPuertasCoche;
     @FXML
-    private TableColumn<?, ?> columnaCombustibleCoche;
+    private TableColumn<Coche, String> columnaCombustibleCoche;
     @FXML
-    private TableColumn<?, ?> columnaCaballosCoche;
+    private TableColumn<Coche, Integer> columnaCaballosCoche;
     @FXML
-    private TableColumn<?, ?> columnaPrecioDiaCoche;
+    private TableColumn<Coche, Float> columnaPrecioDiaCoche;
     @FXML
     private TextField txtPrecioTotalCoches;
     @FXML
@@ -435,9 +436,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     /*
-    
+
         SERVICIOS
-    
+
      */
     @FXML
     private void accionBtnServicios(ActionEvent event) {
@@ -664,16 +665,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     //COCHES
     private void poderBuscarCoches() {
-        if ((!textNPrazas.getText().isBlank())
-                && (dataFLlegadaCoches.getValue() != null)
+        if ((dataFLlegadaCoches.getValue() != null)
                 && (dataFRetornoCoches.getValue() != null)) {
 
             if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue())))
                     || (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue())))
                     || (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue())))) {
                 btnBuscarCoches.setDisable(true);
-
-                //Ao inicializarse ten dúas clases css: label e etqInfo
                 if (etqInfoCoches.getStyleClass().size() == 2) {
                     etqInfoCoches.getStyleClass().add("etqErro");
                 }
@@ -685,35 +683,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
                 }
 
-            } else {
+            } else if (comprobarNumeroValido()) {
                 etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarCoches.setDisable(false);
                 etqInfoCoches.getStyleClass().remove("etqErro");
-            }
-
-        } else if ((dataFLlegadaCoches.getValue() != null)
-                && (dataFRetornoCoches.getValue() != null)) {
-
-            if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue())))
-                    || (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue())))
-                    || (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue())))) {
-                btnBuscarCoches.setDisable(true);
-                if (etqInfoCoches.getStyleClass().size() == 2) {
-                    etqInfoCoches.getStyleClass().add("etqErro");
-                }
-
-                //A data de chegada e maior que a de retorno
-                if (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue()))) {
-                    etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES);
-                } else { //As datas son menores que a actual
-                    etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
-                }
-
             } else {
-                etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
-                btnBuscarCoches.setDisable(true);
-                etqInfoCoches.getStyleClass().remove("etqErro");
+                etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
             }
+
         } else if (dataFRetornoCoches.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue()))) {
                 etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
@@ -721,10 +698,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if (etqInfoCoches.getStyleClass().size() == 2) {
                     etqInfoCoches.getStyleClass().add("etqErro");
                 }
-            } else {
+            } else if (comprobarNumeroValido()) {
                 etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarCoches.setDisable(true);
                 etqInfoCoches.getStyleClass().remove("etqErro");
+            } else {
+                etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
             }
 
         } else if (dataFLlegadaCoches.getValue() != null) {
@@ -734,16 +713,20 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if (etqInfoCoches.getStyleClass().size() == 2) {
                     etqInfoCoches.getStyleClass().add("etqErro");
                 }
-            } else {
+            } else if (comprobarNumeroValido()) {
                 etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarCoches.setDisable(true);
                 etqInfoCoches.getStyleClass().remove("etqErro");
+            } else {
+                etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
             }
 
-        } else {
+        } else if (comprobarNumeroValido()) {
             etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
             btnBuscarCoches.setDisable(true);
             etqInfoCoches.getStyleClass().remove("etqErro");
+        } else {
+            etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
         }
 
         btnReservarCoches.setDisable(true);
@@ -754,21 +737,20 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         poderBuscarCoches();
     }
 
-    @FXML
-    private void comprobarBuscarCochesTxt(KeyEvent event) {
+    private Boolean comprobarNumeroValido() {
         try {
             int num = Integer.parseInt(textNPrazas.getText());
-            if ((num > 12) || (num < 1)) {
-                poderBuscarCoches();
-                System.out.println("Aqui");
-            } else {
-                etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
-                btnBuscarCoches.setDisable(true);
-                if (etqInfoCoches.getStyleClass().size() == 2) {
-                    etqInfoCoches.getStyleClass().add("etqErro");
-                }
-            }
+            return (num <= 12) && (num >= 1);
         } catch (NumberFormatException ex) {
+            return textNPrazas.getText().isEmpty();
+        }
+    }
+
+    @FXML
+    private void comprobarBuscarCochesTxt(KeyEvent event) {
+        if (comprobarNumeroValido()) {
+            poderBuscarCoches();
+        } else {
             etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
             btnBuscarCoches.setDisable(true);
             if (etqInfoCoches.getStyleClass().size() == 2) {
@@ -779,6 +761,39 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnBuscarCoches(ActionEvent event) {
+        Time llegada = new Time(dataFLlegadaCoches.getValue());
+        Time salida = new Time(dataFRetornoCoches.getValue());
+        Integer numPrazas;
+        if (!textNPrazas.getText().isEmpty()) {
+            numPrazas = Integer.parseInt(textNPrazas.getText());
+        } else {
+            numPrazas = null;
+        }
+        ObservableList<Coche> coches = FXCollections.observableList(getInstanceModelo().buscarCoches(llegada, salida, numPrazas));
+
+        columnaMatriculaCoche.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        columnaModeloCoche.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        columnaPlazasCoche.setCellValueFactory(new PropertyValueFactory<>("nPrazas"));
+        columnaPuertasCoche.setCellValueFactory(new PropertyValueFactory<>("nPuertas"));
+        columnaCombustibleCoche.setCellValueFactory(new PropertyValueFactory<>("tipoCombustible"));
+        columnaCaballosCoche.setCellValueFactory(new PropertyValueFactory<>("caballos"));
+        columnaPrecioDiaCoche.setCellValueFactory(new PropertyValueFactory<>("precioDia"));
+
+        taboaReservarCoche.setItems(coches);
+    }
+
+    @FXML
+    private void seleccionCoche(MouseEvent event) {
+        if ((taboaReservarCoche.getSelectionModel().getSelectedItem() != null)
+                && (!btnBuscarCoches.isDisable())) {
+            Integer dias = Time.obtenerDias(dataFRetornoCoches.getValue(), dataFLlegadaCoches.getValue());
+            Coche coche = taboaReservarCoche.getSelectionModel().getSelectedItem();
+            Float precioTotal = dias * coche.getPrecioDia();
+            txtPrecioTotalCoches.setText(precioTotal.toString());
+            btnReservarCoches.setDisable(false);
+        } else {
+            btnReservarCoches.setDisable(true);
+        }
     }
 
     @FXML
@@ -786,9 +801,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     /*
-    
+
         INFROMACION
-    
+
      */
     @FXML
     private void accionBtnInfo(ActionEvent event) {

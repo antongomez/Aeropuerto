@@ -558,7 +558,7 @@
                                                 <Button fx:id="btnBuscarCoches" mnemonicParsing="false" onAction="#accionBtnBuscarCoches" text="Buscar" />
                                              </children>
                                           </VBox>
-                                          <TableView fx:id="taboaReservarCoche" maxHeight="340.0" minHeight="300.0" prefHeight="320.0">
+                                          <TableView fx:id="taboaReservarCoche" maxHeight="340.0" minHeight="300.0" onMouseClicked="#seleccionCoche" prefHeight="320.0">
                                             <columns>
                                               <TableColumn fx:id="columnaMatriculaCoche" minWidth="120.0" prefWidth="120.0" text="Matrícula" />
                                               <TableColumn fx:id="columnaModeloCoche" minWidth="120.0" prefWidth="120.0" text="Modelo" />

@@ -24,10 +24,10 @@ public class Vuelo {
     private Aerolinea aerolinea;
     private Integer plazasNormal;
     private Integer plazasPremium;
-    private HashMap<Integer,Boolean> asientosNormalesDisponibles;
-    private HashMap<Integer,Boolean> asientosPremiumDisponibles;
+    private HashMap<Integer, Boolean> asientosNormalesDisponibles;
+    private HashMap<Integer, Boolean> asientosPremiumDisponibles;
     private String retraso;//Es un string que viene de un interval en java (hh:mm:ss)
-   // private String estado;//Atributo para la tabla de Salidas-Llegadas
+    // private String estado;//Atributo para la tabla de Salidas-Llegadas
 
     public Vuelo(String numVuelo, String origen, String destino,
             Time fechasalidaTeo, Time fechasalidaReal,
@@ -47,8 +47,8 @@ public class Vuelo {
         this.cancelado = cancelado;
         this.terminal = terminal;
         this.avion = new Avion(codigoAvion);
-        this.asientosNormalesDisponibles=new HashMap<>();
-        this.asientosPremiumDisponibles=new HashMap<>();
+        this.asientosNormalesDisponibles = new HashMap<>();
+        this.asientosPremiumDisponibles = new HashMap<>();
 
     }
 
@@ -70,29 +70,27 @@ public class Vuelo {
         this.cancelado = cancelado;
         this.terminal = terminal;
         this.avion = new Avion(codigoAvion);
-        this.asientosNormalesDisponibles=new HashMap<>();
-        this.asientosPremiumDisponibles=new HashMap<>();
+        this.asientosNormalesDisponibles = new HashMap<>();
+        this.asientosPremiumDisponibles = new HashMap<>();
 
     }
+
     /*Constructor para tabla salidas-llegadas*/
 
-    public Vuelo(String numVuelo, String origen, String destino, Timestamp fechaSalidaReal,Timestamp fechaLlegadaReal, Integer puertaEmbarque, Boolean cancelado, Integer terminal, String retraso) {
+    public Vuelo(String numVuelo, String origen, String destino, Timestamp fechaSalidaReal, Timestamp fechaLlegadaReal, Integer puertaEmbarque, Boolean cancelado, Integer terminal, String retraso) {
         this.numVuelo = numVuelo;
         this.origen = origen;
         this.destino = destino;
-        if(fechaSalidaReal!=null){
-        this.fechasalidaReal = new Time(fechaSalidaReal);
-        }
-        else{
-            this.fechallegadaReal= new Time(fechaLlegadaReal);
+        if (fechaSalidaReal != null) {
+            this.fechasalidaReal = new Time(fechaSalidaReal);
+        } else {
+            this.fechallegadaReal = new Time(fechaLlegadaReal);
         }
         this.puertaEmbarque = puertaEmbarque;
         this.cancelado = cancelado;
         this.terminal = terminal;
         this.retraso = retraso;
     }
-   
-    
 
     public Aerolinea getAerolinea() {
         return aerolinea;
@@ -197,13 +195,16 @@ public class Vuelo {
     public void setAerolinea(String nombre, Float precioMaleta, Float pesoMaleta) {
         this.aerolinea = new Aerolinea(nombre, precioMaleta, pesoMaleta);
     }
+
     public void setAerolinea(String nombre) {
         this.aerolinea = new Aerolinea(nombre);
     }
-    public void setRetraso(String retraso){
-        this.retraso=retraso;
+
+    public void setRetraso(String retraso) {
+        this.retraso = retraso;
     }
-    public String getRetraso(){
+
+    public String getRetraso() {
         return retraso;
     }
 
@@ -242,44 +243,38 @@ public class Vuelo {
     public void setAsientosPremiumDisponibles(HashMap<Integer, Boolean> asientosPremiumDisponibles) {
         this.asientosPremiumDisponibles = asientosPremiumDisponibles;
     }
-    
-    public String getEstado(){
-    
-        String estado="";
 
-        if(cancelado==true){
-            estado="Cancelado";
-        }
-        else if(retraso.equals("00:00:00")){
-            estado="Puntual";
-        }
-        else if(retraso.contains("day")){
-            estado="Aplazado";
-        }
-        else{
-            
+    public String getEstado() {
+
+        String estado = "";
+
+        if (cancelado == true) {
+            estado = "Cancelado";
+        } else if (retraso.equals("00:00:00")) {
+            estado = "Puntual";
+        } else if (retraso.contains("day")) {
+            estado = "Aplazado";
+        } else {
+
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            try{
-            Calendar fecha= Calendar.getInstance();
-            Date tiempo=sdf.parse(retraso);
-            fecha.setTime(tiempo);
-            if(fecha.get(Calendar.HOUR)<=1){
-                int minutos=fecha.get(Calendar.MINUTE)+fecha.get(Calendar.HOUR)*60;
-                estado="Retraso:\n"+minutos+" min";
-            }
-            else{
-                
-                estado="Retraso:\n"+fecha.get(Calendar.HOUR)+" h "+fecha.get(Calendar.MINUTE)+" min";
-            }
-            }
-            catch(Exception e){
+            try {
+                Calendar fecha = Calendar.getInstance();
+                Date tiempo = sdf.parse(retraso);
+                fecha.setTime(tiempo);
+                if (fecha.get(Calendar.HOUR) <= 1) {
+                    int minutos = fecha.get(Calendar.MINUTE) + fecha.get(Calendar.HOUR) * 60;
+                    estado = "Retraso:\n" + minutos + " min";
+                } else {
+
+                    estado = "Retraso:\n" + fecha.get(Calendar.HOUR) + " h " + fecha.get(Calendar.MINUTE) + " min";
+                }
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-            
-            
+
         }
-        
+
         return estado;
-}
-    
+    }
+
 }

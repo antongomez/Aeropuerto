@@ -1,9 +1,7 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
-import aeropuerto.elementos.Parking;
 import aeropuerto.util.Reserva;
-import aeropuerto.util.Time;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -155,5 +153,5 @@ public class daoReservas extends AbstractDAO {
         }
         return correcto;
     }
-    
+
 }

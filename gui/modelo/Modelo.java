@@ -1,6 +1,7 @@
 package gui.modelo;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
@@ -103,12 +104,12 @@ public class Modelo {
     public void obtenerDatosAvionVuelo(Vuelo v) {
         fa.obtenerDatosAvionVuelo(v);
     }
-    
-    public void obtenerAsientos(Vuelo vuelo){
+
+    public void obtenerAsientos(Vuelo vuelo) {
         fa.obtenerAsientos(vuelo);
     }
-    
-    public Boolean comprarBilletes(ObservableList<Usuario> usuarios){
+
+    public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return fa.comprarBilletes(usuarios);
     }
 
@@ -119,15 +120,19 @@ public class Modelo {
     public List<Integer> buscarTerminais() {
         return fa.buscarTerminais();
     }
-    
-    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin){
+
+    public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin) {
         return fa.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
     }
 
     public Parking buscarParking(Integer terminal, Time inicio, Time fin) {
         return fa.buscarParking(terminal, inicio, fin);
     }
-    
+
+    public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
+        return fa.buscarCoches(llegada, retorno, numPlazas);
+    }
+
     public Integer obterPrazaLibre(Integer numTerminal, Integer piso, Time inicio, Time fin) {
         return fa.obterPrazaLibre(numTerminal, piso, inicio, fin);
     }
@@ -135,10 +140,12 @@ public class Modelo {
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return fa.reservarParking(reserva, dniUsuario);
     }
-    public List<Vuelo> mostrarSalidas(){
+
+    public List<Vuelo> mostrarSalidas() {
         return fa.verSalidas();
     }
-public List<Vuelo> mostrarLlegadas(){
+
+    public List<Vuelo> mostrarLlegadas() {
         return fa.verLlegadas();
     }
 }

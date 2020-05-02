@@ -1,5 +1,6 @@
 package aeropuerto;
 
+import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.elementos.Usuario;
@@ -153,6 +154,10 @@ public class FachadaAplicacion extends Application {
 
     public Parking buscarParking(Integer terminal, Time inicio, Time fin) {
         return gp.buscarParking(terminal, inicio, fin);
+    }
+    
+    public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
+        return fbd.buscarCoches(llegada, retorno, numPlazas);
     }
 
     public Integer obterPrazaLibre(Integer numTerminal, Integer piso, Time inicio, Time fin) {

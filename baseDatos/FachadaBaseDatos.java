@@ -1,6 +1,7 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
@@ -24,6 +25,7 @@ public class FachadaBaseDatos {
     private daoVuelos daoVuelos;
     private daoReservas daoReservas;
     private daoTerminal daoTerminal;
+    private daoCoches daoCoches;
 
     public FachadaBaseDatos(FachadaAplicacion fa) {
 
@@ -52,6 +54,7 @@ public class FachadaBaseDatos {
             daoVuelos = new daoVuelos(conexion, fa);
             daoReservas = new daoReservas(conexion, fa);
             daoTerminal = new daoTerminal(conexion, fa);
+            daoCoches = new daoCoches(conexion, fa);
 
         } catch (FileNotFoundException f) {
             fa.mostrarError(f.getMessage());
@@ -115,11 +118,12 @@ public class FachadaBaseDatos {
 
         daoVuelos.obtenerDatosAvionVuelo(v);
     }
-    
-    public void obtenerAsientos(Vuelo vuelo){
+
+    public void obtenerAsientos(Vuelo vuelo) {
         daoVuelos.obtenerAsientos(vuelo);
     }
-    public Boolean comprarBilletes(ObservableList<Usuario> usuarios){
+
+    public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return daoVuelos.comprarBilletes(usuarios);
     }
 
@@ -150,10 +154,16 @@ public class FachadaBaseDatos {
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return daoReservas.reservarParking(reserva, dniUsuario);
     }
-    public List<Vuelo> verSalidas(){
+
+    public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
+        return daoCoches.buscarCoches(llegada, retorno, numPlazas);
+    }
+
+    public List<Vuelo> verSalidas() {
         return daoVuelos.verSalidas();
     }
-    public List<Vuelo> verLlegadas(){
+
+    public List<Vuelo> verLlegadas() {
         return daoVuelos.verLlegadas();
     }
     public EstadisticasAerolinea obtenerEstAerolineas(String aer){
