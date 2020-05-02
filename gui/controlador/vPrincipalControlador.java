@@ -94,7 +94,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private ToggleButton btnInfo;
     @FXML
-    private ToggleButton btnAdmin;
+    private ToggleButton btnPersonal;
 
     //Ventas
     @FXML
@@ -342,6 +342,22 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TextField txtFieldPesoMaleta;
     @FXML
     private TextField txtFieldPaisSede;
+    @FXML
+    //Personal laboral
+    private Button btnControl;
+    @FXML
+    private Button btnEntrarSalir;
+    @FXML
+    private Button btnTarea;
+    @FXML
+    private Button btnCoches;
+    @FXML
+    private Button btnMaletas;
+    @FXML
+    private Button btnHistorial;
+    @FXML
+    private AnchorPane panelPersLab;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -414,11 +430,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         this.usuario = usuario;
 
         if (usuario instanceof Administrador) {
-            btnAdmin.setText(TXT_BTN_ADMIN);
+            btnPersonal.setText(TXT_BTN_ADMIN);
         } else if (usuario instanceof PersonalLaboral) {
-            btnAdmin.setText(TXT_BTN_PL);
+            btnPersonal.setText(TXT_BTN_PL);
         } else {
-            btnAdmin.setVisible(false);
+            btnPersonal.setVisible(false);
         }
     }
 
@@ -914,9 +930,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
     
 
-    @FXML
-    private void accionBtnAdmin(ActionEvent event) {
-    }
 
     @FXML
     private void accionBtnBuscar(ActionEvent event) {
@@ -1130,6 +1143,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             panelInfoParking.setVisible(false);
         }
+    }
+    /*Personal laboral*/
+
+    @FXML
+    private void accionBtnPersonal(ActionEvent event) {
     }
 
     
