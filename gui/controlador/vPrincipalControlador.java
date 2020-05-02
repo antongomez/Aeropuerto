@@ -539,7 +539,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             getInstanceModelo().mostrarError("No se pudo obtener el número de "
                     + "plazas disponibles en el parking de la terminal. "
-                    + "Inténtelo en otro momento.");
+                    + "Inténtelo en otro momento.", getVenta());
         }
         if (comprobarMatricula()) {
             btnReservarParking.setDisable(false);
@@ -570,12 +570,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 numPraza);
         if (getInstanceModelo().reservarParking(reserva, usuario.getDni())) {
             getInstanceModelo().mostrarNotificacion("Reserva realizada con éxito.\n"
+                    + "- Dni del cliente: " + usuario.getDni() + "\n"
                     + "- Terminal: " + parking.getTerminal() + "\n"
                     + "- Piso: " + parking.getPiso() + "\n"
                     + "- Número de plaza: " + numPraza + "\n"
                     + "- Fecha de inicio: " + llegada.toStringFecha() + "\n"
                     + "- Fecha de abandono: " + retorno.toStringFecha() + "\n"
-                    + "- Precio: " + obterPrecioParking() + " €.");
+                    + "- Precio: " + obterPrecioParking() + " €.",
+                    getVenta());
         }
     }
 
@@ -845,6 +847,31 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnReservarCoches(ActionEvent event) {
+        Coche coche = taboaReservarCoche.getSelectionModel().getSelectedItem();
+        if (coche != null) {
+            Reserva reserva = new Reserva(new Time(dataFLlegadaCoches.getValue()),
+                    new Time(dataFLlegadaCoches.getValue()),
+                    "coche",
+                    coche.getMatricula());
+            if (getInstanceModelo().reservarCoche(reserva, usuario.getDni())) {
+                getInstanceModelo().mostrarNotificacion("Reserva realizada con éxito.\n"
+                        + "- Dni del cliente: " + usuario.getDni() + "\n"
+                        + "- Fecha de inicio: " + reserva.getInicio().toStringFecha() + "\n"
+                        + "- Fecha de devolución: " + reserva.getFin().toStringFecha() + "\n"
+                        + "- Matrícula del coche: " + reserva.getMatricula() + "\n"
+                        + "- Precio: " + txtPrecioTotalCoches.getText() + " €.",
+                        getVenta());
+            } else {
+                getInstanceModelo().mostrarError("Se ha producido un error en la reserva. "
+                        + "Inténtelo de nuevo más tarde.\n\n"
+                        + "Disculpe las molestias, trataremos de arreglarlo lo antes porsible.",
+                        getVenta());
+            }
+        } else {
+            getInstanceModelo().mostrarError("Debe seleccionar un coche antes de "
+                    + "reservar.", getVenta());
+        }
+
     }
 
     /*
@@ -949,7 +976,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         if (((salida != null) && (!Time.fechaMayorIgualActual(salida)))
                 || ((llegada != null) && (!Time.fechaMayorIgualActual(llegada)))) {
-            getInstanceModelo().mostrarError("Las fechas de salida y llegada deben ser mayores que la fecha actual");
+            getInstanceModelo().mostrarError("Las fechas de salida y llegada deben "
+                    + "ser mayores que la fecha actual", getVenta());
         } else {
 
             ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
@@ -976,7 +1004,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private void accionBtnDarseBaja(ActionEvent event) {
         if (Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true) {
-            Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente");
+            Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente", getVenta());
         }
         super.getVenta().close();
     }
@@ -984,7 +1012,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private void accionBtnGuardar(ActionEvent event) {
         if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
-            Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!");
+            Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
         } else {
             Usuario us;
             if (usuario instanceof Administrador) {
@@ -999,7 +1027,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
             try {
                 if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
-                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente");
+                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente", getVenta());
                     //No cambiamos los datos del usuario asociado a esta clase hasta que se cambien en la base
                     usuario.setId(us.getId());
                     usuario.setEmail(us.getEmail());
@@ -1015,7 +1043,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 }
                 //Este error no llega aquí, el programa se para
             } catch (NumberFormatException e) {
-                Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto");
+                Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
             }
             if (!textFieldContrasenha.getText().isEmpty()) {
                 Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
@@ -1122,7 +1150,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<Reserva> res = FXCollections.observableArrayList(
                 getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
         tablaMisReservas.setItems(res);
-        Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada con éxito");
+        Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
+                + "con éxito", getVenta());
 
     }
 

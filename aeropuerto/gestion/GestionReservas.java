@@ -38,4 +38,8 @@ public class GestionReservas {
         return fbd.reservarParking(reserva, dniUsuario);
     }
 
+    public Boolean reservarCoche(Reserva reserva, String dniUsuario) {
+        return fbd.reservarCoche(reserva, dniUsuario);
+    }
+
 }

@@ -17,6 +17,7 @@ import gui.controlador.VNotificacionController;
 import gui.controlador.vConfirmacionControlador;
 import java.util.List;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 
 public class Modelo {
 
@@ -50,22 +51,39 @@ public class Modelo {
         return fa.modificarContrasenha(idUsuario, clave);
     }
 
+    public void mostrarError(String mensaje, Stage pai) {
+        VErrorController controlador = ((VErrorController) loadWindow(getClass().
+                getResource("/gui/vista/vError.fxml"), "Error", null));
+        controlador.mostrarMensaje(mensaje);
+        controlador.getVenta().initOwner(pai);
+        controlador.getVenta().setResizable(false);
+    }
+
     public void mostrarError(String mensaje) {
-        ((VErrorController) loadWindow(getClass().
-                getResource("/gui/vista/vError.fxml"), "Error", null)).mostrarMensaje(mensaje);
+        VErrorController controlador = ((VErrorController) loadWindow(getClass().
+                getResource("/gui/vista/vError.fxml"), "Error", null));
+        controlador.mostrarMensaje(mensaje);
+        controlador.getVenta().setResizable(false);
     }
 
     public Usuario credencialesCorrectos(String id, String cont) {
         return fa.credencialesCorrectos(id, cont);
     }
 
-    public void mostrarNotificacion(String mensaje) {
-        ((VNotificacionController) loadWindow(getClass().
-                getResource("/gui/vista/vNotificacion.fxml"), "Notificación", null)).mostrarMensaje(mensaje);
+    public void mostrarNotificacion(String mensaje, Stage pai) {
+        VNotificacionController controlador = ((VNotificacionController) loadWindow(getClass().
+                getResource("/gui/vista/vNotificacion.fxml"), "Notificación", null));
+        controlador.mostrarMensaje(mensaje);
+        controlador.getVenta().initOwner(pai);
+        controlador.getVenta().setResizable(false);
     }
 
-    public void mostrarConfirmacion(String mensaje) {
-        ((vConfirmacionControlador) loadWindow(getClass().getResource("/gui/vista/vConfirmacion.fxml"), "Confirmación", null)).mostrarMensaje(mensaje);
+    public void mostrarConfirmacion(String mensaje, Stage pai) {
+        vConfirmacionControlador controlador = ((vConfirmacionControlador) loadWindow(getClass().
+                getResource("/gui/vista/vConfirmacion.fxml"), "Confirmación", null));
+        controlador.mostrarMensaje(mensaje);
+        controlador.getVenta().initOwner(pai);
+        controlador.getVenta().setResizable(false);
     }
 
     //Vuelos
@@ -140,6 +158,10 @@ public class Modelo {
 
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return fa.reservarParking(reserva, dniUsuario);
+    }
+
+    public Boolean reservarCoche(Reserva reserva, String dniUsuario) {
+        return fa.reservarCoche(reserva, dniUsuario);
     }
 
     public List<Vuelo> mostrarSalidas() {

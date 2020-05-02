@@ -154,4 +154,34 @@ public class daoReservas extends AbstractDAO {
         return correcto;
     }
 
+    public Boolean reservarCoche(Reserva res, String dniUsu) {
+        Connection con;
+        PreparedStatement stmRes = null;
+        con = super.getConexion();
+        Boolean correcto = true;
+
+        try {
+            stmRes = con.prepareStatement("insert into reservar values"
+                    + "(?, ?, ?, ?)");
+            stmRes.setTimestamp(1, res.getInicio().toTimestamp());
+            stmRes.setTimestamp(2, res.getFin().toTimestamp());
+            stmRes.setString(3, dniUsu);
+            stmRes.setString(4, res.getMatricula());
+            stmRes.executeUpdate();
+
+        } catch (SQLException e) {
+            correcto = false;
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmRes.close();
+            } catch (SQLException e) {
+                correcto = false;
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
+
 }

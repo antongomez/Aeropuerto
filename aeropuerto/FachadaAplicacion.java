@@ -104,10 +104,12 @@ public class FachadaAplicacion extends Application {
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return gv.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
-    public List<Vuelo> verSalidas(){
+
+    public List<Vuelo> verSalidas() {
         return gv.verSalidas();
     }
-    public List<Vuelo> verLlegadas(){
+
+    public List<Vuelo> verLlegadas() {
         return gv.verLlegadas();
     }
 
@@ -121,8 +123,8 @@ public class FachadaAplicacion extends Application {
         return gr.cancelarReserva(res, dniUs);
     }
     //Aerolineas
-    
-    public EstadisticasAerolinea obtenerEstAerolineas(String aer){
+
+    public EstadisticasAerolinea obtenerEstAerolineas(String aer) {
         return gv.obtenerEstAerolineas(aer);
     }
     //Devuelve la lista de aerolineas que ya han realizado algún vuelo
@@ -143,12 +145,12 @@ public class FachadaAplicacion extends Application {
     public void obtenerDatosAvionVuelo(Vuelo v) {
         gv.obtenerDatosAvionVuelo(v);
     }
-    
-    public void obtenerAsientos(Vuelo vuelo){
+
+    public void obtenerAsientos(Vuelo vuelo) {
         gv.obtenerAsientos(vuelo);
     }
-    
-    public Boolean comprarBilletes(ObservableList<Usuario> usuarios){
+
+    public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return gv.comprarBilletes(usuarios);
     }
 
@@ -159,7 +161,7 @@ public class FachadaAplicacion extends Application {
     public Parking buscarParking(Integer terminal, Time inicio, Time fin) {
         return gp.buscarParking(terminal, inicio, fin);
     }
-    
+
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
         return fbd.buscarCoches(llegada, retorno, numPlazas);
     }
@@ -170,6 +172,10 @@ public class FachadaAplicacion extends Application {
 
     public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin) {
         return gp.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
+    }
+
+    public Boolean reservarCoche(Reserva reserva, String dniUsuario) {
+        return gr.reservarCoche(reserva, dniUsuario);
     }
 
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {

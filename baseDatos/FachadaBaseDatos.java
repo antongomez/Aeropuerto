@@ -156,6 +156,10 @@ public class FachadaBaseDatos {
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return daoReservas.reservarParking(reserva, dniUsuario);
     }
+    
+    public Boolean reservarCoche(Reserva reserva, String dniUsuario) {
+        return daoReservas.reservarCoche(reserva, dniUsuario);
+    }
 
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
         return daoCoches.buscarCoches(llegada, retorno, numPlazas);
