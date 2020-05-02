@@ -318,6 +318,29 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TextField txtPrecioTotalCoches;
     @FXML
     private Button btnReservarCoches;
+    //Estadisticas aerolinea
+    @FXML
+    private ComboBox<String> comboBoxEstAer;
+    @FXML
+    private TextField txtFieldVuelosRetraso;
+    @FXML
+    private TextField txtFieldTiempoRetraso;
+    @FXML
+    private TextField txtFieldOcNormal;
+    @FXML
+    private TextField txtFieldOcPremium;
+    @FXML
+    private TextField txtFieldPlazasAvion;
+    @FXML
+    private TextField txtFieldAnoAvion;
+    @FXML
+    private TextField txtFieldNacionalidad;
+    @FXML
+    private TextField txtFieldPrecioMaleta;
+    @FXML
+    private TextField txtFieldPesoMaleta;
+    @FXML
+    private TextField txtFieldPaisSede;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -811,6 +834,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         etqTitulo.setText(TITULO_INFO);
         accionSalidas();
     }
+    @FXML
+    private void abrirPestanaSL(Event event) {
+        radioBtnSalidas.setSelected(true);
+        accionSalidas();
+    }
 
     @FXML
     private void pulsarSalidas(ActionEvent event) {
@@ -846,6 +874,17 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 getInstanceModelo().mostrarLlegadas());
         tablaSalidasLlegadas.setItems(llegadas);
     }
+    
+    //Estadísticas aerolínea
+    @FXML
+    private void cambiarAerolinea(ActionEvent event) {
+    }
+
+    @FXML
+    private void abrirPestanaEstAerolineas(Event event) {
+    }
+    
+    
 
     @FXML
     private void accionBtnAdmin(ActionEvent event) {
@@ -1064,5 +1103,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             panelInfoParking.setVisible(false);
         }
     }
+
+    
+
+    
 
 }

@@ -342,81 +342,6 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <TabPane fx:id="panelInfo" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="Vuelos">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="1000.0" styleClass="root">
-                           <children>
-                              <VBox alignment="CENTER" fillWidth="false" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <VBox alignment="CENTER" fillWidth="false" prefHeight="520.0" prefWidth="876.0" spacing="50.0">
-                                       <children>
-                                          <HBox spacing="90.0">
-                                             <children>
-                                                <RadioButton fx:id="radioBtnSalidas" mnemonicParsing="false" onAction="#pulsarSalidas" selected="true" text="Salidas">
-                                                   <toggleGroup>
-                                                      <ToggleGroup fx:id="infoVuelos" />
-                                                   </toggleGroup>
-                                                </RadioButton>
-                                                <RadioButton fx:id="radioBtnLlegadas" mnemonicParsing="false" onAction="#pulsarLlegadas" text="Llegadas" toggleGroup="$infoVuelos" />
-                                             </children>
-                                          </HBox>
-                                          <Button fx:id="btnActualizarSL" mnemonicParsing="false" onAction="#actualizarSL" text="Actualizar" />
-                                          <TableView fx:id="tablaSalidasLlegadas" prefHeight="400.0">
-                                            <columns>
-                                              <TableColumn fx:id="colVueloSL" minWidth="120.0" prefWidth="120.0" text="Vuelo" />
-                                              <TableColumn fx:id="colOrigenSL" minWidth="120.0" prefWidth="120.0" text="Origen" />
-                                                <TableColumn fx:id="colDestinoSL" minWidth="120.0" prefWidth="120.0" text="Destino" />
-                                                <TableColumn fx:id="colTerminalSL" minWidth="120.0" prefWidth="120.0" text="Terminal" />
-                                                <TableColumn fx:id="colPuertaSL" minWidth="120.0" prefWidth="120.0" text="Puerta" />
-                                                <TableColumn fx:id="colFechaSL" minWidth="120.0" prefWidth="120.0" text="Salida" />
-                                                <TableColumn fx:id="colEstadoSL" minWidth="120.0" prefWidth="120.0" text="Estado" />
-                                            </columns>
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                       </children>
-                                    </VBox>
-                                 </children></VBox>
-                           </children></AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="Estadísticas Aerolíneas">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
-                           <children>
-                              <AnchorPane layoutX="82.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="829.0" styleClass="background">
-                                 <children>
-                                    <ComboBox layoutX="27.0" layoutY="26.0" prefHeight="26.0" prefWidth="195.0" promptText="Aerolínea" styleClass="campos" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="26.0" layoutY="93.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00%" styleClass="labTitulo" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="550.0" layoutY="93.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00" styleClass="labTitulo" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="26.0" layoutY="146.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00%" styleClass="labTitulo" />
-                                    <Label layoutX="124.0" layoutY="98.0" styleClass="labelRegistrar" text="Vuelos con retraso" />
-                                    <Label layoutX="367.0" layoutY="98.0" prefHeight="21.0" prefWidth="162.0" styleClass="labelRegistrar" text="Tiempo medio retraso:" />
-                                    <Label layoutX="124.0" layoutY="151.0" styleClass="labelRegistrar" text="Ocupación vuelo normal" />
-                                    <Label layoutX="121.0" layoutY="207.0" styleClass="labelRegistrar" text="Ocupación vuelo premium" />
-                                    <Label layoutX="14.0" layoutY="356.0" styleClass="labelRegistrar" text="Plazas medias por avión:" />
-                                    <Label layoutX="14.0" layoutY="405.0" styleClass="labelRegistrar" text="Año fabricación medio avión:" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="26.0" layoutY="202.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00%" styleClass="labTitulo" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="304.0" layoutY="351.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00" styleClass="labTitulo" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="304.0" layoutY="400.0" prefHeight="26.0" prefWidth="63.0" promptText="2000" styleClass="labTitulo" />
-                                    <Label layoutX="14.0" layoutY="450.0" styleClass="labelRegistrar" text="Nacionalidad predominante pasajeros:" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="304.0" layoutY="445.0" prefHeight="26.0" prefWidth="172.0" promptText="España" styleClass="labTitulo" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="550.0" layoutY="202.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00" styleClass="labTitulo" />
-                                    <Label layoutX="367.0" layoutY="207.0" styleClass="labelRegistrar" text="Precio facturar maleta:" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="550.0" layoutY="147.0" prefHeight="26.0" prefWidth="63.0" promptText="0.00" styleClass="labTitulo" />
-                                    <Label layoutX="367.0" layoutY="152.0" styleClass="labelRegistrar" text="Peso base maleta:" />
-                                    <TextField alignment="CENTER" editable="false" layoutX="300.0" layoutY="298.0" prefHeight="26.0" prefWidth="93.0" promptText="España" styleClass="labTitulo" />
-                                    <Label layoutX="14.0" layoutY="303.0" styleClass="labelRegistrar" text="País sede:" />
-                                 </children>
-                              </AnchorPane>
-                           </children></AnchorPane>
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
             <TabPane fx:id="panelServicios" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab text="Parking">
@@ -636,6 +561,81 @@
                      </content>
                   </Tab>
                </tabs>
+            </TabPane>
+            <TabPane fx:id="panelInfo" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab onSelectionChanged="#abrirPestanaSL" text="Vuelos">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="1000.0" styleClass="root">
+                           <children>
+                              <VBox alignment="CENTER" fillWidth="false" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox alignment="CENTER" fillWidth="false" prefHeight="520.0" prefWidth="876.0" spacing="50.0">
+                                       <children>
+                                          <HBox spacing="90.0">
+                                             <children>
+                                                <RadioButton fx:id="radioBtnSalidas" mnemonicParsing="false" onAction="#pulsarSalidas" selected="true" text="Salidas">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="infoVuelos" />
+                                                   </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton fx:id="radioBtnLlegadas" mnemonicParsing="false" onAction="#pulsarLlegadas" text="Llegadas" toggleGroup="$infoVuelos" />
+                                             </children>
+                                          </HBox>
+                                          <Button fx:id="btnActualizarSL" mnemonicParsing="false" onAction="#actualizarSL" text="Actualizar" />
+                                          <TableView fx:id="tablaSalidasLlegadas" prefHeight="400.0">
+                                            <columns>
+                                              <TableColumn fx:id="colVueloSL" minWidth="120.0" prefWidth="120.0" text="Vuelo" />
+                                              <TableColumn fx:id="colOrigenSL" minWidth="120.0" prefWidth="120.0" text="Origen" />
+                                                <TableColumn fx:id="colDestinoSL" minWidth="120.0" prefWidth="120.0" text="Destino" />
+                                                <TableColumn fx:id="colTerminalSL" minWidth="120.0" prefWidth="120.0" text="Terminal" />
+                                                <TableColumn fx:id="colPuertaSL" minWidth="120.0" prefWidth="120.0" text="Puerta" />
+                                                <TableColumn fx:id="colFechaSL" minWidth="120.0" prefWidth="120.0" text="Salida" />
+                                                <TableColumn fx:id="colEstadoSL" minWidth="120.0" prefWidth="120.0" text="Estado" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </children></VBox>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                <Tab onSelectionChanged="#abrirPestanaEstAerolineas" text="Estadísticas Aerolíneas">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <AnchorPane layoutX="82.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="829.0" styleClass="background">
+                                 <children>
+                                    <ComboBox fx:id="comboBoxEstAer" layoutX="27.0" layoutY="26.0" onAction="#cambiarAerolinea" prefHeight="26.0" prefWidth="195.0" styleClass="campos" />
+                                    <TextField fx:id="txtFieldVuelosRetraso" alignment="CENTER" editable="false" layoutX="26.0" layoutY="93.0" prefHeight="26.0" prefWidth="63.0" styleClass="labTitulo" />
+                                    <TextField fx:id="txtFieldTiempoRetraso" alignment="CENTER" editable="false" layoutX="550.0" layoutY="93.0" prefHeight="26.0" prefWidth="63.0" styleClass="labTitulo" />
+                                    <TextField fx:id="txtFieldOcNormal" alignment="CENTER" editable="false" layoutX="26.0" layoutY="146.0" prefHeight="26.0" prefWidth="63.0" styleClass="labTitulo" />
+                                    <Label layoutX="124.0" layoutY="98.0" styleClass="labelRegistrar" text="Vuelos con retraso" />
+                                    <Label layoutX="367.0" layoutY="98.0" prefHeight="21.0" prefWidth="162.0" styleClass="labelRegistrar" text="Tiempo medio retraso:" />
+                                    <Label layoutX="124.0" layoutY="151.0" styleClass="labelRegistrar" text="Ocupación vuelo normal" />
+                                    <Label layoutX="121.0" layoutY="207.0" styleClass="labelRegistrar" text="Ocupación vuelo premium" />
+                                    <Label layoutX="14.0" layoutY="356.0" styleClass="labelRegistrar" text="Plazas medias por avión:" />
+                                    <Label layoutX="14.0" layoutY="405.0" styleClass="labelRegistrar" text="Año fabricación medio avión:" />
+                                    <TextField fx:id="txtFieldOcPremium" alignment="CENTER" editable="false" layoutX="26.0" layoutY="202.0" prefHeight="26.0" prefWidth="63.0" styleClass="labTitulo" />
+                                    <TextField fx:id="txtFieldPlazasAvion" alignment="CENTER" editable="false" layoutX="304.0" layoutY="351.0" prefHeight="26.0" prefWidth="63.0" styleClass="labTitulo" />
+                                    <TextField fx:id="txtFieldAnoAvion" alignment="CENTER" editable="false" layoutX="304.0" layoutY="400.0" prefHeight="26.0" prefWidth="63.0" styleClass="labTitulo" />
+                                    <Label layoutX="14.0" layoutY="450.0" styleClass="labelRegistrar" text="Nacionalidad predominante pasajeros:" />
+                                    <TextField fx:id="txtFieldNacionalidad" alignment="CENTER" editable="false" layoutX="304.0" layoutY="445.0" prefHeight="31.0" prefWidth="328.0" styleClass="labTitulo" />
+                                    <TextField fx:id="txtFieldPrecioMaleta" alignment="CENTER" editable="false" layoutX="550.0" layoutY="202.0" prefHeight="26.0" prefWidth="63.0" styleClass="labTitulo" />
+                                    <Label layoutX="367.0" layoutY="207.0" styleClass="labelRegistrar" text="Precio facturar maleta:" />
+                                    <TextField fx:id="txtFieldPesoMaleta" alignment="CENTER" editable="false" layoutX="550.0" layoutY="147.0" prefHeight="26.0" prefWidth="63.0" styleClass="labTitulo" />
+                                    <Label layoutX="367.0" layoutY="152.0" styleClass="labelRegistrar" text="Peso base maleta:" />
+                                    <TextField fx:id="txtFieldPaisSede" alignment="CENTER" editable="false" layoutX="300.0" layoutY="298.0" prefHeight="26.0" prefWidth="93.0" styleClass="labTitulo" />
+                                    <Label layoutX="14.0" layoutY="303.0" styleClass="labelRegistrar" text="País sede:" />
+                                 </children>
+                              </AnchorPane>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
             </TabPane>
          </children>
       </StackPane>
