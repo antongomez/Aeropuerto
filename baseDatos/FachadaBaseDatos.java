@@ -171,7 +171,7 @@ public class FachadaBaseDatos {
     public EstadisticasAerolinea obtenerEstAerolineas(String aer){
         return daoAerolineas.obtenerEstAerolineas(aer);
     }
-    public List<String> obtenerAerolineas(){
-        return daoAerolineas.buscarAerolineas();
+    public List<String> obtenerAerolineasConVuelos(){
+        return daoAerolineas.obtenerAerolineasConVuelos();
     }
 }

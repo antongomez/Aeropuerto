@@ -51,7 +51,7 @@ public class GestionVuelos {
     public EstadisticasAerolinea obtenerEstAerolineas(String aer){
         return fbd.obtenerEstAerolineas(aer);
     }
-    public List<String> obtenerAerolineas(){
-        return fbd.obtenerAerolineas();
+    public List<String> obtenerAerolineasConVuelos(){
+        return fbd.obtenerAerolineasConVuelos();
     }
 }

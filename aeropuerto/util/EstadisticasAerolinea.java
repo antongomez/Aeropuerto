@@ -64,6 +64,8 @@ public void addNacionalidad(String nac){
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
             try {
                 Calendar fecha = Calendar.getInstance();
+                
+                retraso=tiempoMedioRetraso.substring(0,8);
                 Date tiempo = sdf.parse(retraso);
                 fecha.setTime(tiempo);
                 if (fecha.get(Calendar.HOUR) <= 1) {

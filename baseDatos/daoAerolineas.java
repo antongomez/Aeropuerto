@@ -40,16 +40,16 @@ public class daoAerolineas extends AbstractDAO{
 
         try {
             //Estadisticas sobre las aerolineas y los aviones
-            stmEst = con.prepareStatement("select sum(anhofabricacion)/count(*) as anhomedio, sum(capacidadpremium+capacidadnormal)/count(*) as capmedia, " +
-                    "aerolinea, preciobasemaleta,pesobasemaleta from aerolinea a, avion av, modeloavion m " +
+            stmEst = con.prepareStatement("select (CASE count(*) when 0 then 0 else sum(anhofabricacion)/count(*) end) as anhomedio,(CASE count(*) when 0 then 0 else sum(capacidadpremium+capacidadnormal)/count(*) end) as capmedia, " +
+                    "paissede, preciobasemaleta,pesobasemaleta from aerolinea a, avion av, modeloavion m " +
                     "where a.nombre=av.aerolinea and m.nombre=av.modeloavion and aerolinea=? " +
-                    "group by aerolinea, preciobasemaleta, pesobasemaleta");
+                    "group by paissede, preciobasemaleta, pesobasemaleta");
             stmEst.setString(1, aer);
             rsAviones = stmEst.executeQuery();
             
             //Estadisticas sobre retrasos
-            stmEst=con.prepareStatement("select (cast (nRetrasos as float)/nVuelos)*100 as porcRetrasos, tiempoRetraso/nVuelos as tiempoMedioRetraso " +
-            "from (select count(*) as nRetrasos, sum(fechasalidareal-fechasalidateorica) as tiempoRetraso " +
+            stmEst=con.prepareStatement("select (CASE nVuelos when 0 then 0 else (cast (nRetrasos as float)/nVuelos)*100 end) as porcRetrasos,(CASE nVuelos when 0 then '00:00:00' else tiempoRetraso/nVuelos end) as tiempoMedioRetraso " +
+            "from (select count(*) as nRetrasos, (CASE count(*) when 0 then '00:00:00' else sum(fechasalidareal-fechasalidateorica) end) as tiempoRetraso " +
             "from aerolinea a, avion av, vuelo v " +
             "where av.aerolinea=a.nombre and v.avion=av.codigo and aerolinea=? " +
             "and v.fechallegadareal<NOW() and v.cancelado=false and fechasalidateorica!=fechasalidareal)as ret, " +
@@ -92,7 +92,7 @@ public class daoAerolineas extends AbstractDAO{
             
             
             if (rsAviones.next() && rsRetrasos.next() && rsOcupacion.next()) {
-                resultado=new EstadisticasAerolinea(new Aerolinea(aer, rsAviones.getFloat("preciobasemaleta"),rsAviones.getFloat("pesobasemaleta")),
+                resultado=new EstadisticasAerolinea(new Aerolinea(aer,rsAviones.getString("paissede"), rsAviones.getFloat("preciobasemaleta"),rsAviones.getFloat("pesobasemaleta")),
                 rsRetrasos.getFloat("porcRetrasos"),rsRetrasos.getString("tiempoMedioRetraso"),rsOcupacion.getFloat("porcOcNormal"),
                 rsOcupacion.getFloat("porcOcPremium"), rsAviones.getFloat("anhomedio"),rsAviones.getFloat("capMedia"));
             
@@ -116,7 +116,7 @@ public class daoAerolineas extends AbstractDAO{
         return resultado;
         
     }
-    public List<String> buscarAerolineas() {
+    public List<String> obtenerAerolineasConVuelos() {
         Connection con;
         PreparedStatement stmRes = null;
         ResultSet rsRes;
@@ -124,10 +124,11 @@ public class daoAerolineas extends AbstractDAO{
         ArrayList<String> aerolineas = new ArrayList<>();
 
         try {
-            stmRes = con.prepareStatement("select nombre from aerolinea");
+            stmRes = con.prepareStatement("select distinct nombre from aerolinea a, vuelo v, avion av "
+                    + "where a.nombre=av.aerolinea and v.avion=av.codigo and v.fechallegadareal<NOW() and cancelado=false ");
             rsRes = stmRes.executeQuery();
             while (rsRes.next()) {
-                aerolineas.add(rsRes.getString("aerolineas"));
+                aerolineas.add(rsRes.getString("nombre"));
             }
 
         } catch (SQLException e) {

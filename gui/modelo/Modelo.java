@@ -149,8 +149,8 @@ public class Modelo {
     public List<Vuelo> mostrarLlegadas() {
         return fa.verLlegadas();
     }
-    public List<String> obtenerAerolineas(){
-        return fa.obtenerAerolineas();
+    public List<String> obtenerAerolineasConVuelos(){
+        return fa.obtenerAerolineasConVuelos();
     }
     public EstadisticasAerolinea obtenerEstadisticasAerolinea(String aer){
         return fa.obtenerEstAerolineas(aer);

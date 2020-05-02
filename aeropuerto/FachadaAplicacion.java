@@ -125,8 +125,9 @@ public class FachadaAplicacion extends Application {
     public EstadisticasAerolinea obtenerEstAerolineas(String aer){
         return gv.obtenerEstAerolineas(aer);
     }
-    public List<String> obtenerAerolineas(){
-        return gv.obtenerAerolineas();
+    //Devuelve la lista de aerolineas que ya han realizado algún vuelo
+    public List<String> obtenerAerolineasConVuelos(){
+        return gv.obtenerAerolineasConVuelos();
     }
 
     //Erros

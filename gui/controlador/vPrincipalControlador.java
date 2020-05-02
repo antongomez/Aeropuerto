@@ -6,6 +6,7 @@ import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Reserva;
@@ -400,6 +401,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //Lista de terminais para mostrar no comboBox da venta reservar parking
         ObservableList<Integer> terminais = FXCollections.observableArrayList(getInstanceModelo().buscarTerminais());
         cboxTerminalParking.setItems(terminais);
+        
+        //Definimos combobox estadísticas aerolíneas
+        
+        ObservableList<String> aerolineas = FXCollections.observableArrayList(getInstanceModelo().obtenerAerolineasConVuelos());
+        comboBoxEstAer.setItems(aerolineas);
+        comboBoxEstAer.getSelectionModel().selectFirst();
 
     }
 
@@ -878,12 +885,33 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //Estadísticas aerolínea
     @FXML
     private void cambiarAerolinea(ActionEvent event) {
+        accionCalculoEstAerolinea();
     }
 
     @FXML
     private void abrirPestanaEstAerolineas(Event event) {
+        
+        comboBoxEstAer.getSelectionModel().selectFirst();
+        accionCalculoEstAerolinea();
     }
     
+    private void accionCalculoEstAerolinea(){
+        EstadisticasAerolinea est=getInstanceModelo().obtenerEstadisticasAerolinea(comboBoxEstAer.getSelectionModel().getSelectedItem());    
+        txtFieldVuelosRetraso.setText((float)(Math.round((est.getPorcVuelosRetraso() * 1.2f) * 100d) / 100d)+"%");
+        txtFieldOcNormal.setText((float)(Math.round((est.getPorcOcupNormal() * 1.2f) * 100d) / 100d)+"%");
+        txtFieldOcPremium.setText((float)(Math.round((est.getPorcOcupPremium() * 1.2f) * 100d) / 100d)+"%");
+        txtFieldTiempoRetraso.setText(est.getTiempoMedioRetraso());
+        txtFieldPesoMaleta.setText(est.getAerolinea().getPesoBaseMaleta().toString());
+        txtFieldPrecioMaleta.setText(est.getAerolinea().getPrecioBaseMaleta().toString());
+        txtFieldPaisSede.setText(est.getAerolinea().getPais());
+        txtFieldPlazasAvion.setText((float)(Math.round((est.getPlazasMediasAvion() * 1.2f) * 100d) / 100d)+"");
+        txtFieldAnoAvion.setText((float)(Math.round((est.getAnoFabricMedioAvion() * 1.2f) * 100d) / 100d)+"");
+        String paises="";
+        for(String pais: est.getNacionalidadPred()){
+            paises+=pais+"  ";
+        }
+        txtFieldNacionalidad.setText(paises);
+    }
     
 
     @FXML
