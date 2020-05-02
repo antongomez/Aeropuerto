@@ -358,7 +358,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Button btnHistorial;
     @FXML
     private AnchorPane panelPersLab;
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -418,9 +417,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //Lista de terminais para mostrar no comboBox da venta reservar parking
         ObservableList<Integer> terminais = FXCollections.observableArrayList(getInstanceModelo().buscarTerminais());
         cboxTerminalParking.setItems(terminais);
-        
+
         //Definimos combobox estadísticas aerolíneas
-        
         ObservableList<String> aerolineas = FXCollections.observableArrayList(getInstanceModelo().obtenerAerolineasConVuelos());
         comboBoxEstAer.setItems(aerolineas);
         comboBoxEstAer.getSelectionModel().selectFirst();
@@ -885,6 +883,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         etqTitulo.setText(TITULO_INFO);
         accionSalidas();
     }
+
     @FXML
     private void abrirPestanaSL(Event event) {
         radioBtnSalidas.setSelected(true);
@@ -925,7 +924,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 getInstanceModelo().mostrarLlegadas());
         tablaSalidasLlegadas.setItems(llegadas);
     }
-    
+
     //Estadísticas aerolínea
     @FXML
     private void cambiarAerolinea(ActionEvent event) {
@@ -934,30 +933,28 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void abrirPestanaEstAerolineas(Event event) {
-        
+
         comboBoxEstAer.getSelectionModel().selectFirst();
         accionCalculoEstAerolinea();
     }
-    
-    private void accionCalculoEstAerolinea(){
-        EstadisticasAerolinea est=getInstanceModelo().obtenerEstadisticasAerolinea(comboBoxEstAer.getSelectionModel().getSelectedItem());    
-        txtFieldVuelosRetraso.setText((float)(Math.round((est.getPorcVuelosRetraso() * 1.2f) * 100d) / 100d)+"%");
-        txtFieldOcNormal.setText((float)(Math.round((est.getPorcOcupNormal() * 1.2f) * 100d) / 100d)+"%");
-        txtFieldOcPremium.setText((float)(Math.round((est.getPorcOcupPremium() * 1.2f) * 100d) / 100d)+"%");
+
+    private void accionCalculoEstAerolinea() {
+        EstadisticasAerolinea est = getInstanceModelo().obtenerEstadisticasAerolinea(comboBoxEstAer.getSelectionModel().getSelectedItem());
+        txtFieldVuelosRetraso.setText((float) (Math.round((est.getPorcVuelosRetraso() * 1.2f) * 100d) / 100d) + "%");
+        txtFieldOcNormal.setText((float) (Math.round((est.getPorcOcupNormal() * 1.2f) * 100d) / 100d) + "%");
+        txtFieldOcPremium.setText((float) (Math.round((est.getPorcOcupPremium() * 1.2f) * 100d) / 100d) + "%");
         txtFieldTiempoRetraso.setText(est.getTiempoMedioRetraso());
         txtFieldPesoMaleta.setText(est.getAerolinea().getPesoBaseMaleta().toString());
         txtFieldPrecioMaleta.setText(est.getAerolinea().getPrecioBaseMaleta().toString());
         txtFieldPaisSede.setText(est.getAerolinea().getPais());
-        txtFieldPlazasAvion.setText((float)(Math.round((est.getPlazasMediasAvion() * 1.2f) * 100d) / 100d)+"");
-        txtFieldAnoAvion.setText((float)(Math.round((est.getAnoFabricMedioAvion() * 1.2f) * 100d) / 100d)+"");
-        String paises="";
-        for(String pais: est.getNacionalidadPred()){
-            paises+=pais+"  ";
+        txtFieldPlazasAvion.setText((float) (Math.round((est.getPlazasMediasAvion() * 1.2f) * 100d) / 100d) + "");
+        txtFieldAnoAvion.setText((float) (Math.round((est.getAnoFabricMedioAvion() * 1.2f) * 100d) / 100d) + "");
+        String paises = "";
+        for (String pais : est.getNacionalidadPred()) {
+            paises += pais + "  ";
         }
         txtFieldNacionalidad.setText(paises);
     }
-    
-
 
     @FXML
     private void accionBtnBuscar(ActionEvent event) {
@@ -1157,36 +1154,37 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void seleccionarVuelo(MouseEvent event) {
-        this.btnComprar.setDisable(false);
+        if (tablaProximosVuelos.getSelectionModel().getSelectedItem() != null) {
+            this.btnComprar.setDisable(false);
+        }
     }
 
     @FXML
     private void seleccionarReserva(MouseEvent event) {
-
         Reserva resSelect = tablaMisReservas.getSelectionModel().getSelectedItem();//reserva seleccionada
-        btnCancelarReserva.setDisable(false);
-        if (resSelect.getTipo().equals("Parking")) {
-            panelInfoParking.setVisible(true);
-            etqTerminal.setText(resSelect.getTerminal().toString());
-            etqPiso.setText(resSelect.getPiso().toString());
-            etqPlaza.setText(resSelect.getNumPlaza().toString());
+        if (resSelect != null) {
+            btnCancelarReserva.setDisable(false);
+            if (resSelect.getTipo().equals("Parking")) {
+                panelInfoParking.setVisible(true);
+                etqTerminal.setText(resSelect.getTerminal().toString());
+                etqPiso.setText(resSelect.getPiso().toString());
+                etqPlaza.setText(resSelect.getNumPlaza().toString());
+            } else {
+                panelInfoParking.setVisible(false);
+            }
         } else {
             panelInfoParking.setVisible(false);
         }
     }
-    /*Personal laboral*/
 
+    /*Personal laboral*/
     @FXML
     private void accionBtnPersonal(ActionEvent event) {
-        if(usuario instanceof PersonalLaboral){  
-        panelPersLab.toFront();
-        etqTitulo.setText(TITULO_PERSLAB);
+        if (usuario instanceof PersonalLaboral) {
+            panelPersLab.toFront();
+            etqTitulo.setText(TITULO_PERSLAB);
         }
-        
+
     }
-
-    
-
-    
 
 }
