@@ -54,6 +54,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TITULO_AREAP = "ÁREA PERSONAL";
     private final static String TITULO_SERV = "SERVICIOS";
     private final static String TITULO_INFO = "INFORMACIÓN";
+    private final static String TITULO_PERSLAB = "PERSONAL LABORAL";
 
     private final static String TXT_BTN_ADMIN = "Administrador";
     private final static String TXT_BTN_PL = "Personal";
@@ -1148,6 +1149,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnPersonal(ActionEvent event) {
+        if(usuario instanceof PersonalLaboral){  
+        panelPersLab.toFront();
+        etqTitulo.setText(TITULO_PERSLAB);
+        }
+        
     }
 
     

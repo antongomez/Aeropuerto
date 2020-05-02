@@ -8,6 +8,7 @@ public class PersonalLaboral extends Usuario {
     private String labor;
     private String descripcionTarea;
     private Time fechaInicio;
+    
     //private ArrayList<ElemHistorial> historialTrabajo; creo que este atributo sobra
 
     public PersonalLaboral(String dni, String id, String email, String nombre,
