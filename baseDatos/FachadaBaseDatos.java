@@ -26,6 +26,7 @@ public class FachadaBaseDatos {
     private daoReservas daoReservas;
     private daoTerminal daoTerminal;
     private daoCoches daoCoches;
+    private daoAerolineas daoAerolineas;
 
     public FachadaBaseDatos(FachadaAplicacion fa) {
 
@@ -55,6 +56,7 @@ public class FachadaBaseDatos {
             daoReservas = new daoReservas(conexion, fa);
             daoTerminal = new daoTerminal(conexion, fa);
             daoCoches = new daoCoches(conexion, fa);
+            daoAerolineas = new daoAerolineas(conexion, fa);
 
         } catch (FileNotFoundException f) {
             fa.mostrarError(f.getMessage());
@@ -167,6 +169,9 @@ public class FachadaBaseDatos {
         return daoVuelos.verLlegadas();
     }
     public EstadisticasAerolinea obtenerEstAerolineas(String aer){
-        return daoVuelos.obtenerEstAerolineas(aer);
+        return daoAerolineas.obtenerEstAerolineas(aer);
+    }
+    public List<String> obtenerAerolineas(){
+        return daoAerolineas.buscarAerolineas();
     }
 }

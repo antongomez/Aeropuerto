@@ -5,6 +5,7 @@ import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Reserva;
@@ -147,5 +148,11 @@ public class Modelo {
 
     public List<Vuelo> mostrarLlegadas() {
         return fa.verLlegadas();
+    }
+    public List<String> obtenerAerolineas(){
+        return fa.obtenerAerolineas();
+    }
+    public EstadisticasAerolinea obtenerEstadisticasAerolinea(String aer){
+        return fa.obtenerEstAerolineas(aer);
     }
 }

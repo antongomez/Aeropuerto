@@ -125,6 +125,9 @@ public class FachadaAplicacion extends Application {
     public EstadisticasAerolinea obtenerEstAerolineas(String aer){
         return gv.obtenerEstAerolineas(aer);
     }
+    public List<String> obtenerAerolineas(){
+        return gv.obtenerAerolineas();
+    }
 
     //Erros
     public void mostrarError(String menseje) {
