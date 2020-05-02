@@ -187,7 +187,7 @@ public class vComprarControlador extends Controlador implements Initializable {
         if (us != null) {
             us.comprarVuelo(vuelo.getNumVuelo());
             if (pasajeros.contains(us)) {
-                Modelo.getInstanceModelo().mostrarError("El usuario ya figura como pasajero");
+                Modelo.getInstanceModelo().mostrarError("El usuario ya figura como pasajero", getVenta());
             } else if (comprobarAsientos(us)) {
                 pasajeros.add(us);
                 tablaPasajeros.getSelectionModel().selectLast();
@@ -195,7 +195,8 @@ public class vComprarControlador extends Controlador implements Initializable {
                 actualizarPrecio();
             }
         } else {
-            Modelo.getInstanceModelo().mostrarError("Usuario no registrado.\nDebe registrarse antes de volar con nostros");
+            Modelo.getInstanceModelo().mostrarError("Usuario no registrado.\n"
+                    + "Debe registrarse antes de volar con nostros.", getVenta());
         }
     }
 
@@ -327,7 +328,8 @@ public class vComprarControlador extends Controlador implements Initializable {
     //Función que comprueba disponibilidad de asientos 
     public boolean comprobarAsientos(Usuario usuario) {
         if (plazasPremiumEnEspera == 0 && plazasNormalesEnEspera == 0) {
-            Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan más plazas para este vuelo");
+            Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan "
+                    + "más plazas para este vuelo", getVenta());
             return false;
         } else if (plazasPremiumEnEspera == 0) {
             radioBtnPremium.setSelected(false);
@@ -368,9 +370,11 @@ public class vComprarControlador extends Controlador implements Initializable {
     private void pagar(MouseEvent event) {
         if (Modelo.getInstanceModelo().comprarBilletes(pasajeros)) {
             getVenta().close();
-            Modelo.getInstanceModelo().mostrarNotificacion("Vuelo comprado con éxito. Precio total: " + actualizarPrecio().toString());
+            Modelo.getInstanceModelo().mostrarNotificacion("Vuelo comprado con éxito.\n "
+                    + "Precio total: " + actualizarPrecio().toString() + ".", getVenta());
         } else {
-            Modelo.getInstanceModelo().mostrarError("Hubo un error en la compra, lo sentimos.");
+            Modelo.getInstanceModelo().mostrarError("Hubo un error en la compra, lo sentimos.\n"
+                    + "Trataremos de arreglarlo lo antes posible.", getVenta());
             getVenta().close();
         }
     }

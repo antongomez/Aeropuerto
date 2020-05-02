@@ -2,6 +2,7 @@ package gui.controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -21,6 +22,11 @@ public class VNotificacionController extends Controlador implements Initializabl
 
     public void mostrarMensaje(String men) {
         mensaje.setText(men);
+    }
+
+    @FXML
+    private void accionAceptar(ActionEvent event) {
+        getVenta().close();
     }
 
 }

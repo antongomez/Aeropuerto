@@ -70,21 +70,21 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
 
         //Habría que poner una excepcion por si el dni es incorrecto?
         if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
-            Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!");
+            Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
         } else {
             try {
                 Usuario us = new Usuario(textFieldDni.getText(), textFieldId.getText(), textFieldEmail.getText(),
-                         textFieldNombre.getText(),textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                        textFieldNombre.getText(), textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
                         Integer.parseInt(textFieldTelefono.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
 
                 if (Modelo.getInstanceModelo().registrarUsuario(us, textFieldContrasenha.getText()) == true) {  //comprobamos si se registró correctamente
-                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente");
+                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente", getVenta());
 
                     //se cierra la ventana de registrar
                     getVenta().close();
                 }
             } catch (NumberFormatException e) {
-                Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto");
+                Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
             }
         }
     }
