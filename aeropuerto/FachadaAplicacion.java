@@ -7,6 +7,7 @@ import aeropuerto.gestion.GestionParking;
 import aeropuerto.gestion.GestionReservas;
 import aeropuerto.gestion.GestionVuelos;
 import aeropuerto.gestion.GestionUsuarios;
+import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Reserva;
@@ -117,6 +118,11 @@ public class FachadaAplicacion extends Application {
 
     public Boolean cancelarReserva(Reserva res, String dniUs) {
         return gr.cancelarReserva(res, dniUs);
+    }
+    //Aerolineas
+    
+    public EstadisticasAerolinea obtenerEstAerolineas(String aer){
+        return gv.obtenerEstAerolineas(aer);
     }
 
     //Erros

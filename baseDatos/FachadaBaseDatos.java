@@ -4,6 +4,7 @@ import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.PorcentajeDisponibilidad;
 import aeropuerto.util.Reserva;
@@ -154,5 +155,8 @@ public class FachadaBaseDatos {
     }
     public List<Vuelo> verLlegadas(){
         return daoVuelos.verLlegadas();
+    }
+    public EstadisticasAerolinea obtenerEstAerolineas(String aer){
+        return daoVuelos.obtenerEstAerolineas(aer);
     }
 }

@@ -2,6 +2,7 @@ package aeropuerto.gestion;
 
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
+import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
@@ -46,5 +47,8 @@ public class GestionVuelos {
     }
     public List<Vuelo> verLlegadas(){
         return fbd.verLlegadas();
+    }
+    public EstadisticasAerolinea obtenerEstAerolineas(String aer){
+        return fbd.obtenerEstAerolineas(aer);
     }
 }
