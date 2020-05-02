@@ -14,8 +14,7 @@ public class Usuario {
     /*este atributo sirve para guardar los datos de un vuelo concreto de un usuario(confirmado o en proceso)*/
     private CompraVuelo vueloEnEspera;
 
-    
-    public Usuario(String dni, String id, String email,String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo) {
+    public Usuario(String dni, String id, String email, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo) {
 
         //No sé si hay que poner comprobaciones de que no sean nulos, dni correcto y sexo m/h/- si ya lo hace sql
         this.dni = dni;
@@ -27,10 +26,10 @@ public class Usuario {
         this.paisProcedencia = paisProcedencia;
         this.telefono = telefono;
         this.sexo = sexo;
-        if(sexo.length()==1){
-            this.sexo=cambiarFormatoSexo(sexo);
+        if (sexo.length() == 1) {
+            this.sexo = cambiarFormatoSexo(sexo);
         }
-        
+
     }
 
     public Usuario(String dni, String nombre) {
@@ -49,7 +48,6 @@ public class Usuario {
     public String getEmail() {
         return email;
     }
-
 
     public String getNombre() {
         return nombre;
@@ -84,7 +82,6 @@ public class Usuario {
         this.email = email;
     }
 
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -109,7 +106,7 @@ public class Usuario {
         this.sexo = sexo;
     }
 
-    public String cambiarFormatoSexo(String sexoFormatoOriginal) {
+    public final String cambiarFormatoSexo(String sexoFormatoOriginal) {
         String sexoFormatoFinal;
         if (sexoFormatoOriginal.length() == 1) {
             switch (sexoFormatoOriginal) {
@@ -132,7 +129,7 @@ public class Usuario {
                     sexoFormatoFinal = "m";
                     break;
                 default:
-                    sexoFormatoFinal = "-";
+                    sexoFormatoFinal = "o";
                     break;
             }
         }
@@ -142,19 +139,17 @@ public class Usuario {
     public CompraVuelo getVueloEnEspera() {
         return vueloEnEspera;
     }
-    
-    public void comprarVuelo(String numVuelo){
-        vueloEnEspera=new CompraVuelo(numVuelo);
+
+    public void comprarVuelo(String numVuelo) {
+        vueloEnEspera = new CompraVuelo(numVuelo);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Usuario){
-            return((Usuario) obj).getDni().equals(this.dni);
+        if (obj instanceof Usuario) {
+            return ((Usuario) obj).getDni().equals(this.dni);
         }
         return super.equals(obj); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
 }

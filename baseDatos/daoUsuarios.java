@@ -93,8 +93,8 @@ public class daoUsuarios extends AbstractDAO {
                             rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
                             rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
                             rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"),
-                            rsAdmin_PL.getTimestamp("fechainicio"),rsAdmin_PL.getString("curriculum"));
-                    
+                            rsAdmin_PL.getTimestamp("fechainicio"), rsAdmin_PL.getString("curriculum"));
+
                 } else {
                     //Personal Laboral
                     stmAdmin_PL = con.prepareStatement("select usuario, labor, descripciontarea, fechainicio "
@@ -114,7 +114,7 @@ public class daoUsuarios extends AbstractDAO {
                                 rsAdmin_PL.getTimestamp("fechainicio"));
 
                     } else {
-                         System.out.println("user");
+                        System.out.println("user");
                         //Personal Externo
                         stmAdmin_PL = con.prepareStatement("select usuario, estardentro "
                                 + "from personalexterno "
@@ -193,7 +193,6 @@ public class daoUsuarios extends AbstractDAO {
     public Boolean modificarUsuario(Usuario us) {
         Connection con;
         PreparedStatement stmUsuario = null;
-        PreparedStatement stmBorrado = null;
         Boolean correcto;
 
         con = super.getConexion();
@@ -218,15 +217,14 @@ public class daoUsuarios extends AbstractDAO {
 
             stmUsuario.executeUpdate();
             /*Si es admin se actualiza el curriculum*/
-            if(us instanceof Administrador){
-            stmUsuario=con.prepareStatement("update administrador set curriculum=? where usuario=?");
-            stmUsuario.setString(1, ((Administrador)us).getCurriculum());
-            stmUsuario.setString(2, us.getDni());
-            stmUsuario.executeUpdate();
+            if (us instanceof Administrador) {
+                stmUsuario = con.prepareStatement("update administrador set curriculum=? where usuario=?");
+                stmUsuario.setString(1, ((Administrador) us).getCurriculum());
+                stmUsuario.setString(2, us.getDni());
+                stmUsuario.executeUpdate();
             }
-            
+
             correcto = true;
-            
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -353,23 +351,23 @@ public class daoUsuarios extends AbstractDAO {
         }
         return resultado;
     }
-    public Usuario obtenerUsuario(String dni){
+
+    public Usuario obtenerUsuario(String dni) {
         EstadisticasUsuario resultado = null;
         Connection con;
         PreparedStatement stmUsuario = null;
         ResultSet rsUsuario;
-        Usuario us=null;
- 
+        Usuario us = null;
+
         con = this.getConexion();
 
         try {
             stmUsuario = con.prepareStatement("select dni, nombre from usuario where dni=?");
             stmUsuario.setString(1, dni);
-            rsUsuario=stmUsuario.executeQuery();
-
+            rsUsuario = stmUsuario.executeQuery();
 
             if (rsUsuario.next()) {
-                us=new Usuario(rsUsuario.getString("dni"),rsUsuario.getString("nombre"));
+                us = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("nombre"));
             }
 
         } catch (SQLException e) {
@@ -383,6 +381,6 @@ public class daoUsuarios extends AbstractDAO {
             }
         }
         return us;
-        
+
     }
 }
