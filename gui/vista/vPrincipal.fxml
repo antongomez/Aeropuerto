@@ -535,19 +535,19 @@
                                                             <HBox alignment="CENTER" spacing="10.0">
                                                                <children>
                                                                   <Label minHeight="25.0" prefHeight="30.0" text="Fecha de llegada:" />
-                                                                  <DatePicker fx:id="dataFLlegadaCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCoches" prefHeight="30.0" prefWidth="120.0" />
+                                                                  <DatePicker fx:id="dataFLlegadaCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCochesDteP" prefHeight="30.0" prefWidth="120.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox alignment="CENTER" prefHeight="30.0" spacing="10.0">
                                                                <children>
                                                                   <Label minHeight="25.0" prefHeight="30.0" text="Fecha de retorno:" />
-                                                                  <DatePicker fx:id="dataFRetornoCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCoches" prefHeight="30.0" prefWidth="120.0" />
+                                                                  <DatePicker fx:id="dataFRetornoCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCochesDteP" prefHeight="30.0" prefWidth="120.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox alignment="CENTER" prefHeight="30.0" spacing="10.0">
                                                                <children>
                                                                   <Label minHeight="28.0" prefHeight="30.0" text="Número de plazas:" />
-                                                                  <TextField fx:id="textNPrazas" minHeight="25.0" minWidth="30.0" onKeyReleased="#comprobarBuscarCoches" prefHeight="30.0" prefWidth="60.0" />
+                                                                  <TextField fx:id="textNPrazas" minHeight="25.0" minWidth="30.0" onKeyReleased="#comprobarBuscarCochesTxt" prefHeight="30.0" prefWidth="60.0" />
                                                                </children>
                                                             </HBox>
                                                          </children>

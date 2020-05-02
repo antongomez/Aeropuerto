@@ -59,6 +59,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TEXTO_INFO_PARKING_COCHES = "Introduce los datos de tu vuelo o de tu estancia";
     private final static String TEXTO_ERROR_PARKING_COCHES = "La fecha de regreso debe ser mayor que la de llegada";
     private final static String TEXTO_ERROR_PARKING_COCHES_2 = "Las fechas de llegada y de retorno deben ser mayores que la actual";
+    private final static String TEXTO_ERROR_COCHES_NUMERO = "El numero de plazas no es válido";
 
     private final static Float PRECIO_DIA_PARKING = 10.0f;
 
@@ -662,7 +663,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     //COCHES
-    private void comprobarBuscarCoches() {
+    private void poderBuscarCoches() {
         if ((!textNPrazas.getText().isBlank())
                 && (dataFLlegadaCoches.getValue() != null)
                 && (dataFRetornoCoches.getValue() != null)) {
@@ -726,7 +727,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 etqInfoCoches.getStyleClass().remove("etqErro");
             }
 
-        }  else if (dataFLlegadaCoches.getValue() != null) {
+        } else if (dataFLlegadaCoches.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue()))) {
                 etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
                 btnBuscarCoches.setDisable(true);
@@ -749,14 +750,31 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     @FXML
-    private void comprobarBuscarCoches(Event event) {
-        comprobarBuscarCoches();
+    private void comprobarBuscarCochesDteP(Event event) {
+        poderBuscarCoches();
     }
 
     @FXML
-    private void comprobarBuscarCoches(KeyEvent event) {
-        //Comprobar numero e se e corecto
-        comprobarBuscarCoches();
+    private void comprobarBuscarCochesTxt(KeyEvent event) {
+        try {
+            int num = Integer.parseInt(textNPrazas.getText());
+            if ((num > 12) || (num < 1)) {
+                poderBuscarCoches();
+                System.out.println("Aqui");
+            } else {
+                etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
+                btnBuscarCoches.setDisable(true);
+                if (etqInfoCoches.getStyleClass().size() == 2) {
+                    etqInfoCoches.getStyleClass().add("etqErro");
+                }
+            }
+        } catch (NumberFormatException ex) {
+            etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
+            btnBuscarCoches.setDisable(true);
+            if (etqInfoCoches.getStyleClass().size() == 2) {
+                etqInfoCoches.getStyleClass().add("etqErro");
+            }
+        }
     }
 
     @FXML
