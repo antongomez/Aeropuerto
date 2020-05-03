@@ -358,6 +358,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Button btnHistorial;
     @FXML
     private AnchorPane panelPersLab;
+    @FXML
+    private Button btnDevolver;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -367,6 +369,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         etqTitulo.setText(TITULO_VUELOS);
 
         btnComprar.setDisable(true);
+        btnComprar.toFront();
+        btnDevolver.setDisable(true);
+        btnDevolver.setVisible(false);
 
         //Definimos o tipo de dato de cada columna da TaboaProximosVoos
         columnaNumVuelo.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
@@ -995,6 +1000,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Vuelo vuelo = tablaProximosVuelos.getSelectionModel().getSelectedItem();
         vComprarControlador controlador = ((vComprarControlador) loadWindow(getClass().getResource("/gui/vista/vComprar.fxml"), "AeroETSE", stage));
         controlador.inicializarVComprar(vuelo, usuario);
+        btnComprar.setDisable(true);
 
     }
 
@@ -1154,8 +1160,21 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void seleccionarVuelo(MouseEvent event) {
-        if (tablaProximosVuelos.getSelectionModel().getSelectedItem() != null) {
-            this.btnComprar.setDisable(false);
+        Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
+        if (vueloSelect != null) {
+            if (Modelo.getInstanceModelo().obtenerVuelosUsuario(usuario.getDni()).contains(vueloSelect)) {
+                btnComprar.setDisable(true);
+                btnComprar.setVisible(false);
+                btnDevolver.toFront();
+                btnDevolver.setVisible(true);
+                btnDevolver.setDisable(false);
+            } else {
+                btnComprar.setDisable(false);
+                btnComprar.setVisible(true);
+                btnComprar.toFront();
+                btnDevolver.setVisible(false);
+                btnDevolver.setDisable(true);
+            }
         }
     }
 
@@ -1185,6 +1204,31 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             etqTitulo.setText(TITULO_PERSLAB);
         }
 
+    }
+
+    @FXML
+    private void devolverBillete(ActionEvent event) {
+        Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
+        if (vueloSelect != null) {
+            //if(Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo())){
+            if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
+                Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
+                btnComprar.setDisable(false);
+                btnComprar.setVisible(true);
+                btnComprar.toFront();
+                btnDevolver.setVisible(false);
+                btnDevolver.setDisable(true);
+            } else {
+                Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
+            }
+            //}
+            /*else{
+                Modelo.getInstanceModelo().mostrarNotificacion("Nuestra política de devolución no permite devolver "
+                        + "un billete en un plazo inferior a 15 días de la salida del vuelo. "
+                        + "Para más información contacte con "+vueloSelect.getAerolinea().getNombre()+", la aerolínea encargada "
+                                + "de operar este vuelo.", getVenta());
+            }*/
+        }
     }
 
 }

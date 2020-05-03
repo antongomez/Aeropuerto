@@ -154,8 +154,8 @@ public class FachadaAplicacion extends Application {
         return gv.comprarBilletes(usuarios);
     }
     
-    public Boolean plazoDevolución(String vuelo){
-        return gv.plazoDevolución(vuelo);
+    public Boolean plazoDevolucion(String vuelo){
+        return gv.plazoDevolucion(vuelo);
     }
     
     public Boolean devolverBillete(String vuelo, String dni){

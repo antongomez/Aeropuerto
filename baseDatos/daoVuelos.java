@@ -303,7 +303,7 @@ public class daoVuelos extends AbstractDAO {
         return correcto;
     }
 
-    public Boolean plazoDevolución(String vuelo) {
+    public Boolean plazoDevolucion(String vuelo) {
         Connection con;
         PreparedStatement stmVuelo = null;
         ResultSet rsVuelo;
@@ -313,9 +313,10 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select *"
-                    + "from vuelos "
-                    + "where vuelo=? and datedd(dd,15,NOW())>vuelo.fechasalidareal");
+            stmVuelo = con.prepareStatement("select * "
+                    + "from vuelo "
+                    + "where numvuelo=? and fechasalidareal<(SELECT DATEADD(DAY,15,NOW()))");
+            stmVuelo.setString(1, vuelo);
             rsVuelo = stmVuelo.executeQuery();
             if (rsVuelo.next()) {
                 enPlazo = false;

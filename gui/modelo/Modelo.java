@@ -132,6 +132,14 @@ public class Modelo {
         return fa.comprarBilletes(usuarios);
     }
 
+    public Boolean plazoDevolucion(String vuelo){
+        return fa.plazoDevolucion(vuelo);
+    }
+
+    public Boolean devolverBillete(String vuelo, String dni){
+        return fa.devolverBillete(vuelo, dni);
+    }
+
     public Usuario obtenerUsuario(String dni) {
         return fa.obtenerUsuario(dni);
     }

@@ -99,6 +99,8 @@ public class vComprarControlador extends Controlador implements Initializable {
     private VBox vBoxDatosExtra;
     @FXML
     private Label etqDatosExtra;
+    @FXML
+    private Button btnEliminar;
 
     /**
      * Initializes the controller class.
@@ -188,8 +190,18 @@ public class vComprarControlador extends Controlador implements Initializable {
             us.comprarVuelo(vuelo.getNumVuelo());
             if (pasajeros.contains(us)) {
                 Modelo.getInstanceModelo().mostrarError("El usuario ya figura como pasajero", getVenta());
-            } else if (comprobarAsientos(us)) {
+            } else if(Modelo.getInstanceModelo().obtenerVuelosUsuario(us.getDni()).contains(vuelo)){
+                 Modelo.getInstanceModelo().mostrarError("El usuario ya dispone un billete para este vuelo", getVenta());
+            }
+            else if (comprobarAsientos(us)) {
                 pasajeros.add(us);
+                if (pasajeros.size() == 1) {
+                    radioBtnPremium.setDisable(true);
+                    radioBtnAcompanhante.setDisable(true);
+                    comboBoxAsiento.setDisable(true);
+                    comboBoxNumMaletas.setDisable(true);
+                    btnPagar.setDisable(false);
+                }
                 tablaPasajeros.getSelectionModel().selectLast();
                 actualizarDatosUsu();
                 actualizarPrecio();
@@ -397,6 +409,33 @@ public class vComprarControlador extends Controlador implements Initializable {
             usuario.getVueloEnEspera().setAsiento(comboBoxAsiento.getSelectionModel().getSelectedItem());
             vuelo.getAsientosNormalesDisponibles().replace(usuario.getVueloEnEspera().getAsiento(), false);
         }
+    }
+
+    @FXML
+    private void eliminarPasajero(ActionEvent event) {
+        Usuario pasajeroSelect = tablaPasajeros.getSelectionModel().getSelectedItem();
+        if (pasajeroSelect != null) {
+            if (pasajeroSelect.getVueloEnEspera().getPremium()) {
+                vuelo.getAsientosPremiumDisponibles().replace(pasajeroSelect.getVueloEnEspera().getAsiento(), true);
+            } else {
+                vuelo.getAsientosNormalesDisponibles().replace(pasajeroSelect.getVueloEnEspera().getAsiento(), true);
+            }
+            pasajeros.remove(pasajeroSelect);
+            if (pasajeros.size() > 0) {
+                tablaPasajeros.getSelectionModel().selectFirst();
+                actualizarDatosUsu();
+                actualizarPrecio();
+            } else {
+                Float precio = (float) (Math.round((float) 0 * 100d) / 100d);
+                txtFieldPrecioTotal.setText("0");
+                radioBtnPremium.setDisable(true);
+                radioBtnAcompanhante.setDisable(true);
+                comboBoxAsiento.setDisable(true);
+                comboBoxNumMaletas.setDisable(true);
+                btnPagar.setDisable(true);
+            }
+        }
+
     }
 
 }

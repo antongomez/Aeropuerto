@@ -129,8 +129,8 @@ public class FachadaBaseDatos {
         return daoVuelos.comprarBilletes(usuarios);
     }
     
-    public Boolean plazoDevolución(String vuelo){
-        return daoVuelos.plazoDevolución(vuelo);
+    public Boolean plazoDevolucion(String vuelo){
+        return daoVuelos.plazoDevolucion(vuelo);
     }
     
     public Boolean devolverBillete(String vuelo, String dni){

@@ -43,8 +43,8 @@ public class GestionVuelos {
         return fbd.comprarBilletes(usuarios);
     }
     
-    public Boolean plazoDevolución(String vuelo){
-        return fbd.plazoDevolución(vuelo);
+    public Boolean plazoDevolucion(String vuelo){
+        return fbd.plazoDevolucion(vuelo);
     }
     
     public Boolean devolverBillete(String vuelo, String dni){
