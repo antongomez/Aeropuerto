@@ -200,6 +200,6 @@ public class Modelo {
         return fa.pasarControlBillete(dni,vuelo);
     }
     public Boolean salirControlBillete(String dni, String vuelo){
-        return fa.pasarControlBillete(dni,vuelo);
+        return fa.salirControlBillete(dni,vuelo);
     }
 }

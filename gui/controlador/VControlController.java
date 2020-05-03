@@ -56,10 +56,11 @@ public class VControlController extends Controlador implements Initializable {
         if(checkBoxPersExterno.isSelected()){
             if(!txtFieldDni.getText().isEmpty()){
                 if(Modelo.getInstanceModelo().pasarControlPersExt(txtFieldDni.getText())==true){
-                    Modelo.getInstanceModelo().mostrarConfirmacion("Usuario registrado correctamente", this.getVenta());
+                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente", this.getVenta());
+                    txtFieldDni.setText("");
                 }
                 else{
-                    Modelo.getInstanceModelo().mostrarConfirmacion("Este usuario no está registrado como personal externo", this.getVenta());
+                    Modelo.getInstanceModelo().mostrarError("Este usuario no está registrado como personal externo", this.getVenta());
                 }
             }
             else{
@@ -69,10 +70,12 @@ public class VControlController extends Controlador implements Initializable {
         else{
             if(!(txtFieldDni.getText().isEmpty()||txtFieldNumVuelo.getText().isEmpty())){
                 if(Modelo.getInstanceModelo().pasarControlBillete(txtFieldDni.getText(),txtFieldNumVuelo.getText())==true){
-                    Modelo.getInstanceModelo().mostrarConfirmacion("Usuario registrado correctamente", this.getVenta());
+                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente", this.getVenta());
+                    txtFieldDni.setText("");
+                    txtFieldNumVuelo.setText("");
                 }
                 else{
-                    Modelo.getInstanceModelo().mostrarConfirmacion("Estos datos no corresponden con ningún billete", this.getVenta());
+                    Modelo.getInstanceModelo().mostrarError("Estos datos no corresponden con ningún billete", this.getVenta());
                 }
             }
             else{
@@ -87,10 +90,11 @@ public class VControlController extends Controlador implements Initializable {
         if(checkBoxPersExterno.isSelected()){
             if(!txtFieldDni.getText().isEmpty()){
                 if(Modelo.getInstanceModelo().salirControlPersExt(txtFieldDni.getText())==true){
-                    Modelo.getInstanceModelo().mostrarConfirmacion("Usuario registrado correctamente", this.getVenta());
+                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente", this.getVenta());
+                    txtFieldDni.setText("");
                 }
                 else{
-                    Modelo.getInstanceModelo().mostrarConfirmacion("Este usuario no está registrado como personal externo", this.getVenta());
+                    Modelo.getInstanceModelo().mostrarError("Este usuario no está registrado como personal externo", this.getVenta());
                 }
             }
             else{
@@ -100,10 +104,12 @@ public class VControlController extends Controlador implements Initializable {
         else{
             if(!(txtFieldDni.getText().isEmpty()||txtFieldNumVuelo.getText().isEmpty())){
                 if(Modelo.getInstanceModelo().salirControlBillete(txtFieldDni.getText(),txtFieldNumVuelo.getText())==true){
-                    Modelo.getInstanceModelo().mostrarConfirmacion("Usuario registrado correctamente", this.getVenta());
+                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente", this.getVenta());
+                    txtFieldDni.setText("");
+                    txtFieldNumVuelo.setText("");
                 }
                 else{
-                    Modelo.getInstanceModelo().mostrarConfirmacion("Estos datos no corresponden con ningún billete", this.getVenta());
+                    Modelo.getInstanceModelo().mostrarError("Estos datos no corresponden con ningún billete", this.getVenta());
                 }
             }
             else{
@@ -119,7 +125,9 @@ public class VControlController extends Controlador implements Initializable {
         txtFieldNumVuelo.setVisible(false);
         }
         else{
-            etqNumVuelo.setVisible(true);
+            
+        txtFieldNumVuelo.setText("");
+        etqNumVuelo.setVisible(true);
         txtFieldNumVuelo.setVisible(true);
         }
     }

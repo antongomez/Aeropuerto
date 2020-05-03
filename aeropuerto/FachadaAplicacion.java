@@ -107,7 +107,7 @@ public class FachadaAplicacion extends Application {
         return gv.pasarControlBillete(dni,vuelo);
     }
     public Boolean salirControlBillete(String dni, String vuelo){
-        return gv.pasarControlBillete(dni,vuelo);
+        return gv.salirControlBillete(dni,vuelo);
     }
 
     //Vuelos

@@ -196,6 +196,6 @@ public class FachadaBaseDatos {
         return daoVuelos.pasarControlBillete(dni,vuelo);
     }
     public Boolean salirControlBillete(String dni, String vuelo){
-        return daoVuelos.pasarControlBillete(dni,vuelo);
+        return daoVuelos.salirControlBillete(dni,vuelo);
     }
 }

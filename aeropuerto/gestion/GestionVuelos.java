@@ -68,6 +68,6 @@ public class GestionVuelos {
         return fbd.pasarControlBillete(dni,vuelo);
     }
     public Boolean salirControlBillete(String dni, String vuelo){
-        return fbd.pasarControlBillete(dni,vuelo);
+        return fbd.salirControlBillete(dni,vuelo);
     }
 }
