@@ -38,4 +38,5 @@ public class VMaletaController extends Controlador implements Initializable {
     public void setTrabajador(PersonalLaboral trab){
         this.trabajador=trab;
     }
+    
 }

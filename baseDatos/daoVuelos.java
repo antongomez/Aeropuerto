@@ -445,4 +445,69 @@ public class daoVuelos extends AbstractDAO {
         return resultado;
     }
 
+    
+    public Boolean pasarControlBillete(String dni, String vuelo){
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        Boolean correcto=false;
+
+        con = super.getConexion();
+
+        try {
+
+            stmUsuario = con.prepareStatement("update comprarbillete set pasarcontrol=true "
+                    + "where usuario=? and vuelo=?");
+
+            stmUsuario.setString(1,dni);
+            stmUsuario.setString(2,vuelo);
+
+            if(stmUsuario.executeUpdate()>0){
+                correcto=true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto = false;
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
+    public Boolean salirControlBillete(String dni, String vuelo){
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        Boolean correcto=false;
+
+        con = super.getConexion();
+
+        try {
+
+            stmUsuario = con.prepareStatement("update comprarbillete set pasarcontrol=false "
+                    + "where usuario=? and vuelo=?");
+
+            stmUsuario.setString(1,dni);
+            stmUsuario.setString(2,vuelo);
+
+            if(stmUsuario.executeUpdate()>0){
+                correcto=true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto = false;
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
 }

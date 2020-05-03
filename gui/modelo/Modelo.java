@@ -190,4 +190,16 @@ public class Modelo {
     public EstadisticasAerolinea obtenerEstadisticasAerolinea(String aer) {
         return fa.obtenerEstAerolineas(aer);
     }
+    public Boolean pasarControlPersExt(String dni){
+        return fa.pasarControlPersExt(dni);
+    }
+    public Boolean salirControlPersExt(String dni){
+        return fa.salirControlPersExt(dni);
+    }
+    public Boolean pasarControlBillete(String dni, String vuelo){
+        return fa.pasarControlBillete(dni,vuelo);
+    }
+    public Boolean salirControlBillete(String dni, String vuelo){
+        return fa.pasarControlBillete(dni,vuelo);
+    }
 }

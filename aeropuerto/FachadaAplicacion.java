@@ -2,6 +2,7 @@ package aeropuerto;
 
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
+import aeropuerto.elementos.PersonalExterno;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.gestion.GestionParking;
@@ -94,6 +95,19 @@ public class FachadaAplicacion extends Application {
     tipo= estacion => num=1,...,4 dependiendo de la estación concreta en este orden: primavera, verano, otoño, invierno*/
     public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num) {
         return gu.obtenerEstadisticasUsuario(dniUs, tipo, num);
+    }
+    /*Estas cuatro funciones devuelven false si no se encontró el usuario o el vuelo indicados*/
+    public Boolean pasarControlPersExt(String dni){
+        return gu.pasarControlPersExt(dni);
+    }
+    public Boolean salirControlPersExt(String dni){
+        return gu.salirControlPersExt(dni);
+    }
+    public Boolean pasarControlBillete(String dni, String vuelo){
+        return gv.pasarControlBillete(dni,vuelo);
+    }
+    public Boolean salirControlBillete(String dni, String vuelo){
+        return gv.pasarControlBillete(dni,vuelo);
     }
 
     //Vuelos

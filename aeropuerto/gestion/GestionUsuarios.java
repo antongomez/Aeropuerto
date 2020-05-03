@@ -46,4 +46,11 @@ public class GestionUsuarios {
     public Usuario obtenerUsuario(String dni){
         return fbd.obtenerUsuario(dni);
     }
+    public Boolean pasarControlPersExt(String dni){
+        return fbd.pasarControlPersExt(dni);
+    }
+    public Boolean salirControlPersExt(String dni){
+        return fbd.salirControlPersExt(dni);
+    }
+    
 }

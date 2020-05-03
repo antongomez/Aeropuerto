@@ -186,4 +186,16 @@ public class FachadaBaseDatos {
     public List<String> obtenerAerolineasConVuelos(){
         return daoAerolineas.obtenerAerolineasConVuelos();
     }
+    public Boolean pasarControlPersExt(String dni){
+        return daoUsuarios.pasarControlPersExt(dni);
+    }
+    public Boolean salirControlPersExt(String dni){
+        return daoUsuarios.salirControlPersExt(dni);
+    }
+    public Boolean pasarControlBillete(String dni, String vuelo){
+        return daoVuelos.pasarControlBillete(dni,vuelo);
+    }
+    public Boolean salirControlBillete(String dni, String vuelo){
+        return daoVuelos.pasarControlBillete(dni,vuelo);
+    }
 }

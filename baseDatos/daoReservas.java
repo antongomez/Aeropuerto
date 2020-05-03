@@ -36,6 +36,7 @@ public class daoReservas extends AbstractDAO {
             stmRes.setString(1, dniUs);
             stmRes.setString(2, dniUs);
             rsRes = stmRes.executeQuery();
+         
 
             while (rsRes.next()) {
                 if (rsRes.getString("tipo").equals("Coche")) {

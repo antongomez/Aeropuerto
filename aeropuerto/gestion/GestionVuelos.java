@@ -63,4 +63,11 @@ public class GestionVuelos {
     public List<String> obtenerAerolineasConVuelos(){
         return fbd.obtenerAerolineasConVuelos();
     }
+    
+    public Boolean pasarControlBillete(String dni, String vuelo){
+        return fbd.pasarControlBillete(dni,vuelo);
+    }
+    public Boolean salirControlBillete(String dni, String vuelo){
+        return fbd.pasarControlBillete(dni,vuelo);
+    }
 }

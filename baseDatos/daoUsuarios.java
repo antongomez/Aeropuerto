@@ -193,7 +193,7 @@ public class daoUsuarios extends AbstractDAO {
     public Boolean modificarUsuario(Usuario us) {
         Connection con;
         PreparedStatement stmUsuario = null;
-        Boolean correcto;
+        Boolean correcto=false;
 
         con = super.getConexion();
 
@@ -215,7 +215,9 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setString(8, us.cambiarFormatoSexo(us.getSexo()));
             stmUsuario.setString(9, us.getDni());
 
-            stmUsuario.executeUpdate();
+            if(stmUsuario.executeUpdate()>0){
+                correcto=true;
+            }
             /*Si es admin se actualiza el curriculum*/
             if (us instanceof Administrador) {
                 stmUsuario = con.prepareStatement("update administrador set curriculum=? where usuario=?");
@@ -224,12 +226,11 @@ public class daoUsuarios extends AbstractDAO {
                 stmUsuario.executeUpdate();
             }
 
-            correcto = true;
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
-            correcto = false;
+
         } finally {
             try {
                 stmUsuario.close();
@@ -383,4 +384,68 @@ public class daoUsuarios extends AbstractDAO {
         return us;
 
     }
+    
+    public Boolean pasarControlPersExt(String dni){
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        Boolean correcto=false;
+
+        con = super.getConexion();
+
+        try {
+
+            stmUsuario = con.prepareStatement("update personalexterno set estardentro=true "
+                    + "where usuario=?");
+
+            stmUsuario.setString(1,dni);
+
+            if(stmUsuario.executeUpdate()>0){
+                correcto=true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto = false;
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
+    public Boolean salirControlPersExt(String dni){
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        Boolean correcto=false;
+
+        con = super.getConexion();
+
+        try {
+
+            stmUsuario = con.prepareStatement("update personalexterno set estardentro=false "
+                    + "where usuario=?");
+
+            stmUsuario.setString(1,dni);
+
+            if(stmUsuario.executeUpdate()>0){
+                correcto=true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto = false;
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
+   
 }
