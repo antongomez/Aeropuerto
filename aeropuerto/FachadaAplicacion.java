@@ -96,6 +96,10 @@ public class FachadaAplicacion extends Application {
     public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num) {
         return gu.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
+    
+    public EstadisticasUsuario obtenerEstadisticasGlobalesUsuario(String dniUs) {
+        return gu.obtenerEstadisticasGlobalesUsuario(dniUs);
+    }
 
     /*Estas cuatro funciones devuelven false si no se encontró el usuario o el vuelo indicados*/
     public Boolean pasarControlPersExt(String dni) {
@@ -221,5 +225,9 @@ public class FachadaAplicacion extends Application {
     public List<String> obtenerAnhosViajados(String dni) {
         return gv.obtenerAnhosViajados(dni);
     }
+    public Boolean usuarioViajado(String dni){
+        return gu.usuarioViajado(dni);
+    }
+    
 
 }

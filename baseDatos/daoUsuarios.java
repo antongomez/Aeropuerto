@@ -193,7 +193,7 @@ public class daoUsuarios extends AbstractDAO {
     public Boolean modificarUsuario(Usuario us) {
         Connection con;
         PreparedStatement stmUsuario = null;
-        Boolean correcto=false;
+        Boolean correcto = false;
 
         con = super.getConexion();
 
@@ -215,8 +215,8 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setString(8, us.cambiarFormatoSexo(us.getSexo()));
             stmUsuario.setString(9, us.getDni());
 
-            if(stmUsuario.executeUpdate()>0){
-                correcto=true;
+            if (stmUsuario.executeUpdate() > 0) {
+                correcto = true;
             }
             /*Si es admin se actualiza el curriculum*/
             if (us instanceof Administrador) {
@@ -225,7 +225,6 @@ public class daoUsuarios extends AbstractDAO {
                 stmUsuario.setString(2, us.getDni());
                 stmUsuario.executeUpdate();
             }
-
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -286,18 +285,18 @@ public class daoUsuarios extends AbstractDAO {
             aux = "Estacion(v.fechaSalidaReal)";
         }
 
-        consulta = "select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa, billete.vecesViajadas as veces from "
-                + "(select a.aerolinea as aerolineaFav from comprarbillete cb, vuelo v, avion a "
+        consulta = "select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa, billete.vecesViajadas as veces"
+                + " from (select a.aerolinea as aerolineaFav from comprarbillete cb, vuelo v, avion a "
                 + "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and " + aux + "=?"
                 + "group by a.aerolinea having count(*)>=all "
                 + "(select count(*) from comprarbillete cb, vuelo v, avion a "
                 + "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and " + aux + "=?"
                 + "group by a.aerolinea)) as aerolinea, "
                 + "(select v.destino as destinoFav from comprarbillete cb, vuelo v "
-                + "where cb.usuario=? and cb.vuelo=v.numvuelo and " + aux + "=?"
+                + "where cb.usuario=? and v.destino != 'Folgoso do Courel' and cb.vuelo=v.numvuelo and " + aux + "=?"
                 + "group by v.destino having count(*)>=all "
                 + "(select count(*) from comprarbillete cb, vuelo v "
-                + "where cb.usuario=? and cb.vuelo=v.numvuelo and " + aux + "=? group by v.destino)) as destino, "
+                + "where cb.usuario=? and v.destino != 'Folgoso do Courel' and cb.vuelo=v.numvuelo and " + aux + "=? group by v.destino)) as destino, "
                 + "(select tipoAsiento as tarifaFav from comprarbillete cb, vuelo v "
                 + "where cb.usuario=? and cb.vuelo=v.numvuelo and " + aux + "=?"
                 + "group by tipoAsiento having count(*)>=all "
@@ -353,6 +352,91 @@ public class daoUsuarios extends AbstractDAO {
         return resultado;
     }
 
+    public EstadisticasUsuario obtenerEstadisticasGlobalesUsuario(String dniUs) {
+        EstadisticasUsuario resultado = null;
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        ResultSet rsUsuario;
+        String consulta;
+        con = this.getConexion();
+
+        consulta = "select *\n"
+                + "from \n"
+                + "(select a.aerolinea as aerolineaFav\n"
+                + "from comprarbillete cb, vuelo v, avion a\n"
+                + "where cb.usuario = ?\n"
+                + "  and cb.vuelo = v.numvuelo\n"
+                + "  and v.avion = a.codigo\n"
+                + "group by a.aerolinea\n"
+                + "having count(*)>=all (select count(*) from comprarbillete cb, vuelo v, avion a \n"
+                + "                where cb.usuario= ?\n"
+                + "				  and cb.vuelo = v.numvuelo\n"
+                + "				  and v.avion = a.codigo \n"
+                + "                group by a.aerolinea)) as aerolineaFav,\n"
+                + "				\n"
+                + "(select v.destino as destinoFav\n"
+                + "from comprarbillete cb, vuelo v \n"
+                + "where cb.usuario = ? \n"
+                + "  and cb.vuelo = v.numvuelo\n"
+                + "  and v.destino != 'Folgoso do Courel'\n"
+                + "group by v.destino\n"
+                + "having count(*)>=all(select count(*)\n"
+                + "					 from comprarbillete cb, vuelo v \n"
+                + "                	 where cb.usuario = ?\n"
+                + "					  and cb.vuelo = v.numvuelo\n"
+                + "					  and v.destino != 'Folgoso do Courel'\n"
+                + "					 group by v.destino)) as destinoFav,\n"
+                + "					 \n"
+                + "(select tipoAsiento as tarifaFav\n"
+                + "from comprarbillete cb, vuelo v \n"
+                + "where cb.usuario = ?\n"
+                + "  and cb.vuelo = v.numvuelo\n"
+                + "group by tipoAsiento\n"
+                + "having count(*)>=all(select count(*)\n"
+                + "					 from comprarbillete cb, vuelo v\n"
+                + "					 where cb.usuario = ?\n"
+                + "					   and cb.vuelo=v.numvuelo\n"
+                + "					 group by cb.tipoAsiento)) as tarifaFav";
+
+        try {
+            stmUsuario = con.prepareStatement(consulta);
+            stmUsuario.setString(1, dniUs);
+            stmUsuario.setString(2, dniUs);
+            stmUsuario.setString(3, dniUs);
+            stmUsuario.setString(4, dniUs);
+            stmUsuario.setString(5, dniUs);
+            stmUsuario.setString(6, dniUs);
+            rsUsuario = stmUsuario.executeQuery();
+            
+            if (rsUsuario.next()) {
+                resultado = new EstadisticasUsuario();
+                resultado.anadirAerolinea(rsUsuario.getString("aerolineaFav"));
+                resultado.anadirDestino(rsUsuario.getString("destinoFav"));
+                resultado.anadirTarifa(rsUsuario.getString("tarifaFav"));
+
+            } else {
+                resultado = new EstadisticasUsuario();
+            }
+            /*Si se encuentra más de una tupla*/
+            while (rsUsuario.next()) {
+                resultado.anadirAerolinea(rsUsuario.getString("aerolineaFav"));
+                resultado.anadirDestino(rsUsuario.getString("destinoFav"));
+                resultado.anadirTarifa(rsUsuario.getString("tarifaFav"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return resultado;
+    }
+
     public Usuario obtenerUsuario(String dni) {
         EstadisticasUsuario resultado = null;
         Connection con;
@@ -384,11 +468,11 @@ public class daoUsuarios extends AbstractDAO {
         return us;
 
     }
-    
-    public Boolean pasarControlPersExt(String dni){
+
+    public Boolean pasarControlPersExt(String dni) {
         Connection con;
         PreparedStatement stmUsuario = null;
-        Boolean correcto=false;
+        Boolean correcto = false;
 
         con = super.getConexion();
 
@@ -397,10 +481,10 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario = con.prepareStatement("update personalexterno set estardentro=true "
                     + "where usuario=?");
 
-            stmUsuario.setString(1,dni);
+            stmUsuario.setString(1, dni);
 
-            if(stmUsuario.executeUpdate()>0){
-                correcto=true;
+            if (stmUsuario.executeUpdate() > 0) {
+                correcto = true;
             }
 
         } catch (SQLException e) {
@@ -416,10 +500,11 @@ public class daoUsuarios extends AbstractDAO {
         }
         return correcto;
     }
-    public Boolean salirControlPersExt(String dni){
+
+    public Boolean salirControlPersExt(String dni) {
         Connection con;
         PreparedStatement stmUsuario = null;
-        Boolean correcto=false;
+        Boolean correcto = false;
 
         con = super.getConexion();
 
@@ -428,10 +513,10 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario = con.prepareStatement("update personalexterno set estardentro=false "
                     + "where usuario=?");
 
-            stmUsuario.setString(1,dni);
+            stmUsuario.setString(1, dni);
 
-            if(stmUsuario.executeUpdate()>0){
-                correcto=true;
+            if (stmUsuario.executeUpdate() > 0) {
+                correcto = true;
             }
 
         } catch (SQLException e) {
@@ -447,5 +532,5 @@ public class daoUsuarios extends AbstractDAO {
         }
         return correcto;
     }
-   
+
 }

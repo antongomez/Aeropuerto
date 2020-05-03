@@ -653,12 +653,56 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         tablaMisVuelos.setItems(vuelosUsuario);
     }
 
+    @FXML
+    private void cancelarViaje(ActionEvent event) {
+        Vuelo vueloSelect = tablaMisVuelos.getSelectionModel().getSelectedItem();
+        if (vueloSelect != null) {
+            //if(Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo())){
+            if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
+                vuelosUsuario.remove(vueloSelect);
+                Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
+            } else {
+                Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
+            }
+            //}
+            /*else{
+                Modelo.getInstanceModelo().mostrarNotificacion("Nuestra política de devolución no permite devolver "
+                        + "un billete en un plazo inferior a 15 días de la salida del vuelo. "
+                        + "Para más información contacte con "+vueloSelect.getAerolinea().getNombre()+", la aerolínea encargada "
+                                + "de operar este vuelo.", getVenta());
+            }*/
+        }
+    }
+
+    @FXML
+    private void seleccionarMiVuelo(MouseEvent event) {
+        Vuelo vueloSelect = tablaMisVuelos.getSelectionModel().getSelectedItem();
+        if (vueloSelect != null) {
+            if (Modelo.getInstanceModelo().vueloRealizado(vueloSelect.getNumVuelo())) {
+                btnCancelar.setDisable(true);
+            } else {
+                btnCancelar.setDisable(false);
+            }
+        }
+    }
+
     //Estadisticas
     @FXML
     private void accionAbrirEstadisticas(Event event) {
         //Ao entrar poñemos as estatisticas dos anos e seleccionamos o mais recente
         buscarAnos();
         mostrarEstadisticas();
+        //Estadisticas globais
+        EstadisticasUsuario estadisticasUsuario = getInstanceModelo()
+                .obtenerEstadisticasGlobalesUsuario(usuario.getDni());
+
+        if (getInstanceModelo().usuarioViajado(usuario.getDni())) {
+            etqAerolineaFavGlobal.setText(estadisticasUsuario.getAerolineasFav().get(0));
+            etqDestinoFavGlobal.setText(estadisticasUsuario.getDestinosFav().get(0));
+            etqTarifaFavGlobal.setText(estadisticasUsuario.getTarifaFav());
+
+        }
+
     }
 
     private void buscarAnos() {
@@ -1303,39 +1347,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnHistorial(ActionEvent event) {
-    }
-
-    @FXML
-    private void cancelarViaje(ActionEvent event) {
-        Vuelo vueloSelect = tablaMisVuelos.getSelectionModel().getSelectedItem();
-        if (vueloSelect != null) {
-            //if(Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo())){
-            if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
-                vuelosUsuario.remove(vueloSelect);
-                Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
-            } else {
-                Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
-            }
-            //}
-            /*else{
-                Modelo.getInstanceModelo().mostrarNotificacion("Nuestra política de devolución no permite devolver "
-                        + "un billete en un plazo inferior a 15 días de la salida del vuelo. "
-                        + "Para más información contacte con "+vueloSelect.getAerolinea().getNombre()+", la aerolínea encargada "
-                                + "de operar este vuelo.", getVenta());
-            }*/
-        }
-    }
-
-    @FXML
-    private void seleccionarMiVuelo(MouseEvent event) {
-        Vuelo vueloSelect = tablaMisVuelos.getSelectionModel().getSelectedItem();
-        if (vueloSelect != null) {
-            if (Modelo.getInstanceModelo().vueloRealizado(vueloSelect.getNumVuelo())) {
-                btnCancelar.setDisable(true);
-            } else {
-                btnCancelar.setDisable(false);
-            }
-        }
     }
 
 }

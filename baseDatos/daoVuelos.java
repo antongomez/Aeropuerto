@@ -648,9 +648,9 @@ public class daoVuelos extends AbstractDAO {
         try {
             String consulta = "select distinct date_part('year',fechasalidateorica) as anhos\n"
                     + "from vuelo\n"
-                    + "where numvuelo = (select vuelo\n"
+                    + "where numvuelo in (select vuelo\n"
                     + "					from comprarbillete\n"
-                    + "					where usuario = '49204425L')\n"
+                    + "					where usuario = ?)\n"
                     + "order by anhos desc";
 
             stmVuelo = con.prepareStatement(consulta);

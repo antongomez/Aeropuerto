@@ -18,8 +18,14 @@ public class EstadisticasUsuario {
         tarifaFav = "";
     }
 
-    public void anadirAerolinea(String a) {
+    public EstadisticasUsuario() {
+        this.vecesViajadas = null;
+        aerolineasFav = new ArrayList<>();
+        destinosFav = new ArrayList<>();
+        tarifaFav = "";
+    }
 
+    public void anadirAerolinea(String a) {
         /*Solo se añade si no estaba ya*/
         if (!aerolineasFav.contains(a)) {
             aerolineasFav.add(a);
@@ -33,11 +39,15 @@ public class EstadisticasUsuario {
     }
 
     public void anadirTarifa(String t) {
-
         if (tarifaFav.isEmpty() || tarifaFav.equals(t)) {
-            tarifaFav = t;
+            if (t.equals("normal")) {
+                tarifaFav = "Normal";
+            } else {
+                tarifaFav = "Premium";
+            }
+
         } else {
-            tarifaFav = "normal y premium";
+            tarifaFav = "Normal y premium";
         }
     }
 

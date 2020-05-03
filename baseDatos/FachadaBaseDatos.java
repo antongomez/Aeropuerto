@@ -104,6 +104,10 @@ public class FachadaBaseDatos {
     public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num) {
         return daoUsuarios.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
+    
+    public EstadisticasUsuario obtenerEstadisticasGlobalesUsuario(String dniUs) {
+        return daoUsuarios.obtenerEstadisticasGlobalesUsuario(dniUs);
+    }
 
     public List<Reserva> obtenerReservasUsuario(String dniUs) {
         return daoReservas.obtenerReservasUsuario(dniUs);

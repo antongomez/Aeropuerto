@@ -115,6 +115,10 @@ public class Modelo {
         return fa.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
 
+    public EstadisticasUsuario obtenerEstadisticasGlobalesUsuario(String dniUs) {
+        return fa.obtenerEstadisticasGlobalesUsuario(dniUs);
+    }
+
     public List<Reserva> obtenerReservasUsuario(String dniUs) {
         return fa.obtenerReservasUsuario(dniUs);
     }
@@ -217,6 +221,10 @@ public class Modelo {
 
     public List<String> obtenerAnhosViajados(String dni) {
         return fa.obtenerAnhosViajados(dni);
+    }
+    
+    public Boolean usuarioViajado(String dni){
+        return fa.usuarioViajado(dni);
     }
 
 }
