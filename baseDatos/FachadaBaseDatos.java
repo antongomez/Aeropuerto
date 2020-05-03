@@ -129,16 +129,16 @@ public class FachadaBaseDatos {
     public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return daoVuelos.comprarBilletes(usuarios);
     }
-    
-    public Boolean plazoDevolucion(String vuelo){
+
+    public Boolean plazoDevolucion(String vuelo) {
         return daoVuelos.plazoDevolucion(vuelo);
     }
-    
+
     public Boolean vueloRealizado(String vuelo) {
         return daoVuelos.vueloRealizado(vuelo);
     }
-    
-    public Boolean devolverBillete(String vuelo, String dni){
+
+    public Boolean devolverBillete(String vuelo, String dni) {
         return daoVuelos.devolverBillete(vuelo, dni);
     }
 
@@ -169,7 +169,7 @@ public class FachadaBaseDatos {
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return daoReservas.reservarParking(reserva, dniUsuario);
     }
-    
+
     public Boolean reservarCoche(Reserva reserva, String dniUsuario) {
         return daoReservas.reservarCoche(reserva, dniUsuario);
     }
@@ -185,37 +185,44 @@ public class FachadaBaseDatos {
     public List<Vuelo> verLlegadas() {
         return daoVuelos.verLlegadas();
     }
-    public EstadisticasAerolinea obtenerEstAerolineas(String aer){
+
+    public EstadisticasAerolinea obtenerEstAerolineas(String aer) {
         return daoAerolineas.obtenerEstAerolineas(aer);
     }
-    public List<String> obtenerAerolineasConVuelos(){
+
+    public List<String> obtenerAerolineasConVuelos() {
         return daoAerolineas.obtenerAerolineasConVuelos();
     }
-    public Boolean pasarControlPersExt(String dni){
+
+    public Boolean pasarControlPersExt(String dni) {
         return daoUsuarios.pasarControlPersExt(dni);
     }
-    public Boolean salirControlPersExt(String dni){
+
+    public Boolean salirControlPersExt(String dni) {
         return daoUsuarios.salirControlPersExt(dni);
     }
-    public Boolean pasarControlBillete(String dni, String vuelo){
-        return daoVuelos.pasarControlBillete(dni,vuelo);
+
+    public Boolean pasarControlBillete(String dni, String vuelo) {
+        return daoVuelos.pasarControlBillete(dni, vuelo);
     }
-    public Boolean salirControlBillete(String dni, String vuelo){
-        return daoVuelos.salirControlBillete(dni,vuelo);
+
+    public Boolean salirControlBillete(String dni, String vuelo) {
+        return daoVuelos.salirControlBillete(dni, vuelo);
     }
-<<<<<<< HEAD
-    public Aerolinea obtenerDatosAerolinea(String vuelo){
+
+    public Aerolinea obtenerDatosAerolinea(String vuelo) {
         return daoVuelos.obtenerDatosAerolinea(vuelo);
     }
-    public Integer numeroMaletasDisponibles(String dni, String vuelo){
+
+    public Integer numeroMaletasDisponibles(String dni, String vuelo) {
         return daoVuelos.numeroMaletasDisponibles(dni, vuelo);
     }
-    public Boolean facturarMaleta(String dni, String vuelo, Float peso){
+
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso) {
         return daoVuelos.facturarMaleta(dni, vuelo, peso);
-=======
-    
-    public List<String> obtenerAnhosViajados(String dni){
+    }
+
+    public List<String> obtenerAnhosViajados(String dni) {
         return daoVuelos.obtenerAnhosViajados(dni);
->>>>>>> Inicio correccion estadisticas
     }
 }
