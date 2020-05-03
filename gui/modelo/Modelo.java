@@ -206,4 +206,8 @@ public class Modelo {
     public Boolean salirControlBillete(String dni, String vuelo){
         return fa.salirControlBillete(dni,vuelo);
     }
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso, Float precioExtra){
+        return fa.facturarMaleta(dni, vuelo, peso, precioExtra);
+    }
+    
 }

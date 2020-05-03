@@ -1,6 +1,7 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Aerolinea;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.Usuario;
@@ -201,5 +202,14 @@ public class FachadaBaseDatos {
     }
     public Boolean salirControlBillete(String dni, String vuelo){
         return daoVuelos.salirControlBillete(dni,vuelo);
+    }
+    public Aerolinea obtenerDatosAerolinea(String vuelo){
+        return daoVuelos.obtenerDatosAerolinea(vuelo);
+    }
+    public Integer numeroMaletasDisponibles(String dni, String vuelo){
+        return daoVuelos.numeroMaletasDisponibles(dni, vuelo);
+    }
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso){
+        return daoVuelos.facturarMaleta(dni, vuelo, peso);
     }
 }

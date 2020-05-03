@@ -1,5 +1,6 @@
 package aeropuerto.gestion;
 
+import aeropuerto.elementos.Aerolinea;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
@@ -13,6 +14,7 @@ public class GestionVuelos {
 
     FachadaGui fgui;
     FachadaBaseDatos fbd;
+    static final float EXTRA_MALETA_KG=5;
 
     public GestionVuelos(FachadaGui fgui, FachadaBaseDatos fbd) {
         this.fgui = fgui;
@@ -74,4 +76,29 @@ public class GestionVuelos {
     public Boolean salirControlBillete(String dni, String vuelo){
         return fbd.salirControlBillete(dni,vuelo);
     }
+    /*Los tres primeros argumentos son de entrada y el último de salida.
+    La función devuelve si fue posible facturar la maleta*/
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso,Float precioExtra){
+       
+        Float precio=(float)0;
+        if(fbd.facturarMaleta(dni, vuelo, peso)==false){
+            return false;
+        }
+        else{
+            Aerolinea aer=fbd.obtenerDatosAerolinea(vuelo);
+            /*Si después de facturar, el número de maletas disponibles es negativo*/
+            if(fbd.numeroMaletasDisponibles(dni, vuelo)<0){
+                precio+=aer.getPrecioBaseMaleta();
+            }
+            if(peso>aer.getPesoBaseMaleta()){
+                precio+=EXTRA_MALETA_KG*(peso-aer.getPesoBaseMaleta());
+            }
+            precioExtra=precio;
+            return true;
+        }
+        
+        
+            
+    }
+    
 }

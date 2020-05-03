@@ -543,4 +543,108 @@ public class daoVuelos extends AbstractDAO {
         }
         return correcto;
     }
+    
+    public Aerolinea obtenerDatosAerolinea(String num){
+        
+        Connection con;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+        Aerolinea result=null;
+
+
+        con = super.getConexion();
+
+        try {
+            stmVuelo = con.prepareStatement("select pesobasemaleta,preciobasemaleta " +
+            "from vuelo v, avion av, aerolinea a " +
+            "where v.avion=av.codigo and av.aerolinea=a.nombre and numvuelo=?");
+            stmVuelo.setString(1, num);
+            rsVuelo = stmVuelo.executeQuery();
+            if (rsVuelo.next()) {
+                result=new Aerolinea(null,rsVuelo.getFloat("preciobasemaleta"),rsVuelo.getFloat("pesobasemaleta"));
+            } 
+        } catch (SQLException e) {
+            getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return result;
+    }
+    
+    public Integer numeroMaletasDisponibles(String dni, String vuelo){
+        
+        Connection con;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+        Integer result=0;
+
+
+        con = super.getConexion();
+
+        try {
+            stmVuelo = con.prepareStatement("select nummaletasreserva-numfact as malDisp " +
+                    "from (select nummaletasreserva from comprarbillete \n" +
+                    "where vuelo=? and usuario=?) r, " +
+                    "(select count(*) as numfact from facturarmaleta where vuelo=? and usuario=?) s");
+            stmVuelo.setString(1, vuelo);
+            stmVuelo.setString(2, dni);
+            stmVuelo.setString(3, vuelo);
+            stmVuelo.setString(4, dni);
+            rsVuelo = stmVuelo.executeQuery();
+            if (rsVuelo.next()) {
+                result=rsVuelo.getInt("malDisp");
+            } 
+        } catch (SQLException e) {
+            getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return result;
+        
+    }
+    
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso){
+        Connection con;
+        PreparedStatement stmVuelo = null;
+        Boolean correcto=true;
+
+        con = super.getConexion();
+
+        try {
+
+            stmVuelo = con.prepareStatement("insert into facturarmaleta (usuario,vuelo,peso)"
+                    + " values (?,?,?)");
+
+            stmVuelo.setString(1,dni);
+            stmVuelo.setString(2,vuelo);
+            stmVuelo.setFloat(3, peso);
+            
+            stmVuelo.executeUpdate();
+
+        } catch (SQLException e) {
+            if(!e.getMessage().contains("(usuario, vuelo)")){
+
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto=false;
+            }
+            correcto = false;
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+                correcto=false;
+            }
+        }
+        return correcto;
+    }
 }

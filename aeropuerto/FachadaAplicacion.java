@@ -126,6 +126,11 @@ public class FachadaAplicacion extends Application {
     public List<Vuelo> verLlegadas() {
         return gv.verLlegadas();
     }
+    
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso,Float precioExtra){
+        return gv.facturarMaleta(dni,vuelo,peso,precioExtra);
+    }
+    
 
     //Reservas
     /*Muestra las reservas de un usuario que aún no han sido vencidas*/
