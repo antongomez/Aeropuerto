@@ -1211,7 +1211,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
         if (vueloSelect != null) {
             //if(Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo())){
-            if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
+            if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {  
                 Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
                 btnComprar.setDisable(false);
                 btnComprar.setVisible(true);
