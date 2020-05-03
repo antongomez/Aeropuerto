@@ -52,10 +52,11 @@ public class Modelo {
     }
 
     public void mostrarError(String mensaje, Stage pai) {
+        Stage stage = new Stage();
+        stage.initOwner(pai);
         VErrorController controlador = ((VErrorController) loadWindow(getClass().
-                getResource("/gui/vista/vError.fxml"), "Error", null));
+                getResource("/gui/vista/vError.fxml"), "Error", stage));
         controlador.mostrarMensaje(mensaje);
-        controlador.getVenta().initOwner(pai);
         controlador.getVenta().setResizable(false);
     }
 
@@ -71,18 +72,20 @@ public class Modelo {
     }
 
     public void mostrarNotificacion(String mensaje, Stage pai) {
+        Stage stage = new Stage();
+        stage.initOwner(pai);
         VNotificacionController controlador = ((VNotificacionController) loadWindow(getClass().
-                getResource("/gui/vista/vNotificacion.fxml"), "Notificación", null));
+                getResource("/gui/vista/vNotificacion.fxml"), "Notificación", stage));
         controlador.mostrarMensaje(mensaje);
-        controlador.getVenta().initOwner(pai);
         controlador.getVenta().setResizable(false);
     }
 
     public void mostrarConfirmacion(String mensaje, Stage pai) {
+        Stage stage = new Stage();
+        stage.initOwner(pai);
         vConfirmacionControlador controlador = ((vConfirmacionControlador) loadWindow(getClass().
-                getResource("/gui/vista/vConfirmacion.fxml"), "Confirmación", null));
+                getResource("/gui/vista/vConfirmacion.fxml"), "Confirmación", stage));
         controlador.mostrarMensaje(mensaje);
-        controlador.getVenta().initOwner(pai);
         controlador.getVenta().setResizable(false);
     }
 
@@ -132,11 +135,11 @@ public class Modelo {
         return fa.comprarBilletes(usuarios);
     }
 
-    public Boolean plazoDevolucion(String vuelo){
+    public Boolean plazoDevolucion(String vuelo) {
         return fa.plazoDevolucion(vuelo);
     }
 
-    public Boolean devolverBillete(String vuelo, String dni){
+    public Boolean devolverBillete(String vuelo, String dni) {
         return fa.devolverBillete(vuelo, dni);
     }
 
@@ -179,10 +182,12 @@ public class Modelo {
     public List<Vuelo> mostrarLlegadas() {
         return fa.verLlegadas();
     }
-    public List<String> obtenerAerolineasConVuelos(){
+
+    public List<String> obtenerAerolineasConVuelos() {
         return fa.obtenerAerolineasConVuelos();
     }
-    public EstadisticasAerolinea obtenerEstadisticasAerolinea(String aer){
+
+    public EstadisticasAerolinea obtenerEstadisticasAerolinea(String aer) {
         return fa.obtenerEstAerolineas(aer);
     }
 }
