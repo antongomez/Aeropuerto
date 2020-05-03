@@ -74,9 +74,9 @@
                         <Insets bottom="3.0" top="3.0" />
                      </padding>
                   </HBox>
-                  <AnchorPane>
+                  <AnchorPane HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="800.0" text="VUELOS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" text="PRÓXIMOS VUELOS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>
