@@ -575,9 +575,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         comboBoxPais.getSelectionModel().select(usuario.getPaisProcedencia());
         comboBoxSexo.getSelectionModel().select(usuario.getSexo());
-
-        vuelosUsuario = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosUsuario(usuario.getDni()));
-        tablaMisVuelos.setItems(vuelosUsuario);
     }
 
     //MODIFICAR DATOS
@@ -642,6 +639,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //MisVuelos
     @FXML
     private void accionAbrirMisVuelos(Event event) {
+        vuelosUsuario = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosUsuario(usuario.getDni()));
+        tablaMisVuelos.setItems(vuelosUsuario);
     }
 
     //Estadisticas
