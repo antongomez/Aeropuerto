@@ -172,6 +172,10 @@ public class FachadaAplicacion extends Application {
         return gv.plazoDevolucion(vuelo);
     }
     
+    public Boolean vueloRealizado(String vuelo) {
+        return gv.vueloRealizado(vuelo);
+    }
+    
     public Boolean devolverBillete(String vuelo, String dni){
         return gv.devolverBillete(vuelo, dni);
     }

@@ -138,6 +138,10 @@ public class Modelo {
     public Boolean plazoDevolucion(String vuelo) {
         return fa.plazoDevolucion(vuelo);
     }
+    
+    public Boolean vueloRealizado(String vuelo) {
+        return fa.vueloRealizado(vuelo);
+    }
 
     public Boolean devolverBillete(String vuelo, String dni) {
         return fa.devolverBillete(vuelo, dni);

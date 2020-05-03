@@ -358,8 +358,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Button btnHistorial;
     @FXML
     private AnchorPane panelPersLab;
+
+    //
     @FXML
     private Button btnDevolver;
+    @FXML
+    private Button btnCancelar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -1208,27 +1212,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void devolverBillete(ActionEvent event) {
-        Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
-        if (vueloSelect != null) {
-            //if(Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo())){
-            if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {  
-                Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
-                btnComprar.setDisable(false);
-                btnComprar.setVisible(true);
-                btnComprar.toFront();
-                btnDevolver.setVisible(false);
-                btnDevolver.setDisable(true);
-            } else {
-                Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
-            }
-            //}
-            /*else{
-                Modelo.getInstanceModelo().mostrarNotificacion("Nuestra política de devolución no permite devolver "
-                        + "un billete en un plazo inferior a 15 días de la salida del vuelo. "
-                        + "Para más información contacte con "+vueloSelect.getAerolinea().getNombre()+", la aerolínea encargada "
-                                + "de operar este vuelo.", getVenta());
-            }*/
-        }
+        Modelo.getInstanceModelo().mostrarNotificacion("Dirigite a tu historial de vuelos, dentro de área personal, para realizar "
+                + "la devolución del billete.", getVenta());
     }
 
     @FXML
@@ -1237,9 +1222,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
         //Seleccionamos o voo que se vai comprar
-        
+
         VControlController controlador = ((VControlController) loadWindow(getClass().getResource("/gui/vista/vControl.fxml"), "AeroETSE", stage));
-        controlador.setTrabajador((PersonalLaboral)usuario);
+        controlador.setTrabajador((PersonalLaboral) usuario);
     }
 
     @FXML
@@ -1256,19 +1241,52 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnMaletas(ActionEvent event) {
-        
+
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
         //Seleccionamos o voo que se vai comprar
-        
+
         VMaletaController controlador = ((VMaletaController) loadWindow(getClass().getResource("/gui/vista/vMaleta.fxml"), "AeroETSE", stage));
-        controlador.setTrabajador((PersonalLaboral)usuario);
-        
+        controlador.setTrabajador((PersonalLaboral) usuario);
+
     }
 
     @FXML
     private void accionBtnHistorial(ActionEvent event) {
+    }
+
+    @FXML
+    private void cancelarViaje(ActionEvent event) {
+        Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
+        if (vueloSelect != null) {
+            //if(Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo())){
+            if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
+                Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
+            } else {
+                Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
+            }
+            //}
+            /*else{
+                Modelo.getInstanceModelo().mostrarNotificacion("Nuestra política de devolución no permite devolver "
+                        + "un billete en un plazo inferior a 15 días de la salida del vuelo. "
+                        + "Para más información contacte con "+vueloSelect.getAerolinea().getNombre()+", la aerolínea encargada "
+                                + "de operar este vuelo.", getVenta());
+            }*/
+        }
+    }
+
+    @FXML
+    private void seleccionarMiVuelo(MouseEvent event) {
+        Vuelo vueloSelect = tablaMisVuelos.getSelectionModel().getSelectedItem();
+        if (vueloSelect != null) {
+            if (Modelo.getInstanceModelo().vueloRealizado(vueloSelect.getNumVuelo())){
+                btnCancelar.setDisable(true);
+            }
+            else{
+                btnCancelar.setDisable(false);
+            }
+        }
     }
 
 }

@@ -133,6 +133,10 @@ public class FachadaBaseDatos {
         return daoVuelos.plazoDevolucion(vuelo);
     }
     
+    public Boolean vueloRealizado(String vuelo) {
+        return daoVuelos.vueloRealizado(vuelo);
+    }
+    
     public Boolean devolverBillete(String vuelo, String dni){
         return daoVuelos.devolverBillete(vuelo, dni);
     }
