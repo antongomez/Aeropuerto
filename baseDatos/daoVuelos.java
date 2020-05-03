@@ -1,6 +1,7 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Aerolinea;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.Time;
@@ -332,7 +333,7 @@ public class daoVuelos extends AbstractDAO {
 
         return enPlazo;
     }
-    
+
     public Boolean vueloRealizado(String vuelo) {
         Connection con;
         PreparedStatement stmVuelo = null;
@@ -475,11 +476,10 @@ public class daoVuelos extends AbstractDAO {
         return resultado;
     }
 
-    
-    public Boolean pasarControlBillete(String dni, String vuelo){
+    public Boolean pasarControlBillete(String dni, String vuelo) {
         Connection con;
         PreparedStatement stmUsuario = null;
-        Boolean correcto=false;
+        Boolean correcto = false;
 
         con = super.getConexion();
 
@@ -488,11 +488,11 @@ public class daoVuelos extends AbstractDAO {
             stmUsuario = con.prepareStatement("update comprarbillete set pasarcontrol=true "
                     + "where usuario=? and vuelo=?");
 
-            stmUsuario.setString(1,dni);
-            stmUsuario.setString(2,vuelo);
+            stmUsuario.setString(1, dni);
+            stmUsuario.setString(2, vuelo);
 
-            if(stmUsuario.executeUpdate()>0){
-                correcto=true;
+            if (stmUsuario.executeUpdate() > 0) {
+                correcto = true;
             }
 
         } catch (SQLException e) {
@@ -508,10 +508,11 @@ public class daoVuelos extends AbstractDAO {
         }
         return correcto;
     }
-    public Boolean salirControlBillete(String dni, String vuelo){
+
+    public Boolean salirControlBillete(String dni, String vuelo) {
         Connection con;
         PreparedStatement stmUsuario = null;
-        Boolean correcto=false;
+        Boolean correcto = false;
 
         con = super.getConexion();
 
@@ -520,11 +521,11 @@ public class daoVuelos extends AbstractDAO {
             stmUsuario = con.prepareStatement("update comprarbillete set pasarcontrol=false "
                     + "where usuario=? and vuelo=?");
 
-            stmUsuario.setString(1,dni);
-            stmUsuario.setString(2,vuelo);
+            stmUsuario.setString(1, dni);
+            stmUsuario.setString(2, vuelo);
 
-            if(stmUsuario.executeUpdate()>0){
-                correcto=true;
+            if (stmUsuario.executeUpdate() > 0) {
+                correcto = true;
             }
 
         } catch (SQLException e) {
@@ -541,25 +542,24 @@ public class daoVuelos extends AbstractDAO {
         return correcto;
     }
     
-    public Aerolinea obtenerDatosAerolinea(String num){
-        
+    public Aerolinea obtenerDatosAerolinea(String num) {
+
         Connection con;
         PreparedStatement stmVuelo = null;
         ResultSet rsVuelo;
-        Aerolinea result=null;
-
+        Aerolinea result = null;
 
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select pesobasemaleta,preciobasemaleta " +
-            "from vuelo v, avion av, aerolinea a " +
-            "where v.avion=av.codigo and av.aerolinea=a.nombre and numvuelo=?");
+            stmVuelo = con.prepareStatement("select pesobasemaleta,preciobasemaleta "
+                    + "from vuelo v, avion av, aerolinea a "
+                    + "where v.avion=av.codigo and av.aerolinea=a.nombre and numvuelo=?");
             stmVuelo.setString(1, num);
             rsVuelo = stmVuelo.executeQuery();
             if (rsVuelo.next()) {
-                result=new Aerolinea(null,rsVuelo.getFloat("preciobasemaleta"),rsVuelo.getFloat("pesobasemaleta"));
-            } 
+                result = new Aerolinea(null, rsVuelo.getFloat("preciobasemaleta"), rsVuelo.getFloat("pesobasemaleta"));
+            }
         } catch (SQLException e) {
             getFachadaAplicacion().mostrarError(e.getMessage());
         } finally {
@@ -571,30 +571,29 @@ public class daoVuelos extends AbstractDAO {
         }
         return result;
     }
-    
-    public Integer numeroMaletasDisponibles(String dni, String vuelo){
-        
+
+    public Integer numeroMaletasDisponibles(String dni, String vuelo) {
+
         Connection con;
         PreparedStatement stmVuelo = null;
         ResultSet rsVuelo;
-        Integer result=0;
-
+        Integer result = 0;
 
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select nummaletasreserva-numfact as malDisp " +
-                    "from (select nummaletasreserva from comprarbillete \n" +
-                    "where vuelo=? and usuario=?) r, " +
-                    "(select count(*) as numfact from facturarmaleta where vuelo=? and usuario=?) s");
+            stmVuelo = con.prepareStatement("select nummaletasreserva-numfact as malDisp "
+                    + "from (select nummaletasreserva from comprarbillete \n"
+                    + "where vuelo=? and usuario=?) r, "
+                    + "(select count(*) as numfact from facturarmaleta where vuelo=? and usuario=?) s");
             stmVuelo.setString(1, vuelo);
             stmVuelo.setString(2, dni);
             stmVuelo.setString(3, vuelo);
             stmVuelo.setString(4, dni);
             rsVuelo = stmVuelo.executeQuery();
             if (rsVuelo.next()) {
-                result=rsVuelo.getInt("malDisp");
-            } 
+                result = rsVuelo.getInt("malDisp");
+            }
         } catch (SQLException e) {
             getFachadaAplicacion().mostrarError(e.getMessage());
         } finally {
@@ -605,13 +604,13 @@ public class daoVuelos extends AbstractDAO {
             }
         }
         return result;
-        
+
     }
-    
-    public Boolean facturarMaleta(String dni, String vuelo, Float peso){
+
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso) {
         Connection con;
         PreparedStatement stmVuelo = null;
-        Boolean correcto=true;
+        Boolean correcto = true;
 
         con = super.getConexion();
 
@@ -620,28 +619,61 @@ public class daoVuelos extends AbstractDAO {
             stmVuelo = con.prepareStatement("insert into facturarmaleta (usuario,vuelo,peso)"
                     + " values (?,?,?)");
 
-            stmVuelo.setString(1,dni);
-            stmVuelo.setString(2,vuelo);
+            stmVuelo.setString(1, dni);
+            stmVuelo.setString(2, vuelo);
             stmVuelo.setFloat(3, peso);
-            
+
             stmVuelo.executeUpdate();
 
         } catch (SQLException e) {
-            if(!e.getMessage().contains("(usuario, vuelo)")){
+            if (!e.getMessage().contains("(usuario, vuelo)")) {
 
+                System.out.println(e.getMessage());
+                this.getFachadaAplicacion().mostrarError(e.getMessage());
+                correcto = false;
+
+            }
+        }
+        return correcto;
+    }
+
+    public List<String> obtenerAnhosViajados(String dni) {
+        List<String> anhos = new ArrayList<>();
+        Connection con;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+
+        con = this.getConexion();
+
+        try {
+            String consulta = "select distinct date_part('year',fechasalidateorica) as anhos\n"
+                    + "from vuelo\n"
+                    + "where numvuelo = (select vuelo\n"
+                    + "					from comprarbillete\n"
+                    + "					where usuario = '49204425L')\n"
+                    + "order by anhos desc";
+
+            stmVuelo = con.prepareStatement(consulta);
+            stmVuelo.setString(1, dni);
+
+            rsVuelo = stmVuelo.executeQuery();
+            while (rsVuelo.next()) {
+                Integer ano = rsVuelo.getInt("anhos");
+                anhos.add(ano.toString());
+            }
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
-            correcto=false;
-            }
-            correcto = false;
+
         } finally {
             try {
                 stmVuelo.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
-                correcto=false;
+
             }
         }
-        return correcto;
+        return anhos;
     }
+
 }

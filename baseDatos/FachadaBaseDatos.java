@@ -203,6 +203,7 @@ public class FachadaBaseDatos {
     public Boolean salirControlBillete(String dni, String vuelo){
         return daoVuelos.salirControlBillete(dni,vuelo);
     }
+<<<<<<< HEAD
     public Aerolinea obtenerDatosAerolinea(String vuelo){
         return daoVuelos.obtenerDatosAerolinea(vuelo);
     }
@@ -211,5 +212,10 @@ public class FachadaBaseDatos {
     }
     public Boolean facturarMaleta(String dni, String vuelo, Float peso){
         return daoVuelos.facturarMaleta(dni, vuelo, peso);
+=======
+    
+    public List<String> obtenerAnhosViajados(String dni){
+        return daoVuelos.obtenerAnhosViajados(dni);
+>>>>>>> Inicio correccion estadisticas
     }
 }

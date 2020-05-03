@@ -28,53 +28,62 @@ public class GestionVuelos {
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return fbd.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
-    
-    public List<Vuelo> obtenerVuelosUsuario(String dniUs){
+
+    public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
         return fbd.obtenerVuelosUsuario(dniUs);
     }
-    public void obtenerDatosAvionVuelo(Vuelo v){
-        
+
+    public void obtenerDatosAvionVuelo(Vuelo v) {
+
         fbd.obtenerDatosAvionVuelo(v);
     }
-    
-    public void obtenerAsientos(Vuelo vuelo){
+
+    public void obtenerAsientos(Vuelo vuelo) {
         fbd.obtenerAsientos(vuelo);
     }
-    
-    public Boolean comprarBilletes(ObservableList<Usuario> usuarios){
+
+    public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return fbd.comprarBilletes(usuarios);
     }
-    
-    public Boolean plazoDevolucion(String vuelo){
+
+    public Boolean plazoDevolucion(String vuelo) {
         return fbd.plazoDevolucion(vuelo);
     }
-    
+
     public Boolean vueloRealizado(String vuelo) {
         return fbd.vueloRealizado(vuelo);
     }
-    
-    public Boolean devolverBillete(String vuelo, String dni){
+
+    public Boolean devolverBillete(String vuelo, String dni) {
         return fbd.devolverBillete(vuelo, dni);
     }
-    
-    public List<Vuelo> verSalidas(){
+
+    public List<Vuelo> verSalidas() {
         return fbd.verSalidas();
     }
-    public List<Vuelo> verLlegadas(){
+
+    public List<Vuelo> verLlegadas() {
         return fbd.verLlegadas();
     }
-    public EstadisticasAerolinea obtenerEstAerolineas(String aer){
+
+    public EstadisticasAerolinea obtenerEstAerolineas(String aer) {
         return fbd.obtenerEstAerolineas(aer);
     }
-    public List<String> obtenerAerolineasConVuelos(){
+
+    public List<String> obtenerAerolineasConVuelos() {
         return fbd.obtenerAerolineasConVuelos();
     }
-    
-    public Boolean pasarControlBillete(String dni, String vuelo){
-        return fbd.pasarControlBillete(dni,vuelo);
+
+    public Boolean pasarControlBillete(String dni, String vuelo) {
+        return fbd.pasarControlBillete(dni, vuelo);
     }
-    public Boolean salirControlBillete(String dni, String vuelo){
-        return fbd.salirControlBillete(dni,vuelo);
+
+    public Boolean salirControlBillete(String dni, String vuelo) {
+        return fbd.salirControlBillete(dni, vuelo);
+    }
+
+    public List<String> obtenerAnhosViajados(String dni) {
+        return fbd.obtenerAnhosViajados(dni);
     }
     /*Los tres primeros argumentos son de entrada y el último de salida.
     La función devuelve si fue posible facturar la maleta*/

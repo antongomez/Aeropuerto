@@ -582,4 +582,32 @@ RADIO-BUTTON
     -fx-background-color: #757575;
 }
 
+/*
+
+    PROPIEDADES DOS TEXTFIELDS
+
+*/
+.text-area{
+    -fx-background-color: cor-bordes, derive(white, -80%);
+    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
+    -fx-background-radius: 0, 0;
+
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: derive(white, -20%);
+}
+
+.text-area:hover{
+    -fx-background-color: cor-accent, derive(white, -80%);
+    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
+    -fx-background-radius: 0, 0;
+}
+
+.text-area:focused{
+    -fx-background-color: cor-secundaria, derive(white, -80%);
+    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
+    -fx-background-radius: 0, 0;
+}
+
 

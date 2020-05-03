@@ -206,8 +206,15 @@ public class Modelo {
     public Boolean salirControlBillete(String dni, String vuelo){
         return fa.salirControlBillete(dni,vuelo);
     }
+<<<<<<< HEAD
     public Boolean facturarMaleta(String dni, String vuelo, Float peso, Float precioExtra){
         return fa.facturarMaleta(dni, vuelo, peso, precioExtra);
     }
     
+=======
+    
+     public List<String> obtenerAnhosViajados(String dni){
+        return fa.obtenerAnhosViajados(dni);
+    }
+>>>>>>> Inicio correccion estadisticas
 }

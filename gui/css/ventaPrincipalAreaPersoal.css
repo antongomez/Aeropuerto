@@ -1,4 +1,18 @@
-.enfasis{
+*{
+    -cor-secundaria: #efedb8;
+    -cor-bordes: lightgray;
+    -cor-accent: lightblue;
+    -cor-fondo: #1d1d1d;
+
+}
+
+.etqInfoEstadisticas{
     -fx-font-size: 13pt;
+    -fx-underline: true;
+    -fx-text-fill: -cor-accent;
+}
+
+#etqInfoEstadisticasGlobales{
+        -fx-text-fill: -cor-secundaria;
 }
 

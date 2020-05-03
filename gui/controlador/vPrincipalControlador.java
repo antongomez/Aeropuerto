@@ -206,13 +206,23 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private ComboBox<String> comboBoxEstUsu;
     @FXML
-    private Label etqAerolineaFav;
+    private Label etqAerolineaFavEspecifica;
     @FXML
-    private Label etqDestinoFav;
+    private Label etqDestinoFavEspecifico;
     @FXML
-    private Label etqTarifaFav;
+    private Label etqTarifaFavEspecifico;
     @FXML
     private TextArea txtAreaNumViajes;
+    @FXML
+    private Label etqInfoEstadisticasEspecificas;
+    @FXML
+    private Label etqInfoEstadisticasGlobales;
+    @FXML
+    private Label etqAerolineaFavGlobal;
+    @FXML
+    private Label etqDestinoFavGlobal;
+    @FXML
+    private Label etqTarifaFavGlobal;
 
     //Reservas
     @FXML
@@ -646,7 +656,59 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //Estadisticas
     @FXML
     private void accionAbrirEstadisticas(Event event) {
+        //Ao entrar poñemos as estatisticas dos anos e seleccionamos o mais recente
+        buscarAnos();
         mostrarEstadisticas();
+    }
+
+    private void buscarAnos() {
+        //Ao entrar poñemos as estatisticas dos anos e seleccionamos o mais recente
+        opVerVuelo.selectToggle(btnAno);
+        ObservableList<String> anhos = FXCollections.observableList(getInstanceModelo().obtenerAnhosViajados(usuario.getDni()));
+        comboBoxEstUsu.setItems(anhos);
+        if (!comboBoxEstUsu.getItems().isEmpty()) {
+            comboBoxEstUsu.getSelectionModel().selectFirst();
+        }
+        String ano = comboBoxEstUsu.getSelectionModel().getSelectedItem();
+        if (ano != null) {
+            etqInfoEstadisticasEspecificas.setText("Estadísticas del " + ano);
+        } else {
+            etqInfoEstadisticasEspecificas.setText("Estadísticas del 2020");
+        }
+    }
+
+    private void mostrarEstadisticas() {
+        String tipo;
+        Integer num;
+        EstadisticasUsuario estadisticasUsuario;
+
+        if (btnEstacion.isSelected()) {
+            tipo = "estacion";
+        } else if (btnMes.isSelected()) {
+            tipo = "mes";
+        } else {
+            tipo = "anho";
+        }
+        if (tipo.equals("anho")) {
+            num = parseInt(comboBoxEstUsu.getSelectionModel().getSelectedItem());
+        } else {
+            num = comboBoxEstUsu.getSelectionModel().getSelectedIndex() + 1;
+        }
+
+        estadisticasUsuario = Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
+        txtAreaNumViajes.setText("Has viajado " + estadisticasUsuario.getVecesViajadas()
+                + " veces en " + comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase() + "!");
+        etqAerolineaFavEspecifica.setText("");
+        etqDestinoFavEspecifico.setText("");
+        for (String aer : estadisticasUsuario.getAerolineasFav()) {
+            etqAerolineaFavEspecifica.setText(etqAerolineaFavEspecifica.getText() + "  " + aer);
+        }
+        for (String de : estadisticasUsuario.getDestinosFav()) {
+            etqDestinoFavEspecifico.setText(etqDestinoFavEspecifico.getText() + "  " + de);
+        }
+
+        etqTarifaFavEspecifico.setText("  " + estadisticasUsuario.getTarifaFav());
+
     }
 
     @FXML
@@ -665,60 +727,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     void accionAnho(ActionEvent event) {
-
-        ArrayList<String> anos = new ArrayList<>();
-        for (Vuelo v : Modelo.getInstanceModelo().obtenerVuelosUsuario(usuario.getDni())) {
-            String v_ano = v.getFechasalidaReal().getAno().toString();
-            if (!anos.contains(v_ano)) {
-                anos.add(v_ano);
-            }
-        }
-        ObservableList<String> anos1 = FXCollections.observableArrayList(anos);
-        comboBoxEstUsu.setItems(anos1);
-        if (!comboBoxEstUsu.getItems().isEmpty()) {
-            comboBoxEstUsu.getSelectionModel().selectFirst();
-        }
-
-    }
-
-    private void mostrarEstadisticas() {
-        String tipo;
-        Integer num;
-        EstadisticasUsuario est;
-
-        if (btnEstacion.isSelected()) {
-            tipo = "estacion";
-        } else if (btnMes.isSelected()) {
-            tipo = "mes";
-        } else {
-            tipo = "anho";
-        }
-        if (tipo.equals("anho")) {
-            num = parseInt(comboBoxEstUsu.getSelectionModel().getSelectedItem());
-        } else {
-            num = comboBoxEstUsu.getSelectionModel().getSelectedIndex() + 1;
-        }
-
-        est = Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
-        txtAreaNumViajes.setText("Has viajado " + est.getVecesViajadas()
-                + " veces en " + comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase() + "!");
-        etqAerolineaFav.setText("");
-        etqDestinoFav.setText("");
-        for (String aer : est.getAerolineasFav()) {
-            etqAerolineaFav.setText(etqAerolineaFav.getText() + "  " + aer);
-        }
-        for (String de : est.getDestinosFav()) {
-            etqDestinoFav.setText(etqDestinoFav.getText() + "  " + de);
-        }
-
-        etqTarifaFav.setText("  " + est.getTarifaFav());
-
+        buscarAnos();
     }
 
     @FXML
     private void accionComboBox(ActionEvent event) {
-
-        if (!comboBoxEstUsu.getSelectionModel().isEmpty()) {
+        if (comboBoxEstUsu.getSelectionModel().getSelectedItem() != null) {
             mostrarEstadisticas();
         }
     }

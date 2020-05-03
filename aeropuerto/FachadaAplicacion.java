@@ -96,18 +96,22 @@ public class FachadaAplicacion extends Application {
     public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num) {
         return gu.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
+
     /*Estas cuatro funciones devuelven false si no se encontró el usuario o el vuelo indicados*/
-    public Boolean pasarControlPersExt(String dni){
+    public Boolean pasarControlPersExt(String dni) {
         return gu.pasarControlPersExt(dni);
     }
-    public Boolean salirControlPersExt(String dni){
+
+    public Boolean salirControlPersExt(String dni) {
         return gu.salirControlPersExt(dni);
     }
-    public Boolean pasarControlBillete(String dni, String vuelo){
-        return gv.pasarControlBillete(dni,vuelo);
+
+    public Boolean pasarControlBillete(String dni, String vuelo) {
+        return gv.pasarControlBillete(dni, vuelo);
     }
-    public Boolean salirControlBillete(String dni, String vuelo){
-        return gv.salirControlBillete(dni,vuelo);
+
+    public Boolean salirControlBillete(String dni, String vuelo) {
+        return gv.salirControlBillete(dni, vuelo);
     }
 
     //Vuelos
@@ -146,8 +150,9 @@ public class FachadaAplicacion extends Application {
     public EstadisticasAerolinea obtenerEstAerolineas(String aer) {
         return gv.obtenerEstAerolineas(aer);
     }
+
     //Devuelve la lista de aerolineas que ya han realizado algún vuelo
-    public List<String> obtenerAerolineasConVuelos(){
+    public List<String> obtenerAerolineasConVuelos() {
         return gv.obtenerAerolineasConVuelos();
     }
 
@@ -172,16 +177,16 @@ public class FachadaAplicacion extends Application {
     public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return gv.comprarBilletes(usuarios);
     }
-    
-    public Boolean plazoDevolucion(String vuelo){
+
+    public Boolean plazoDevolucion(String vuelo) {
         return gv.plazoDevolucion(vuelo);
     }
-    
+
     public Boolean vueloRealizado(String vuelo) {
         return gv.vueloRealizado(vuelo);
     }
-    
-    public Boolean devolverBillete(String vuelo, String dni){
+
+    public Boolean devolverBillete(String vuelo, String dni) {
         return gv.devolverBillete(vuelo, dni);
     }
 
@@ -211,6 +216,10 @@ public class FachadaAplicacion extends Application {
 
     public Boolean reservarParking(Reserva reserva, String dniUsuario) {
         return gr.reservarParking(reserva, dniUsuario);
+    }
+
+    public List<String> obtenerAnhosViajados(String dni) {
+        return gv.obtenerAnhosViajados(dni);
     }
 
 }
