@@ -18,4 +18,13 @@
     -fx-background-color: derive(white, -90%);
 }
 
+#etqFLC {
+    -fx-text-fill: #efedb8;
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+}
+
+#boxTitulo{
+    -fx-background-color: black;
+}
 
