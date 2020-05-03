@@ -32,6 +32,7 @@
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="140.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="12.0" prefWidth="15.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -40,6 +41,7 @@
                               <Label text="DNI:" />
                               <TextField fx:id="textFieldDNI" maxWidth="160.0" prefHeight="160.0" GridPane.columnIndex="1" />
                               <Button fx:id="btnAnhadir" mnemonicParsing="false" onAction="#anhadirPasajero" text="Añadir" GridPane.columnIndex="3" />
+                              <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminarPasajero" text="Eliminar" GridPane.columnIndex="4" />
                            </children>
                         </GridPane>
                         <HBox fillHeight="false" minWidth="-Infinity" spacing="20.0">
