@@ -393,6 +393,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         dataPickLlegada.setValue(LocalDate.now());
         dataPickSalida.setValue(LocalDate.now());
 
+        //Area Persoal Modificar Datos
+        ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia", "Noruega", "Galicia");
+        comboBoxPais.setItems(opcionesPais);
+        ObservableList<String> opcionesSexo = FXCollections.observableArrayList("Mujer", "Hombre", "Prefiero no contestar");
+        comboBoxSexo.setItems(opcionesSexo);
+
         //Definimos el tipo de dato de cada columna de la TablaMisVuelos
         columnaNumMiVuelo.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
         columnaOrigenMiVuelo.setCellValueFactory(new PropertyValueFactory<>("origen"));
@@ -433,6 +439,15 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         comboBoxEstAer.setItems(aerolineas);
         comboBoxEstAer.getSelectionModel().selectFirst();
 
+        //Servicios, taboa Coches
+        columnaMatriculaCoche.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        columnaModeloCoche.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        columnaPlazasCoche.setCellValueFactory(new PropertyValueFactory<>("nPrazas"));
+        columnaPuertasCoche.setCellValueFactory(new PropertyValueFactory<>("nPuertas"));
+        columnaCombustibleCoche.setCellValueFactory(new PropertyValueFactory<>("tipoCombustible"));
+        columnaCaballosCoche.setCellValueFactory(new PropertyValueFactory<>("caballos"));
+        columnaPrecioDiaCoche.setCellValueFactory(new PropertyValueFactory<>("precioDia"));
+
     }
 
     public void setUsuario(Usuario usuario) {
@@ -451,8 +466,86 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnVuelos(ActionEvent event) {
         panelVuelos.toFront();
         etqTitulo.setText(TITULO_VUELOS);
+        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
+                getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
+        tablaProximosVuelos.setItems(vuelos);
+        //Engadimos a data actual nos datePickers
+        dataPickLlegada.setValue(LocalDate.now());
+        dataPickSalida.setValue(LocalDate.now());
+
+        btnComprar.setDisable(true);
+        btnComprar.toFront();
     }
 
+    @FXML
+    private void accionBtnBuscar(ActionEvent event) {
+        Time salida, llegada;
+
+        if (dataPickSalida.getValue() != null) {
+            salida = new Time(dataPickSalida.getValue());
+        } else {
+            salida = Time.diaActual();
+        }
+        if (dataPickLlegada.getValue() != null) {
+            llegada = new Time(dataPickLlegada.getValue());
+        } else {
+            llegada = Time.diaActual();
+        }
+
+        if (((salida != null) && (!Time.fechaMayorIgualActual(salida)))
+                || ((llegada != null) && (!Time.fechaMayorIgualActual(llegada)))) {
+            getInstanceModelo().mostrarError("Las fechas de salida y llegada deben "
+                    + "ser mayores que la fecha actual", getVenta());
+        } else {
+
+            ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
+                    getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(),
+                            txtDestino.getText(), salida, llegada));
+            tablaProximosVuelos.setItems(vuelos);
+        }
+
+    }
+
+    @FXML
+    private void seleccionarVuelo(MouseEvent event) {
+        Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
+        if (vueloSelect != null) {
+            if (Modelo.getInstanceModelo().obtenerVuelosUsuario(usuario.getDni()).contains(vueloSelect)) {
+                btnComprar.setDisable(true);
+                btnComprar.setVisible(false);
+                btnDevolver.toFront();
+                btnDevolver.setVisible(true);
+                btnDevolver.setDisable(false);
+            } else {
+                btnComprar.setDisable(false);
+                btnComprar.setVisible(true);
+                btnComprar.toFront();
+                btnDevolver.setVisible(false);
+                btnDevolver.setDisable(true);
+            }
+        }
+    }
+
+    @FXML
+    private void accionBtnComprar(ActionEvent event) {
+        //Creamos unha venta filla da princiapl
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.initOwner(getVenta());
+        //Seleccionamos o voo que se vai comprar
+        Vuelo vuelo = tablaProximosVuelos.getSelectionModel().getSelectedItem();
+        vComprarControlador controlador = ((vComprarControlador) loadWindow(getClass().getResource("/gui/vista/vComprar.fxml"), "Folgoso do Courel", stage));
+        controlador.inicializarVComprar(vuelo, usuario);
+        btnComprar.setDisable(true);
+
+    }
+
+    /*
+    
+    
+        AREA PERSONAL
+    
+    
+     */
     @FXML
     private void accionBtnAreaP(ActionEvent event) {
         panelAreaP.toFront();
@@ -465,6 +558,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldNombre.setText(usuario.getNombre());
         textFieldAp1.setText(usuario.getAp1());
         textFieldAp2.setText(usuario.getAp2());
+        textFieldContrasenha.setText("");
+        textFieldRepetirContrasenha.setText("");
         textFieldTlf.setText(usuario.getTelefono().toString());
         if (usuario instanceof Administrador) {
             textFieldFIngreso.setText(((Administrador) usuario).getFechaInicio().toString());
@@ -478,16 +573,227 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             paneCurriculum.setVisible(false);
         }
 
-        ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia", "Noruega", "Galicia");
-        comboBoxPais.setItems(opcionesPais);
         comboBoxPais.getSelectionModel().select(usuario.getPaisProcedencia());
-
-        ObservableList<String> opcionesSexo = FXCollections.observableArrayList("Mujer", "Hombre", "Prefiero no contestar");
-        comboBoxSexo.setItems(opcionesSexo);
         comboBoxSexo.getSelectionModel().select(usuario.getSexo());
-        
+
         vuelosUsuario = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosUsuario(usuario.getDni()));
         tablaMisVuelos.setItems(vuelosUsuario);
+    }
+
+    //MODIFICAR DATOS
+    @FXML
+    private void accionAbrirModificarDatos(Event event) {
+        textFieldContrasenha.setText("");
+        textFieldRepetirContrasenha.setText("");
+    }
+
+    @FXML
+    private void accionBtnDarseBaja(ActionEvent event) {
+        if (Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true) {
+            Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente", getVenta());
+        }
+        super.getVenta().close();
+    }
+
+    @FXML
+    private void accionBtnGuardar(ActionEvent event) {
+        if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
+            Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
+        } else {
+            Usuario us;
+            if (usuario instanceof Administrador) {
+                us = new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
+                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem(), txtAreaCurriculum.getText());
+            } else {
+                us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
+                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
+            }
+
+            try {
+                if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
+                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente", getVenta());
+                    //No cambiamos los datos del usuario asociado a esta clase hasta que se cambien en la base
+                    usuario.setId(us.getId());
+                    usuario.setEmail(us.getEmail());
+                    usuario.setNombre(us.getNombre());
+                    usuario.setAp1(us.getAp1());
+                    usuario.setAp2(us.getAp2());
+                    usuario.setPaisProcedencia(us.getPaisProcedencia());
+                    usuario.setTelefono(us.getTelefono());
+                    usuario.setSexo(us.getSexo());
+                    if (usuario instanceof Administrador) {
+                        ((Administrador) usuario).setCurriculum(((Administrador) us).getCurriculum());
+                    }
+                }
+                //Este error no llega aquí, el programa se para
+            } catch (NumberFormatException e) {
+                Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
+            }
+            if (!textFieldContrasenha.getText().isEmpty()) {
+                Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
+            }
+        }
+        textFieldContrasenha.setText("");
+        textFieldRepetirContrasenha.setText("");
+    }
+
+    //MisVuelos
+    @FXML
+    private void accionAbrirMisVuelos(Event event) {
+    }
+
+    //Estadisticas
+    @FXML
+    private void accionAbrirEstadisticas(Event event) {
+        mostrarEstadisticas();
+    }
+
+    @FXML
+    void accionEstacion(ActionEvent event) {
+        ObservableList<String> estaciones = FXCollections.observableArrayList("Primavera", "Verano", "Otoño", "Invierno");
+        comboBoxEstUsu.setItems(estaciones);
+        comboBoxEstUsu.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    void accionMes(ActionEvent event) {
+        ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+        comboBoxEstUsu.setItems(meses);
+        comboBoxEstUsu.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    void accionAnho(ActionEvent event) {
+
+        ArrayList<String> anos = new ArrayList<>();
+        for (Vuelo v : Modelo.getInstanceModelo().obtenerVuelosUsuario(usuario.getDni())) {
+            String v_ano = v.getFechasalidaReal().getAno().toString();
+            if (!anos.contains(v_ano)) {
+                anos.add(v_ano);
+            }
+        }
+        ObservableList<String> anos1 = FXCollections.observableArrayList(anos);
+        comboBoxEstUsu.setItems(anos1);
+        if (!comboBoxEstUsu.getItems().isEmpty()) {
+            comboBoxEstUsu.getSelectionModel().selectFirst();
+        }
+
+    }
+
+    private void mostrarEstadisticas() {
+        String tipo;
+        Integer num;
+        EstadisticasUsuario est;
+
+        if (btnEstacion.isSelected()) {
+            tipo = "estacion";
+        } else if (btnMes.isSelected()) {
+            tipo = "mes";
+        } else {
+            tipo = "anho";
+        }
+        if (tipo.equals("anho")) {
+            num = parseInt(comboBoxEstUsu.getSelectionModel().getSelectedItem());
+        } else {
+            num = comboBoxEstUsu.getSelectionModel().getSelectedIndex() + 1;
+        }
+
+        est = Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
+        txtAreaNumViajes.setText("Has viajado " + est.getVecesViajadas()
+                + " veces en " + comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase() + "!");
+        etqAerolineaFav.setText("");
+        etqDestinoFav.setText("");
+        for (String aer : est.getAerolineasFav()) {
+            etqAerolineaFav.setText(etqAerolineaFav.getText() + "  " + aer);
+        }
+        for (String de : est.getDestinosFav()) {
+            etqDestinoFav.setText(etqDestinoFav.getText() + "  " + de);
+        }
+
+        etqTarifaFav.setText("  " + est.getTarifaFav());
+
+    }
+
+    @FXML
+    private void accionComboBox(ActionEvent event) {
+
+        if (!comboBoxEstUsu.getSelectionModel().isEmpty()) {
+            mostrarEstadisticas();
+        }
+    }
+
+    @FXML
+    private void cambiarAerolinea(ActionEvent event) {
+        accionCalculoEstAerolinea();
+    }
+
+    @FXML
+    private void abrirPestanaEstAerolineas(Event event) {
+
+        comboBoxEstAer.getSelectionModel().selectFirst();
+        accionCalculoEstAerolinea();
+    }
+
+    private void accionCalculoEstAerolinea() {
+        EstadisticasAerolinea est = getInstanceModelo().obtenerEstadisticasAerolinea(comboBoxEstAer.getSelectionModel().getSelectedItem());
+        txtFieldVuelosRetraso.setText((float) (Math.round((est.getPorcVuelosRetraso() * 1.2f) * 100d) / 100d) + "%");
+        txtFieldOcNormal.setText((float) (Math.round((est.getPorcOcupNormal() * 1.2f) * 100d) / 100d) + "%");
+        txtFieldOcPremium.setText((float) (Math.round((est.getPorcOcupPremium() * 1.2f) * 100d) / 100d) + "%");
+        txtFieldTiempoRetraso.setText(est.getTiempoMedioRetraso());
+        txtFieldPesoMaleta.setText(est.getAerolinea().getPesoBaseMaleta().toString());
+        txtFieldPrecioMaleta.setText(est.getAerolinea().getPrecioBaseMaleta().toString());
+        txtFieldPaisSede.setText(est.getAerolinea().getPais());
+        txtFieldPlazasAvion.setText((float) (Math.round((est.getPlazasMediasAvion() * 1.2f) * 100d) / 100d) + "");
+        txtFieldAnoAvion.setText((float) (Math.round((est.getAnoFabricMedioAvion() * 1.2f) * 100d) / 100d) + "");
+        String paises = "";
+        for (String pais : est.getNacionalidadPred()) {
+            paises += pais + "  ";
+        }
+        txtFieldNacionalidad.setText(paises);
+    }
+
+    //Reservas
+    @FXML
+    private void accionAbrirMisReservas(Event event) {
+        ObservableList<Reserva> res = FXCollections.observableArrayList(
+                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
+        tablaMisReservas.setItems(res);
+
+    }
+
+    @FXML
+    private void accionBtnCancelarReserva(ActionEvent event) {
+        Reserva resSelect = tablaMisReservas.getSelectionModel().getSelectedItem();
+        Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
+
+        btnCancelarReserva.setDisable(true);
+        panelInfoParking.setVisible(false);
+        ObservableList<Reserva> res = FXCollections.observableArrayList(
+                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
+        tablaMisReservas.setItems(res);
+        Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
+                + "con éxito", getVenta());
+
+    }
+
+    @FXML
+    private void seleccionarReserva(MouseEvent event) {
+        Reserva resSelect = tablaMisReservas.getSelectionModel().getSelectedItem();
+        if (resSelect != null) {
+            btnCancelarReserva.setDisable(false);
+            if (resSelect.getTipo().equals("Parking")) {
+                panelInfoParking.setVisible(true);
+                etqTerminal.setText(resSelect.getTerminal().toString());
+                etqPiso.setText(resSelect.getPiso().toString());
+                etqPlaza.setText(resSelect.getNumPlaza().toString());
+            } else {
+                panelInfoParking.setVisible(false);
+            }
+        } else {
+            panelInfoParking.setVisible(false);
+        }
     }
 
     /*
@@ -827,15 +1133,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             numPrazas = null;
         }
         ObservableList<Coche> coches = FXCollections.observableList(getInstanceModelo().buscarCoches(llegada, salida, numPrazas));
-
-        columnaMatriculaCoche.setCellValueFactory(new PropertyValueFactory<>("matricula"));
-        columnaModeloCoche.setCellValueFactory(new PropertyValueFactory<>("modelo"));
-        columnaPlazasCoche.setCellValueFactory(new PropertyValueFactory<>("nPrazas"));
-        columnaPuertasCoche.setCellValueFactory(new PropertyValueFactory<>("nPuertas"));
-        columnaCombustibleCoche.setCellValueFactory(new PropertyValueFactory<>("tipoCombustible"));
-        columnaCaballosCoche.setCellValueFactory(new PropertyValueFactory<>("caballos"));
-        columnaPrecioDiaCoche.setCellValueFactory(new PropertyValueFactory<>("precioDia"));
-
         taboaReservarCoche.setItems(coches);
     }
 
@@ -935,273 +1232,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         tablaSalidasLlegadas.setItems(llegadas);
     }
 
-    //Estadísticas aerolínea
-    @FXML
-    private void cambiarAerolinea(ActionEvent event) {
-        accionCalculoEstAerolinea();
-    }
-
-    @FXML
-    private void abrirPestanaEstAerolineas(Event event) {
-
-        comboBoxEstAer.getSelectionModel().selectFirst();
-        accionCalculoEstAerolinea();
-    }
-
-    private void accionCalculoEstAerolinea() {
-        EstadisticasAerolinea est = getInstanceModelo().obtenerEstadisticasAerolinea(comboBoxEstAer.getSelectionModel().getSelectedItem());
-        txtFieldVuelosRetraso.setText((float) (Math.round((est.getPorcVuelosRetraso() * 1.2f) * 100d) / 100d) + "%");
-        txtFieldOcNormal.setText((float) (Math.round((est.getPorcOcupNormal() * 1.2f) * 100d) / 100d) + "%");
-        txtFieldOcPremium.setText((float) (Math.round((est.getPorcOcupPremium() * 1.2f) * 100d) / 100d) + "%");
-        txtFieldTiempoRetraso.setText(est.getTiempoMedioRetraso());
-        txtFieldPesoMaleta.setText(est.getAerolinea().getPesoBaseMaleta().toString());
-        txtFieldPrecioMaleta.setText(est.getAerolinea().getPrecioBaseMaleta().toString());
-        txtFieldPaisSede.setText(est.getAerolinea().getPais());
-        txtFieldPlazasAvion.setText((float) (Math.round((est.getPlazasMediasAvion() * 1.2f) * 100d) / 100d) + "");
-        txtFieldAnoAvion.setText((float) (Math.round((est.getAnoFabricMedioAvion() * 1.2f) * 100d) / 100d) + "");
-        String paises = "";
-        for (String pais : est.getNacionalidadPred()) {
-            paises += pais + "  ";
-        }
-        txtFieldNacionalidad.setText(paises);
-    }
-
-    @FXML
-    private void accionBtnBuscar(ActionEvent event) {
-        Time salida, llegada;
-
-        if (dataPickSalida.getValue() != null) {
-            salida = new Time(dataPickSalida.getValue());
-        } else {
-            salida = Time.diaActual();
-        }
-        if (dataPickLlegada.getValue() != null) {
-            llegada = new Time(dataPickLlegada.getValue());
-        } else {
-            llegada = Time.diaActual();
-        }
-
-        if (((salida != null) && (!Time.fechaMayorIgualActual(salida)))
-                || ((llegada != null) && (!Time.fechaMayorIgualActual(llegada)))) {
-            getInstanceModelo().mostrarError("Las fechas de salida y llegada deben "
-                    + "ser mayores que la fecha actual", getVenta());
-        } else {
-
-            ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
-                    getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(),
-                            txtDestino.getText(), salida, llegada));
-
-            tablaProximosVuelos.setItems(vuelos);
-        }
-
-    }
-
-    @FXML
-    private void accionBtnComprar(ActionEvent event) {
-        //Creamos unha venta filla da princiapl
-        Stage stage = new Stage(StageStyle.DECORATED);
-        stage.initOwner(getVenta());
-        //Seleccionamos o voo que se vai comprar
-        Vuelo vuelo = tablaProximosVuelos.getSelectionModel().getSelectedItem();
-        vComprarControlador controlador = ((vComprarControlador) loadWindow(getClass().getResource("/gui/vista/vComprar.fxml"), "AeroETSE", stage));
-        controlador.inicializarVComprar(vuelo, usuario);
-        btnComprar.setDisable(true);
-
-    }
-
-    @FXML
-    private void accionBtnDarseBaja(ActionEvent event) {
-        if (Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true) {
-            Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente", getVenta());
-        }
-        super.getVenta().close();
-    }
-
-    @FXML
-    private void accionBtnGuardar(ActionEvent event) {
-        if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
-            Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
-        } else {
-            Usuario us;
-            if (usuario instanceof Administrador) {
-                us = new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
-                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem(), txtAreaCurriculum.getText());
-            } else {
-                us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
-                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
-            }
-
-            try {
-                if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
-                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente", getVenta());
-                    //No cambiamos los datos del usuario asociado a esta clase hasta que se cambien en la base
-                    usuario.setId(us.getId());
-                    usuario.setEmail(us.getEmail());
-                    usuario.setNombre(us.getNombre());
-                    usuario.setAp1(us.getAp1());
-                    usuario.setAp2(us.getAp2());
-                    usuario.setPaisProcedencia(us.getPaisProcedencia());
-                    usuario.setTelefono(us.getTelefono());
-                    usuario.setSexo(us.getSexo());
-                    if (usuario instanceof Administrador) {
-                        ((Administrador) usuario).setCurriculum(((Administrador) us).getCurriculum());
-                    }
-                }
-                //Este error no llega aquí, el programa se para
-            } catch (NumberFormatException e) {
-                Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
-            }
-            if (!textFieldContrasenha.getText().isEmpty()) {
-                Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
-            }
-        }
-    }
-
-    @FXML
-    void accionEstacion(ActionEvent event) {
-        //comboBoxEstUsu.setVisible(true);
-        ObservableList<String> estaciones = FXCollections.observableArrayList("Primavera", "Verano", "Otoño", "Invierno");
-        comboBoxEstUsu.setItems(estaciones);
-        comboBoxEstUsu.getSelectionModel().selectFirst();
-    }
-
-    @FXML
-    void accionMes(ActionEvent event) {
-        //comboBoxEstUsu.setVisible(true);
-        ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-        comboBoxEstUsu.setItems(meses);
-        comboBoxEstUsu.getSelectionModel().selectFirst();
-    }
-
-    @FXML
-    void accionAnho(ActionEvent event) {
-
-        ArrayList<String> anos = new ArrayList<>();
-        for (Vuelo v : Modelo.getInstanceModelo().obtenerVuelosUsuario(usuario.getDni())) {
-            String v_ano = v.getFechasalidaReal().getAno().toString();
-            if (!anos.contains(v_ano)) {
-                anos.add(v_ano);
-            }
-        }
-        ObservableList<String> anos1 = FXCollections.observableArrayList(anos);
-        comboBoxEstUsu.setItems(anos1);
-        if (!comboBoxEstUsu.getItems().isEmpty()) {
-            comboBoxEstUsu.getSelectionModel().selectFirst();
-        }
-
-    }
-
-    private void mostrarEstadisticas() {
-        String tipo;
-        Integer num;
-        EstadisticasUsuario est;
-
-        if (btnEstacion.isSelected()) {
-            tipo = "estacion";
-        } else if (btnMes.isSelected()) {
-            tipo = "mes";
-        } else {
-            tipo = "anho";
-        }
-        if (tipo.equals("anho")) {
-            num = parseInt(comboBoxEstUsu.getSelectionModel().getSelectedItem());
-        } else {
-            num = comboBoxEstUsu.getSelectionModel().getSelectedIndex() + 1;
-        }
-
-        est = Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
-        txtAreaNumViajes.setText("Has viajado " + est.getVecesViajadas()
-                + " veces en " + comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase() + "!");
-        etqAerolineaFav.setText("");
-        etqDestinoFav.setText("");
-        for (String aer : est.getAerolineasFav()) {
-            etqAerolineaFav.setText(etqAerolineaFav.getText() + "  " + aer);
-        }
-        for (String de : est.getDestinosFav()) {
-            etqDestinoFav.setText(etqDestinoFav.getText() + "  " + de);
-        }
-
-        etqTarifaFav.setText("  " + est.getTarifaFav());
-
-    }
-
-    @FXML
-    private void accionAbrirEstadisticas(Event event) {
-        mostrarEstadisticas();
-    }
-
-    @FXML
-    private void accionComboBox(ActionEvent event) {
-
-        if (!comboBoxEstUsu.getSelectionModel().isEmpty()) {
-            mostrarEstadisticas();
-        }
-    }
-
-    @FXML
-    private void accionAbrirMisReservas(Event event) {
-        ObservableList<Reserva> res = FXCollections.observableArrayList(
-                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
-        tablaMisReservas.setItems(res);
-
-    }
-
-    @FXML
-    private void accionBtnCancelarReserva(ActionEvent event) {
-        Reserva resSelect = tablaMisReservas.getSelectionModel().getSelectedItem();
-        Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
-
-        btnCancelarReserva.setDisable(true);
-        panelInfoParking.setVisible(false);
-        ObservableList<Reserva> res = FXCollections.observableArrayList(
-                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
-        tablaMisReservas.setItems(res);
-        Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
-                + "con éxito", getVenta());
-
-    }
-
-    @FXML
-    private void seleccionarVuelo(MouseEvent event) {
-        Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
-        if (vueloSelect != null) {
-            if (Modelo.getInstanceModelo().obtenerVuelosUsuario(usuario.getDni()).contains(vueloSelect)) {
-                btnComprar.setDisable(true);
-                btnComprar.setVisible(false);
-                btnDevolver.toFront();
-                btnDevolver.setVisible(true);
-                btnDevolver.setDisable(false);
-            } else {
-                btnComprar.setDisable(false);
-                btnComprar.setVisible(true);
-                btnComprar.toFront();
-                btnDevolver.setVisible(false);
-                btnDevolver.setDisable(true);
-            }
-        }
-    }
-
-    @FXML
-    private void seleccionarReserva(MouseEvent event) {
-        Reserva resSelect = tablaMisReservas.getSelectionModel().getSelectedItem();//reserva seleccionada
-        if (resSelect != null) {
-            btnCancelarReserva.setDisable(false);
-            if (resSelect.getTipo().equals("Parking")) {
-                panelInfoParking.setVisible(true);
-                etqTerminal.setText(resSelect.getTerminal().toString());
-                etqPiso.setText(resSelect.getPiso().toString());
-                etqPlaza.setText(resSelect.getNumPlaza().toString());
-            } else {
-                panelInfoParking.setVisible(false);
-            }
-        } else {
-            panelInfoParking.setVisible(false);
-        }
-    }
-
-    /*Personal laboral*/
+    /*
+    
+        PERSONAL LABORAL
+    
+     */
     @FXML
     private void accionBtnPersonal(ActionEvent event) {
         if (usuario instanceof PersonalLaboral) {
@@ -1282,10 +1317,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void seleccionarMiVuelo(MouseEvent event) {
         Vuelo vueloSelect = tablaMisVuelos.getSelectionModel().getSelectedItem();
         if (vueloSelect != null) {
-            if (Modelo.getInstanceModelo().vueloRealizado(vueloSelect.getNumVuelo())){
+            if (Modelo.getInstanceModelo().vueloRealizado(vueloSelect.getNumVuelo())) {
                 btnCancelar.setDisable(true);
-            }
-            else{
+            } else {
                 btnCancelar.setDisable(false);
             }
         }

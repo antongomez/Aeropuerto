@@ -55,7 +55,7 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
         comboBoxSexo.getSelectionModel().selectFirst();
 
         //muestra representativa de países
-        ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia");
+        ObservableList<String> opcionesPais = FXCollections.observableArrayList("Espanha", "Galicia", "Portugal", "Alemania", "Francia", "Marruecos", "Etiopia", "Estados Unidos", "Colombia", "China", "Rusia", "Australia");
         comboBoxPais.setItems(opcionesPais);
         comboBoxPais.getSelectionModel().selectFirst();
 

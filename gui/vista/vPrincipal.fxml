@@ -496,7 +496,7 @@
             </AnchorPane>
             <TabPane fx:id="panelAreaP" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
                <tabs>
-                  <Tab text="Modificar datos">
+                  <Tab onSelectionChanged="#accionAbrirModificarDatos" text="Modificar datos">
                      <content>
                         <AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background">
                            <children>
@@ -560,7 +560,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Mis de vuelos">
+                  <Tab onSelectionChanged="#accionAbrirMisVuelos" text="Mis de vuelos">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
                            <children>
