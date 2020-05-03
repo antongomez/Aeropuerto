@@ -68,6 +68,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     private Usuario usuario;//usuario que está usando la ventana
     private Parking parking;//parking a reservar
+    private ObservableList<Vuelo> vuelosUsuario;//Vuelos usuario
 
     //Encabezado
     @FXML
@@ -484,8 +485,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<String> opcionesSexo = FXCollections.observableArrayList("Mujer", "Hombre", "Prefiero no contestar");
         comboBoxSexo.setItems(opcionesSexo);
         comboBoxSexo.getSelectionModel().select(usuario.getSexo());
-
-        ObservableList<Vuelo> vuelosUsuario = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosUsuario("48116361Q"));
+        
+        vuelosUsuario = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosUsuario(usuario.getDni()));
         tablaMisVuelos.setItems(vuelosUsuario);
     }
 
@@ -1258,10 +1259,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void cancelarViaje(ActionEvent event) {
-        Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
+        Vuelo vueloSelect = tablaMisVuelos.getSelectionModel().getSelectedItem();
         if (vueloSelect != null) {
             //if(Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo())){
             if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
+                vuelosUsuario.remove(vueloSelect);
                 Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
             } else {
                 Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
