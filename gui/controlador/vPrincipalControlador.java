@@ -1231,4 +1231,44 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
     }
 
+    @FXML
+    private void accionBtnControl(ActionEvent event) {
+        //Creamos unha venta filla da princiapl
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.initOwner(getVenta());
+        //Seleccionamos o voo que se vai comprar
+        
+        VControlController controlador = ((VControlController) loadWindow(getClass().getResource("/gui/vista/vControl.fxml"), "AeroETSE", stage));
+        controlador.setTrabajador((PersonalLaboral)usuario);
+    }
+
+    @FXML
+    private void accionBtnEntrarSalir(ActionEvent event) {
+    }
+
+    @FXML
+    private void accionBtnTarea(ActionEvent event) {
+    }
+
+    @FXML
+    private void accionBtnCoches(ActionEvent event) {
+    }
+
+    @FXML
+    private void accionBtnMaletas(ActionEvent event) {
+        
+        //Creamos unha venta filla da princiapl
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.initOwner(getVenta());
+        //Seleccionamos o voo que se vai comprar
+        
+        VMaletaController controlador = ((VMaletaController) loadWindow(getClass().getResource("/gui/vista/vMaleta.fxml"), "AeroETSE", stage));
+        controlador.setTrabajador((PersonalLaboral)usuario);
+        
+    }
+
+    @FXML
+    private void accionBtnHistorial(ActionEvent event) {
+    }
+
 }

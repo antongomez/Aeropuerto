@@ -5,6 +5,7 @@
  */
 package gui.controlador;
 
+import aeropuerto.elementos.PersonalLaboral;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -19,8 +20,10 @@ import javafx.scene.control.TextField;
  *
  * @author Esther
  */
-public class VControlController implements Initializable {
+public class VControlController extends Controlador implements Initializable {
 
+    private PersonalLaboral trabajador;
+    
     @FXML
     private Label etqNumVuelo;
     @FXML
@@ -39,5 +42,7 @@ public class VControlController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
+    public void setTrabajador(PersonalLaboral trab){
+        this.trabajador=trab;
+    }
 }
