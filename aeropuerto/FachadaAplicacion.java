@@ -153,6 +153,14 @@ public class FachadaAplicacion extends Application {
     public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return gv.comprarBilletes(usuarios);
     }
+    
+    public Boolean plazoDevolución(String vuelo){
+        return gv.plazoDevolución(vuelo);
+    }
+    
+    public Boolean devolverBillete(String vuelo, String dni){
+        return gv.devolverBillete(vuelo, dni);
+    }
 
     public List<Integer> buscarTerminais() {
         return gp.buscarTerminais();

@@ -128,6 +128,14 @@ public class FachadaBaseDatos {
     public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return daoVuelos.comprarBilletes(usuarios);
     }
+    
+    public Boolean plazoDevolución(String vuelo){
+        return daoVuelos.plazoDevolución(vuelo);
+    }
+    
+    public Boolean devolverBillete(String vuelo, String dni){
+        return daoVuelos.devolverBillete(vuelo, dni);
+    }
 
     public Usuario obtenerUsuario(String dni) {
         return daoUsuarios.obtenerUsuario(dni);

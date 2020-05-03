@@ -76,7 +76,6 @@ public class Vuelo {
     }
 
     /*Constructor para tabla salidas-llegadas*/
-
     public Vuelo(String numVuelo, String origen, String destino, Timestamp fechaSalidaReal, Timestamp fechaLlegadaReal, Integer puertaEmbarque, Boolean cancelado, Integer terminal, String retraso) {
         this.numVuelo = numVuelo;
         this.origen = origen;
@@ -275,6 +274,15 @@ public class Vuelo {
         }
 
         return estado;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Vuelo) {
+            return (((Vuelo) obj).getNumVuelo().equals(this.numVuelo));
+        } else {
+            return super.equals(obj);
+        }
     }
 
 }

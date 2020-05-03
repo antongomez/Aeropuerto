@@ -203,10 +203,10 @@ public class daoVuelos extends AbstractDAO {
                 v.setPlazasPremium(rsVuelo.getInt("plazasRestantesPremium"));
                 v.getAvion().setAsientosNormales(rsVuelo.getInt("plazasNormal"));
                 v.getAvion().setAsientosPremium(rsVuelo.getInt("plazasPremium"));
-                for(int i=1; i<=rsVuelo.getInt("plazasNormal"); i++){
+                for (int i = 1; i <= rsVuelo.getInt("plazasNormal"); i++) {
                     v.getAsientosNormalesDisponibles().put(i, true);
                 }
-                for(int i=rsVuelo.getInt("plazasNormal")+1; i<=rsVuelo.getInt("plazasNormal")+rsVuelo.getInt("plazasPremium"); i++){
+                for (int i = rsVuelo.getInt("plazasNormal") + 1; i <= rsVuelo.getInt("plazasNormal") + rsVuelo.getInt("plazasPremium"); i++) {
                     v.getAsientosPremiumDisponibles().put(i, true);
                 }
             }
@@ -223,8 +223,8 @@ public class daoVuelos extends AbstractDAO {
         }
 
     }
-    
-    public void obtenerAsientos(Vuelo vuelo){
+
+    public void obtenerAsientos(Vuelo vuelo) {
         Connection con;
         PreparedStatement stmAsientos = null;
         ResultSet rsAsientos;
@@ -277,10 +277,9 @@ public class daoVuelos extends AbstractDAO {
                 stmBillete.setString(1, usuario.getDni());
                 stmBillete.setString(2, usuario.getVueloEnEspera().getNumVuelo());
                 stmBillete.setInt(3, usuario.getVueloEnEspera().getAsiento());
-                if(usuario.getVueloEnEspera().getPremium()){
+                if (usuario.getVueloEnEspera().getPremium()) {
                     stmBillete.setString(4, "premium");
-                }
-                else{
+                } else {
                     stmBillete.setString(4, "normal");
                 }
                 stmBillete.setInt(5, usuario.getVueloEnEspera().getNumMaletas());
@@ -303,7 +302,68 @@ public class daoVuelos extends AbstractDAO {
         }
         return correcto;
     }
-    public List<Vuelo> verSalidas(){
+
+    public Boolean plazoDevolución(String vuelo) {
+        Connection con;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+
+        Boolean enPlazo = false;
+
+        con = super.getConexion();
+
+        try {
+            stmVuelo = con.prepareStatement("select *"
+                    + "from vuelos "
+                    + "where vuelo=? and datedd(dd,15,NOW())>vuelo.fechasalidareal");
+            rsVuelo = stmVuelo.executeQuery();
+            if (rsVuelo.next()) {
+                enPlazo = false;
+            } else {
+                enPlazo = true;
+            }
+        } catch (SQLException e) {
+            getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return enPlazo;
+    }
+
+    public Boolean devolverBillete(String vuelo, String dni) {
+        Connection con;
+        PreparedStatement stmBillete = null;
+        Boolean correcto;
+
+        con = super.getConexion();
+
+        try {
+            stmBillete = con.prepareStatement("delete from comprarbillete "
+                    + "where vuelo=? and usuario=?");
+            stmBillete.setString(1, vuelo);
+            stmBillete.setString(2, dni);
+            stmBillete.executeUpdate();
+            correcto = true;
+        } catch (SQLException e) {
+            getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto = false;
+        } finally {
+            try {
+                stmBillete.close();
+            } catch (SQLException e) {
+                correcto = false;
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
+
+    public List<Vuelo> verSalidas() {
         List<Vuelo> resultado = new ArrayList<>();
         Connection con;
         Vuelo vueloActual;
@@ -314,17 +374,16 @@ public class daoVuelos extends AbstractDAO {
 
         try {
             stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaSalidaReal, "
-                    + "fechaSalidaReal-fechaSalidaTeorica as retraso,terminal, puertaembarque, cancelado " +
-                    "from vuelo v " +
-                    "where fechaSalidaReal>NOW() and v.origen=? "
+                    + "fechaSalidaReal-fechaSalidaTeorica as retraso,terminal, puertaembarque, cancelado "
+                    + "from vuelo v "
+                    + "where fechaSalidaReal>NOW() and v.origen=? "
                     + "ORDER BY fechaSalidaReal asc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
-                        rsVuelo.getTimestamp("fechaSalidaReal"), null,rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
+                        rsVuelo.getTimestamp("fechaSalidaReal"), null, rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
                         rsVuelo.getInt("terminal"), rsVuelo.getString("retraso"));;
-                
 
                 resultado.add(vueloActual);
             }
@@ -342,7 +401,8 @@ public class daoVuelos extends AbstractDAO {
 
         return resultado;
     }
-    public List<Vuelo> verLlegadas(){
+
+    public List<Vuelo> verLlegadas() {
         List<Vuelo> resultado = new ArrayList<>();
         Connection con;
         Vuelo vueloActual;
@@ -353,18 +413,18 @@ public class daoVuelos extends AbstractDAO {
 
         try {
             stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaLlegadaReal,"
-                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado " +
-                      "from vuelo v " +
-                      "where EXTRACT(YEAR FROM cast(v.fechaLlegadaReal as date))= EXTRACT(YEAR FROM cast(NOW()as date) ) and " +
-                      "EXTRACT(MONTH FROM cast(v.fechaLlegadaReal as date))=EXTRACT(MONTH FROM cast(NOW()as date) ) " +
-                      "and EXTRACT(DAY FROM cast(v.fechaLlegadaReal as date))=EXTRACT(DAY FROM cast(NOW()as date) ) " +
-                      "and v.destino=? "
+                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado "
+                    + "from vuelo v "
+                    + "where EXTRACT(YEAR FROM cast(v.fechaLlegadaReal as date))= EXTRACT(YEAR FROM cast(NOW()as date) ) and "
+                    + "EXTRACT(MONTH FROM cast(v.fechaLlegadaReal as date))=EXTRACT(MONTH FROM cast(NOW()as date) ) "
+                    + "and EXTRACT(DAY FROM cast(v.fechaLlegadaReal as date))=EXTRACT(DAY FROM cast(NOW()as date) ) "
+                    + "and v.destino=? "
                     + "ORDER BY fechaLlegadaReal desc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
-                        null, rsVuelo.getTimestamp("fechallegadareal"),rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
+                        null, rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
                         rsVuelo.getInt("terminal"), rsVuelo.getString("retraso"));
 
                 resultado.add(vueloActual);
@@ -383,8 +443,5 @@ public class daoVuelos extends AbstractDAO {
 
         return resultado;
     }
-    
-    
-    }
 
-
+}
