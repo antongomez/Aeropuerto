@@ -18,8 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="gui.controlador.VCocheControlador">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.VCocheControlador">
    <children>
       <VBox prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -45,11 +44,11 @@
                                       </rowConstraints>
                                        <children>
                                           <Label text="Dni:" />
-                                          <TextField prefHeight="27.0" prefWidth="154.0" GridPane.columnIndex="2" />
-                                          <Button mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" />
+                                          <TextField fx:id="textFieldDNIConReserva" prefHeight="27.0" prefWidth="154.0" GridPane.columnIndex="2" />
+                                          <Button fx:id="btnBuscarConReserva" mnemonicParsing="false" onAction="#obtenerReservasUsuario" text="Buscar" GridPane.columnIndex="4" />
                                        </children>
                                     </GridPane>
-                                    <TableView prefHeight="200.0" prefWidth="600.0">
+                                    <TableView fx:id="tablaConReservatablaConReserva" onMouseClicked="#seleccionarConReserva" prefHeight="200.0" prefWidth="600.0">
                                       <columns>
                                         <TableColumn prefWidth="250.0" text="Matrícula" />
                                         <TableColumn prefWidth="250.0" text="Fecha vuelta" />
@@ -61,11 +60,11 @@
                                     </TableView>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="225.0">
                                        <children>
-                                          <Button mnemonicParsing="false" text="Alquilar" />
+                                          <Button fx:id="btnAlquilarConReserva" mnemonicParsing="false" onAction="#alquilarConReserva" text="Alquilar" />
                                           <VBox prefHeight="66.0" prefWidth="158.0" spacing="20.0">
                                              <children>
-                                                <RadioButton mnemonicParsing="false" text="Cambiar fecha" />
-                                                <DatePicker />
+                                                <RadioButton fx:id="cambiarFechaConReserva" mnemonicParsing="false" onAction="#activarDatePicker" text="Cambiar fecha" />
+                                                <DatePicker fx:id="datePickerConReserva" />
                                              </children>
                                           </VBox>
                                        </children>
