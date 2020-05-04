@@ -24,7 +24,7 @@ import javafx.scene.control.TextField;
  */
 public class VControlController extends Controlador implements Initializable {
 
-    private PersonalLaboral trabajador;
+
     
     @FXML
     private Label etqNumVuelo;
@@ -46,10 +46,7 @@ public class VControlController extends Controlador implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    public void setTrabajador(PersonalLaboral trab){
-        this.trabajador=trab;
-    }
-
+  
     @FXML
     private void entrarControl(ActionEvent event) {
         

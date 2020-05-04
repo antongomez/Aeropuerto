@@ -1394,7 +1394,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //Seleccionamos o voo que se vai comprar
 
         VControlController controlador = ((VControlController) loadWindow(getClass().getResource("/gui/vista/vControl.fxml"), "AeroETSE", stage));
-        controlador.setTrabajador((PersonalLaboral) usuario);
     }
 
     @FXML
@@ -1437,15 +1436,22 @@ private void actualizarBotonesPersLab(){
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
-        //Seleccionamos o voo que se vai comprar
+   
 
         VMaletaController controlador = ((VMaletaController) loadWindow(getClass().getResource("/gui/vista/vMaleta.fxml"), "AeroETSE", stage));
-        controlador.setTrabajador((PersonalLaboral) usuario);
+
 
     }
 
     @FXML
     private void accionBtnHistorial(ActionEvent event) {
+        //Creamos unha venta filla da princiapl
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.initOwner(getVenta());
+        
+
+        VHistorialController controlador = ((VHistorialController) loadWindow(getClass().getResource("/gui/vista/vHistorial.fxml"), "AeroETSE", stage));
+        controlador.setTrabajador((PersonalLaboral) usuario);
     }
 
 }

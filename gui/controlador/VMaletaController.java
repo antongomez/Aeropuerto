@@ -23,7 +23,6 @@ import javafx.scene.control.TextField;
  */
 public class VMaletaController extends Controlador implements Initializable {
     
-    private PersonalLaboral trabajador;
 
     @FXML
     private TextField txtFieldNumVuelo;
@@ -42,9 +41,7 @@ public class VMaletaController extends Controlador implements Initializable {
         // TODO
         
     }    
-    public void setTrabajador(PersonalLaboral trab){
-        this.trabajador=trab;
-    }
+   
 
     @FXML
     private void facturar(ActionEvent event) {
