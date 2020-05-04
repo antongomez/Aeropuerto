@@ -694,7 +694,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //Estadisticas
     @FXML
     private void accionAbrirEstadisticas(Event event) {
-        etqInfoEstadisticas1.setVisible(false);
         etqInfoEstadisticas2.setVisible(false);
         //Ao entrar poñemos as estatisticas dos anos e seleccionamos o mais recente
         buscarAnos();
@@ -703,6 +702,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         EstadisticasUsuario estadisticasUsuario = getInstanceModelo()
                 .obtenerEstadisticasGlobalesUsuario(usuario.getDni());
 
+        //Aerolinea
         if (estadisticasUsuario.getAerolineasFav().isEmpty()) {
             etqAerolineaFavGlobal.setText(" - ");
         } else {
@@ -712,9 +712,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
             etqAerolineaFavGlobal.setText(aerolineasFav);
         }
+        //Destino
         if (estadisticasUsuario.getDestinosFav().isEmpty()) {
             etqDestinoFavGlobal.setText(" - ");
-            etqInfoEstadisticas2.setVisible(true);
+            //Controlamos no caso de que so fixera viaxes de volta ao folgoso do courel
+            if ((getInstanceModelo().usuarioViajado(usuario.getDni()))
+                    && (!etqAerolineaFavGlobal.getText().equals(" - "))) {
+                etqInfoEstadisticas2.setVisible(true);
+            }
         } else {
             String destinosFav = estadisticasUsuario.getDestinosFav().get(0);
             for (int i = 1; i < estadisticasUsuario.getDestinosFav().size(); i++) {
@@ -722,7 +727,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
             etqDestinoFavGlobal.setText(destinosFav);
         }
-
+        //Tarifa
         if (!estadisticasUsuario.getTarifaFav().isEmpty()) {
             etqTarifaFavGlobal.setText(estadisticasUsuario.getTarifaFav());
         } else {
@@ -752,6 +757,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Integer num;
         EstadisticasUsuario estadisticasUsuario;
         String titulo = "Estadisticas ";
+        etqInfoEstadisticas1.setVisible(false);
 
         if (btnEstacion.isSelected()) {
             tipo = "estacion";
@@ -765,8 +771,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
         if (tipo.equals("anho")) {
             num = parseInt(comboBoxEstUsu.getSelectionModel().getSelectedItem());
+            etqInfoEstadisticas1.setText("En el " + num + " no has realizado vuelos que despegaran desde nuestro aeropuerto");
         } else {
             num = comboBoxEstUsu.getSelectionModel().getSelectedIndex() + 1;
+            String mes_estacion = comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase();
+            etqInfoEstadisticas1.setText("En " + mes_estacion + " no has realizado vuelos que despegaran desde nuestro aeropuerto");
         }
 
         estadisticasUsuario = Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
@@ -788,6 +797,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
         if (estadisticasUsuario.getDestinosFav().isEmpty()) {
             etqDestinoFavEspecifico.setText(" - ");
+            if ((getInstanceModelo().usuarioViajado(usuario.getDni()))
+                    && (!etqAerolineaFavEspecifica.getText().equals(" - "))) {
+                etqInfoEstadisticas1.setVisible(true);
+            }
         } else {
             String destinosFav = estadisticasUsuario.getDestinosFav().get(0);
             for (int i = 1; i < estadisticasUsuario.getDestinosFav().size(); i++) {
@@ -805,7 +818,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     @FXML
-    void accionEstacion(ActionEvent event) {
+    void accionEstacion(ActionEvent event
+    ) {
         ObservableList<String> estaciones = FXCollections.observableArrayList("Primavera", "Verano", "Otoño", "Invierno");
         comboBoxEstUsu.setItems(estaciones);
         comboBoxEstUsu.getSelectionModel().selectFirst();
@@ -813,7 +827,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     @FXML
-    void accionMes(ActionEvent event) {
+    void accionMes(ActionEvent event
+    ) {
         ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         comboBoxEstUsu.setItems(meses);
         comboBoxEstUsu.getSelectionModel().selectFirst();
@@ -821,25 +836,29 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     @FXML
-    void accionAnho(ActionEvent event) {
+    void accionAnho(ActionEvent event
+    ) {
         buscarAnos();
         mostrarEstadisticas();
     }
 
     @FXML
-    private void accionComboBox(ActionEvent event) {
+    private void accionComboBox(ActionEvent event
+    ) {
         if (comboBoxEstUsu.getSelectionModel().getSelectedItem() != null) {
             mostrarEstadisticas();
         }
     }
 
     @FXML
-    private void cambiarAerolinea(ActionEvent event) {
+    private void cambiarAerolinea(ActionEvent event
+    ) {
         accionCalculoEstAerolinea();
     }
 
     @FXML
-    private void abrirPestanaEstAerolineas(Event event) {
+    private void abrirPestanaEstAerolineas(Event event
+    ) {
 
         comboBoxEstAer.getSelectionModel().selectFirst();
         accionCalculoEstAerolinea();
