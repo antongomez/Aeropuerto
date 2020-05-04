@@ -630,9 +630,10 @@ public class daoVuelos extends AbstractDAO {
 
                 System.out.println(e.getMessage());
                 this.getFachadaAplicacion().mostrarError(e.getMessage());
-                correcto = false;
+                
 
             }
+            correcto = false;
         }
         return correcto;
     }

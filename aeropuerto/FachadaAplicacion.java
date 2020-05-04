@@ -135,8 +135,11 @@ public class FachadaAplicacion extends Application {
         return gv.verLlegadas();
     }
     
-    public Boolean facturarMaleta(String dni, String vuelo, Float peso,Float precioExtra){
-        return gv.facturarMaleta(dni,vuelo,peso,precioExtra);
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso){
+        return gv.facturarMaleta(dni,vuelo,peso);
+    }
+    public Float getPrecioExtraDespuesFacturar(String dni, String vuelo, Float peso){
+        return gv.getPrecioExtraDespuesFacturar(dni,vuelo, peso);
     }
     
 

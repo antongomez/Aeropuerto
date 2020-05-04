@@ -55,15 +55,19 @@ public class VMaletaController extends Controlador implements Initializable {
         else{
             Float peso;
             try{
-                Float extra=null;
+                
                 peso=parseFloat(txtFieldPeso.getText());
-                if(Modelo.getInstanceModelo().facturarMaleta(txtFieldDni.getText(), txtFieldNumVuelo.getText(), peso, extra)==true){
-                    if(extra.equals((float)0)){
+                if(Modelo.getInstanceModelo().facturarMaleta(txtFieldDni.getText(), txtFieldNumVuelo.getText(), peso)==true){
+                    Float extra=Modelo.getInstanceModelo().getPrecioExtraDespuesFacturar(txtFieldDni.getText(), txtFieldNumVuelo.getText(), peso);
+                    if(extra==(float)0){
                         Modelo.getInstanceModelo().mostrarNotificacion("Operación realizada con éxito", this.getVenta());
                     }
                     else{
                         Modelo.getInstanceModelo().mostrarNotificacion("Operación realizada con éxito.\n Debes pagar "+extra+" € extra", this.getVenta());
                     }
+                    txtFieldDni.setText("");
+                    txtFieldNumVuelo.setText("");
+                    txtFieldPeso.setText("");
                 }
                 else{
                     Modelo.getInstanceModelo().mostrarError("Datos incorrectos", this.getVenta());

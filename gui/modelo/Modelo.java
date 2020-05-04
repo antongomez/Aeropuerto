@@ -215,8 +215,12 @@ public class Modelo {
         return fa.salirControlBillete(dni, vuelo);
     }
 
-    public Boolean facturarMaleta(String dni, String vuelo, Float peso, Float precioExtra) {
-        return fa.facturarMaleta(dni, vuelo, peso, precioExtra);
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso) {
+        return fa.facturarMaleta(dni, vuelo, peso);
+    }
+    /*Se debe llamar después de facturar una maleta*/
+    public Float getPrecioExtraDespuesFacturar(String dni, String vuelo, Float peso){
+        return fa.getPrecioExtraDespuesFacturar(dni,vuelo,peso);
     }
 
     public List<String> obtenerAnhosViajados(String dni) {
