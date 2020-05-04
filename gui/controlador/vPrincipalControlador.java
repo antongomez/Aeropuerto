@@ -223,6 +223,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Label etqDestinoFavGlobal;
     @FXML
     private Label etqTarifaFavGlobal;
+    @FXML
+    private Label etqInfoEstadisticas1;
+    @FXML
+    private Label etqInfoEstadisticas2;
 
     //Reservas
     @FXML
@@ -331,6 +335,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TextField txtPrecioTotalCoches;
     @FXML
     private Button btnReservarCoches;
+
     //Estadisticas aerolinea
     @FXML
     private ComboBox<String> comboBoxEstAer;
@@ -689,6 +694,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //Estadisticas
     @FXML
     private void accionAbrirEstadisticas(Event event) {
+        etqInfoEstadisticas1.setVisible(false);
+        etqInfoEstadisticas2.setVisible(false);
         //Ao entrar poñemos as estatisticas dos anos e seleccionamos o mais recente
         buscarAnos();
         mostrarEstadisticas();
@@ -707,6 +714,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
         if (estadisticasUsuario.getDestinosFav().isEmpty()) {
             etqDestinoFavGlobal.setText(" - ");
+            etqInfoEstadisticas2.setVisible(true);
         } else {
             String destinosFav = estadisticasUsuario.getDestinosFav().get(0);
             for (int i = 1; i < estadisticasUsuario.getDestinosFav().size(); i++) {

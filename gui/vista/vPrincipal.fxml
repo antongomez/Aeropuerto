@@ -613,7 +613,7 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefWidth="500.0" spacing="100.0">
                                              <children>
-                                                <TextArea fx:id="txtAreaNumViajes" editable="false" minWidth="180.0" prefHeight="120.0" prefWidth="300.0" styleClass="text-area" text="Has viajado...este verano!" wrapText="true" />
+                                                <TextArea fx:id="txtAreaNumViajes" editable="false" minWidth="180.0" prefHeight="120.0" prefWidth="300.0" styleClass="text-area" text="Has viajado...este 2020!" wrapText="true" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -640,6 +640,7 @@
                                                 <Label fx:id="etqTarifaFavEspecifico" prefHeight="32.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                              </children>
                                           </GridPane>
+                                          <Label fx:id="etqInfoEstadisticas1" styleClass="etqInfo" text="Este año no has realizado vuelos que despegaran desde nuestro aeropuerto" />
                                        </children>
                                     </VBox>
                                     <VBox alignment="CENTER" fillWidth="false" spacing="10.0">
@@ -664,6 +665,7 @@
                                                 <Label fx:id="etqTarifaFavGlobal" prefHeight="32.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                              </children>
                                           </GridPane>
+                                          <Label fx:id="etqInfoEstadisticas2" styleClass="etqInfo" text="Aún no has realizado vuelos que despegaran desde nuestro aeropuerto" />
                                        </children>
                                     </VBox>
                                  </children>
