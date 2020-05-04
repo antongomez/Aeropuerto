@@ -3,6 +3,7 @@ package gui.modelo;
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
+import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
@@ -230,5 +231,13 @@ public class Modelo {
     public Boolean usuarioViajado(String dni){
         return fa.usuarioViajado(dni);
     }
-
+public Boolean estaDentroPersLab(PersonalLaboral us){
+    return fa.estaDentroPersLaboral(us);
+}
+public void entrarPersLaboral(PersonalLaboral usu){
+        fa.entrarPersLaboral(usu);
+    }
+    public void salirPersLaboral(PersonalLaboral usu){
+        fa.salirPersLaboral(usu);
+    }
 }

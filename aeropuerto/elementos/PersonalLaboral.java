@@ -8,6 +8,7 @@ public class PersonalLaboral extends Usuario {
     private String labor;
     private String descripcionTarea;
     private Time fechaInicio;
+    private Boolean estaDentro;
     
     //private ArrayList<ElemHistorial> historialTrabajo; creo que este atributo sobra
 
@@ -59,5 +60,11 @@ public class PersonalLaboral extends Usuario {
     public void setFechaInicio(Time fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-
+    
+public void setEstaDentro(Boolean dentro){
+    this.estaDentro=dentro;
+}
+public Boolean estaDentro(){
+    return this.estaDentro;
+}
 }

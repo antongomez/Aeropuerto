@@ -1370,6 +1370,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (usuario instanceof PersonalLaboral) {
             panelPersLab.toFront();
             etqTitulo.setText(TITULO_PERSLAB);
+            PersonalLaboral trabajador=(PersonalLaboral)usuario;
+            
+            trabajador.setEstaDentro(Modelo.getInstanceModelo().estaDentroPersLab(trabajador));
+           
+            actualizarBotonesPersLab();
+        
         }
 
     }
@@ -1393,8 +1399,30 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnEntrarSalir(ActionEvent event) {
+        PersonalLaboral trab=(PersonalLaboral)usuario;
+        if(btnEntrarSalir.getText().equals("Entrar")){
+            Modelo.getInstanceModelo().entrarPersLaboral(trab);
+        }
+        else{
+            Modelo.getInstanceModelo().salirPersLaboral(trab);
+        }
+        actualizarBotonesPersLab();
     }
-
+private void actualizarBotonesPersLab(){
+    
+        if(!((PersonalLaboral)usuario).estaDentro()){
+               btnMaletas.setDisable(true);
+               btnControl.setDisable(true);
+               btnCoches.setDisable(true);
+               btnEntrarSalir.setText("Entrar");
+            }
+            else{
+               btnMaletas.setDisable(false);
+               btnControl.setDisable(false);
+               btnCoches.setDisable(false);
+               btnEntrarSalir.setText("Salir");
+            }
+    }
     @FXML
     private void accionBtnTarea(ActionEvent event) {
     }

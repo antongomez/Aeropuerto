@@ -475,7 +475,7 @@ public class daoUsuarios extends AbstractDAO {
     }
 
     public Usuario obtenerUsuario(String dni) {
-        EstadisticasUsuario resultado = null;
+
         Connection con;
         PreparedStatement stmUsuario = null;
         ResultSet rsUsuario;
@@ -569,5 +569,89 @@ public class daoUsuarios extends AbstractDAO {
         }
         return correcto;
     }
+    
+    public Boolean estaDentroPersLaboral(String dni){
+        Connection con;
+        PreparedStatement stmHistorial = null;
+        ResultSet rsHistorial;
+        Boolean result=null;
+
+        con = this.getConexion();
+
+        try {
+            stmHistorial = con.prepareStatement("select count(*)>0 as dentro " +
+"from historialtrabajo where personallaboral=? and fechasalida is null");
+            stmHistorial.setString(1, dni);
+            rsHistorial = stmHistorial.executeQuery();
+
+            if (rsHistorial.next()) {
+                result=rsHistorial.getBoolean("dentro");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmHistorial.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return result;
+    }
+    
+    public void entrarPersLaboral(String dni){
+        Connection con;
+        PreparedStatement stmHist = null;
+
+        con = super.getConexion();
+
+        try {
+
+            stmHist = con.prepareStatement("insert into historialtrabajo(personallaboral) values (?)");
+
+            stmHist.setString(1, dni);
+            stmHist.executeUpdate();
+
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmHist.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    }
+    public void salirPersLaboral(String dni){
+         Connection con;
+        PreparedStatement stmHist = null;
+
+        con = super.getConexion();
+
+        try {
+
+            stmHist = con.prepareStatement("update historialtrabajo set fechasalida=NOW() "
+                    + " where fechasalida is null and personallaboral=?");
+
+            stmHist.setString(1, dni);
+            stmHist.executeUpdate();
+
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmHist.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    } 
+            
 
 }

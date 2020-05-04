@@ -229,4 +229,14 @@ public class FachadaBaseDatos {
     public List<String> obtenerAnhosViajados(String dni) {
         return daoVuelos.obtenerAnhosViajados(dni);
     }
+    public Boolean estaDentroPersLaboral(String dni){
+        return daoUsuarios.estaDentroPersLaboral(dni);
+    }
+    public void entrarPersLaboral(String dni){
+        daoUsuarios.entrarPersLaboral(dni);
+    }
+    public void salirPersLaboral(String dni){
+        daoUsuarios.salirPersLaboral(dni);
+    }
+    
 }

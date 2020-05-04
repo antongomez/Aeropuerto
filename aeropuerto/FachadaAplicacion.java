@@ -3,6 +3,7 @@ package aeropuerto;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalExterno;
+import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.gestion.GestionParking;
@@ -231,6 +232,14 @@ public class FachadaAplicacion extends Application {
     public Boolean usuarioViajado(String dni){
         return gu.usuarioViajado(dni);
     }
-    
+    public Boolean estaDentroPersLaboral(PersonalLaboral us){
+        return gu.estaDentroPersLaboral(us);
+    }
+    public void entrarPersLaboral(PersonalLaboral usu){
+        gu.entrarPersLaboral(usu);
+    }
+    public void salirPersLaboral(PersonalLaboral usu){
+        gu.salirPersLaboral(usu);
+    }
 
 }

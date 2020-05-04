@@ -1,5 +1,6 @@
 package aeropuerto.gestion;
 
+import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.util.EstadisticasUsuario;
 import baseDatos.FachadaBaseDatos;
@@ -62,6 +63,17 @@ public class GestionUsuarios {
 
     public Boolean usuarioViajado(String dni) {
         return !(fbd.obtenerVuelosUsuario(dni).isEmpty());
+    }
+    public Boolean estaDentroPersLaboral(PersonalLaboral us){
+        return fbd.estaDentroPersLaboral(us.getDni());
+    }
+    public void entrarPersLaboral(PersonalLaboral usu){
+        fbd.entrarPersLaboral(usu.getDni());
+        usu.setEstaDentro(true);
+    }
+    public void salirPersLaboral(PersonalLaboral usu){
+        fbd.salirPersLaboral(usu.getDni());
+        usu.setEstaDentro(false);
     }
 
 }
