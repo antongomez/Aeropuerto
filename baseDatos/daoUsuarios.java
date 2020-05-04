@@ -285,25 +285,57 @@ public class daoUsuarios extends AbstractDAO {
             aux = "Estacion(v.fechaSalidaReal)";
         }
 
-        consulta = "select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa, billete.vecesViajadas as veces"
-                + " from (select a.aerolinea as aerolineaFav from comprarbillete cb, vuelo v, avion a "
-                + "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and " + aux + "=?"
-                + "group by a.aerolinea having count(*)>=all "
-                + "(select count(*) from comprarbillete cb, vuelo v, avion a "
-                + "where cb.usuario=? and cb.vuelo=v.numvuelo and v.avion=a.codigo and " + aux + "=?"
-                + "group by a.aerolinea)) as aerolinea, "
-                + "(select v.destino as destinoFav from comprarbillete cb, vuelo v "
-                + "where cb.usuario=? and v.destino != 'Folgoso do Courel' and cb.vuelo=v.numvuelo and " + aux + "=?"
-                + "group by v.destino having count(*)>=all "
-                + "(select count(*) from comprarbillete cb, vuelo v "
-                + "where cb.usuario=? and v.destino != 'Folgoso do Courel' and cb.vuelo=v.numvuelo and " + aux + "=? group by v.destino)) as destino, "
-                + "(select tipoAsiento as tarifaFav from comprarbillete cb, vuelo v "
-                + "where cb.usuario=? and cb.vuelo=v.numvuelo and " + aux + "=?"
-                + "group by tipoAsiento having count(*)>=all "
-                + "(select count(*) from comprarbillete cb, vuelo v "
-                + "where cb.usuario=? and cb.vuelo=v.numvuelo and " + aux + "=? group by cb.tipoAsiento)) as tarifa, "
-                + "(select count(*) as vecesViajadas from comprarBillete cb, vuelo v "
-                + "where usuario=? and cb.vuelo=v.numvuelo and " + aux + "=?) as billete";
+        consulta = "select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa, billete.vecesViajadas as veces\n"
+                + "from \n"
+                + "(select cb.usuario as usuario, a.aerolinea as aerolineaFav\n"
+                + "from comprarbillete cb, vuelo v, avion a \n"
+                + "where cb.usuario = ?\n"
+                + " and cb.vuelo = v.numvuelo\n"
+                + " and v.avion = a.codigo\n"
+                + " and " + aux + " = ?\n"
+                + "group by a.aerolinea, cb.usuario\n"
+                + "having count(*)>=all (select count(*)\n"
+                + "					from comprarbillete cb, vuelo v, avion a \n"
+                + "					where cb.usuario = ?\n"
+                + "					  and cb.vuelo = v.numvuelo \n"
+                + "					  and v.avion = a.codigo \n"
+                + "					  and " + aux + " = ?\n"
+                + "					group by a.aerolinea)) as aerolinea natural full join\n"
+                + "					\n"
+                + "(select cb.usuario as usuario, v.destino as destinoFav\n"
+                + "from comprarbillete cb, vuelo v \n"
+                + "where cb.usuario = ?\n"
+                + "  and v.destino != 'Folgoso do Courel'\n"
+                + "  and cb.vuelo = v.numvuelo\n"
+                + "  and " + aux + " = ?\n"
+                + "group by v.destino, cb.usuario\n"
+                + "having count(*)>=all(select count(*)\n"
+                + "					from comprarbillete cb, vuelo v \n"
+                + "					where cb.usuario = ?\n"
+                + "					  and v.destino != 'Folgoso do Courel'\n"
+                + "					  and cb.vuelo = v.numvuelo\n"
+                + "					  and " + aux + " = ?\n"
+                + "					group by v.destino)) as destino natural full join\n"
+                + "					\n"
+                + "(select cb.usuario as usuario, tipoAsiento as tarifaFav\n"
+                + "from comprarbillete cb, vuelo v \n"
+                + "where cb.usuario = ?\n"
+                + "  and cb.vuelo = v.numvuelo\n"
+                + "  and " + aux + " = ?\n"
+                + "group by tipoAsiento, cb.usuario\n"
+                + "having count(*)>=all(select count(*)\n"
+                + "					from comprarbillete cb, vuelo v \n"
+                + "					where cb.usuario = ?\n"
+                + "					  and cb.vuelo = v.numvuelo\n"
+                + "					  and " + aux + " = ?\n"
+                + "					group by cb.tipoAsiento)) as tarifa natural full join\n"
+                + "					\n"
+                + "(select cb.usuario as usuario, count(*) as vecesViajadas\n"
+                + "from comprarBillete cb, vuelo v \n"
+                + "where cb.usuario = ?\n"
+                + "  and cb.vuelo = v.numvuelo\n"
+                + "  and " + aux + " = ?\n"
+                + "group by cb.usuario) as billete";
 
         try {
             stmUsuario = con.prepareStatement(consulta);
@@ -326,7 +358,9 @@ public class daoUsuarios extends AbstractDAO {
             if (rsUsuario.next()) {
                 resultado = new EstadisticasUsuario(rsUsuario.getInt("veces"));
                 resultado.anadirAerolinea(rsUsuario.getString("aerolinea"));
-                resultado.anadirDestino(rsUsuario.getString("destino"));
+                if (rsUsuario.getString("destino") != null) {
+                    resultado.anadirDestino(rsUsuario.getString("destino"));
+                }
                 resultado.anadirTarifa(rsUsuario.getString("tarifa"));
 
             } else {
@@ -360,43 +394,44 @@ public class daoUsuarios extends AbstractDAO {
         String consulta;
         con = this.getConexion();
 
-        consulta = "select *\n"
+        consulta = "select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa \n"
                 + "from \n"
-                + "(select a.aerolinea as aerolineaFav\n"
-                + "from comprarbillete cb, vuelo v, avion a\n"
+                + "(select cb.usuario as usuario, a.aerolinea as aerolineaFav\n"
+                + "from comprarbillete cb, vuelo v, avion a \n"
                 + "where cb.usuario = ?\n"
-                + "  and cb.vuelo = v.numvuelo\n"
-                + "  and v.avion = a.codigo\n"
-                + "group by a.aerolinea\n"
-                + "having count(*)>=all (select count(*) from comprarbillete cb, vuelo v, avion a \n"
-                + "                where cb.usuario= ?\n"
-                + "				  and cb.vuelo = v.numvuelo\n"
-                + "				  and v.avion = a.codigo \n"
-                + "                group by a.aerolinea)) as aerolineaFav,\n"
-                + "				\n"
-                + "(select v.destino as destinoFav\n"
+                + " and cb.vuelo = v.numvuelo\n"
+                + " and v.avion = a.codigo\n"
+                + "group by a.aerolinea, cb.usuario\n"
+                + "having count(*)>=all (select count(*)\n"
+                + "					from comprarbillete cb, vuelo v, avion a \n"
+                + "					where cb.usuario = ?\n"
+                + "					  and cb.vuelo = v.numvuelo \n"
+                + "					  and v.avion = a.codigo \n"
+                + "					group by a.aerolinea)) as aerolinea natural full join\n"
+                + "					\n"
+                + "(select cb.usuario as usuario, v.destino as destinoFav\n"
                 + "from comprarbillete cb, vuelo v \n"
-                + "where cb.usuario = ? \n"
-                + "  and cb.vuelo = v.numvuelo\n"
+                + "where cb.usuario = ?\n"
                 + "  and v.destino != 'Folgoso do Courel'\n"
-                + "group by v.destino\n"
+                + "  and cb.vuelo = v.numvuelo\n"
+                + "group by v.destino, cb.usuario\n"
                 + "having count(*)>=all(select count(*)\n"
-                + "					 from comprarbillete cb, vuelo v \n"
-                + "                	 where cb.usuario = ?\n"
-                + "					  and cb.vuelo = v.numvuelo\n"
+                + "					from comprarbillete cb, vuelo v \n"
+                + "					where cb.usuario = ?\n"
                 + "					  and v.destino != 'Folgoso do Courel'\n"
-                + "					 group by v.destino)) as destinoFav,\n"
-                + "					 \n"
-                + "(select tipoAsiento as tarifaFav\n"
+                + "					  and cb.vuelo = v.numvuelo\n"
+                + "					group by v.destino)) as destino natural full join\n"
+                + "					\n"
+                + "(select cb.usuario as usuario, tipoAsiento as tarifaFav\n"
                 + "from comprarbillete cb, vuelo v \n"
                 + "where cb.usuario = ?\n"
                 + "  and cb.vuelo = v.numvuelo\n"
-                + "group by tipoAsiento\n"
+                + "group by tipoAsiento, cb.usuario\n"
                 + "having count(*)>=all(select count(*)\n"
-                + "					 from comprarbillete cb, vuelo v\n"
-                + "					 where cb.usuario = ?\n"
-                + "					   and cb.vuelo=v.numvuelo\n"
-                + "					 group by cb.tipoAsiento)) as tarifaFav";
+                + "					from comprarbillete cb, vuelo v \n"
+                + "					where cb.usuario = ?\n"
+                + "					  and cb.vuelo=v.numvuelo\n"
+                + "					group by cb.tipoAsiento)) as tarifa ";
 
         try {
             stmUsuario = con.prepareStatement(consulta);
@@ -407,12 +442,14 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.setString(5, dniUs);
             stmUsuario.setString(6, dniUs);
             rsUsuario = stmUsuario.executeQuery();
-            
+
             if (rsUsuario.next()) {
                 resultado = new EstadisticasUsuario();
-                resultado.anadirAerolinea(rsUsuario.getString("aerolineaFav"));
-                resultado.anadirDestino(rsUsuario.getString("destinoFav"));
-                resultado.anadirTarifa(rsUsuario.getString("tarifaFav"));
+                resultado.anadirAerolinea(rsUsuario.getString("aerolinea"));
+                if (rsUsuario.getString("destino") != null) {
+                    resultado.anadirDestino(rsUsuario.getString("destino"));
+                }
+                resultado.anadirTarifa(rsUsuario.getString("tarifa"));
 
             } else {
                 resultado = new EstadisticasUsuario();

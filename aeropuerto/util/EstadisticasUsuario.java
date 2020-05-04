@@ -39,7 +39,7 @@ public class EstadisticasUsuario {
     }
 
     public void anadirTarifa(String t) {
-        if (tarifaFav.isEmpty() || tarifaFav.equals(t)) {
+        if (tarifaFav.isEmpty() || tarifaFav.toLowerCase().equals(t)) {
             if (t.equals("normal")) {
                 tarifaFav = "Normal";
             } else {

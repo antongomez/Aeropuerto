@@ -696,11 +696,29 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         EstadisticasUsuario estadisticasUsuario = getInstanceModelo()
                 .obtenerEstadisticasGlobalesUsuario(usuario.getDni());
 
-        if (getInstanceModelo().usuarioViajado(usuario.getDni())) {
-            etqAerolineaFavGlobal.setText(estadisticasUsuario.getAerolineasFav().get(0));
-            etqDestinoFavGlobal.setText(estadisticasUsuario.getDestinosFav().get(0));
-            etqTarifaFavGlobal.setText(estadisticasUsuario.getTarifaFav());
+        if (estadisticasUsuario.getAerolineasFav().isEmpty()) {
+            etqAerolineaFavGlobal.setText(" - ");
+        } else {
+            String aerolineasFav = estadisticasUsuario.getAerolineasFav().get(0);
+            for (int i = 1; i < estadisticasUsuario.getAerolineasFav().size(); i++) {
+                aerolineasFav += ", " + estadisticasUsuario.getAerolineasFav().get(i);
+            }
+            etqAerolineaFavGlobal.setText(aerolineasFav);
+        }
+        if (estadisticasUsuario.getDestinosFav().isEmpty()) {
+            etqDestinoFavGlobal.setText(" - ");
+        } else {
+            String destinosFav = estadisticasUsuario.getDestinosFav().get(0);
+            for (int i = 1; i < estadisticasUsuario.getDestinosFav().size(); i++) {
+                destinosFav += ", " + estadisticasUsuario.getDestinosFav().get(i);
+            }
+            etqDestinoFavGlobal.setText(destinosFav);
+        }
 
+        if (!estadisticasUsuario.getTarifaFav().isEmpty()) {
+            etqTarifaFavGlobal.setText(estadisticasUsuario.getTarifaFav());
+        } else {
+            etqTarifaFavGlobal.setText(" - ");
         }
 
     }
@@ -770,7 +788,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             etqDestinoFavEspecifico.setText(destinosFav);
         }
 
-        if (!estadisticasUsuario.getTarifaFav().isBlank()) {
+        if (!estadisticasUsuario.getTarifaFav().isEmpty()) {
             etqTarifaFavEspecifico.setText(estadisticasUsuario.getTarifaFav());
         } else {
             etqTarifaFavEspecifico.setText(" - ");
