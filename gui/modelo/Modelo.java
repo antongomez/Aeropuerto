@@ -240,4 +240,7 @@ public void entrarPersLaboral(PersonalLaboral usu){
     public void salirPersLaboral(PersonalLaboral usu){
         fa.salirPersLaboral(usu);
     }
+    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+        fa.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
+    }
 }

@@ -7,19 +7,18 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/estiloBase.css" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.VHistorialController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estiloBase.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.VHistorialController">
    <children>
-      <TableView layoutX="41.0" layoutY="157.0" prefHeight="222.0" prefWidth="519.0">
+      <TableView fx:id="tablaHistorial" disable="true" layoutX="41.0" layoutY="157.0" prefHeight="222.0" prefWidth="519.0">
         <columns>
-          <TableColumn prefWidth="255.0" text="Entrada" />
-          <TableColumn prefWidth="259.0" text="Salida" />
+          <TableColumn fx:id="colEntrada" prefWidth="255.0" text="Entrada" />
+          <TableColumn fx:id="colSalida" prefWidth="259.0" text="Salida" />
         </columns>
       </TableView>
-      <DatePicker layoutX="151.0" layoutY="42.0" prefHeight="31.0" prefWidth="128.0" />
-      <DatePicker layoutX="358.0" layoutY="42.0" prefHeight="31.0" prefWidth="128.0" />
+      <DatePicker fx:id="datePickerFechaInicio" layoutX="151.0" layoutY="42.0" prefHeight="31.0" prefWidth="128.0" />
+      <DatePicker fx:id="datePickerFechaFin" layoutX="358.0" layoutY="42.0" prefHeight="31.0" prefWidth="128.0" />
       <Label layoutX="94.0" layoutY="47.0" text="Desde:" />
       <Label layoutX="300.0" layoutY="47.0" text="Hasta:" />
-      <Button layoutX="255.0" layoutY="106.0" mnemonicParsing="false" text="Buscar" />
+      <Button fx:id="btnBuscar" layoutX="255.0" layoutY="106.0" mnemonicParsing="false" onAction="#buscarHistorial" text="Buscar" />
    </children>
 </AnchorPane>

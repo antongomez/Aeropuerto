@@ -2,6 +2,7 @@ package aeropuerto.elementos;
 
 import aeropuerto.util.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class PersonalLaboral extends Usuario {
 
@@ -9,8 +10,7 @@ public class PersonalLaboral extends Usuario {
     private String descripcionTarea;
     private Time fechaInicio;
     private Boolean estaDentro;
-    
-    //private ArrayList<ElemHistorial> historialTrabajo; creo que este atributo sobra
+    private ArrayList<ElemHistorial> historialTrabajo;
 
     public PersonalLaboral(String dni, String id, String email, String nombre,
             String ap1, String ap2, String paisProcedencia, Integer telefono,
@@ -20,23 +20,21 @@ public class PersonalLaboral extends Usuario {
         this.labor = labor;
         this.descripcionTarea = descripcionTarea;
         this.fechaInicio = new Time(fechaInicio); //la fecha de inicio es la fecha de creación
-        //this.historialTrabajo = new ArrayList<>(); //inicialmente no hay historial de trabajo
+        this.historialTrabajo = new ArrayList<>();
     }
 
-    /*
-    public void ficharEntrada(){
-        
-        //condición para poder fichar la entrada (primera vez que trabaja o salió del último turno)
-        if(historialTrabajo.isEmpty() || historialTrabajo.get(historialTrabajo.size()-1).getFechaSalida()!=null){
-            
-            historialTrabajo.add(new ElemHistorial(new Date()));
-            //acceso a base de datos
-        }
-        else{
-            System.out.println("Debes salir antes del turno anterior");
-        }
+    public ArrayList<ElemHistorial> getHistorialTrabajo() {
+        return historialTrabajo;
+    }
+    public void borrarHistorial(){
+       historialTrabajo.clear();
+    }
     
-     */
+    public void addElemHistorial(ElemHistorial elem){
+        this.historialTrabajo.add(elem);
+    }
+
+
     public String getLabor() {
         return labor;
     }

@@ -2,10 +2,12 @@ package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Administrador;
+import aeropuerto.elementos.ElemHistorial;
 import aeropuerto.elementos.PersonalExterno;
 import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.Time;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -652,6 +654,42 @@ public class daoUsuarios extends AbstractDAO {
             }
         }
     } 
+    
+    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+        Connection con;
+        PreparedStatement stmHistorial = null;
+        ResultSet rsHistorial;
+        Boolean result=null;
+
+        con = this.getConexion();
+
+        try {
+            stmHistorial = con.prepareStatement("select fechaentrada,fechasalida "
+                    + " from historialtrabajo where personallaboral=? " +
+                    "and cast(fechaentrada as date)>=? and cast(fechaentrada as date)<=? " +
+                    "order by fechaEntrada");
+            stmHistorial.setString(1, usu.getDni());
+            stmHistorial.setTimestamp(2, fechaInicio.toTimestamp());
+            stmHistorial.setTimestamp(3, fechaFin.toTimestamp());
+            rsHistorial = stmHistorial.executeQuery();
+
+            while (rsHistorial.next()) {
+                usu.addElemHistorial(new ElemHistorial(new Time(rsHistorial.getTimestamp("fechaentrada")),
+                new Time(rsHistorial.getTimestamp("fechaentrada"))));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmHistorial.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        
+    }
             
 
 }

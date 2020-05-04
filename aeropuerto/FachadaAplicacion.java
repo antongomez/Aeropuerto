@@ -241,5 +241,8 @@ public class FachadaAplicacion extends Application {
     public void salirPersLaboral(PersonalLaboral usu){
         gu.salirPersLaboral(usu);
     }
+    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+        gu.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
+    }
 
 }

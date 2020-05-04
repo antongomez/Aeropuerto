@@ -3,6 +3,7 @@ package aeropuerto.gestion;
 import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.util.EstadisticasUsuario;
+import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 
@@ -74,6 +75,9 @@ public class GestionUsuarios {
     public void salirPersLaboral(PersonalLaboral usu){
         fbd.salirPersLaboral(usu.getDni());
         usu.setEstaDentro(false);
+    }
+    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+        fbd.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
 
 }

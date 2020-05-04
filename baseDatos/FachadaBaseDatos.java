@@ -4,6 +4,7 @@ import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Aerolinea;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
+import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
@@ -238,5 +239,7 @@ public class FachadaBaseDatos {
     public void salirPersLaboral(String dni){
         daoUsuarios.salirPersLaboral(dni);
     }
-    
+    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+        daoUsuarios.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
+    }
 }

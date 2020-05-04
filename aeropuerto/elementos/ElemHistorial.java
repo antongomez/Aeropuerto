@@ -1,33 +1,28 @@
 package aeropuerto.elementos;
 
+import aeropuerto.util.Time;
 import java.util.Date;
 
 //clase creada para guardar el formato de los elementos del historial de trabajo del personal laboral
 public class ElemHistorial {
 
-    private Date fechaEntrada;
-    private Date fechaSalida;
+    private Time fechaEntrada;
+    private Time fechaSalida;
 
     //cuando se construye un elemento inicialmente solo se sabe la fecha de entrada
-    public ElemHistorial(Date fechaEntrada) {
+    public ElemHistorial(Time fechaEntrada, Time fechaSalida) {
         this.fechaEntrada = fechaEntrada;
-        this.fechaSalida = null;
+        this.fechaSalida = fechaSalida;
     }
 
-    public Date getFechaEntrada() {
+    public Time getFechaEntrada() {
         return fechaEntrada;
     }
 
-    public Date getFechaSalida() {
+    public Time getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaEntrada(Date fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
-    }
-
-    public void setFechaSalida(Date fechaSalida) {
-        this.fechaSalida = fechaSalida;
-    }
+    
 
 }
