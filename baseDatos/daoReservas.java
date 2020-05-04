@@ -184,5 +184,9 @@ public class daoReservas extends AbstractDAO {
         }
         return correcto;
     }
+    
+    public void obtenerResrvasCocheUsuario(String dniUsuario){
+        
+    }
 
 }

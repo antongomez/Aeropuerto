@@ -17,6 +17,8 @@ public class Reserva {
     private Integer terminal;
     private Integer piso;
     private Integer numPlaza;
+    /*Atributo solo válido para reserva de coche*/
+    private Float precio;
 
     /*Constructor reserva coche*/
     public Reserva(String tipo, Timestamp inicio, Timestamp fin, String matricula) {

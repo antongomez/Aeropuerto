@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -37,6 +38,12 @@ public class VCocheControlador implements Initializable {
     private RadioButton cambiarFechaConReserva;
     @FXML
     private DatePicker datePickerConReserva;
+    @FXML
+    private TableColumn<?, ?> columnaMatriculaConReserva;
+    @FXML
+    private TableColumn<?, ?> columnaFechaVueltaConReserva;
+    @FXML
+    private TableColumn<?, ?> columnaPrecioConReserva;
 
     /**
      * Initializes the controller class.
@@ -50,6 +57,7 @@ public class VCocheControlador implements Initializable {
 
     @FXML
     private void obtenerReservasUsuario(ActionEvent event) {
+        
     }
 
     @FXML
@@ -62,6 +70,12 @@ public class VCocheControlador implements Initializable {
 
     @FXML
     private void activarDatePicker(ActionEvent event) {
+        if(cambiarFechaConReserva.isSelected()){
+            datePickerConReserva.setDisable(false);
+        }
+        else{
+            datePickerConReserva.setDisable(true);
+        }
     }
     
 }
