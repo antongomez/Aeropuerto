@@ -725,13 +725,17 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         String tipo;
         Integer num;
         EstadisticasUsuario estadisticasUsuario;
+        String titulo = "Estadisticas ";
 
         if (btnEstacion.isSelected()) {
             tipo = "estacion";
+            titulo += "de ";
         } else if (btnMes.isSelected()) {
             tipo = "mes";
+            titulo += "de ";
         } else {
             tipo = "anho";
+            titulo += "del ";
         }
         if (tipo.equals("anho")) {
             num = parseInt(comboBoxEstUsu.getSelectionModel().getSelectedItem());
@@ -740,18 +744,37 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
 
         estadisticasUsuario = Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
+
         txtAreaNumViajes.setText("Has viajado " + estadisticasUsuario.getVecesViajadas()
                 + " veces en " + comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase() + "!");
-        etqAerolineaFavEspecifica.setText("");
-        etqDestinoFavEspecifico.setText("");
-        for (String aer : estadisticasUsuario.getAerolineasFav()) {
-            etqAerolineaFavEspecifica.setText(etqAerolineaFavEspecifica.getText() + "  " + aer);
+
+        titulo += comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase();
+        etqInfoEstadisticasEspecificas.setText(titulo);
+
+        if (estadisticasUsuario.getAerolineasFav().isEmpty()) {
+            etqAerolineaFavEspecifica.setText(" - ");
+        } else {
+            String aerolineasFav = estadisticasUsuario.getAerolineasFav().get(0);
+            for (int i = 1; i < estadisticasUsuario.getAerolineasFav().size(); i++) {
+                aerolineasFav += ", " + estadisticasUsuario.getAerolineasFav().get(i);
+            }
+            etqAerolineaFavEspecifica.setText(aerolineasFav);
         }
-        for (String de : estadisticasUsuario.getDestinosFav()) {
-            etqDestinoFavEspecifico.setText(etqDestinoFavEspecifico.getText() + "  " + de);
+        if (estadisticasUsuario.getDestinosFav().isEmpty()) {
+            etqDestinoFavEspecifico.setText(" - ");
+        } else {
+            String destinosFav = estadisticasUsuario.getDestinosFav().get(0);
+            for (int i = 1; i < estadisticasUsuario.getDestinosFav().size(); i++) {
+                destinosFav += ", " + estadisticasUsuario.getDestinosFav().get(i);
+            }
+            etqDestinoFavEspecifico.setText(destinosFav);
         }
 
-        etqTarifaFavEspecifico.setText("  " + estadisticasUsuario.getTarifaFav());
+        if (!estadisticasUsuario.getTarifaFav().isBlank()) {
+            etqTarifaFavEspecifico.setText(estadisticasUsuario.getTarifaFav());
+        } else {
+            etqTarifaFavEspecifico.setText(" - ");
+        }
 
     }
 
@@ -760,6 +783,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<String> estaciones = FXCollections.observableArrayList("Primavera", "Verano", "Otoño", "Invierno");
         comboBoxEstUsu.setItems(estaciones);
         comboBoxEstUsu.getSelectionModel().selectFirst();
+        mostrarEstadisticas();
     }
 
     @FXML
@@ -767,11 +791,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         comboBoxEstUsu.setItems(meses);
         comboBoxEstUsu.getSelectionModel().selectFirst();
+        mostrarEstadisticas();
     }
 
     @FXML
     void accionAnho(ActionEvent event) {
         buscarAnos();
+        mostrarEstadisticas();
     }
 
     @FXML

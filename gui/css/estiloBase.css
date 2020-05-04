@@ -584,30 +584,44 @@ RADIO-BUTTON
 
 /*
 
-    PROPIEDADES DOS TEXTFIELDS
+    PROPIEDADES DOS TEXTAREA
 
 */
-.text-area{
+.text-area {
     -fx-background-color: cor-bordes, derive(white, -80%);
-    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
-    -fx-background-radius: 0, 0;
-
+    -fx-background-radius: 0;
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
     -fx-prompt-text-fill: derive(white, -20%);
 }
+.text-area > .scroll-pane {
+    -fx-background-color: cor-bordes;
+}
+.text-area .content {
+    /*the is 1px less top and bottom than TextInput because of scrollpane border */
+    -fx-cursor: text;
+    -fx-background-color: derive(white, -80%);
+    -fx-background-radius: 0;
+}
+.text-area:hover > .scroll-pane {
+    -fx-background-color: -cor-accent;
+}
 
 .text-area:hover{
-    -fx-background-color: cor-accent, derive(white, -80%);
-    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
-    -fx-background-radius: 0, 0;
+    -fx-background-color: -cor-accent, derive(white, -80%);
+}
+
+.text-area:focused > .scroll-pane {
+    -fx-background-color: cor-secundaria;
 }
 
 .text-area:focused{
     -fx-background-color: cor-secundaria, derive(white, -80%);
-    -fx-background-insets: 0, 1.5 1.5 2.5 1.5;
-    -fx-background-radius: 0, 0;
 }
-
+.text-area:focused .content {
+    -fx-background-insets: 0;
+    -fx-background-color: derive(white, -80%);
+    -fx-background-radius: 0;
+}
 

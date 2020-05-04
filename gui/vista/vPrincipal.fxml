@@ -624,7 +624,7 @@
                                           <GridPane hgap="5.0" vgap="5.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="160.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -633,7 +633,7 @@
                                             </rowConstraints>
                                              <children>
                                                 <Label prefHeight="32.0" text="Aerolínea favorita:" />
-                                                <Label prefHeight="32.0" text="Destino máis popular:" GridPane.rowIndex="1" />
+                                                <Label prefHeight="32.0" text="Destino más popular:" GridPane.rowIndex="1" />
                                                 <Label prefHeight="32.0" text="Tarifa favorita:" GridPane.rowIndex="2" />
                                                 <Label fx:id="etqAerolineaFavEspecifica" prefHeight="32.0" GridPane.columnIndex="1" />
                                                 <Label fx:id="etqDestinoFavEspecifico" prefHeight="32.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -648,7 +648,7 @@
                                           <GridPane hgap="5.0" vgap="5.0">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="160.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" />
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -657,7 +657,7 @@
                                              </rowConstraints>
                                              <children>
                                                 <Label prefHeight="32.0" text="Aerolínea favorita:" />
-                                                <Label prefHeight="32.0" text="Destino máis popular:" GridPane.rowIndex="1" />
+                                                <Label prefHeight="32.0" text="Destino más popular:" GridPane.rowIndex="1" />
                                                 <Label prefHeight="32.0" text="Tarifa favorita:" GridPane.rowIndex="2" />
                                                 <Label fx:id="etqAerolineaFavGlobal" prefHeight="32.0" GridPane.columnIndex="1" />
                                                 <Label fx:id="etqDestinoFavGlobal" prefHeight="32.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
