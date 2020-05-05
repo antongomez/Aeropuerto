@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estiloBase.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.VHistorialController">
    <children>
-      <TableView fx:id="tablaHistorial" disable="true" layoutX="41.0" layoutY="157.0" prefHeight="222.0" prefWidth="519.0">
+      <TableView fx:id="tablaHistorial" layoutX="41.0" layoutY="157.0" prefHeight="222.0" prefWidth="519.0">
         <columns>
           <TableColumn fx:id="colEntrada" prefWidth="255.0" text="Entrada" />
           <TableColumn fx:id="colSalida" prefWidth="259.0" text="Salida" />

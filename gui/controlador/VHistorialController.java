@@ -60,7 +60,7 @@ public class VHistorialController extends Controlador implements Initializable {
         this.trabajador = trab;
         colEntrada.setCellValueFactory(new PropertyValueFactory<>("fechaEntrada"));
         colSalida.setCellValueFactory(new PropertyValueFactory<>("fechaSalida"));
-
+        trabajador.borrarHistorial();
         Modelo.getInstanceModelo().obtenerHistorialPersLaboral(trabajador, Time.diaActual(), Time.diaActual());
 
         ObservableList<ElemHistorial> hist = FXCollections.observableArrayList(trabajador.getHistorialTrabajo());

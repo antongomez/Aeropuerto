@@ -1424,6 +1424,13 @@ private void actualizarBotonesPersLab(){
     }
     @FXML
     private void accionBtnTarea(ActionEvent event) {
+        //Creamos unha venta filla da princiapl
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.initOwner(getVenta());
+        
+
+        VTareaController controlador = ((VTareaController) loadWindow(getClass().getResource("/gui/vista/vTarea.fxml"), "AeroETSE", stage));
+        controlador.setTrabajador((PersonalLaboral) usuario);
     }
 
     @FXML
