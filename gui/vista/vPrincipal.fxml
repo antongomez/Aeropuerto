@@ -718,7 +718,7 @@
                                                 <Label minHeight="-Infinity" prefHeight="33.0" text="Terminal:" GridPane.rowIndex="1" />
                                                 <Label minHeight="-Infinity" prefHeight="33.0" text="Tipo de ventas:" GridPane.columnIndex="2" />
                                                 <TextField fx:id="txtNomeTendas" minHeight="-Infinity" minWidth="100.0" prefHeight="33.0" prefWidth="180.0" GridPane.columnIndex="1" />
-                                                <ComboBox fx:id="cBoxTerminalTendas" minHeight="-Infinity" prefHeight="33.0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <ComboBox fx:id="cBoxTerminalTendas" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="90.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <ComboBox fx:id="cBoxTipoTendas" minHeight="-Infinity" prefHeight="33.0" prefWidth="200.0" promptText="moda y complementos" GridPane.columnIndex="3" />
                                              </children>
                                           </GridPane>

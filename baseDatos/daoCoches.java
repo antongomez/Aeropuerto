@@ -45,7 +45,6 @@ public class daoCoches extends AbstractDAO {
             stmCoches.setTimestamp(1, retorno.toTimestamp());
             stmCoches.setTimestamp(2, llegada.toTimestamp());
             stmCoches.setTimestamp(3, retorno.toTimestamp());
-            stmCoches.setTimestamp(4, llegada.toTimestamp());
 
             if (numPlazas != null) {
                 stmCoches.setInt(3, numPlazas);
