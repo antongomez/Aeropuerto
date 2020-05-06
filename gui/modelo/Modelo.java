@@ -104,6 +104,14 @@ public class Modelo {
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
         return fa.obtenerVuelosUsuario(dniUs);
     }
+    
+    public List<Vuelo> obtenerVuelosRealizadosUsuario(String dniUs) {
+        return fa.obtenerVuelosRealizadosUsuario(dniUs);
+    }
+    
+    public List<Vuelo> obtenerVuelosFuturosUsuario(String dniUs) {
+        return fa.obtenerVuelosFuturosUsuario(dniUs);
+    }
 
     //Función cambiar datos
     public boolean modificarUsuario(Usuario usuario) {

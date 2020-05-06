@@ -93,6 +93,14 @@ public class FachadaAplicacion extends Application {
         return gv.obtenerVuelosUsuario(dniUs);
     }
 
+    public List<Vuelo> obtenerVuelosRealizadosUsuario(String dniUs) {
+        return gv.obtenerVuelosRealizadosUsuario(dniUs);
+    }
+    
+    public List<Vuelo> obtenerVuelosFuturosUsuario(String dniUs) {
+        return gv.obtenerVuelosFuturosUsuario(dniUs);
+    }
+    
     /*tipo: año/mes/estación
     tipo=anho => num= año concreto
     tipo=mes => num=1,...,12 dependiendo del mes concreto

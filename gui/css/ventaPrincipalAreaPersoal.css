@@ -4,6 +4,7 @@
     -cor-accent: lightblue;
     -cor-fondo: #1d1d1d;
     -cor-cancelado: #b80c00;
+    -cor-encurso: #11ad00;
 
 }
 
@@ -48,5 +49,10 @@
 
 .labCanceladoCor{
     -fx-background-color: -cor-bordes, -cor-cancelado;
+    -fx-background-insets: 0, 1;
+}
+
+.labEnCursoCor{
+    -fx-background-color: -cor-bordes, -cor-encurso;
     -fx-background-insets: 0, 1;
 }

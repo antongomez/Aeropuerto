@@ -32,6 +32,14 @@ public class GestionVuelos {
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
         return fbd.obtenerVuelosUsuario(dniUs);
     }
+    
+    public List<Vuelo> obtenerVuelosRealizadosUsuario(String dniUs) {
+        return fbd.obtenerVuelosRealizadosUsuario(dniUs);
+    }
+    
+    public List<Vuelo> obtenerVuelosFuturosUsuario(String dniUs) {
+        return fbd.obtenerVuelosFuturosUsuario(dniUs);
+    }
 
     public void obtenerDatosAvionVuelo(Vuelo v) {
 

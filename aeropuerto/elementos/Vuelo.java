@@ -90,6 +90,10 @@ public class Vuelo {
         this.terminal = terminal;
         this.retraso = retraso;
     }
+    
+    public Boolean enCurso(){
+        return ((!Time.fechaMayorIgualActual(fechasalidaReal)) && (Time.fechaMayorIgualActual(fechallegadaTeo)));
+    }
 
     public Aerolinea getAerolinea() {
         return aerolinea;

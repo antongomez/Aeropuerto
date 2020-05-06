@@ -140,8 +140,8 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select v.numvuelo as numvuelo, v.origen as origen, "
-                    + "v.destino as destino, v.fechasalidareal as fechasalidareal, v.fechallegadareal as fechallegadareal, "
+            stmVuelo = con.prepareStatement("select v.numvuelo, v.origen, "
+                    + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, "
                     + "c.preciobillete as preciobillete, v.cancelado as cancelado "
                     + "from usuario u, vuelo v, comprarBillete c "
                     + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? "
@@ -150,7 +150,91 @@ public class daoVuelos extends AbstractDAO {
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
-                        rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getTimestamp("fechallegadareal"),
+                        rsVuelo.getTimestamp("fechasalidateorica"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadateorica"), rsVuelo.getTimestamp("fechallegadareal"),
+                        rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
+                        null, null);
+
+                resultado.add(vueloActual);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
+    }
+
+    public List<Vuelo> obtenerVuelosRealizadosUsuario(String dniUs) {
+        List<Vuelo> resultado = new ArrayList<>();
+        Connection con;
+        Vuelo vueloActual;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+
+        con = super.getConexion();
+
+        try {
+            stmVuelo = con.prepareStatement("select v.numvuelo, v.origen, "
+                    + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, "
+                    + "c.preciobillete, v.cancelado "
+                    + "from usuario u, vuelo v, comprarBillete c "
+                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? "
+                    + "  and v.fechallegadareal < now()"
+                    + "order by v.fechasalidateorica asc ");
+            stmVuelo.setString(1, dniUs);
+            rsVuelo = stmVuelo.executeQuery();
+            while (rsVuelo.next()) {
+                vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
+                        rsVuelo.getTimestamp("fechasalidateorica"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadateorica"), rsVuelo.getTimestamp("fechallegadareal"),
+                        rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
+                        null, null);
+
+                resultado.add(vueloActual);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmVuelo.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
+    }
+
+    public List<Vuelo> obtenerVuelosFuturosUsuario(String dniUs) {
+        List<Vuelo> resultado = new ArrayList<>();
+        Connection con;
+        Vuelo vueloActual;
+        PreparedStatement stmVuelo = null;
+        ResultSet rsVuelo;
+
+        con = super.getConexion();
+
+        try {
+            stmVuelo = con.prepareStatement("select v.numvuelo, v.origen, "
+                    + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, "
+                    + "c.preciobillete, v.cancelado "
+                    + "from usuario u, vuelo v, comprarBillete c "
+                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? "
+                    + "  and v.fechallegadareal >= now()"
+                    + "order by v.fechasalidateorica asc ");
+            stmVuelo.setString(1, dniUs);
+            rsVuelo = stmVuelo.executeQuery();
+            while (rsVuelo.next()) {
+                vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
+                        rsVuelo.getTimestamp("fechasalidateorica"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadateorica"), rsVuelo.getTimestamp("fechallegadareal"),
                         rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
                         null, null);
 

@@ -32,7 +32,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -49,7 +48,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
 
 public class vPrincipalControlador extends Controlador implements Initializable {
 
@@ -71,7 +69,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     private Usuario usuario;//usuario que está usando la ventana
     private Parking parking;//parking a reservar
-    private ObservableList<Vuelo> vuelosUsuario;//Vuelos usuario
+    private ObservableList<Vuelo> vuelosFuturos;//Vuelos usuario
 
     //Encabezado
     @FXML
@@ -193,11 +191,27 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private TableColumn<Vuelo, String> columnaDestinoMiVuelo;
     @FXML
-    private TableColumn<Vuelo, Timestamp> columnaSalidaMiVuelo;
+    private TableColumn<Vuelo, Time> columnaSalidaMiVuelo;
     @FXML
-    private TableColumn<Vuelo, Timestamp> columnaLlegadaMiVuelo;
+    private TableColumn<Vuelo, Time> columnaLlegadaMiVuelo;
     @FXML
     private TableColumn<Vuelo, Float> columnaPrecioMiVuelo;
+
+    //Tabla Futuros Vuelos
+    @FXML
+    private TableView<Vuelo> tablaFuturosVuelos;
+    @FXML
+    private TableColumn<Vuelo, Integer> columnaNumeroFV;
+    @FXML
+    private TableColumn<Vuelo, String> columnaOrigenFV;
+    @FXML
+    private TableColumn<Vuelo, String> columnaDestinoFV;
+    @FXML
+    private TableColumn<Vuelo, Time> columnaSalidaFV;
+    @FXML
+    private TableColumn<Vuelo, Time> columnaLlegadaFV;
+    @FXML
+    private TableColumn<Vuelo, Float> columnaPrecioFV;
 
     //Estadisticas
     @FXML
@@ -474,6 +488,29 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
         });
 
+        columnaNumeroFV.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
+        columnaOrigenFV.setCellValueFactory(new PropertyValueFactory<>("origen"));
+        columnaDestinoFV.setCellValueFactory(new PropertyValueFactory<>("destino"));
+        columnaSalidaFV.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
+        columnaLlegadaFV.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
+        columnaPrecioFV.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
+        //A fila ponse en vermello en caso de estar cancelado o vuelo
+        tablaFuturosVuelos.setRowFactory(row -> new TableRow<Vuelo>() {
+            @Override
+            public void updateItem(Vuelo item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if ((item != null) && (!empty)) {
+                    if (item.getCancelado()) {
+                        setStyle("-fx-background-color: #b80c00;");
+                    }
+                    if (item.enCurso()) {
+                        setStyle("-fx-background-color: #11ad00;");
+                    }
+                }
+            }
+        });
+
         //Definimos el tipo de dato de cada columna de la tablaMisReservas
         colInicioReserva.setCellValueFactory(new PropertyValueFactory<>("inicio"));
         colFinReserva.setCellValueFactory(new PropertyValueFactory<>("fin"));
@@ -665,9 +702,16 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             etqFechaIngreso.setVisible(false);
             paneCurriculum.setVisible(false);
         }
-
         comboBoxPais.getSelectionModel().select(usuario.getPaisProcedencia());
         comboBoxSexo.getSelectionModel().select(usuario.getSexo());
+
+        //MisVuelos
+        ObservableList<Vuelo> vuelosRealizados = FXCollections.observableArrayList(getInstanceModelo()
+                .obtenerVuelosRealizadosUsuario(usuario.getDni()));
+        tablaMisVuelos.setItems(vuelosRealizados);
+        vuelosFuturos = FXCollections.observableArrayList(getInstanceModelo()
+                .obtenerVuelosFuturosUsuario(usuario.getDni()));
+        tablaFuturosVuelos.setItems(vuelosFuturos);
 
         //RESERVAS
         ObservableList<Reserva> res = FXCollections.observableArrayList(
@@ -737,17 +781,21 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //MisVuelos
     @FXML
     private void accionAbrirMisVuelos(Event event) {
-        vuelosUsuario = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosUsuario(usuario.getDni()));
-        tablaMisVuelos.setItems(vuelosUsuario);
+        ObservableList<Vuelo> vuelosRealizados
+                = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosRealizadosUsuario(usuario.getDni()));
+        tablaMisVuelos.setItems(vuelosRealizados);
+        vuelosFuturos
+                = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosFuturosUsuario(usuario.getDni()));
+        tablaFuturosVuelos.setItems(vuelosFuturos);
     }
 
     @FXML
     private void cancelarViaje(ActionEvent event) {
-        Vuelo vueloSelect = tablaMisVuelos.getSelectionModel().getSelectedItem();
+        Vuelo vueloSelect = tablaFuturosVuelos.getSelectionModel().getSelectedItem();
         if (vueloSelect != null) {
             //if(Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo())){
             if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
-                vuelosUsuario.remove(vueloSelect);
+                vuelosFuturos.remove(vueloSelect);
                 Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
             } else {
                 Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
@@ -764,7 +812,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void seleccionarMiVuelo(MouseEvent event) {
-        Vuelo vueloSelect = tablaMisVuelos.getSelectionModel().getSelectedItem();
+        Vuelo vueloSelect = tablaFuturosVuelos.getSelectionModel().getSelectedItem();
         if (vueloSelect != null) {
             if (Modelo.getInstanceModelo().vueloRealizado(vueloSelect.getNumVuelo())) {
                 btnCancelar.setDisable(true);

@@ -104,6 +104,14 @@ public class FachadaBaseDatos {
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
         return daoVuelos.obtenerVuelosUsuario(dniUs);
     }
+    
+    public List<Vuelo> obtenerVuelosRealizadosUsuario(String dniUs) {
+        return daoVuelos.obtenerVuelosRealizadosUsuario(dniUs);
+    }
+    
+    public List<Vuelo> obtenerVuelosFuturosUsuario(String dniUs) {
+        return daoVuelos.obtenerVuelosFuturosUsuario(dniUs);
+    }
 
     public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num) {
         return daoUsuarios.obtenerEstadisticasUsuario(dniUs, tipo, num);
