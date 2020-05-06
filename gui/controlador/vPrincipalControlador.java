@@ -486,16 +486,24 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaNomeTendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaTipoTendas.setCellValueFactory(new PropertyValueFactory<>("tipoVentas"));
         columnaTerminalTendas.setCellValueFactory(new PropertyValueFactory<>("terminal"));
-        
+
         ObservableList<String> terminais2 = FXCollections.observableArrayList("Todas");
         //Usamos a lista de terminais obtida de antes
         terminais.forEach((enteiro) -> {
             terminais2.add(enteiro.toString());
         });
         cBoxTerminalTendas.setItems(terminais2);
-        
-        
-        ObservableList<String> tipoVentas = FXCollections.observableArrayList("Todas");
+        cBoxTerminalTendas.getSelectionModel().selectFirst();
+
+        ObservableList<String> tipoVentas = FXCollections.observableArrayList("Todos");
+        tipoVentas.addAll(getInstanceModelo().obterTipoVentas());
+        cBoxTipoTendas.setItems(tipoVentas);
+        cBoxTipoTendas.getSelectionModel().selectFirst();
+
+        ObservableList<Tienda> tiendas = FXCollections.observableList(getInstanceModelo().buscarTiendas(txtNomeTendas.getText(),
+                cBoxTipoTendas.getSelectionModel().getSelectedItem(),
+                cBoxTerminalTendas.getSelectionModel().getSelectedItem()));
+        taboaTendas.setItems(tiendas);
     }
 
     public void setUsuario(Usuario usuario) {
@@ -623,6 +631,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         comboBoxPais.getSelectionModel().select(usuario.getPaisProcedencia());
         comboBoxSexo.getSelectionModel().select(usuario.getSexo());
+
+        //RESERVAS
+        ObservableList<Reserva> res = FXCollections.observableArrayList(
+                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
+        tablaMisReservas.setItems(res);
     }
 
     //MODIFICAR DATOS
@@ -851,8 +864,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     @FXML
-    void accionEstacion(ActionEvent event
-    ) {
+    void accionEstacion(ActionEvent event) {
         ObservableList<String> estaciones = FXCollections.observableArrayList("Primavera", "Verano", "Otoño", "Invierno");
         comboBoxEstUsu.setItems(estaciones);
         comboBoxEstUsu.getSelectionModel().selectFirst();
@@ -860,8 +872,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     @FXML
-    void accionMes(ActionEvent event
-    ) {
+    void accionMes(ActionEvent event) {
         ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         comboBoxEstUsu.setItems(meses);
         comboBoxEstUsu.getSelectionModel().selectFirst();
@@ -869,29 +880,25 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     @FXML
-    void accionAnho(ActionEvent event
-    ) {
+    void accionAnho(ActionEvent event) {
         buscarAnos();
         mostrarEstadisticas();
     }
 
     @FXML
-    private void accionComboBox(ActionEvent event
-    ) {
+    private void accionComboBox(ActionEvent event) {
         if (comboBoxEstUsu.getSelectionModel().getSelectedItem() != null) {
             mostrarEstadisticas();
         }
     }
 
     @FXML
-    private void cambiarAerolinea(ActionEvent event
-    ) {
+    private void cambiarAerolinea(ActionEvent event) {
         accionCalculoEstAerolinea();
     }
 
     @FXML
-    private void abrirPestanaEstAerolineas(Event event
-    ) {
+    private void abrirPestanaEstAerolineas(Event event) {
 
         comboBoxEstAer.getSelectionModel().selectFirst();
         accionCalculoEstAerolinea();
@@ -967,29 +974,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //PARKING
         btnReservarParking.setDisable(true);
         btnBuscarParking.setDisable(true);
-        etqErroMatricula.setVisible(false);
-        //Borramos os txt
-        txtMatriculaParking.clear();
-        txtPrecioParking.clear();
-        cboxTerminalParking.getSelectionModel().clearSelection();
-        dataFRetornoParking.setValue(null);
-        dataFLlegadaParking.setValue(null);
-        //Configuramos a etiqueta de informacion
-        etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
-        etqInfoParking.getStyleClass().remove("etqErro");
 
         //COCHES
-        //Desactivamos os botons
         btnBuscarCoches.setDisable(true);
         btnReservarCoches.setDisable(true);
-        //Configuramos a etiqueta de informacion
-        etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
-        etqInfoCoches.getStyleClass().remove("etqErro");
-        //Borramos os txt
-        textNPrazas.clear();
-        txtPrecioTotalCoches.clear();
-        dataFRetornoCoches.setValue(null);
-        dataFLlegadaCoches.setValue(null);
 
         //Poñemos o panel diante
         etqTitulo.setText(TITULO_SERV);
@@ -1000,6 +988,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //PARKING
     @FXML
     private void abrirParking(Event event) {
+        btnReservarParking.setDisable(true);
+        btnBuscarParking.setDisable(true);
     }
 
     @FXML
@@ -1059,6 +1049,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     + "- Precio: " + obterPrecioParking() + " €.",
                     getVenta());
         }
+        btnReservarParking.setDisable(true);
+        txtMatriculaParking.clear();
+        etqErroMatricula.setVisible(false);
     }
 
     @FXML
@@ -1195,6 +1188,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //COCHES
     @FXML
     private void abrirCoches(Event event) {
+        btnBuscarCoches.setDisable(true);
+        btnReservarCoches.setDisable(true);
+
     }
 
     private void poderBuscarCoches() {
@@ -1302,7 +1298,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             numPrazas = null;
         }
-        ObservableList<Coche> coches = FXCollections.observableList(getInstanceModelo().buscarCoches(llegada, salida, numPrazas));
+        actualizarTaboa(llegada, salida, numPrazas);
+    }
+
+    private void actualizarTaboa(Time llegada, Time salida, Integer numPrazas) {
+        ObservableList<Coche> coches = FXCollections.observableList(getInstanceModelo()
+                .buscarCoches(llegada, salida, numPrazas));
         taboaReservarCoche.setItems(coches);
     }
 
@@ -1325,7 +1326,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Coche coche = taboaReservarCoche.getSelectionModel().getSelectedItem();
         if (coche != null) {
             Reserva reserva = new Reserva(new Time(dataFLlegadaCoches.getValue()),
-                    new Time(dataFLlegadaCoches.getValue()),
+                    new Time(dataFRetornoCoches.getValue()),
                     "coche",
                     coche.getMatricula());
             if (getInstanceModelo().reservarCoche(reserva, usuario.getDni())) {
@@ -1347,6 +1348,17 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     + "reservar.", getVenta());
         }
 
+        Integer numPrazas;
+        if (!textNPrazas.getText().isEmpty()) {
+            numPrazas = Integer.parseInt(textNPrazas.getText());
+        } else {
+            numPrazas = null;
+        }
+        actualizarTaboa(new Time(dataFLlegadaCoches.getValue()),
+                new Time(dataFRetornoCoches.getValue()),
+                numPrazas);
+        btnReservarCoches.setDisable(true);
+
     }
 
     //Tendas
@@ -1356,7 +1368,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnBuscarTendas(ActionEvent event) {
-
+        ObservableList<Tienda> tiendas = FXCollections.observableList(getInstanceModelo().buscarTiendas(txtNomeTendas.getText(),
+                cBoxTipoTendas.getSelectionModel().getSelectedItem(),
+                cBoxTerminalTendas.getSelectionModel().getSelectedItem()));
+        taboaTendas.setItems(tiendas);
     }
 
     /*

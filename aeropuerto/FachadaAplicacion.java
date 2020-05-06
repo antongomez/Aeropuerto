@@ -3,6 +3,7 @@ package aeropuerto;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalLaboral;
+import aeropuerto.elementos.Tienda;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.gestion.GestionParking;
@@ -128,6 +129,10 @@ public class FachadaAplicacion extends Application {
 
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
         return gv.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
+    }
+    
+    public List<Tienda> buscarTiendas(String nombre, String tipo, String terminal) {
+        return gt.buscarTiendas(nombre, tipo, terminal);
     }
 
     public List<Vuelo> verSalidas() {

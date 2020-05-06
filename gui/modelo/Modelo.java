@@ -4,6 +4,7 @@ import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalLaboral;
+import aeropuerto.elementos.Tienda;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
@@ -162,6 +163,10 @@ public class Modelo {
 
     public List<String> obterTipoVentas() {
         return fa.obterTipoVentas();
+    }
+    
+    public List<Tienda> buscarTiendas(String nombre, String tipo, String terminal) {
+        return fa.buscarTiendas(nombre, tipo, terminal);
     }
 
     public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin) {

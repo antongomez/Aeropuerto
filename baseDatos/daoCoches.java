@@ -36,8 +36,8 @@ public class daoCoches extends AbstractDAO {
             }
             consulta += "order by nplazas desc, precioPorDia asc, caballos desc, nPuertas asc";
             stmCoches = con.prepareStatement(consulta);
-            stmCoches.setTimestamp(1, llegada.toTimestamp());
-            stmCoches.setTimestamp(2, retorno.toTimestamp());
+            stmCoches.setTimestamp(2, llegada.toTimestamp());
+            stmCoches.setTimestamp(1, retorno.toTimestamp());
             if (numPlazas != null) {
                 stmCoches.setInt(3, numPlazas);
             }

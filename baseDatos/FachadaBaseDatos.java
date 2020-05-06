@@ -5,6 +5,7 @@ import aeropuerto.elementos.Aerolinea;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalLaboral;
+import aeropuerto.elementos.Tienda;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
@@ -185,6 +186,10 @@ public class FachadaBaseDatos {
         return daoCoches.buscarCoches(llegada, retorno, numPlazas);
     }
 
+    public List<Tienda> buscarTiendas(String nombre, String tipo, String terminal) {
+        return daoTiendas.buscarTiendas(nombre, tipo, terminal);
+    }
+
     public List<Vuelo> verSalidas() {
         return daoVuelos.verSalidas();
     }
@@ -228,8 +233,8 @@ public class FachadaBaseDatos {
     public Boolean facturarMaleta(String dni, String vuelo, Float peso) {
         return daoVuelos.facturarMaleta(dni, vuelo, peso);
     }
-    
-    public List<String> obterTipoVentas(){
+
+    public List<String> obterTipoVentas() {
         return daoTiendas.obterTipoVentas();
     }
 
