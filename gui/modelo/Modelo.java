@@ -181,6 +181,10 @@ public class Modelo {
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
         return fa.buscarCoches(llegada, retorno, numPlazas);
     }
+    
+    public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas, String modelo, String matricula) {
+        return fa.buscarCoches(llegada, retorno, numPlazas, modelo, matricula);
+    }
 
     public Integer obterPrazaLibre(Integer numTerminal, Integer piso, Time inicio, Time fin) {
         return fa.obterPrazaLibre(numTerminal, piso, inicio, fin);
@@ -263,7 +267,11 @@ public class Modelo {
         return fa.obtenerReservasCocheUsuario(dniUsuario);
     }
     
-    public Boolean introducirAlquiler(Reserva reserva, String dni){
-        return fa.introducirAlquiler(reserva, dni);
+    public Boolean introducirAlquiler(String matricula, Time fin, String dni){
+        return fa.introducirAlquiler(matricula, fin, dni);
+    }
+    
+    public Boolean comprobarRegistrado(String dni){
+        return fa.comprobarRegistrado(dni);
     }
 }

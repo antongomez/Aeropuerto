@@ -3,6 +3,7 @@ package baseDatos;
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Coche;
 import aeropuerto.util.Reserva;
+import aeropuerto.util.Time;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -238,7 +239,7 @@ public class daoReservas extends AbstractDAO {
         return resultado;
     }
     
-    public Boolean introducirAlquiler(Reserva reserva, String dni){
+    public Boolean introducirAlquiler(String matricula, Time fin, String dni){
         Connection con;
         PreparedStatement stmRes = null;
         con = super.getConexion();
@@ -248,8 +249,8 @@ public class daoReservas extends AbstractDAO {
             stmRes = con.prepareStatement("insert into alquilar values"
                     + "(NOW(),?, ?, ?, null)");
             stmRes.setString(1, dni);
-            stmRes.setString(2, reserva.getMatricula());
-            stmRes.setTimestamp(3, reserva.getFin().toTimestamp());
+            stmRes.setString(2, matricula);
+            stmRes.setTimestamp(3, fin.toTimestamp());
             stmRes.executeUpdate();
 
         } catch (SQLException e) {

@@ -5,9 +5,12 @@
  */
 package gui.controlador;
 
+import aeropuerto.elementos.Coche;
+import aeropuerto.elementos.Usuario;
 import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import gui.modelo.Modelo;
+import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ import javafx.scene.input.MouseEvent;
 public class VCocheControlador extends Controlador implements Initializable {
 
     private String dniUsuarioActual;
+    private Coche cocheActual;
 
     //Apartados con reserva
     @FXML
@@ -63,87 +67,130 @@ public class VCocheControlador extends Controlador implements Initializable {
     private TableColumn<Reserva, String> columnaModeloConReserva;
     @FXML
     private TextField textFieldPrecioFinalConReserva;
-    
+
     @FXML
     private TextField textFieldModeloSinReserva;
     @FXML
     private TextField textFieldMatriculaSinReserva;
     @FXML
-    private ComboBox<?> comboBoxPlazasSinReserva;
-    @FXML
-    private DatePicker datePickerFechaVueltaSinSalida;
-    @FXML
     private Button btnBuscarSinReserva;
     @FXML
-    private TableView<?> tablaSinReservas;
+    private TableView<Coche> tablaSinReservas;
     @FXML
-    private TableColumn<?, ?> columnaMatriculaSinReserva;
+    private TableColumn<Coche, String> columnaMatriculaSinReserva;
     @FXML
-    private TableColumn<?, ?> columnaModeloSinReserva;
+    private TableColumn<Coche, String> columnaModeloSinReserva;
     @FXML
-    private TableColumn<?, ?> columnaCaballosSinReserva;
+    private TableColumn<Coche, Integer> columnaCaballosSinReserva;
     @FXML
-    private TableColumn<?, ?> columnaPrecioDiaSinReserva;
+    private TableColumn<Coche, Float> columnaPrecioDiaSinReserva;
     @FXML
-    private TableColumn<?, ?> columnaCombustibleSinReserva;
+    private TableColumn<Coche, String> columnaCombustibleSinReserva;
     @FXML
-    private TableColumn<?, ?> columnaPlazasSinReserva;
+    private TableColumn<Coche, Integer> columnaPlazasSinReserva;
+    @FXML
+    private TableColumn<Coche, Integer> columnaPuertasSinReserva;
     @FXML
     private TextField textFieldDniSinReserva;
     @FXML
     private Button btnAlquilarSinReserva;
     @FXML
     private TextField textFieldPrecioSinReserva;
-    
+    @FXML
+    private TextField textFieldNPlazas;
+    @FXML
+    private DatePicker datePickerFechaVueltaSinReserva;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Apartado con reserva
         cambiarFechaConReserva.setSelected(false);
         cambiarFechaConReserva.setDisable(true);
         datePickerConReserva.setDisable(true);
         btnAlquilarConReserva.setDisable(true);
+
         columnaMatriculaConReserva.setCellValueFactory(new PropertyValueFactory<>("matricula"));
         columnaFechaVueltaConReserva.setCellValueFactory(new PropertyValueFactory<>("fin"));
         columnaPrecioConReserva.setCellValueFactory(new PropertyValueFactory<>("precio"));
         columnaModeloConReserva.setCellValueFactory(new PropertyValueFactory<>("modelo"));
         columnaFechaRecogidaConReserva.setCellValueFactory(new PropertyValueFactory<>("inicio"));
         columnaEstadoConReserva.setCellValueFactory(new PropertyValueFactory<>("estado"));
+
+        //Apartado sin reserva
+        btnBuscarSinReserva.setDisable(true);
+        btnAlquilarSinReserva.setDisable(true);
+        columnaMatriculaSinReserva.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        columnaModeloSinReserva.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        columnaCaballosSinReserva.setCellValueFactory(new PropertyValueFactory<>("caballos"));
+        columnaPrecioDiaSinReserva.setCellValueFactory(new PropertyValueFactory<>("precioDia"));
+        columnaCombustibleSinReserva.setCellValueFactory(new PropertyValueFactory<>("tipoCombustible"));
+        columnaPlazasSinReserva.setCellValueFactory(new PropertyValueFactory<>("nPrazas"));
+        columnaPuertasSinReserva.setCellValueFactory(new PropertyValueFactory<>("nPuertas"));
     }
 
     @FXML
     private void obtenerReservasUsuario(ActionEvent event) {
         dniUsuarioActual = textFieldDNIConReserva.getText();
-        ObservableList<Reserva> reservas = FXCollections.observableList(Modelo.getInstanceModelo().obtenerReservasCocheUsuario(dniUsuarioActual));
-        tablaConReserva.setItems(reservas);
+        if (Modelo.getInstanceModelo().comprobarRegistrado(dniUsuarioActual)) {
+            ObservableList<Reserva> reservas = FXCollections.observableList(Modelo.getInstanceModelo().obtenerReservasCocheUsuario(dniUsuarioActual));
+            tablaConReserva.setItems(reservas);
+        } else {
+            Modelo.getInstanceModelo().mostrarError("Usuario no registrado.\n"
+                    + "Debe registrarse antes de alquilar coches con nosotros.", getVenta());
+        }
     }
 
     @FXML
     private void seleccionarConReserva(MouseEvent event) {
         Reserva reserva = tablaConReserva.getSelectionModel().getSelectedItem();
-        if (reserva.getEstado().equals("sin alquilar")) {
-            cambiarFechaConReserva.setDisable(false);
-            datePickerConReserva.setValue(reserva.getFin().toLocalDate());
-            btnAlquilarConReserva.setDisable(false);
-            textFieldPrecioFinalConReserva.setText(reserva.getPrecio().toString());
-        } else {
-            cambiarFechaConReserva.setDisable(true);
-            datePickerConReserva.setValue(reserva.getFin().toLocalDate());
-            btnAlquilarConReserva.setDisable(true);
+        if (reserva != null) {
+            if (reserva.getEstado().equals("sin alquilar")) {
+                cambiarFechaConReserva.setDisable(false);
+                datePickerConReserva.setValue(reserva.getFin().toLocalDate());
+                btnAlquilarConReserva.setDisable(false);
+                textFieldPrecioFinalConReserva.setText(reserva.getPrecio().toString());
+            } else {
+                cambiarFechaConReserva.setDisable(true);
+                datePickerConReserva.setValue(reserva.getFin().toLocalDate());
+                btnAlquilarConReserva.setDisable(true);
+            }
         }
     }
 
     @FXML
     private void alquilarConReserva(ActionEvent event) {
         Reserva reserva = tablaConReserva.getSelectionModel().getSelectedItem();
-        if (cambiarFechaConReserva.isSelected()) {
-            reserva.setFin(new Time(datePickerConReserva.getValue()));
-            Modelo.getInstanceModelo().introducirAlquiler(reserva, dniUsuarioActual);
-        } else {
-            Modelo.getInstanceModelo().introducirAlquiler(reserva, dniUsuarioActual);
+        if (reserva != null) {
+            if (cambiarFechaConReserva.isSelected()) {
+                reserva.setFin(new Time(datePickerConReserva.getValue()));
+                if (Modelo.getInstanceModelo().introducirAlquiler(reserva.getMatricula(), reserva.getFin(), dniUsuarioActual)) {
+                    Modelo.getInstanceModelo().mostrarNotificacion("Alquiler realizado con éxito.\n"
+                            + "- Dni del cliente: " + dniUsuarioActual + "\n"
+                            + "- Matricula del coche: " + reserva.getMatricula() + "\n"
+                            + "- Fecha de inicio: " + reserva.getInicio().toStringFecha() + "\n"
+                            + "- Fecha de abandono: " + reserva.getFin().toStringFecha() + "\n"
+                            + "- Precio: " + reserva.getPrecio().toString() + " €.",
+                            getVenta());
+                }
+            } else {
+                if (Modelo.getInstanceModelo().introducirAlquiler(reserva.getMatricula(), reserva.getFin(), dniUsuarioActual)) {
+                    Modelo.getInstanceModelo().mostrarNotificacion("Alquiler realizado con éxito.\n"
+                            + "- Dni del cliente: " + dniUsuarioActual + "\n"
+                            + "- Matricula del coche: " + reserva.getMatricula() + "\n"
+                            + "- Fecha de inicio: " + reserva.getInicio().toStringFecha() + "\n"
+                            + "- Fecha de abandono: " + reserva.getFin().toStringFecha() + "\n"
+                            + "- Precio: " + reserva.getPrecio().toString() + " €.",
+                            getVenta());
+                }
+            }
         }
+        btnBuscarConReserva.fire();
+        btnAlquilarConReserva.setDisable(true);
+        textFieldDNIConReserva.clear();
+        textFieldPrecioFinalConReserva.clear();
     }
 
     @FXML
@@ -155,24 +202,101 @@ public class VCocheControlador extends Controlador implements Initializable {
             datePickerConReserva.setValue(tablaConReserva.getSelectionModel().getSelectedItem().getFin().toLocalDate());
         }
     }
-    
+
     @FXML
     private void actualizarPrecioConReserva(ActionEvent event) {
         Reserva reserva = tablaConReserva.getSelectionModel().getSelectedItem();
-        Float precio=Time.obtenerDias(reserva.getInicio().toLocalDate(), datePickerConReserva.getValue())*reserva.getPrecioDia();
-        textFieldPrecioFinalConReserva.setText(precio.toString());
+        if (reserva != null) {
+            Float precio = (float) (Math.round(Time.obtenerDias(reserva.getInicio().toLocalDate(), datePickerConReserva.getValue()) * reserva.getPrecioDia() * 100d) / 100d);
+            textFieldPrecioFinalConReserva.setText(precio.toString());
+        }
     }
-    
+
     @FXML
     private void buscarCochesDisponibles(ActionEvent event) {
+        if (!comprobarNumeroValido()) {
+            Modelo.getInstanceModelo().mostrarError("El número de plazas debe ser un número entre 1 y 12.", getVenta());
+        } else if (!fechaVueltaCorrecta()) {
+            Modelo.getInstanceModelo().mostrarError("Debe de haber por lo menos un día de diferencia entre la fecha y actual y la de vuelta.", getVenta());
+        } else {
+            Integer numPlazas;
+            if (!textFieldNPlazas.getText().isEmpty()) {
+                numPlazas = Integer.parseInt(textFieldNPlazas.getText());
+            } else {
+                numPlazas = null;
+            }
+            ObservableList<Coche> coches = FXCollections.observableList(Modelo.getInstanceModelo().buscarCoches(Time.diaActual(), new Time(datePickerFechaVueltaSinReserva.getValue()),
+                    numPlazas, textFieldModeloSinReserva.getText(), textFieldMatriculaSinReserva.getText()));
+            tablaSinReservas.setItems(coches);
+        }
+
     }
 
     @FXML
     private void seleccionarSinReserva(MouseEvent event) {
+        btnAlquilarSinReserva.setDisable(false);
+        cocheActual = tablaSinReservas.getSelectionModel().getSelectedItem();
+        if (cocheActual != null) {
+            Float precio = (float) (Math.round(Time.obtenerDias(Time.diaActual().toLocalDate(),
+                    datePickerFechaVueltaSinReserva.getValue()) * cocheActual.getPrecioDia() * 100d) / 100d);
+            textFieldPrecioSinReserva.setText(precio.toString());
+        }
     }
 
     @FXML
     private void alquilarSinReserva(ActionEvent event) {
+        String dni = textFieldDniSinReserva.getText();
+        if (Modelo.getInstanceModelo().comprobarRegistrado(dni)) {
+            if (cocheActual != null) {
+                Reserva reserva = new Reserva(Time.diaActual(), new Time(datePickerFechaVueltaSinReserva.getValue()),
+                        cocheActual.getMatricula(), cocheActual.getPrecioDia());
+                if (Modelo.getInstanceModelo().introducirAlquiler(reserva.getMatricula(),
+                        reserva.getFin(), dni)) {
+                    Modelo.getInstanceModelo().mostrarNotificacion("Alquiler realizado con éxito.\n"
+                            + "- Dni del cliente: " + dni + "\n"
+                            + "- Matricula del coche: " + reserva.getMatricula() + "\n"
+                            + "- Fecha de inicio: " + reserva.getInicio().toStringFecha() + "\n"
+                            + "- Fecha de abandono: " + reserva.getFin().toStringFecha() + "\n"
+                            + "- Precio: " + reserva.getPrecio().toString() + " €.",
+                            getVenta());
+                }
+            }
+        } else {
+            Modelo.getInstanceModelo().mostrarError("Usuario no registrado.\n"
+                    + "Debe registrarse antes de alquilar coches con nosotros.", getVenta());
+        }
+        btnBuscarSinReserva.fire();
+        textFieldPrecioSinReserva.clear();
+        textFieldDniSinReserva.clear();
+    }
+
+    private Boolean comprobarNumeroValido() {
+        try {
+            int num = Integer.parseInt(textFieldNPlazas.getText());
+            return (num <= 12) && (num >= 1);
+        } catch (NumberFormatException ex) {
+            return textFieldNPlazas.getText().isEmpty();
+        }
+    }
+
+    private Boolean fechaVueltaCorrecta() {
+        Boolean correcto = false;
+        Time fecharetorno = new Time(datePickerFechaVueltaSinReserva.getValue());
+        if (!Time.fechaMayorIgualActual(fecharetorno)) {
+            return false;
+        } else if (Time.obtenerDias(fecharetorno.toLocalDate(), Time.diaActual().toLocalDate()) < 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @FXML
+    private void activarBuscar(ActionEvent event) {
+        btnBuscarSinReserva.setDisable(false);
+        textFieldPrecioSinReserva.clear();
+        tablaSinReservas.setItems(null);
+        btnAlquilarSinReserva.setDisable(true);
     }
 
 }

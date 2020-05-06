@@ -79,5 +79,9 @@ public class GestionUsuarios {
     public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
         fbd.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
+    
+    public Boolean comprobarRegistrado(String dni){
+        return fbd.comprobarRegistrado(dni);
+    }
 
 }

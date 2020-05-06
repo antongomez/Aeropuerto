@@ -76,4 +76,71 @@ public class daoCoches extends AbstractDAO {
 
         return coches;
     }
+    
+    public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas, String modelo, String matricula) {
+        PreparedStatement stmCoches = null;
+        ResultSet rsCoches;
+        ArrayList<Coche> coches = new ArrayList<>();
+        Connection con = super.getConexion();
+
+        try {
+            String consulta = "select *\n"
+                    + "from cocheAlquiler \n"
+                    + "where matricula not in ((select cochealquiler as matricula\n"
+                    + "						from reservar\n"
+                    + "						where fechainicioreserva <= ? \n"
+                    + "						  and fechafinreserva >= ?) \n"
+                    + "						UNION\n"
+                    + "						(select matricula\n"
+                    + "						from alquilar\n"
+                    + "						where fechaalquiler <= ? \n"
+                    + "						  and fechadevolucion is null))\n"
+                    + "  and retirado = false \n"
+                    + "  and modelo like ? \n"
+                    + "  and matricula like ? \n";
+            if (numPlazas != null) {
+                consulta += "  and nplazas = ? \n";
+            }
+            
+            consulta += "order by nplazas desc, precioPorDia asc, caballos desc, nPuertas asc";
+            stmCoches = con.prepareStatement(consulta);
+
+            stmCoches.setTimestamp(1, retorno.toTimestamp());
+            stmCoches.setTimestamp(2, llegada.toTimestamp());
+            stmCoches.setTimestamp(3, retorno.toTimestamp());
+            stmCoches.setString(4,"%"+modelo+"%");
+            stmCoches.setString(5, "%"+matricula+"%");
+
+            if(numPlazas!=null){
+                stmCoches.setInt(6, numPlazas);
+            }
+
+            rsCoches = stmCoches.executeQuery();
+            while (rsCoches.next()) {
+                coches.add(new Coche(rsCoches.getString("matricula"),
+                        rsCoches.getString("modelo"),
+                        rsCoches.getInt("caballos"),
+                        rsCoches.getInt("nPlazas"),
+                        rsCoches.getInt("nPuertas"),
+                        rsCoches.getFloat("precioPorDia"),
+                        rsCoches.getString("tipoCombustible"),
+                        rsCoches.getBoolean("retirado")));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmCoches.close();
+            } catch (SQLException e) {
+
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return coches;
+    }
+    
+    
 }

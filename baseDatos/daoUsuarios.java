@@ -756,5 +756,37 @@ public class daoUsuarios extends AbstractDAO {
         }
 
     }
+    
+    public Boolean comprobarRegistrado(String dni){
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        ResultSet rsUsuario;
+        Boolean registrado = false;
+
+        con = this.getConexion();
+
+        try {
+            stmUsuario = con.prepareStatement("select dni "
+                    + "from usuario "
+                    + "where dni=? ");
+            stmUsuario.setString(1, dni);
+            rsUsuario = stmUsuario.executeQuery();
+
+            if (rsUsuario.next()) {
+                registrado=true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return registrado;
+    }
 
 }

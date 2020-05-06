@@ -6,6 +6,7 @@
 package aeropuerto.gestion;
 
 import aeropuerto.util.Reserva;
+import aeropuerto.util.Time;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;
@@ -46,8 +47,8 @@ public class GestionReservas {
         return fbd.obtenerReservasCocheUsuario(dniUsuario);
     }
     
-    public Boolean introducirAlquiler(Reserva reserva, String dni){
-        return fbd.introducirAlquiler(reserva, dni);
+    public Boolean introducirAlquiler(String matricula, Time fin, String dni){
+        return fbd.introducirAlquiler(matricula, fin, dni);
     }
 
 }

@@ -185,6 +185,10 @@ public class FachadaBaseDatos {
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
         return daoCoches.buscarCoches(llegada, retorno, numPlazas);
     }
+    
+    public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas, String modelo, String matricula) {
+        return daoCoches.buscarCoches(llegada, retorno, numPlazas, modelo, matricula);
+    }
 
     public List<Tienda> buscarTiendas(String nombre, String tipo, String terminal) {
         return daoTiendas.buscarTiendas(nombre, tipo, terminal);
@@ -262,7 +266,11 @@ public class FachadaBaseDatos {
         return daoReservas.obtenerReservasCocheUsuario(dniUsuario);
     }
     
-    public Boolean introducirAlquiler(Reserva reserva, String dni){
-        return daoReservas.introducirAlquiler(reserva, dni);
+    public Boolean introducirAlquiler(String matricula, Time fin, String dni){
+        return daoReservas.introducirAlquiler(matricula, fin, dni);
+    }
+    
+    public Boolean comprobarRegistrado(String dni){
+        return daoUsuarios.comprobarRegistrado(dni);
     }
 }

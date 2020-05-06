@@ -71,6 +71,13 @@ public class Reserva {
         this.estado=estado;
         this.matricula=matricula;
     }
+    
+    public Reserva(Time inicio, Time fin, String matricula, Float precioDia){
+        this.inicio=inicio;
+        this.fin=fin;
+        this.matricula=matricula;
+        this.precio = (float)(Math.round(((Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate()))*precioDia) * 100d) / 100d);
+    }
 
     public Integer getTerminal() {
         return terminal;
