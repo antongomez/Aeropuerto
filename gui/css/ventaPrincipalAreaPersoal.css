@@ -3,6 +3,7 @@
     -cor-bordes: lightgray;
     -cor-accent: lightblue;
     -cor-fondo: #1d1d1d;
+    -cor-cancelado: #b80c00;
 
 }
 
@@ -37,3 +38,15 @@
     -fx-background-color: -cor-accent, #1d1d1d;
 }
 
+.hBoxCancelado{
+    -fx-background-color: #1d1d1d;
+}
+
+.labCanceladoTexto{
+    -fx-text-fill: -cor-bordes;
+}
+
+.labCanceladoCor{
+    -fx-background-color: -cor-bordes, -cor-cancelado;
+    -fx-background-insets: 0, 1;
+}
