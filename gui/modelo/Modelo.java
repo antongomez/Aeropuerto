@@ -160,6 +160,10 @@ public class Modelo {
         return fa.buscarTerminais();
     }
 
+    public List<String> obterTipoVentas() {
+        return fa.obterTipoVentas();
+    }
+
     public PorcentajeDisponibilidad obterPrazasRestantesParkingTerminal(Integer numTerminal, Time inicio, Time fin) {
         return fa.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
     }
@@ -219,28 +223,33 @@ public class Modelo {
     public Boolean facturarMaleta(String dni, String vuelo, Float peso) {
         return fa.facturarMaleta(dni, vuelo, peso);
     }
+
     /*Se debe llamar después de facturar una maleta*/
-    public Float getPrecioExtraDespuesFacturar(String dni, String vuelo, Float peso){
-        return fa.getPrecioExtraDespuesFacturar(dni,vuelo,peso);
+    public Float getPrecioExtraDespuesFacturar(String dni, String vuelo, Float peso) {
+        return fa.getPrecioExtraDespuesFacturar(dni, vuelo, peso);
     }
 
     public List<String> obtenerAnhosViajados(String dni) {
         return fa.obtenerAnhosViajados(dni);
     }
-    
-    public Boolean usuarioViajado(String dni){
+
+    public Boolean usuarioViajado(String dni) {
         return fa.usuarioViajado(dni);
     }
-public Boolean estaDentroPersLab(PersonalLaboral us){
-    return fa.estaDentroPersLaboral(us);
-}
-public void entrarPersLaboral(PersonalLaboral usu){
+
+    public Boolean estaDentroPersLab(PersonalLaboral us) {
+        return fa.estaDentroPersLaboral(us);
+    }
+
+    public void entrarPersLaboral(PersonalLaboral usu) {
         fa.entrarPersLaboral(usu);
     }
-    public void salirPersLaboral(PersonalLaboral usu){
+
+    public void salirPersLaboral(PersonalLaboral usu) {
         fa.salirPersLaboral(usu);
     }
-    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+
+    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
         fa.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
 }

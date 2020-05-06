@@ -29,6 +29,7 @@ public class FachadaBaseDatos {
     private daoTerminal daoTerminal;
     private daoCoches daoCoches;
     private daoAerolineas daoAerolineas;
+    private daoTiendas daoTiendas;
 
     public FachadaBaseDatos(FachadaAplicacion fa) {
 
@@ -59,6 +60,7 @@ public class FachadaBaseDatos {
             daoTerminal = new daoTerminal(conexion, fa);
             daoCoches = new daoCoches(conexion, fa);
             daoAerolineas = new daoAerolineas(conexion, fa);
+            daoTiendas = new daoTiendas(conexion, fa);
 
         } catch (FileNotFoundException f) {
             fa.mostrarError(f.getMessage());
@@ -105,7 +107,7 @@ public class FachadaBaseDatos {
     public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num) {
         return daoUsuarios.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
-    
+
     public EstadisticasUsuario obtenerEstadisticasGlobalesUsuario(String dniUs) {
         return daoUsuarios.obtenerEstadisticasGlobalesUsuario(dniUs);
     }
@@ -226,20 +228,28 @@ public class FachadaBaseDatos {
     public Boolean facturarMaleta(String dni, String vuelo, Float peso) {
         return daoVuelos.facturarMaleta(dni, vuelo, peso);
     }
+    
+    public List<String> obterTipoVentas(){
+        return daoTiendas.obterTipoVentas();
+    }
 
     public List<String> obtenerAnhosViajados(String dni) {
         return daoVuelos.obtenerAnhosViajados(dni);
     }
-    public Boolean estaDentroPersLaboral(String dni){
+
+    public Boolean estaDentroPersLaboral(String dni) {
         return daoUsuarios.estaDentroPersLaboral(dni);
     }
-    public void entrarPersLaboral(String dni){
+
+    public void entrarPersLaboral(String dni) {
         daoUsuarios.entrarPersLaboral(dni);
     }
-    public void salirPersLaboral(String dni){
+
+    public void salirPersLaboral(String dni) {
         daoUsuarios.salirPersLaboral(dni);
     }
-    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+
+    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
         daoUsuarios.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
 }

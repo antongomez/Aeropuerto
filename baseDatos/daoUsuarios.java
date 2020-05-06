@@ -571,23 +571,23 @@ public class daoUsuarios extends AbstractDAO {
         }
         return correcto;
     }
-    
-    public Boolean estaDentroPersLaboral(String dni){
+
+    public Boolean estaDentroPersLaboral(String dni) {
         Connection con;
         PreparedStatement stmHistorial = null;
         ResultSet rsHistorial;
-        Boolean result=null;
+        Boolean result = null;
 
         con = this.getConexion();
 
         try {
-            stmHistorial = con.prepareStatement("select count(*)>0 as dentro " +
-"from historialtrabajo where personallaboral=? and fechasalida is null");
+            stmHistorial = con.prepareStatement("select count(*)>0 as dentro "
+                    + "from historialtrabajo where personallaboral=? and fechasalida is null");
             stmHistorial.setString(1, dni);
             rsHistorial = stmHistorial.executeQuery();
 
             if (rsHistorial.next()) {
-                result=rsHistorial.getBoolean("dentro");
+                result = rsHistorial.getBoolean("dentro");
             }
 
         } catch (SQLException e) {
@@ -602,8 +602,8 @@ public class daoUsuarios extends AbstractDAO {
         }
         return result;
     }
-    
-    public void entrarPersLaboral(String dni){
+
+    public void entrarPersLaboral(String dni) {
         Connection con;
         PreparedStatement stmHist = null;
 
@@ -616,7 +616,6 @@ public class daoUsuarios extends AbstractDAO {
             stmHist.setString(1, dni);
             stmHist.executeUpdate();
 
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
@@ -628,8 +627,9 @@ public class daoUsuarios extends AbstractDAO {
             }
         }
     }
-    public void salirPersLaboral(String dni){
-         Connection con;
+
+    public void salirPersLaboral(String dni) {
+        Connection con;
         PreparedStatement stmHist = null;
 
         con = super.getConexion();
@@ -642,7 +642,6 @@ public class daoUsuarios extends AbstractDAO {
             stmHist.setString(1, dni);
             stmHist.executeUpdate();
 
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
@@ -653,21 +652,21 @@ public class daoUsuarios extends AbstractDAO {
                 System.out.println("Imposible cerrar cursores");
             }
         }
-    } 
-    
-    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+    }
+
+    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
         Connection con;
         PreparedStatement stmHistorial = null;
         ResultSet rsHistorial;
-        Boolean result=null;
+        Boolean result = null;
 
         con = this.getConexion();
 
         try {
             stmHistorial = con.prepareStatement("select fechaentrada,fechasalida "
-                    + " from historialtrabajo where personallaboral=? " +
-                    "and cast(fechaentrada as date)>=? and cast(fechaentrada as date)<=? " +
-                    "order by fechaEntrada");
+                    + " from historialtrabajo where personallaboral=? "
+                    + "and cast(fechaentrada as date)>=? and cast(fechaentrada as date)<=? "
+                    + "order by fechaEntrada");
             stmHistorial.setString(1, usu.getDni());
             stmHistorial.setTimestamp(2, fechaInicio.toTimestamp());
             stmHistorial.setTimestamp(3, fechaFin.toTimestamp());
@@ -675,7 +674,7 @@ public class daoUsuarios extends AbstractDAO {
 
             while (rsHistorial.next()) {
                 usu.addElemHistorial(new ElemHistorial(new Time(rsHistorial.getTimestamp("fechaentrada")),
-                new Time(rsHistorial.getTimestamp("fechaentrada"))));
+                        new Time(rsHistorial.getTimestamp("fechaentrada"))));
             }
 
         } catch (SQLException e) {
@@ -688,8 +687,7 @@ public class daoUsuarios extends AbstractDAO {
                 System.out.println("Imposible cerrar cursores");
             }
         }
-        
+
     }
-            
 
 }

@@ -2,12 +2,12 @@ package aeropuerto;
 
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
-import aeropuerto.elementos.PersonalExterno;
 import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.gestion.GestionParking;
 import aeropuerto.gestion.GestionReservas;
+import aeropuerto.gestion.GestionTiendas;
 import aeropuerto.gestion.GestionVuelos;
 import aeropuerto.gestion.GestionUsuarios;
 import aeropuerto.util.EstadisticasAerolinea;
@@ -24,12 +24,13 @@ import javafx.stage.Stage;
 
 public class FachadaAplicacion extends Application {
 
-    FachadaGui fgui;
-    FachadaBaseDatos fbd;
-    GestionUsuarios gu;
-    GestionVuelos gv;
-    GestionReservas gr;
-    GestionParking gp;
+    private FachadaGui fgui;
+    private FachadaBaseDatos fbd;
+    private GestionUsuarios gu;
+    private GestionVuelos gv;
+    private GestionReservas gr;
+    private GestionParking gp;
+    private GestionTiendas gt;
 
     public FachadaAplicacion() {
         fgui = new gui.FachadaGui(this);
@@ -38,6 +39,7 @@ public class FachadaAplicacion extends Application {
         gv = new GestionVuelos(fgui, fbd);
         gr = new GestionReservas(fgui, fbd);
         gp = new GestionParking(fgui, fbd);
+        gt = new GestionTiendas(fgui, fbd);
     }
 
     public static void main(String[] args) {
@@ -97,7 +99,7 @@ public class FachadaAplicacion extends Application {
     public EstadisticasUsuario obtenerEstadisticasUsuario(String dniUs, String tipo, Integer num) {
         return gu.obtenerEstadisticasUsuario(dniUs, tipo, num);
     }
-    
+
     public EstadisticasUsuario obtenerEstadisticasGlobalesUsuario(String dniUs) {
         return gu.obtenerEstadisticasGlobalesUsuario(dniUs);
     }
@@ -135,14 +137,14 @@ public class FachadaAplicacion extends Application {
     public List<Vuelo> verLlegadas() {
         return gv.verLlegadas();
     }
-    
-    public Boolean facturarMaleta(String dni, String vuelo, Float peso){
-        return gv.facturarMaleta(dni,vuelo,peso);
+
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso) {
+        return gv.facturarMaleta(dni, vuelo, peso);
     }
-    public Float getPrecioExtraDespuesFacturar(String dni, String vuelo, Float peso){
-        return gv.getPrecioExtraDespuesFacturar(dni,vuelo, peso);
+
+    public Float getPrecioExtraDespuesFacturar(String dni, String vuelo, Float peso) {
+        return gv.getPrecioExtraDespuesFacturar(dni, vuelo, peso);
     }
-    
 
     //Reservas
     /*Muestra las reservas de un usuario que aún no han sido vencidas*/
@@ -202,6 +204,10 @@ public class FachadaAplicacion extends Application {
         return gp.buscarTerminais();
     }
 
+    public List<String> obterTipoVentas() {
+        return gt.obterTipoVentas();
+    }
+
     public Parking buscarParking(Integer terminal, Time inicio, Time fin) {
         return gp.buscarParking(terminal, inicio, fin);
     }
@@ -229,19 +235,24 @@ public class FachadaAplicacion extends Application {
     public List<String> obtenerAnhosViajados(String dni) {
         return gv.obtenerAnhosViajados(dni);
     }
-    public Boolean usuarioViajado(String dni){
+
+    public Boolean usuarioViajado(String dni) {
         return gu.usuarioViajado(dni);
     }
-    public Boolean estaDentroPersLaboral(PersonalLaboral us){
+
+    public Boolean estaDentroPersLaboral(PersonalLaboral us) {
         return gu.estaDentroPersLaboral(us);
     }
-    public void entrarPersLaboral(PersonalLaboral usu){
+
+    public void entrarPersLaboral(PersonalLaboral usu) {
         gu.entrarPersLaboral(usu);
     }
-    public void salirPersLaboral(PersonalLaboral usu){
+
+    public void salirPersLaboral(PersonalLaboral usu) {
         gu.salirPersLaboral(usu);
     }
-    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+
+    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
         gu.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
 

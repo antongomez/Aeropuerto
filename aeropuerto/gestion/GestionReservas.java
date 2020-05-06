@@ -12,8 +12,8 @@ import java.util.List;
 
 public class GestionReservas {
 
-    FachadaGui fgui;
-    FachadaBaseDatos fbd;
+    private FachadaGui fgui;
+    private FachadaBaseDatos fbd;
 
     public GestionReservas(FachadaGui fgui, FachadaBaseDatos fbd) {
         this.fgui = fgui;

@@ -144,7 +144,8 @@ public class daoVuelos extends AbstractDAO {
                     + "v.destino as destino, v.fechasalidareal as fechasalidareal, v.fechallegadareal as fechallegadareal, "
                     + "c.preciobillete as preciobillete, v.cancelado as cancelado "
                     + "from usuario u, vuelo v, comprarBillete c "
-                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=?");
+                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? "
+                    + "order by v.fechasalidateorica asc ");
             stmVuelo.setString(1, dniUs);
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
@@ -541,7 +542,7 @@ public class daoVuelos extends AbstractDAO {
         }
         return correcto;
     }
-    
+
     public Aerolinea obtenerDatosAerolinea(String num) {
 
         Connection con;
@@ -630,7 +631,6 @@ public class daoVuelos extends AbstractDAO {
 
                 System.out.println(e.getMessage());
                 this.getFachadaAplicacion().mostrarError(e.getMessage());
-                
 
             }
             correcto = false;

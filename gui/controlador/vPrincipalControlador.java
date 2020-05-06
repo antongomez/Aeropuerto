@@ -4,6 +4,7 @@ import aeropuerto.elementos.Administrador;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalLaboral;
+import aeropuerto.elementos.Tienda;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
@@ -336,6 +337,24 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private Button btnReservarCoches;
 
+    //Tendas
+    @FXML
+    private TextField txtNomeTendas;
+    @FXML
+    private ComboBox<String> cBoxTerminalTendas;
+    @FXML
+    private ComboBox<String> cBoxTipoTendas;
+    @FXML
+    private Button btnBuscarTendas;
+    @FXML
+    private TableView<Tienda> taboaTendas;
+    @FXML
+    private TableColumn<Tienda, String> columnaNomeTendas;
+    @FXML
+    private TableColumn<Tienda, String> columnaTipoTendas;
+    @FXML
+    private TableColumn<Tienda, Integer> columnaTerminalTendas;
+
     //Estadisticas aerolinea
     @FXML
     private ComboBox<String> comboBoxEstAer;
@@ -463,6 +482,20 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaCaballosCoche.setCellValueFactory(new PropertyValueFactory<>("caballos"));
         columnaPrecioDiaCoche.setCellValueFactory(new PropertyValueFactory<>("precioDia"));
 
+        //Tendas, taboa, comboBox terminais, comboBox tipoVentas
+        columnaNomeTendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaTipoTendas.setCellValueFactory(new PropertyValueFactory<>("tipoVentas"));
+        columnaTerminalTendas.setCellValueFactory(new PropertyValueFactory<>("terminal"));
+        
+        ObservableList<String> terminais2 = FXCollections.observableArrayList("Todas");
+        //Usamos a lista de terminais obtida de antes
+        terminais.forEach((enteiro) -> {
+            terminais2.add(enteiro.toString());
+        });
+        cBoxTerminalTendas.setItems(terminais2);
+        
+        
+        ObservableList<String> tipoVentas = FXCollections.observableArrayList("Todas");
     }
 
     public void setUsuario(Usuario usuario) {
@@ -964,6 +997,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     }
 
+    //PARKING
+    @FXML
+    private void abrirParking(Event event) {
+    }
+
     @FXML
     private void accionBtnBuscarParking(ActionEvent event) {
         parking = getInstanceModelo().buscarParking(
@@ -1155,6 +1193,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     //COCHES
+    @FXML
+    private void abrirCoches(Event event) {
+    }
+
     private void poderBuscarCoches() {
         if ((dataFLlegadaCoches.getValue() != null)
                 && (dataFRetornoCoches.getValue() != null)) {
@@ -1307,6 +1349,16 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     }
 
+    //Tendas
+    @FXML
+    private void abrirTiendas(Event event) {
+    }
+
+    @FXML
+    private void accionBtnBuscarTendas(ActionEvent event) {
+
+    }
+
     /*
 
         INFROMACION
@@ -1370,12 +1422,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (usuario instanceof PersonalLaboral) {
             panelPersLab.toFront();
             etqTitulo.setText(TITULO_PERSLAB);
-            PersonalLaboral trabajador=(PersonalLaboral)usuario;
-            
+            PersonalLaboral trabajador = (PersonalLaboral) usuario;
+
             trabajador.setEstaDentro(Modelo.getInstanceModelo().estaDentroPersLab(trabajador));
-           
+
             actualizarBotonesPersLab();
-        
+
         }
 
     }
@@ -1398,36 +1450,35 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnEntrarSalir(ActionEvent event) {
-        PersonalLaboral trab=(PersonalLaboral)usuario;
-        if(btnEntrarSalir.getText().equals("Entrar")){
+        PersonalLaboral trab = (PersonalLaboral) usuario;
+        if (btnEntrarSalir.getText().equals("Entrar")) {
             Modelo.getInstanceModelo().entrarPersLaboral(trab);
-        }
-        else{
+        } else {
             Modelo.getInstanceModelo().salirPersLaboral(trab);
         }
         actualizarBotonesPersLab();
     }
-private void actualizarBotonesPersLab(){
-    
-        if(!((PersonalLaboral)usuario).estaDentro()){
-               btnMaletas.setDisable(true);
-               btnControl.setDisable(true);
-               btnCoches.setDisable(true);
-               btnEntrarSalir.setText("Entrar");
-            }
-            else{
-               btnMaletas.setDisable(false);
-               btnControl.setDisable(false);
-               btnCoches.setDisable(false);
-               btnEntrarSalir.setText("Salir");
-            }
+
+    private void actualizarBotonesPersLab() {
+
+        if (!((PersonalLaboral) usuario).estaDentro()) {
+            btnMaletas.setDisable(true);
+            btnControl.setDisable(true);
+            btnCoches.setDisable(true);
+            btnEntrarSalir.setText("Entrar");
+        } else {
+            btnMaletas.setDisable(false);
+            btnControl.setDisable(false);
+            btnCoches.setDisable(false);
+            btnEntrarSalir.setText("Salir");
+        }
     }
+
     @FXML
     private void accionBtnTarea(ActionEvent event) {
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
-        
 
         VTareaController controlador = ((VTareaController) loadWindow(getClass().getResource("/gui/vista/vTarea.fxml"), "AeroETSE", stage));
         controlador.setTrabajador((PersonalLaboral) usuario);
@@ -1443,10 +1494,8 @@ private void actualizarBotonesPersLab(){
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
-   
 
         VMaletaController controlador = ((VMaletaController) loadWindow(getClass().getResource("/gui/vista/vMaleta.fxml"), "AeroETSE", stage));
-
 
     }
 
@@ -1455,7 +1504,6 @@ private void actualizarBotonesPersLab(){
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
-        
 
         VHistorialController controlador = ((VHistorialController) loadWindow(getClass().getResource("/gui/vista/vHistorial.fxml"), "AeroETSE", stage));
         controlador.setTrabajador((PersonalLaboral) usuario);
