@@ -260,5 +260,13 @@ public class FachadaAplicacion extends Application {
     public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
         gu.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
+    
+    public List<Reserva> obtenerReservasCocheUsuario(String dniUsuario){
+        return gr.obtenerReservasCocheUsuario(dniUsuario);
+    }
+    
+    public Boolean introducirAlquiler(Reserva reserva, String dni){
+        return gr.introducirAlquiler(reserva, dni);
+    }
 
 }

@@ -1510,6 +1510,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnCoches(ActionEvent event) {
+        //Creamos unha venta filla da princiapl
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.initOwner(getVenta());
+        
+        VCocheControlador controlador = ((VCocheControlador) loadWindow(getClass().getResource("/gui/vista/vCoche.fxml"), "AeroETSE", stage));
     }
 
     @FXML

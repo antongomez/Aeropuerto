@@ -257,4 +257,12 @@ public class FachadaBaseDatos {
     public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
         daoUsuarios.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
+    
+    public List<Reserva> obtenerReservasCocheUsuario(String dniUsuario){
+        return daoReservas.obtenerReservasCocheUsuario(dniUsuario);
+    }
+    
+    public Boolean introducirAlquiler(Reserva reserva, String dni){
+        return daoReservas.introducirAlquiler(reserva, dni);
+    }
 }

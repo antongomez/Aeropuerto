@@ -2,6 +2,7 @@ package aeropuerto.util;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -133,6 +134,11 @@ public class Time {
         //System.out.println("Data real: " + getStringSql() + ".Data nova: " + (new Timestamp(miliseg)).toString());
 
         return new Timestamp(miliseg);
+    }
+    
+    public LocalDate toLocalDate(){
+        LocalDate fecha= LocalDate.of(this.getAno(), this.getMes(), this.getDia());
+        return fecha;
     }
 
     @Override

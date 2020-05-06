@@ -55,6 +55,14 @@ public class Reserva {
         this.tipo = tipo;
         this.matricula = matricula;
     }
+    
+    public Reserva(Timestamp inicio, Timestamp fin, String tipo, String matricula, Float precio) {
+        this.inicio = new Time(inicio);
+        this.fin = new Time(fin);
+        this.tipo = tipo;
+        this.matricula = matricula;
+        this.precio = (float) (Math.round(precio * 100d) / 100d);
+    }
 
     public Integer getTerminal() {
         return terminal;
@@ -80,8 +88,22 @@ public class Reserva {
         return fin;
     }
 
+    public void setFin(Time fin) {
+        this.fin = fin;
+    }
+    
     public String getTipo() {
         return tipo;
     }
+
+    public Float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Float precio) {
+        this.precio = precio;
+    }
+    
+    
 
 }

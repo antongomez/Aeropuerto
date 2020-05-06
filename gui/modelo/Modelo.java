@@ -258,4 +258,12 @@ public class Modelo {
     public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
         fa.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
+
+    public List<Reserva> obtenerReservasCocheUsuario(String dniUsuario) {
+        return fa.obtenerReservasCocheUsuario(dniUsuario);
+    }
+    
+    public Boolean introducirAlquiler(Reserva reserva, String dni){
+        return fa.introducirAlquiler(reserva, dni);
+    }
 }

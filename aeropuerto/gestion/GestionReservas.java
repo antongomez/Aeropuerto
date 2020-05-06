@@ -41,5 +41,13 @@ public class GestionReservas {
     public Boolean reservarCoche(Reserva reserva, String dniUsuario) {
         return fbd.reservarCoche(reserva, dniUsuario);
     }
+    
+    public List<Reserva> obtenerReservasCocheUsuario(String dniUsuario){
+        return fbd.obtenerReservasCocheUsuario(dniUsuario);
+    }
+    
+    public Boolean introducirAlquiler(Reserva reserva, String dni){
+        return fbd.introducirAlquiler(reserva, dni);
+    }
 
 }

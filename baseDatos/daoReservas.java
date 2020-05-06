@@ -185,8 +185,66 @@ public class daoReservas extends AbstractDAO {
         return correcto;
     }
     
-    public void obtenerResrvasCocheUsuario(String dniUsuario){
+    public List<Reserva> obtenerReservasCocheUsuario(String dniUsuario){
+        List<Reserva> resultado = new ArrayList<>();
+        Connection con;
+        PreparedStatement stmRes = null;
+        con = super.getConexion();
+        ResultSet rsRes;
         
+        try {
+            stmRes = con.prepareStatement("select cast(fechainicioreserva as date), cast(fechafinreserva as date), cochealquiler as matricula, "
+                    + "(cast(fechafinreserva as date)-cast(fechainicioreserva as date))*coche.preciopordia as precio "
+                    + "from reservar as res, cochealquiler as coche "
+                    + "where res.usuario=? and cast(fechainicioreserva as date)=cast(NOW() as date) and coche.matricula=res.cochealquiler ");
+            stmRes.setString(1, dniUsuario);
+            rsRes=stmRes.executeQuery();
+            while(rsRes.next()){
+                Reserva reserva = new Reserva(rsRes.getTimestamp("fechainicioreserva"),rsRes.getTimestamp("fechafinreserva"),
+                "coche", rsRes.getString("matricula"), rsRes.getFloat("precio"));
+                resultado.add(reserva);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmRes.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return resultado;
+    }
+    
+    public Boolean introducirAlquiler(Reserva reserva, String dni){
+        Connection con;
+        PreparedStatement stmRes = null;
+        con = super.getConexion();
+        Boolean correcto = true;
+
+        try {
+            stmRes = con.prepareStatement("insert into alquilar values"
+                    + "(NOW(),?, ?, ?, null)");
+            stmRes.setString(1, dni);
+            stmRes.setString(2, reserva.getMatricula());
+            stmRes.setTimestamp(3, reserva.getFin().toTimestamp());
+            stmRes.executeUpdate();
+
+        } catch (SQLException e) {
+            correcto = false;
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmRes.close();
+            } catch (SQLException e) {
+                correcto = false;
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
     }
 
 }

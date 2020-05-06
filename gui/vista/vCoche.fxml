@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.VCocheControlador">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../css/estiloBase.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controlador.VCocheControlador">
    <children>
       <VBox prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -48,7 +48,7 @@
                                           <Button fx:id="btnBuscarConReserva" mnemonicParsing="false" onAction="#obtenerReservasUsuario" text="Buscar" GridPane.columnIndex="4" />
                                        </children>
                                     </GridPane>
-                                    <TableView fx:id="tablaConReservatablaConReserva" onMouseClicked="#seleccionarConReserva" prefHeight="200.0" prefWidth="600.0">
+                                    <TableView fx:id="tablaConReserva" onMouseClicked="#seleccionarConReserva" prefHeight="200.0" prefWidth="600.0">
                                       <columns>
                                         <TableColumn fx:id="columnaMatriculaConReserva" prefWidth="250.0" text="Matrícula" />
                                         <TableColumn fx:id="columnaFechaVueltaConReserva" prefWidth="250.0" text="Fecha vuelta" />
