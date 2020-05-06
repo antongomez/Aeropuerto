@@ -145,6 +145,7 @@ public class daoReservas extends AbstractDAO {
             correcto = false;
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
+            
         } finally {
             try {
                 stmRes.close();
