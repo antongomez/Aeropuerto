@@ -18,7 +18,6 @@ import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.security.Timestamp;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -973,10 +972,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnServicios(ActionEvent event) {
         //PARKING
         btnReservarParking.setDisable(true);
-        btnBuscarParking.setDisable(true);
 
         //COCHES
-        btnBuscarCoches.setDisable(true);
         btnReservarCoches.setDisable(true);
 
         //Poñemos o panel diante
@@ -989,7 +986,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private void abrirParking(Event event) {
         btnReservarParking.setDisable(true);
-        btnBuscarParking.setDisable(true);
     }
 
     @FXML
@@ -1188,7 +1184,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //COCHES
     @FXML
     private void abrirCoches(Event event) {
-        btnBuscarCoches.setDisable(true);
         btnReservarCoches.setDisable(true);
 
     }

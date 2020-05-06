@@ -25,19 +25,28 @@ public class daoCoches extends AbstractDAO {
 
         try {
             String consulta = "select *\n"
-                    + "from cocheAlquiler\n"
-                    + "where matricula not in (select cochealquiler\n"
+                    + "from cocheAlquiler \n"
+                    + "where matricula not in ((select cochealquiler as matricula\n"
                     + "						from reservar\n"
                     + "						where fechainicioreserva <= ? \n"
-                    + "                                           and fechafinreserva >= ?) \n"
+                    + "						  and fechafinreserva >= ?) \n"
+                    + "						UNION\n"
+                    + "						(select matricula\n"
+                    + "						from alquilar\n"
+                    + "						where fechaalquiler <= ? \n"
+                    + "						  and fechadevolucion is null))\n"
                     + "  and retirado = false \n";
             if (numPlazas != null) {
                 consulta += "  and nplazas = ? \n";
             }
             consulta += "order by nplazas desc, precioPorDia asc, caballos desc, nPuertas asc";
             stmCoches = con.prepareStatement(consulta);
-            stmCoches.setTimestamp(2, llegada.toTimestamp());
+
             stmCoches.setTimestamp(1, retorno.toTimestamp());
+            stmCoches.setTimestamp(2, llegada.toTimestamp());
+            stmCoches.setTimestamp(3, retorno.toTimestamp());
+            stmCoches.setTimestamp(4, llegada.toTimestamp());
+
             if (numPlazas != null) {
                 stmCoches.setInt(3, numPlazas);
             }
