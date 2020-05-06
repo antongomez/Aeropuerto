@@ -81,7 +81,7 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
                     Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente", getVenta());
 
                     //se cierra la ventana de registrar
-                    getVenta().close();
+                    //getVenta().close();
                 }
             } catch (NumberFormatException e) {
                 Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());

@@ -46,7 +46,27 @@ public class daoUsuarios extends AbstractDAO {
             correcto = true;
 
         } catch (SQLException e) {
+            String m=e.getMessage();
+            if(m.contains("usuario_dni_check") || m.contains("character(9)")){
+                getFachadaAplicacion().mostrarError("Formato de dni incorrecto");
+            }
+            else if(m.contains("usuario_pkey")){
+                getFachadaAplicacion().mostrarError("Usuario ya registrado");
+            }
+            else if(m.contains("usuario_id_key")){
+                getFachadaAplicacion().mostrarError("El id elegido ya corresponde a otro usuario");
+            }
+            else if(m.contains("usuario_correoelectronico_key")){
+                getFachadaAplicacion().mostrarError("Ya existe un usuario registrado con ese email");
+            }
+            else if(m.contains("demasiado largo")){
+                getFachadaAplicacion().mostrarError("Uno de los campos contiene un valor demasiado largo. "
+                        + "Revise los datos introducidos.");
+            }
+            else{
             getFachadaAplicacion().mostrarError(e.getMessage());
+            
+            }
             correcto = false;
         } finally {
             try {
@@ -63,9 +83,11 @@ public class daoUsuarios extends AbstractDAO {
         Usuario resultado = null;
         Connection con;
         PreparedStatement stmUsuario = null;
-        PreparedStatement stmAdmin_PL;
+        PreparedStatement stmAdmin = null;
+        PreparedStatement stmPL = null;
         ResultSet rsUsuario;
         ResultSet rsAdmin_PL;
+        Boolean esAdmin = false, esPL = false;
 
         con = this.getConexion();
 
@@ -80,69 +102,78 @@ public class daoUsuarios extends AbstractDAO {
 
             //Se existe un usuario, comprobamos se e administrador ou persoal laboral
             if (rsUsuario.next()) {
-
                 //Administrador
-                stmAdmin_PL = con.prepareStatement("select usuario,fechainicio,curriculum "
-                        + "from administrador "
-                        + "where usuario = ? ");
-                stmAdmin_PL.setString(1, rsUsuario.getString("dni"));
-                rsAdmin_PL = stmAdmin_PL.executeQuery();
+                try {
 
-                //Comprobamos se e admin
-                if (rsAdmin_PL.next()) {
-                    resultado = new Administrador(rsUsuario.getString("dni"), rsUsuario.getString("id"),
-                            rsUsuario.getString("correoElectronico"),
-                            rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
-                            rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
-                            rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"),
-                            rsAdmin_PL.getTimestamp("fechainicio"), rsAdmin_PL.getString("curriculum"));
-
-                } else {
-                    //Personal Laboral
-                    stmAdmin_PL = con.prepareStatement("select usuario, labor, descripciontarea, fechainicio "
-                            + "from personallaboral "
+                    stmAdmin = con.prepareStatement("select usuario,fechainicio,curriculum "
+                            + "from administrador "
                             + "where usuario = ? ");
-                    stmAdmin_PL.setString(1, rsUsuario.getString("dni"));
-                    rsAdmin_PL = stmAdmin_PL.executeQuery();
+                    stmAdmin.setString(1, rsUsuario.getString("dni"));
+                    rsAdmin_PL = stmAdmin.executeQuery();
 
-                    //Comprobamos se e PL
+                    //Comprobamos se e admin
                     if (rsAdmin_PL.next()) {
-                        resultado = new PersonalLaboral(rsUsuario.getString("dni"), rsUsuario.getString("id"),
+                        resultado = new Administrador(rsUsuario.getString("dni"), rsUsuario.getString("id"),
                                 rsUsuario.getString("correoElectronico"),
                                 rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
                                 rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
                                 rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"),
-                                rsAdmin_PL.getString("labor"), rsAdmin_PL.getString("descripciontarea"),
-                                rsAdmin_PL.getTimestamp("fechainicio"));
+                                rsAdmin_PL.getTimestamp("fechainicio"), rsAdmin_PL.getString("curriculum"));
+                        esAdmin = true;
+                    }
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    this.getFachadaAplicacion().mostrarError(e.getMessage());
+                } finally {
+                    try {
+                        stmAdmin.close();
+                    } catch (SQLException e) {
+                        System.out.println("Imposible cerrar cursores");
+                    }
+                }
 
-                    } else {
-                        System.out.println("user");
-                        //Personal Externo
-                        stmAdmin_PL = con.prepareStatement("select usuario, estardentro "
-                                + "from personalexterno "
+                if (!esAdmin) {
+                    try {
+                        //Personal Laboral
+                        stmPL = con.prepareStatement("select usuario, labor, descripciontarea, fechainicio "
+                                + "from personallaboral "
                                 + "where usuario = ? ");
-                        stmAdmin_PL.setString(1, rsUsuario.getString("dni"));
-                        rsAdmin_PL = stmAdmin_PL.executeQuery();
+                        stmPL.setString(1, rsUsuario.getString("dni"));
+                        rsAdmin_PL = stmPL.executeQuery();
 
-                        //Comprobamos se e persoal Externo
+                        //Comprobamos se e PL
                         if (rsAdmin_PL.next()) {
-                            resultado = new PersonalExterno(rsUsuario.getString("dni"), rsAdmin_PL.getString("usuario"),
+                            resultado = new PersonalLaboral(rsUsuario.getString("dni"), rsUsuario.getString("id"),
                                     rsUsuario.getString("correoElectronico"),
                                     rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
                                     rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
                                     rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"),
-                                    rsAdmin_PL.getBoolean("estardentro"));
-                            //Noutro caso tomamolo como usuario normal
-                        } else {
-                            resultado = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("id"),
-                                    rsUsuario.getString("correoElectronico"),
-                                    rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
-                                    rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
-                                    rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"));
+                                    rsAdmin_PL.getString("labor"), rsAdmin_PL.getString("descripciontarea"),
+                                    rsAdmin_PL.getTimestamp("fechainicio"));
+                            esPL = true;
+
+                        }
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                        this.getFachadaAplicacion().mostrarError(e.getMessage());
+                    } finally {
+                        try {
+                            stmPL.close();
+                        } catch (SQLException e) {
+                            System.out.println("Imposible cerrar cursores");
                         }
                     }
-                }
 
+                    if (!esPL) {
+
+                        resultado = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("id"),
+                                rsUsuario.getString("correoElectronico"),
+                                rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
+                                rsUsuario.getString("segundoApellido"), rsUsuario.getString("paisProcedencia"),
+                                rsUsuario.getInt("telefono"), rsUsuario.getString("sexo"));
+                    }
+
+                }
             }
 
         } catch (SQLException e) {

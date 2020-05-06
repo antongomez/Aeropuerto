@@ -80,6 +80,7 @@ public class Modelo {
                 getResource("/gui/vista/vNotificacion.fxml"), "Notificación", stage));
         controlador.mostrarMensaje(mensaje);
         controlador.getVenta().setResizable(false);
+        
     }
 
     public void mostrarConfirmacion(String mensaje, Stage pai) {
