@@ -788,6 +788,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             etqTarifaFavGlobal.setText(" - ");
         }
+        //Comprobase se o usuario viaxou 
+        if(!getInstanceModelo().usuarioViajado(usuario.getDni())){
+            txtAreaNumViajes.setText("¡" + usuario.getNombre() + ","
+                    + " aún no has viajado con nosotros! Dirígete al panel y "
+                    + "déjate llevar por los destinos más increíbles.");
+        }
 
     }
 
@@ -814,59 +820,65 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         String titulo = "Estadisticas ";
         etqInfoEstadisticas1.setVisible(false);
 
-        if (btnEstacion.isSelected()) {
-            tipo = "estacion";
-            titulo += "de ";
-        } else if (btnMes.isSelected()) {
-            tipo = "mes";
-            titulo += "de ";
+        if (getInstanceModelo().usuarioViajado(usuario.getDni())) {
+            if (btnEstacion.isSelected()) {
+                tipo = "estacion";
+                titulo += "de ";
+            } else if (btnMes.isSelected()) {
+                tipo = "mes";
+                titulo += "de ";
+            } else {
+                tipo = "anho";
+                titulo += "del ";
+            }
+            if (tipo.equals("anho")) {
+                num = parseInt(comboBoxEstUsu.getSelectionModel().getSelectedItem());
+                etqInfoEstadisticas1.setText("En el " + num + " no has realizado vuelos que despegaran desde nuestro aeropuerto");
+            } else {
+                num = comboBoxEstUsu.getSelectionModel().getSelectedIndex() + 1;
+                String mes_estacion = comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase();
+                etqInfoEstadisticas1.setText("En " + mes_estacion + " no has realizado vuelos que despegaran desde nuestro aeropuerto");
+            }
+
+            estadisticasUsuario = Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
+
+            txtAreaNumViajes.setText("Has viajado " + estadisticasUsuario.getVecesViajadas()
+                    + " veces en " + comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase() + "!");
+
+            titulo += comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase();
+            etqInfoEstadisticasEspecificas.setText(titulo);
+
+            if (estadisticasUsuario.getAerolineasFav().isEmpty()) {
+                etqAerolineaFavEspecifica.setText(" - ");
+            } else {
+                String aerolineasFav = estadisticasUsuario.getAerolineasFav().get(0);
+                for (int i = 1; i < estadisticasUsuario.getAerolineasFav().size(); i++) {
+                    aerolineasFav += ", " + estadisticasUsuario.getAerolineasFav().get(i);
+                }
+                etqAerolineaFavEspecifica.setText(aerolineasFav);
+            }
+            if (estadisticasUsuario.getDestinosFav().isEmpty()) {
+                etqDestinoFavEspecifico.setText(" - ");
+                if ((getInstanceModelo().usuarioViajado(usuario.getDni()))
+                        && (!etqAerolineaFavEspecifica.getText().equals(" - "))) {
+                    etqInfoEstadisticas1.setVisible(true);
+                }
+            } else {
+                String destinosFav = estadisticasUsuario.getDestinosFav().get(0);
+                for (int i = 1; i < estadisticasUsuario.getDestinosFav().size(); i++) {
+                    destinosFav += ", " + estadisticasUsuario.getDestinosFav().get(i);
+                }
+                etqDestinoFavEspecifico.setText(destinosFav);
+            }
+
+            if (!estadisticasUsuario.getTarifaFav().isEmpty()) {
+                etqTarifaFavEspecifico.setText(estadisticasUsuario.getTarifaFav());
+            } else {
+                etqTarifaFavEspecifico.setText(" - ");
+            }
         } else {
-            tipo = "anho";
-            titulo += "del ";
-        }
-        if (tipo.equals("anho")) {
-            num = parseInt(comboBoxEstUsu.getSelectionModel().getSelectedItem());
-            etqInfoEstadisticas1.setText("En el " + num + " no has realizado vuelos que despegaran desde nuestro aeropuerto");
-        } else {
-            num = comboBoxEstUsu.getSelectionModel().getSelectedIndex() + 1;
-            String mes_estacion = comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase();
-            etqInfoEstadisticas1.setText("En " + mes_estacion + " no has realizado vuelos que despegaran desde nuestro aeropuerto");
-        }
-
-        estadisticasUsuario = Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
-
-        txtAreaNumViajes.setText("Has viajado " + estadisticasUsuario.getVecesViajadas()
-                + " veces en " + comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase() + "!");
-
-        titulo += comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase();
-        etqInfoEstadisticasEspecificas.setText(titulo);
-
-        if (estadisticasUsuario.getAerolineasFav().isEmpty()) {
             etqAerolineaFavEspecifica.setText(" - ");
-        } else {
-            String aerolineasFav = estadisticasUsuario.getAerolineasFav().get(0);
-            for (int i = 1; i < estadisticasUsuario.getAerolineasFav().size(); i++) {
-                aerolineasFav += ", " + estadisticasUsuario.getAerolineasFav().get(i);
-            }
-            etqAerolineaFavEspecifica.setText(aerolineasFav);
-        }
-        if (estadisticasUsuario.getDestinosFav().isEmpty()) {
             etqDestinoFavEspecifico.setText(" - ");
-            if ((getInstanceModelo().usuarioViajado(usuario.getDni()))
-                    && (!etqAerolineaFavEspecifica.getText().equals(" - "))) {
-                etqInfoEstadisticas1.setVisible(true);
-            }
-        } else {
-            String destinosFav = estadisticasUsuario.getDestinosFav().get(0);
-            for (int i = 1; i < estadisticasUsuario.getDestinosFav().size(); i++) {
-                destinosFav += ", " + estadisticasUsuario.getDestinosFav().get(i);
-            }
-            etqDestinoFavEspecifico.setText(destinosFav);
-        }
-
-        if (!estadisticasUsuario.getTarifaFav().isEmpty()) {
-            etqTarifaFavEspecifico.setText(estadisticasUsuario.getTarifaFav());
-        } else {
             etqTarifaFavEspecifico.setText(" - ");
         }
 
@@ -1515,7 +1527,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
-        
+
         VCocheControlador controlador = ((VCocheControlador) loadWindow(getClass().getResource("/gui/vista/vCoche.fxml"), "AeroETSE", stage));
     }
 
