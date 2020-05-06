@@ -277,6 +277,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Label etqErroMatricula;
     @FXML
     private ToggleGroup infoVuelos;
+    @FXML
+    private HBox hBoxInfoDisponhibilidadeParking;
+    @FXML
+    private Label etqInfoDisponhibilidadeParking;
 
     //Informacion
     @FXML
@@ -472,7 +476,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         comboBoxEstAer.setItems(aerolineas);
         comboBoxEstAer.getSelectionModel().selectFirst();
 
-        //Servicios, taboa Coches
+        //Servicios, taboa Coches, etqInfo
         columnaMatriculaCoche.setCellValueFactory(new PropertyValueFactory<>("matricula"));
         columnaModeloCoche.setCellValueFactory(new PropertyValueFactory<>("modelo"));
         columnaPlazasCoche.setCellValueFactory(new PropertyValueFactory<>("nPrazas"));
@@ -480,6 +484,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaCombustibleCoche.setCellValueFactory(new PropertyValueFactory<>("tipoCombustible"));
         columnaCaballosCoche.setCellValueFactory(new PropertyValueFactory<>("caballos"));
         columnaPrecioDiaCoche.setCellValueFactory(new PropertyValueFactory<>("precioDia"));
+
+        btnBuscarParking.setDisable(true);
+        btnBuscarCoches.setDisable(true);
+        hBoxInfoDisponhibilidadeParking.setVisible(false);
 
         //Tendas, taboa, comboBox terminais, comboBox tipoVentas
         columnaNomeTendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -1002,7 +1010,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (pd != null) {
             txtPlazasParking.setText(pd.getPlazasLibres().toString());
             txtPrecioParking.setText(obterPrecioParking());
+            etqInfoDisponhibilidadeParking.setText(String.format("%.2f", pd.calcularPorcentajeDisp()) + "%.");
+            hBoxInfoDisponhibilidadeParking.setVisible(true);
         } else {
+            hBoxInfoDisponhibilidadeParking.setVisible(false);
+            txtPrecioParking.clear();
+            txtPlazasParking.clear();
             getInstanceModelo().mostrarError("No se pudo obtener el número de "
                     + "plazas disponibles en el parking de la terminal. "
                     + "Inténtelo en otro momento.", getVenta());
@@ -1048,6 +1061,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         btnReservarParking.setDisable(true);
         txtMatriculaParking.clear();
         etqErroMatricula.setVisible(false);
+        btnBuscarParking.fire();
     }
 
     @FXML

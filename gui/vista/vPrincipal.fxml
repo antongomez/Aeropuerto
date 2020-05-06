@@ -574,6 +574,12 @@
                                                       </HBox>
                                                    </children>
                                                 </HBox>
+                                                <HBox fx:id="hBoxInfoDisponhibilidadeParking" alignment="CENTER">
+                                                   <children>
+                                                      <Label text="En esas fechas el parking estará disponible en un: " />
+                                                      <Label fx:id="etqInfoDisponhibilidadeParking" text="80%" />
+                                                   </children>
+                                                </HBox>
                                              </children>
                                           </VBox>
                                           <VBox>

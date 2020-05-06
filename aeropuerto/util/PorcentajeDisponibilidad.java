@@ -23,11 +23,11 @@ public class PorcentajeDisponibilidad {
     }
 
     public Double calcularPorcentajeDisp() {
-        return ((double) plazasLibres / (double) totalPlazas);
+        return ((double) plazasLibres / (double) totalPlazas) * 100;
     }
 
     public Double calcularPorcentajeOcup() {
-        return ((double) (totalPlazas - plazasLibres) / (double) totalPlazas);
+        return ((double) (totalPlazas - plazasLibres) / (double) totalPlazas) * 100;
     }
 
     public Integer getTotalPlazas() {
