@@ -52,6 +52,12 @@ public class VCocheControlador extends Controlador implements Initializable{
     private TableColumn<Reserva, Float> columnaPrecioConReserva;
     @FXML
     private TableView<Reserva> tablaConReserva;
+    @FXML
+    private TableColumn<Reserva, String> columnaModeloConReserva;
+    @FXML
+    private TableColumn<Reserva, Time> columnaFechaRecogidaConReserva;
+    @FXML
+    private TableColumn<Reserva, String> columnaEstadoConReserva;
 
     /**
      * Initializes the controller class.
