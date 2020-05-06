@@ -32,7 +32,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -47,6 +49,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 public class vPrincipalControlador extends Controlador implements Initializable {
 
@@ -426,6 +429,20 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
                 getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
         tablaProximosVuelos.setItems(vuelos);
+        //A fila ponse en vermello en caso de estar cancelado o vuelo
+        tablaProximosVuelos.setRowFactory(row -> new TableRow<Vuelo>() {
+            @Override
+            public void updateItem(Vuelo item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if ((item != null) && (!empty)) {
+                    if (item.getCancelado()) {
+                        setStyle("-fx-background-color: #b80c00");
+                    }
+                }
+            }
+        });
+
         //Engadimos a data actual nos datePickers
         dataPickLlegada.setValue(LocalDate.now());
         dataPickSalida.setValue(LocalDate.now());
@@ -443,6 +460,19 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaSalidaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
         columnaLlegadaMiVuelo.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
         columnaPrecioMiVuelo.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
+        //A fila ponse en vermello en caso de estar cancelado o vuelo
+        tablaMisVuelos.setRowFactory(row -> new TableRow<Vuelo>() {
+            @Override
+            public void updateItem(Vuelo item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if ((item != null) && (!empty)) {
+                    if (item.getCancelado()) {
+                        setStyle("-fx-background-color: #b80c00");
+                    }
+                }
+            }
+        });
 
         //Definimos el tipo de dato de cada columna de la tablaMisReservas
         colInicioReserva.setCellValueFactory(new PropertyValueFactory<>("inicio"));
@@ -603,11 +633,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     /*
-    
-    
+
+
         AREA PERSONAL
-    
-    
+
+
      */
     @FXML
     private void accionBtnAreaP(ActionEvent event) {
@@ -666,18 +696,17 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
         } else {
             Usuario us;
-            try{
-            if (usuario instanceof Administrador) {
-                us = new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
-                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem(), txtAreaCurriculum.getText());
-            } else {
-                us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
-                        textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                        Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
-            }
-            
-            
+            try {
+                if (usuario instanceof Administrador) {
+                    us = new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
+                            textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                            Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem(), txtAreaCurriculum.getText());
+                } else {
+                    us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
+                            textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                            Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
+                }
+
                 if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
                     Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente", getVenta());
                     //No cambiamos los datos del usuario asociado a esta clase hasta que se cambien en la base
@@ -693,12 +722,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                         ((Administrador) usuario).setCurriculum(((Administrador) us).getCurriculum());
                     }
                     if (!textFieldContrasenha.getText().isEmpty()) {
-                Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
-            }
+                        Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
+                    }
                 }
 
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
             }
         }
@@ -788,8 +816,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             etqTarifaFavGlobal.setText(" - ");
         }
-        //Comprobase se o usuario viaxou 
-        if(!getInstanceModelo().usuarioViajado(usuario.getDni())){
+        //Comprobase se o usuario viaxou
+        if (!getInstanceModelo().usuarioViajado(usuario.getDni())) {
             txtAreaNumViajes.setText("¡" + usuario.getNombre() + ","
                     + " aún no has viajado con nosotros! Dirígete al panel y "
                     + "déjate llevar por los destinos más increíbles.");
@@ -1451,9 +1479,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     /*
-    
+
         PERSONAL LABORAL
-    
+
      */
     @FXML
     private void accionBtnPersonal(ActionEvent event) {

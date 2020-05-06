@@ -525,9 +525,9 @@ public class daoUsuarios extends AbstractDAO {
             }
             /*Si se encuentra más de una tupla*/
             while (rsUsuario.next()) {
-                resultado.anadirAerolinea(rsUsuario.getString("aerolineaFav"));
-                resultado.anadirDestino(rsUsuario.getString("destinoFav"));
-                resultado.anadirTarifa(rsUsuario.getString("tarifaFav"));
+                resultado.anadirAerolinea(rsUsuario.getString("aerolinea"));
+                resultado.anadirDestino(rsUsuario.getString("destino"));
+                resultado.anadirTarifa(rsUsuario.getString("tarifa"));
             }
 
         } catch (SQLException e) {

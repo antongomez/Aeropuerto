@@ -8,11 +8,32 @@
 
 .etqInfoEstadisticas{
     -fx-font-size: 13pt;
-    -fx-underline: true;
     -fx-text-fill: -cor-accent;
+    -fx-background-color: #1d1d1d;
 }
 
 #etqInfoEstadisticasGlobales{
-        -fx-text-fill: -cor-secundaria;
+    -fx-text-fill: -cor-accent;
+}
+
+.labTituloMisVuelos{
+    -fx-font-size: 14pt;
+    -fx-text-fill: derive(white, -80%);
+}
+
+.vBoxFondoVuelosPasados{
+    -fx-background-radius: 9 9 3 3;
+    -fx-background-color: -cor-accent;
+}
+
+.vBoxFondoFuturosVuelos{
+    -fx-background-radius: 9 9 3 3;
+    -fx-background-color: -cor-accent;
+}
+
+.vBoxEstadisticas{
+    -fx-background-radius: 10, 10;
+    -fx-background-insets: 0, 2;
+    -fx-background-color: -cor-accent, #1d1d1d;
 }
 
