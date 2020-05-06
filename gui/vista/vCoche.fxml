@@ -29,38 +29,38 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <VBox prefHeight="505.0" prefWidth="1200.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox prefHeight="405.0" prefWidth="600.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="60.0">
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                                        <children>
-                                          <GridPane prefHeight="6.0" prefWidth="305.0">
+                                          <GridPane>
                                             <columnConstraints>
-                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="13.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="187.0" />
+                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="35.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="1.0" prefWidth="10.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="172.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
+                                                <TextField fx:id="textFieldDNIConReserva" prefHeight="27.0" prefWidth="154.0" GridPane.columnIndex="2" />
                                                 <Label text="Dni:" />
-                                                <TextField fx:id="textFieldDNIConReserva" prefHeight="27.0" prefWidth="267.0" GridPane.columnIndex="2" />
                                              </children>
                                           </GridPane>
                                           <Button fx:id="btnBuscarConReserva" mnemonicParsing="false" onAction="#obtenerReservasUsuario" text="Buscar" />
                                        </children>
                                        <padding>
-                                          <Insets bottom="15.0" left="300.0" right="300.0" top="15.0" />
+                                          <Insets bottom="15.0" left="100.0" right="100.0" top="15.0" />
                                        </padding>
                                     </HBox>
-                                    <TableView fx:id="tablaConReserva" onMouseClicked="#seleccionarConReserva" prefHeight="200.0" prefWidth="828.0">
+                                    <TableView fx:id="tablaConReserva" onMouseClicked="#seleccionarConReserva" prefHeight="200.0" prefWidth="600.0">
                                       <columns>
                                           <TableColumn fx:id="columnaModeloConReserva" prefWidth="75.0" text="Modelo" />
                                         <TableColumn fx:id="columnaMatriculaConReserva" prefWidth="250.0" text="Matrícula" />
                                           <TableColumn fx:id="columnaFechaRecogidaConReserva" prefWidth="75.0" text="Fecha recogida" />
                                         <TableColumn fx:id="columnaFechaVueltaConReserva" prefWidth="250.0" text="Fecha vuelta" />
                                           <TableColumn fx:id="columnaPrecioConReserva" prefWidth="250.0" text="Precio" />
-                                          <TableColumn fx:id="columnaEstadoConReserva" prefWidth="75.0" text="Estado" />
+                                          <TableColumn fx:id="columnaEstadoConReserva" prefWidth="75.0" text="Estado reserva" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -72,9 +72,23 @@
                                           <VBox prefHeight="66.0" prefWidth="158.0" spacing="20.0">
                                              <children>
                                                 <RadioButton fx:id="cambiarFechaConReserva" mnemonicParsing="false" onAction="#activarDatePicker" text="Cambiar fecha" />
-                                                <DatePicker fx:id="datePickerConReserva" />
+                                                <DatePicker fx:id="datePickerConReserva" onAction="#actualizarPrecioConReserva" />
                                              </children>
                                           </VBox>
+                                          <GridPane prefHeight="68.0" prefWidth="217.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="123.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.0" minWidth="0.0" prefWidth="5.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="89.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label prefHeight="17.0" prefWidth="78.0" text="Precio final:" />
+                                                <TextField fx:id="textFieldPrecioFinalConReserva" GridPane.columnIndex="2" />
+                                             </children>
+                                          </GridPane>
                                        </children>
                                        <padding>
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -115,23 +129,23 @@
                                                 <Label text="Matrícula:" GridPane.rowIndex="1" />
                                                 <Label text="Plazas:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                                 <Label text="Fecha de vuelta:" GridPane.columnIndex="3" />
-                                                <TextField GridPane.columnIndex="1" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <ComboBox prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                                <DatePicker GridPane.columnIndex="4" />
+                                                <TextField fx:id="textFieldModeloSinReserva" GridPane.columnIndex="1" />
+                                                <TextField fx:id="textFieldMatriculaSinReserva" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <ComboBox fx:id="comboBoxPlazasSinReserva" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                                <DatePicker fx:id="datePickerFechaVueltaSinSalida" GridPane.columnIndex="4" />
                                              </children>
                                           </GridPane>
-                                          <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="98.0" text="Buscar" />
+                                          <Button fx:id="btnBuscarSinReserva" mnemonicParsing="false" onAction="#buscarCochesDisponibles" prefHeight="31.0" prefWidth="98.0" text="Buscar" />
                                        </children>
                                     </HBox>
-                                    <TableView prefHeight="200.0" prefWidth="200.0">
+                                    <TableView fx:id="tablaSinReservas" onMouseClicked="#seleccionarSinReserva" prefHeight="200.0" prefWidth="200.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="Matrícula" />
-                                        <TableColumn prefWidth="75.0" text="Modelo" />
-                                          <TableColumn prefWidth="75.0" text="Caballos" />
-                                          <TableColumn prefWidth="75.0" text="Precio/Día" />
-                                          <TableColumn prefWidth="75.0" text="Combustible" />
-                                          <TableColumn prefWidth="75.0" text="Plazas" />
+                                        <TableColumn fx:id="columnaMatriculaSinReserva" prefWidth="75.0" text="Matrícula" />
+                                        <TableColumn fx:id="columnaModeloSinReserva" prefWidth="75.0" text="Modelo" />
+                                          <TableColumn fx:id="columnaCaballosSinReserva" prefWidth="75.0" text="Caballos" />
+                                          <TableColumn fx:id="columnaPrecioDiaSinReserva" prefWidth="75.0" text="Precio/Día" />
+                                          <TableColumn fx:id="columnaCombustibleSinReserva" prefWidth="75.0" text="Combustible" />
+                                          <TableColumn fx:id="columnaPlazasSinReserva" prefWidth="75.0" text="Plazas" />
                                           <TableColumn prefWidth="75.0" text="Puertas" />
                                       </columns>
                                        <columnResizePolicy>
@@ -153,8 +167,8 @@
                                             </rowConstraints>
                                              <children>
                                                 <Label text="Dni:" GridPane.columnIndex="2" />
-                                                <TextField GridPane.columnIndex="4" />
-                                                <Button mnemonicParsing="false" text="Alquilar" />
+                                                <TextField fx:id="textFieldDniSinReserva" GridPane.columnIndex="4" />
+                                                <Button fx:id="btnAlquilarSinReserva" mnemonicParsing="false" onAction="#alquilarSinReserva" text="Alquilar" />
                                              </children>
                                           </GridPane>
                                           <GridPane>
@@ -168,7 +182,7 @@
                                              </rowConstraints>
                                              <children>
                                                 <Label text="Precio:" />
-                                                <TextField GridPane.columnIndex="2" />
+                                                <TextField fx:id="textFieldPrecioSinReserva" GridPane.columnIndex="2" />
                                              </children>
                                           </GridPane>
                                        </children>

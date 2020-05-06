@@ -5,7 +5,9 @@
  */
 package aeropuerto.util;
 
+import aeropuerto.elementos.Coche;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Reserva {
 
@@ -20,6 +22,8 @@ public class Reserva {
     /*Atributo solo válido para reserva de coche*/
     private Float precio;
     private String estado;
+    private Float precioDia;
+    private String modelo;
 
     /*Constructor reserva coche*/
     public Reserva(String tipo, Timestamp inicio, Timestamp fin, String matricula) {
@@ -57,12 +61,15 @@ public class Reserva {
         this.matricula = matricula;
     }
     
-    public Reserva(Timestamp inicio, Timestamp fin, String tipo, String matricula, Float precio) {
+    public Reserva(Timestamp inicio, Timestamp fin, String tipo, String matricula, String modelo, Float precioDia, String estado) {
         this.inicio = new Time(inicio);
         this.fin = new Time(fin);
         this.tipo = tipo;
-        this.matricula = matricula;
-        this.precio = (float) (Math.round(precio * 100d) / 100d);
+        this.precio = (float)(Math.round(((Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate()))*precioDia) * 100d) / 100d);
+        this.modelo=modelo;
+        this.precioDia=precioDia;
+        this.estado=estado;
+        this.matricula=matricula;
     }
 
     public Integer getTerminal() {
@@ -104,7 +111,23 @@ public class Reserva {
     public void setPrecio(Float precio) {
         this.precio = precio;
     }
-    
-    
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Float getPrecioDia() {
+        return precioDia;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    
+    
 }

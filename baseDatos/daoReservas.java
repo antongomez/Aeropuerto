@@ -1,6 +1,7 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Coche;
 import aeropuerto.util.Reserva;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -193,15 +194,33 @@ public class daoReservas extends AbstractDAO {
         ResultSet rsRes;
         
         try {
-            stmRes = con.prepareStatement("select cast(fechainicioreserva as date), cast(fechafinreserva as date), cochealquiler as matricula, "
-                    + "(cast(fechafinreserva as date)-cast(fechainicioreserva as date))*coche.preciopordia as precio "
-                    + "from reservar as res, cochealquiler as coche "
-                    + "where res.usuario=? and cast(fechainicioreserva as date)=cast(NOW() as date) and coche.matricula=res.cochealquiler ");
+            stmRes = con.prepareStatement("SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), res.cochealquiler as matricula, "
+                    + "coche.preciopordia as preciodia, coche.modelo as modelo, "
+                    + "'sin alquilar' as estado "
+                    + "FROM reservar as res, cochealquiler as coche "
+                    + "WHERE res.usuario=? and cast(fechainicioreserva as date)=cast(NOW() as date) and coche.matricula=res.cochealquiler "
+                    + "and NOT EXISTS(SELECT * "
+                    + "           FROM alquilar as alq "
+                    + "           WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 "
+                    + "           and res.cochealquiler=alq.matricula "
+                    + "           and res.usuario=alq.usuario) "
+                    + "UNION "
+                    + "SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), res.cochealquiler as matricula, "
+                    + "coche.preciopordia as preciodia, coche.modelo as modelo, "
+                    + "'alquilado' as estado "
+                    + "FROM reservar as res, cochealquiler as coche "
+                    + "WHERE res.usuario=? and cast(fechainicioreserva as date)=cast(NOW() as date) and coche.matricula=res.cochealquiler "
+                    + "and EXISTS(SELECT * "
+                    + "           FROM alquilar as alq "
+                    + "           WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 "
+                    + "           and res.cochealquiler=alq.matricula "
+                    + "           and res.usuario=alq.usuario) ");
             stmRes.setString(1, dniUsuario);
+            stmRes.setString(2, dniUsuario);
             rsRes=stmRes.executeQuery();
             while(rsRes.next()){
                 Reserva reserva = new Reserva(rsRes.getTimestamp("fechainicioreserva"),rsRes.getTimestamp("fechafinreserva"),
-                "coche", rsRes.getString("matricula"), rsRes.getFloat("precio"));
+                "coche", rsRes.getString("matricula"),rsRes.getString("modelo"),rsRes.getFloat("preciodia"), rsRes.getString("estado"));
                 resultado.add(reserva);
             }
 
