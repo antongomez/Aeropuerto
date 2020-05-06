@@ -226,6 +226,7 @@ public class daoUsuarios extends AbstractDAO {
     public Boolean modificarUsuario(Usuario us) {
         Connection con;
         PreparedStatement stmUsuario = null;
+        PreparedStatement stmAdmin = null;
         Boolean correcto = false;
 
         con = super.getConexion();
@@ -253,21 +254,56 @@ public class daoUsuarios extends AbstractDAO {
             }
             /*Si es admin se actualiza el curriculum*/
             if (us instanceof Administrador) {
-                stmUsuario = con.prepareStatement("update administrador set curriculum=? where usuario=?");
-                stmUsuario.setString(1, ((Administrador) us).getCurriculum());
-                stmUsuario.setString(2, us.getDni());
-                stmUsuario.executeUpdate();
+                try{
+                stmAdmin = con.prepareStatement("update administrador set curriculum=? where usuario=?");
+                stmAdmin.setString(1, ((Administrador) us).getCurriculum());
+                stmAdmin.setString(2, us.getDni());
+                stmAdmin.executeUpdate();
+                }
+                catch(SQLException e){
+                    if(e.getMessage().contains("demasiado largo")){
+                        this.getFachadaAplicacion().mostrarError("El currículum no debe superar los 500 caracteres");
+                    }
+                    else{
+                        System.out.println(e.getMessage());
+                        this.getFachadaAplicacion().mostrarError(e.getMessage());
+                    }
+                    correcto=false;
+                }
+                finally{
+                    try{
+                        stmAdmin.close();
+                    }catch(SQLException e){
+                        System.out.println("Imposible cerrar cursores");
+                        correcto=false;
+                    }
+                }
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            String m=e.getMessage();
+            if(m.contains("usuario_id_key")){
+                getFachadaAplicacion().mostrarError("El id elegido ya corresponde a otro usuario");
+            }
+            else if(m.contains("usuario_correoelectronico_key")){
+                getFachadaAplicacion().mostrarError("Ya existe un usuario registrado con ese email");
+            }
+            else if(m.contains("demasiado largo")){
+                getFachadaAplicacion().mostrarError("Uno de los campos contiene un valor demasiado largo. "
+                        + "Revise los datos introducidos.");
+            }
+            else{
+            getFachadaAplicacion().mostrarError(e.getMessage());
+            
+            }
+            correcto=false;
 
         } finally {
             try {
                 stmUsuario.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
+                correcto=false;
             }
         }
         return correcto;
