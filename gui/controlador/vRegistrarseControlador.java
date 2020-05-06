@@ -78,10 +78,11 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
                         Integer.parseInt(textFieldTelefono.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
 
                 if (Modelo.getInstanceModelo().registrarUsuario(us, textFieldContrasenha.getText()) == true) {  //comprobamos si se registró correctamente
+                    getVenta().close();
                     Modelo.getInstanceModelo().mostrarNotificacion("Usuario registrado correctamente", getVenta());
 
                     //se cierra la ventana de registrar
-                    //getVenta().close();
+                    
                 }
             } catch (NumberFormatException e) {
                 Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
