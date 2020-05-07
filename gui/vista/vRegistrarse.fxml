@@ -64,9 +64,8 @@
                   <TextField fx:id="textFieldAp1" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                   <TextField fx:id="textFieldAp2" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                   <ComboBox fx:id="comboBoxPais" minHeight="-Infinity" minWidth="120.0" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                  <TextField fx:id="textFieldTelefono" minHeight="-Infinity" minWidth="120.0" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                  <TextField fx:id="textFieldTelefono" minHeight="-Infinity" minWidth="120.0" onKeyReleased="#comprobarTxtBaleiros" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                   <ComboBox fx:id="comboBoxSexo" minHeight="-Infinity" minWidth="120.0" prefHeight="32.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-                  <Label fx:id="labDniErro" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" styleClass="labDNI" text="¡DNI incorrecto!" textFill="RED" GridPane.columnIndex="3" />
                </children>
             </GridPane>
          </children>

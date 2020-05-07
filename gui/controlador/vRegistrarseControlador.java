@@ -21,8 +21,6 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
     @FXML
     private Label labTitulo;
     @FXML
-    private Label labDniErro;
-    @FXML
     private TextField textFieldDni;
     @FXML
     private TextField textFieldId;
@@ -59,7 +57,6 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
         comboBoxPais.setItems(opcionesPais);
         comboBoxPais.getSelectionModel().selectFirst();
 
-        labDniErro.setVisible(false);
 
         btnRegistrar.setDisable(true);
 
@@ -68,7 +65,6 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
     @FXML
     private void accionBtnRegistrarse(ActionEvent event) {
 
-        //Habría que poner una excepcion por si el dni es incorrecto?
         if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
             Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
         } else {
@@ -109,6 +105,7 @@ public class vRegistrarseControlador extends Controlador implements Initializabl
                 || textFieldAp1.getText().isEmpty()
                 || textFieldAp2.getText().isEmpty()
                 || comboBoxPais.getSelectionModel().getSelectedItem().isEmpty() //O pais pode ser null na base de datos
-                || comboBoxSexo.getSelectionModel().getSelectedItem().isEmpty());
+                || comboBoxSexo.getSelectionModel().getSelectedItem().isEmpty()
+                ||textFieldTelefono.getText().isEmpty());
     }
 }

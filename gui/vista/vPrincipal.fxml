@@ -601,7 +601,7 @@
                <tabs>
                   <Tab onSelectionChanged="#accionAbrirModificarDatos" text="Modificar datos">
                      <content>
-                        <AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background">
+                        <AnchorPane fx:id="paneModificarDatos" prefHeight="600.0" prefWidth="600.0" styleClass="background">
                            <children>
                               <Button fx:id="btnDarseBaja" layoutX="25.0" layoutY="467.0" mnemonicParsing="false" onAction="#accionBtnDarseBaja" text="Darse de baja" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" />
                               <Button fx:id="btnGuardar" layoutX="605.0" layoutY="473.0" mnemonicParsing="false" onAction="#accionBtnGuardar" text="Guardar" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
@@ -637,15 +637,15 @@
                                     <Label prefHeight="30.0" prefWidth="150.0" text="País:" GridPane.rowIndex="9" />
                                     <Label prefHeight="23.0" prefWidth="150.0" text="Teléfono:" GridPane.rowIndex="10" />
                                     <Label prefHeight="30.0" prefWidth="150.0" text="Sexo:" GridPane.rowIndex="11" />
-                                    <TextField fx:id="textFieldID" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <TextField fx:id="textFieldEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <TextField fx:id="textFieldID" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="textFieldEmail" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <PasswordField fx:id="textFieldContrasenha" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <PasswordField fx:id="textFieldRepetirContrasenha" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <TextField fx:id="textFieldNombre" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <TextField fx:id="textFieldAp1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <TextField fx:id="textFieldAp2" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                    <TextField fx:id="textFieldNombre" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <TextField fx:id="textFieldAp1" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <TextField fx:id="textFieldAp2" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                     <ComboBox fx:id="comboBoxPais" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                    <TextField fx:id="textFieldTlf" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                    <TextField fx:id="textFieldTlf" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#comprobarTxtBaleiros" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                                     <ComboBox fx:id="comboBoxSexo" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                                     <Label fx:id="etqFechaIngreso" prefHeight="30.0" prefWidth="150.0" text="Fecha de ingreso:" GridPane.rowIndex="1" />
                                     <Label prefHeight="30.0" prefWidth="150.0" text="DNI:" />
@@ -747,7 +747,7 @@
                                           <Insets bottom="2.0" left="2.0" right="2.0" />
                                        </padding>
                                     </VBox>
-                                    <Button fx:id="btnCancelar" disable="true" mnemonicParsing="false" onAction="#cancelarViaje" text="Cancelar" />
+                                    <Button fx:id="btnCancelar" disable="true" mnemonicParsing="false" onAction="#cancelarViaje" text="Devolver" />
                                  </children>
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

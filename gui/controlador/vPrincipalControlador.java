@@ -131,6 +131,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     //Campos modificar datos
     @FXML
+    private AnchorPane paneModificarDatos;
+    @FXML
     private TextField textFieldID;
     @FXML
     private TextField textFieldEmail;
@@ -419,6 +421,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Button btnDevolver;
     @FXML
     private Button btnCancelar;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -598,6 +601,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             btnPersonal.setVisible(false);
         }
     }
+    /*
+    Compra de vuelos
+    
+    */
 
     @FXML
     private void accionBtnVuelos(ActionEvent event) {
@@ -685,6 +692,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
      */
     @FXML
     private void accionBtnAreaP(ActionEvent event) {
+        
         panelAreaP.toFront();
         etqTitulo.setText(TITULO_AREAP);
 
@@ -736,9 +744,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private void accionBtnDarseBaja(ActionEvent event) {
         if (Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true) {
+            super.getVenta().close();
             Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente", getVenta());
+        
         }
-        super.getVenta().close();
+        
     }
 
     @FXML
@@ -783,6 +793,26 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
         textFieldContrasenha.setText("");
         textFieldRepetirContrasenha.setText("");
+    }
+    /*Para comprobar que todos los campos estén cubiertos*/
+    @FXML
+    private void comprobarTxtBaleiros(KeyEvent event) {
+        if (camposCompletos()) {
+            btnGuardar.setDisable(false);
+        } else {
+            btnGuardar.setDisable(true);
+        }
+    }
+
+    private Boolean camposCompletos() {
+        return !(textFieldID.getText().isEmpty()
+                || textFieldEmail.getText().isEmpty()
+                || textFieldNombre.getText().isEmpty()
+                || textFieldAp1.getText().isEmpty()
+                || textFieldAp2.getText().isEmpty()
+                || comboBoxPais.getSelectionModel().getSelectedItem().isEmpty()
+                || comboBoxSexo.getSelectionModel().getSelectedItem().isEmpty()
+                ||textFieldTlf.getText().isEmpty());
     }
 
     //MisVuelos

@@ -311,8 +311,14 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.executeUpdate();
             correcto = true;
         } catch (SQLException e) {
+            String m=e.getMessage();
+            if(m.contains("fkey")){
+               this.getFachadaAplicacion().mostrarError("Ya has disfrutado de nuestros servicios. No puedes darte de baja."); 
+            }
+            else{
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
+            }
             correcto = false;
         } finally {
             try {
