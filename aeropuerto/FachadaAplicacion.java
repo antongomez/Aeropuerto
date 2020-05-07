@@ -15,8 +15,10 @@ import aeropuerto.gestion.GestionUsuarios;
 import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.PorcentajeDisponibilidad;
-import aeropuerto.util.Reserva;
+import aeropuerto.util.reservas.Reserva;
 import aeropuerto.util.Time;
+import aeropuerto.util.reservas.ReservaCoche;
+import aeropuerto.util.reservas.ReservaParking;
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
 import java.util.List;
@@ -162,8 +164,12 @@ public class FachadaAplicacion extends Application {
 
     //Reservas
     /*Muestra las reservas de un usuario que aún no han sido vencidas*/
-    public List<Reserva> obtenerReservasUsuario(String dniUs) {
-        return gr.obtenerReservasUsuario(dniUs);
+    public List<ReservaParking> obterResParkingUsuario(String dniUs) {
+        return gr.obterResParkingUsuario(dniUs);
+    }
+    
+    public List<ReservaCoche> obterResCocheUsuario(String dniUs) {
+        return gr.obterResCocheUsuario(dniUs);
     }
 
     public Boolean cancelarReserva(Reserva res, String dniUs) {
@@ -238,11 +244,11 @@ public class FachadaAplicacion extends Application {
         return gp.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
     }
 
-    public Boolean reservarCoche(Reserva reserva, String dniUsuario) {
+    public Boolean reservarCoche(ReservaCoche reserva, String dniUsuario) {
         return gr.reservarCoche(reserva, dniUsuario);
     }
 
-    public Boolean reservarParking(Reserva reserva, String dniUsuario) {
+    public Boolean reservarParking(ReservaParking reserva, String dniUsuario) {
         return gr.reservarParking(reserva, dniUsuario);
     }
 
@@ -270,7 +276,7 @@ public class FachadaAplicacion extends Application {
         gu.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
     
-    public List<Reserva> obtenerReservasCocheUsuario(String dniUsuario){
+    public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario){
         return gr.obtenerReservasCocheUsuario(dniUsuario);
     }
     
@@ -282,7 +288,7 @@ public class FachadaAplicacion extends Application {
         return gu.comprobarRegistrado(dni);
     }
     
-    public Reserva buscarAlquilerDevolucion(String matricula){
+    public ReservaCoche buscarAlquilerDevolucion(String matricula){
         return gr.buscarAlquilerDevolucion(matricula);
     }
     

@@ -11,8 +11,10 @@ import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.PorcentajeDisponibilidad;
-import aeropuerto.util.Reserva;
+import aeropuerto.util.reservas.Reserva;
 import aeropuerto.util.Time;
+import aeropuerto.util.reservas.ReservaCoche;
+import aeropuerto.util.reservas.ReservaParking;
 import gui.FachadaGui;
 import static gui.controlador.Controlador.loadWindow;
 import static gui.controlador.Controlador.loadWindowConfirm;
@@ -82,9 +84,9 @@ public class Modelo {
                 getResource("/gui/vista/vNotificacion.fxml"), "Notificación", stage));
         controlador.mostrarMensaje(mensaje);
         controlador.getVenta().setResizable(false);
-        
+
     }
-    
+
     /*public void mostrarConfirmacion(String mensaje, Stage pai) {
         Stage stage = new Stage();
         stage.initOwner(pai);
@@ -93,7 +95,6 @@ public class Modelo {
         controlador.mostrarMensaje(mensaje);
         controlador.getVenta().setResizable(false);
     }*/
-
     public Boolean mostrarConfirmacion(String mensaje, Stage pai) {
         Stage stage = new Stage();
         stage.initOwner(pai);
@@ -117,11 +118,11 @@ public class Modelo {
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
         return fa.obtenerVuelosUsuario(dniUs);
     }
-    
+
     public List<Vuelo> obtenerVuelosRealizadosUsuario(String dniUs) {
         return fa.obtenerVuelosRealizadosUsuario(dniUs);
     }
-    
+
     public List<Vuelo> obtenerVuelosFuturosUsuario(String dniUs) {
         return fa.obtenerVuelosFuturosUsuario(dniUs);
     }
@@ -143,8 +144,12 @@ public class Modelo {
         return fa.obtenerEstadisticasGlobalesUsuario(dniUs);
     }
 
-    public List<Reserva> obtenerReservasUsuario(String dniUs) {
-        return fa.obtenerReservasUsuario(dniUs);
+    public List<ReservaParking> obterResParkingUsuario(String dniUs) {
+        return fa.obterResParkingUsuario(dniUs);
+    }
+
+    public List<ReservaCoche> obterResCocheUsuario(String dniUs) {
+        return fa.obterResCocheUsuario(dniUs);
     }
 
     public Boolean cancelarReserva(Reserva res, String dniUs) {
@@ -182,7 +187,7 @@ public class Modelo {
     public List<String> obterTipoVentas() {
         return fa.obterTipoVentas();
     }
-    
+
     public List<Tienda> buscarTiendas(String nombre, String tipo, String terminal) {
         return fa.buscarTiendas(nombre, tipo, terminal);
     }
@@ -198,7 +203,7 @@ public class Modelo {
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
         return fa.buscarCoches(llegada, retorno, numPlazas);
     }
-    
+
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas, String modelo, String matricula) {
         return fa.buscarCoches(llegada, retorno, numPlazas, modelo, matricula);
     }
@@ -207,11 +212,11 @@ public class Modelo {
         return fa.obterPrazaLibre(numTerminal, piso, inicio, fin);
     }
 
-    public Boolean reservarParking(Reserva reserva, String dniUsuario) {
+    public Boolean reservarParking(ReservaParking reserva, String dniUsuario) {
         return fa.reservarParking(reserva, dniUsuario);
     }
 
-    public Boolean reservarCoche(Reserva reserva, String dniUsuario) {
+    public Boolean reservarCoche(ReservaCoche reserva, String dniUsuario) {
         return fa.reservarCoche(reserva, dniUsuario);
     }
 
@@ -280,26 +285,27 @@ public class Modelo {
         fa.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
 
-    public List<Reserva> obtenerReservasCocheUsuario(String dniUsuario) {
+    public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario) {
         return fa.obtenerReservasCocheUsuario(dniUsuario);
     }
-    
-    public Boolean introducirAlquiler(String matricula, Time fin, String dni){
+
+    public Boolean introducirAlquiler(String matricula, Time fin, String dni) {
         return fa.introducirAlquiler(matricula, fin, dni);
     }
-    
-    public Boolean comprobarRegistrado(String dni){
+
+    public Boolean comprobarRegistrado(String dni) {
         return fa.comprobarRegistrado(dni);
     }
-    
-    public Reserva buscarAlquilerDevolucion(String matricula){
+
+    public ReservaCoche buscarAlquilerDevolucion(String matricula) {
         return fa.buscarAlquilerDevolucion(matricula);
     }
-    
-    public Boolean devolucionCoche(Reserva alquiler){
+
+    public Boolean devolucionCoche(Reserva alquiler) {
         return fa.devolucionCoche(alquiler);
     }
-    public Aerolinea obtenerDatosAerolinea(String numvuelo){
+
+    public Aerolinea obtenerDatosAerolinea(String numvuelo) {
         return fa.obtenerDatosAerolinea(numvuelo);
     }
 }

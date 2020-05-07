@@ -10,8 +10,10 @@ import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.PorcentajeDisponibilidad;
-import aeropuerto.util.Reserva;
+import aeropuerto.util.reservas.Reserva;
 import aeropuerto.util.Time;
+import aeropuerto.util.reservas.ReservaCoche;
+import aeropuerto.util.reservas.ReservaParking;
 import gui.modelo.Modelo;
 import static gui.modelo.Modelo.getInstanceModelo;
 import static java.lang.Integer.parseInt;
@@ -249,25 +251,32 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     //Reservas
     @FXML
-    private TableView<Reserva> tablaMisReservas;
+    private TableView<ReservaParking> tablaReservasParking;
     @FXML
-    private TableColumn<Reserva, Time> colInicioReserva;
+    private TableColumn<ReservaParking, Time> colInicioReservaParking;
     @FXML
-    private TableColumn<Reserva, Time> colFinReserva;
+    private TableColumn<ReservaParking, Time> colFinReservaParking;
     @FXML
-    private TableColumn<Reserva, String> colTipoReserva;
+    private TableColumn<ReservaParking, String> colMatriculaParking;
     @FXML
-    private Button btnCancelarReserva;
+    private TableColumn<ReservaParking, Integer> colTerminalParking;
     @FXML
-    private TableColumn<Reserva, String> colMatricula;
+    private TableColumn<ReservaParking, Integer> colPisoParking;
     @FXML
-    private GridPane panelInfoParking;
+    private TableColumn<ReservaParking, Integer> colPlazaParking;
     @FXML
-    private Label etqPlaza;
+    private Button btnCancelarReservaParking;
+
     @FXML
-    private Label etqPiso;
+    private TableView<ReservaCoche> tablaReservasCoche;
     @FXML
-    private Label etqTerminal;
+    private TableColumn<ReservaCoche, Time> colInicioReservaCoche;
+    @FXML
+    private TableColumn<ReservaCoche, Time> colFinReservaCoche;
+    @FXML
+    private TableColumn<ReservaCoche, String> colMatriculaCoche;
+    @FXML
+    private Button btnCancelarReservaCoche;
 
     //Servicios
     @FXML
@@ -421,7 +430,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Button btnDevolver;
     @FXML
     private Button btnCancelar;
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -521,13 +529,19 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
         });
 
-        //Definimos el tipo de dato de cada columna de la tablaMisReservas
-        colInicioReserva.setCellValueFactory(new PropertyValueFactory<>("inicio"));
-        colFinReserva.setCellValueFactory(new PropertyValueFactory<>("fin"));
-        colTipoReserva.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        colMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
-        panelInfoParking.setVisible(false);
-        btnCancelarReserva.setDisable(true);
+        //Definimos el tipo de dato de cada columna de la tablaReservasParking y tablaReservasCoche
+        colInicioReservaParking.setCellValueFactory(new PropertyValueFactory<>("inicio"));
+        colFinReservaParking.setCellValueFactory(new PropertyValueFactory<>("fin"));
+        colMatriculaParking.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        colTerminalParking.setCellValueFactory(new PropertyValueFactory<>("terminal"));
+        colPisoParking.setCellValueFactory(new PropertyValueFactory<>("piso"));
+        colPlazaParking.setCellValueFactory(new PropertyValueFactory<>("numPlaza"));
+
+        colInicioReservaCoche.setCellValueFactory(new PropertyValueFactory<>("inicio"));
+        colFinReservaCoche.setCellValueFactory(new PropertyValueFactory<>("fin"));
+        colMatriculaCoche.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+
+        btnCancelarReservaParking.setDisable(true);
 
         //Definimos el panel de estadísticas
         btnMes.setSelected(true);
@@ -601,11 +615,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             btnPersonal.setVisible(false);
         }
     }
+
     /*
     Compra de vuelos
     
-    */
-
+     */
     @FXML
     private void accionBtnVuelos(ActionEvent event) {
         panelVuelos.toFront();
@@ -692,7 +706,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
      */
     @FXML
     private void accionBtnAreaP(ActionEvent event) {
-        
+
         panelAreaP.toFront();
         etqTitulo.setText(TITULO_AREAP);
 
@@ -729,9 +743,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         tablaFuturosVuelos.setItems(vuelosFuturos);
 
         //RESERVAS
-        ObservableList<Reserva> res = FXCollections.observableArrayList(
-                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
-        tablaMisReservas.setItems(res);
+        ObservableList<ReservaParking> resParking = FXCollections.observableArrayList(
+                getInstanceModelo().obterResParkingUsuario(usuario.getDni()));
+        tablaReservasParking.setItems(resParking);
+
+        ObservableList<ReservaCoche> resCoche = FXCollections.observableArrayList(
+                getInstanceModelo().obterResCocheUsuario(usuario.getDni()));
+        tablaReservasCoche.setItems(resCoche);
     }
 
     //MODIFICAR DATOS
@@ -743,14 +761,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnDarseBaja(ActionEvent event) {
-       if(getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres darte de baja?", getVenta())==true){
-        if (Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true) {
-            super.getVenta().close();
-            Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente", getVenta());
-        
+        if (getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres darte de baja?", getVenta()) == true) {
+            if (Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true) {
+                super.getVenta().close();
+                Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente", getVenta());
+
+            }
         }
-       }
-        
+
     }
 
     @FXML
@@ -796,6 +814,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldContrasenha.setText("");
         textFieldRepetirContrasenha.setText("");
     }
+
     /*Para comprobar que todos los campos estén cubiertos*/
     @FXML
     private void comprobarTxtBaleiros(KeyEvent event) {
@@ -814,7 +833,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 || textFieldAp2.getText().isEmpty()
                 || comboBoxPais.getSelectionModel().getSelectedItem().isEmpty()
                 || comboBoxSexo.getSelectionModel().getSelectedItem().isEmpty()
-                ||textFieldTlf.getText().isEmpty());
+                || textFieldTlf.getText().isEmpty());
     }
 
     //MisVuelos
@@ -849,8 +868,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                             + "de operar este vuelo.", getVenta());
                 }
             }
-        }
-        else{
+        } else {
             Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
     }
@@ -1067,42 +1085,62 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //Reservas
     @FXML
     private void accionAbrirMisReservas(Event event) {
-        ObservableList<Reserva> res = FXCollections.observableArrayList(
-                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
-        tablaMisReservas.setItems(res);
+        ObservableList<ReservaParking> resParking = FXCollections.observableArrayList(
+                getInstanceModelo().obterResParkingUsuario(usuario.getDni()));
+        tablaReservasParking.setItems(resParking);
+
+        ObservableList<ReservaCoche> resCoche = FXCollections.observableArrayList(
+                getInstanceModelo().obterResCocheUsuario(usuario.getDni()));
+        tablaReservasCoche.setItems(resCoche);
 
     }
 
     @FXML
-    private void accionBtnCancelarReserva(ActionEvent event) {
-        Reserva resSelect = tablaMisReservas.getSelectionModel().getSelectedItem();
+    private void accionBtnCancelarReservaParking(ActionEvent event) {
+        ReservaParking resSelect = tablaReservasParking.getSelectionModel().getSelectedItem();
         Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
 
-        btnCancelarReserva.setDisable(true);
-        panelInfoParking.setVisible(false);
-        ObservableList<Reserva> res = FXCollections.observableArrayList(
-                getInstanceModelo().obtenerReservasUsuario(usuario.getDni()));
-        tablaMisReservas.setItems(res);
+        btnCancelarReservaParking.setDisable(true);
+
+        ObservableList<ReservaParking> res = FXCollections.observableArrayList(
+                getInstanceModelo().obterResParkingUsuario(usuario.getDni()));
+        tablaReservasParking.setItems(res);
         Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
                 + "con éxito", getVenta());
 
     }
 
     @FXML
-    private void seleccionarReserva(MouseEvent event) {
-        Reserva resSelect = tablaMisReservas.getSelectionModel().getSelectedItem();
+    private void accionBtnCancelarReservaCoche(ActionEvent event) {
+        ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
+        Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
+
+        btnCancelarReservaCoche.setDisable(true);
+
+        ObservableList<ReservaCoche> res = FXCollections.observableArrayList(
+                getInstanceModelo().obterResCocheUsuario(usuario.getDni()));
+        tablaReservasCoche.setItems(res);
+        Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
+                + "con éxito", getVenta());
+    }
+
+    @FXML
+    private void seleccionarReservaParking(MouseEvent event) {
+        ReservaParking resSelect = tablaReservasParking.getSelectionModel().getSelectedItem();
         if (resSelect != null) {
-            btnCancelarReserva.setDisable(false);
-            if (resSelect.getTipo().equals("Parking")) {
-                panelInfoParking.setVisible(true);
-                etqTerminal.setText(resSelect.getTerminal().toString());
-                etqPiso.setText(resSelect.getPiso().toString());
-                etqPlaza.setText(resSelect.getNumPlaza().toString());
-            } else {
-                panelInfoParking.setVisible(false);
-            }
+            btnCancelarReservaParking.setDisable(false);
         } else {
-            panelInfoParking.setVisible(false);
+            btnCancelarReservaParking.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void seleccionarReservaCoche(MouseEvent event) {
+        ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
+        if (resSelect != null) {
+            //btnCancelarReservaParking.setDisable(false);
+        } else {
+            //btnCancelarReservaParking.setDisable(true);
         }
     }
 
@@ -1175,9 +1213,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Time llegada = new Time(dataFLlegadaParking.getValue());
         Time retorno = new Time(dataFRetornoParking.getValue());
         Integer numPraza = asignarPlazaParking(llegada, retorno);
-        Reserva reserva = new Reserva(llegada,
+        ReservaParking reserva = new ReservaParking(llegada,
                 retorno,
-                "parking",
                 txtMatriculaParking.getText(),
                 parking.getTerminal(),
                 parking.getPiso(),
@@ -1469,9 +1506,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnReservarCoches(ActionEvent event) {
         Coche coche = taboaReservarCoche.getSelectionModel().getSelectedItem();
         if (coche != null) {
-            Reserva reserva = new Reserva(new Time(dataFLlegadaCoches.getValue()),
+            ReservaCoche reserva = new ReservaCoche(new Time(dataFLlegadaCoches.getValue()),
                     new Time(dataFRetornoCoches.getValue()),
-                    "coche",
                     coche.getMatricula());
             if (getInstanceModelo().reservarCoche(reserva, usuario.getDni())) {
                 getInstanceModelo().mostrarNotificacion("Reserva realizada con éxito.\n"

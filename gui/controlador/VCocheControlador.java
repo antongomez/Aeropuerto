@@ -7,8 +7,9 @@ package gui.controlador;
 
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Usuario;
-import aeropuerto.util.Reserva;
+import aeropuerto.util.reservas.Reserva;
 import aeropuerto.util.Time;
+import aeropuerto.util.reservas.ReservaCoche;
 import gui.modelo.Modelo;
 import static java.lang.Integer.parseInt;
 import java.net.URL;
@@ -44,7 +45,7 @@ public class VCocheControlador extends Controlador implements Initializable {
     private Coche cocheActual;
 
     //Devolucion
-    private Reserva devolucion;
+    private ReservaCoche devolucion;
 
     //Apartados con reserva
     @FXML
@@ -58,19 +59,19 @@ public class VCocheControlador extends Controlador implements Initializable {
     @FXML
     private DatePicker datePickerConReserva;
     @FXML
-    private TableView<Reserva> tablaConReserva;
+    private TableView<ReservaCoche> tablaConReserva;
     @FXML
-    private TableColumn<Reserva, String> columnaMatriculaConReserva;
+    private TableColumn<ReservaCoche, String> columnaMatriculaConReserva;
     @FXML
-    private TableColumn<Reserva, Time> columnaFechaVueltaConReserva;
+    private TableColumn<ReservaCoche, Time> columnaFechaVueltaConReserva;
     @FXML
-    private TableColumn<Reserva, Float> columnaPrecioConReserva;
+    private TableColumn<ReservaCoche, Float> columnaPrecioConReserva;
     @FXML
-    private TableColumn<Reserva, Time> columnaFechaRecogidaConReserva;
+    private TableColumn<ReservaCoche, Time> columnaFechaRecogidaConReserva;
     @FXML
-    private TableColumn<Reserva, String> columnaEstadoConReserva;
+    private TableColumn<ReservaCoche, String> columnaEstadoConReserva;
     @FXML
-    private TableColumn<Reserva, String> columnaModeloConReserva;
+    private TableColumn<ReservaCoche, String> columnaModeloConReserva;
     @FXML
     private TextField textFieldPrecioFinalConReserva;
 
@@ -166,7 +167,7 @@ public class VCocheControlador extends Controlador implements Initializable {
     private void obtenerReservasUsuario(ActionEvent event) {
         dniUsuarioActual = textFieldDNIConReserva.getText();
         if (Modelo.getInstanceModelo().comprobarRegistrado(dniUsuarioActual)) {
-            ObservableList<Reserva> reservas = FXCollections.observableList(Modelo.getInstanceModelo().obtenerReservasCocheUsuario(dniUsuarioActual));
+            ObservableList<ReservaCoche> reservas = FXCollections.observableList(Modelo.getInstanceModelo().obtenerReservasCocheUsuario(dniUsuarioActual));
             tablaConReserva.setItems(reservas);
         } else {
             Modelo.getInstanceModelo().mostrarError("Usuario no registrado.\n"
@@ -176,7 +177,7 @@ public class VCocheControlador extends Controlador implements Initializable {
 
     @FXML
     private void seleccionarConReserva(MouseEvent event) {
-        Reserva reserva = tablaConReserva.getSelectionModel().getSelectedItem();
+        ReservaCoche reserva = tablaConReserva.getSelectionModel().getSelectedItem();
         if (reserva != null) {
             if (reserva.getEstado().equals("sin alquilar")) {
                 cambiarFechaConReserva.setDisable(false);
@@ -193,7 +194,7 @@ public class VCocheControlador extends Controlador implements Initializable {
 
     @FXML
     private void alquilarConReserva(ActionEvent event) {
-        Reserva reserva = tablaConReserva.getSelectionModel().getSelectedItem();
+        ReservaCoche reserva = tablaConReserva.getSelectionModel().getSelectedItem();
         if (reserva != null) {
             reserva.setUsuario(dniUsuarioActual);
             if (cambiarFechaConReserva.isSelected()) {
@@ -227,7 +228,7 @@ public class VCocheControlador extends Controlador implements Initializable {
 
     @FXML
     private void actualizarPrecioConReserva(ActionEvent event) {
-        Reserva reserva = tablaConReserva.getSelectionModel().getSelectedItem();
+        ReservaCoche reserva = tablaConReserva.getSelectionModel().getSelectedItem();
         if (reserva != null) {
             Integer duracionAlquiler = Time.obtenerDias(reserva.getInicio().toLocalDate(), datePickerConReserva.getValue())+1;
             Float precio = (float) (Math.round(duracionAlquiler * reserva.getPrecioDia() * 100d) / 100d);
@@ -273,7 +274,7 @@ public class VCocheControlador extends Controlador implements Initializable {
         String dni = textFieldDniSinReserva.getText();
         if (Modelo.getInstanceModelo().comprobarRegistrado(dni)) {
             if (cocheActual != null) {
-                Reserva reserva = new Reserva(Time.diaActual(), new Time(datePickerFechaVueltaSinReserva.getValue()),
+                ReservaCoche reserva = new ReservaCoche(Time.diaActual(), new Time(datePickerFechaVueltaSinReserva.getValue()),
                         cocheActual.getMatricula(), cocheActual.getPrecioDia(), dni);
                 if (Modelo.getInstanceModelo().introducirAlquiler(reserva.getMatricula(),
                         reserva.getFin(), dni)) {

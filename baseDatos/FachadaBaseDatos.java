@@ -11,8 +11,10 @@ import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.PorcentajeDisponibilidad;
-import aeropuerto.util.Reserva;
+import aeropuerto.util.reservas.Reserva;
 import aeropuerto.util.Time;
+import aeropuerto.util.reservas.ReservaCoche;
+import aeropuerto.util.reservas.ReservaParking;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -121,15 +123,19 @@ public class FachadaBaseDatos {
         return daoUsuarios.obtenerEstadisticasGlobalesUsuario(dniUs);
     }
 
-    public List<Reserva> obtenerReservasUsuario(String dniUs) {
-        return daoReservas.obtenerReservasUsuario(dniUs);
+    public List<ReservaParking> obterResParkingUsuario(String dniUs) {
+        return daoReservas.obterResParkingUsuario(dniUs);
+    }
+    
+    public List<ReservaCoche> obterResCocheUsuario(String dniUs) {
+        return daoReservas.obterResCocheUsuario(dniUs);
     }
 
-    public Boolean cancelarReservaParking(Reserva res, String dniUs) {
+    public Boolean cancelarReservaParking(ReservaParking res, String dniUs) {
         return daoReservas.cancelarReservaParking(res, dniUs);
     }
 
-    public Boolean cancelarReservaCoche(Reserva res, String dniUs) {
+    public Boolean cancelarReservaCoche(ReservaCoche res, String dniUs) {
         return daoReservas.cancelarReservaCoche(res, dniUs);
     }
 
@@ -178,11 +184,11 @@ public class FachadaBaseDatos {
         return daoTerminal.obterPrazasRestantesParkingTerminal(numTerminal, inicio, fin);
     }
 
-    public Boolean reservarParking(Reserva reserva, String dniUsuario) {
+    public Boolean reservarParking(ReservaParking reserva, String dniUsuario) {
         return daoReservas.reservarParking(reserva, dniUsuario);
     }
 
-    public Boolean reservarCoche(Reserva reserva, String dniUsuario) {
+    public Boolean reservarCoche(ReservaCoche reserva, String dniUsuario) {
         return daoReservas.reservarCoche(reserva, dniUsuario);
     }
 
@@ -266,7 +272,7 @@ public class FachadaBaseDatos {
         daoUsuarios.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
     
-    public List<Reserva> obtenerReservasCocheUsuario(String dniUsuario){
+    public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario){
         return daoReservas.obtenerReservasCocheUsuario(dniUsuario);
     }
     
@@ -278,7 +284,7 @@ public class FachadaBaseDatos {
         return daoUsuarios.comprobarRegistrado(dni);
     }
     
-    public Reserva buscarAlquilerDevolucion(String matricula){
+    public ReservaCoche buscarAlquilerDevolucion(String matricula){
         return daoReservas.buscarAlquilerDevolucion(matricula);
     }
     

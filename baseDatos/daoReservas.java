@@ -2,8 +2,10 @@ package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Coche;
-import aeropuerto.util.Reserva;
+import aeropuerto.util.reservas.Reserva;
 import aeropuerto.util.Time;
+import aeropuerto.util.reservas.ReservaCoche;
+import aeropuerto.util.reservas.ReservaParking;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,35 +20,28 @@ public class daoReservas extends AbstractDAO {
         super.setFachadaAplicacion(fa);
     }
 
-    public List<Reserva> obtenerReservasUsuario(String dniUs) {
+    public List<ReservaParking> obterResParkingUsuario(String dniUs) {
 
-        List<Reserva> resultado = new ArrayList<>();
+        List<ReservaParking> resultado = new ArrayList<>();
         Connection con;
-        Reserva resActual;
+        ReservaParking resActual;
         PreparedStatement stmRes = null;
         ResultSet rsRes;
 
         con = super.getConexion();
 
         try {
-            stmRes = con.prepareStatement("select fechainicioreserva as fechainicio, fechafinreserva as fechafin, 'Coche' as tipo, cocheAlquiler as matricula, "
-                    + "null as terminal, null as piso, null as numplaza "
-                    + "from reservar where usuario=? and fechainicioreserva>NOW() UNION "
-                    + "select fechaentrada as fechainicio, fechafin, 'Parking' as tipo, matricula, terminal, piso, numplaza "
-                    + " from reservarparking "
-                    + "where usuario=? and fechaentrada>NOW()");
+            stmRes = con.prepareStatement("select fechaentrada as fechainicio, fechafin, matricula, terminal, piso, numplaza \n"
+                    + "from reservarparking \n"
+                    + "where usuario = ? \n"
+                    + "  and fechaentrada > NOW()");
             stmRes.setString(1, dniUs);
-            stmRes.setString(2, dniUs);
             rsRes = stmRes.executeQuery();
-         
 
             while (rsRes.next()) {
-                if (rsRes.getString("tipo").equals("Coche")) {
-                    resActual = new Reserva(rsRes.getString("tipo"), rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"), rsRes.getString("matricula"));
-                } else {
-                    resActual = new Reserva(rsRes.getString("tipo"), rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"), rsRes.getString("matricula"),
-                            rsRes.getInt("terminal"), rsRes.getInt("piso"), rsRes.getInt("numplaza"));
-                }
+                resActual = new ReservaParking(rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"), rsRes.getString("matricula"),
+                        rsRes.getInt("terminal"), rsRes.getInt("piso"), rsRes.getInt("numplaza"));
+
                 resultado.add(resActual);
             }
 
@@ -64,7 +59,44 @@ public class daoReservas extends AbstractDAO {
         return resultado;
     }
 
-    public Boolean cancelarReservaParking(Reserva res, String dniUsu) {
+    public List<ReservaCoche> obterResCocheUsuario(String dniUs) {
+
+        List<ReservaCoche> resultado = new ArrayList<>();
+        Connection con;
+        ReservaCoche resActual;
+        PreparedStatement stmRes = null;
+        ResultSet rsRes;
+
+        con = super.getConexion();
+
+        try {
+            stmRes = con.prepareStatement("select fechainicioreserva as fechainicio, fechafinreserva as fechafin, cocheAlquiler as matricula\n"
+                    + "from reservar \n"
+                    + "where usuario = ? \n"
+                    + "  and fechainicioreserva > NOW()");
+            stmRes.setString(1, dniUs);
+            rsRes = stmRes.executeQuery();
+
+            while (rsRes.next()) {
+                resActual = new ReservaCoche(rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"), rsRes.getString("matricula"));
+                resultado.add(resActual);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmRes.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
+    }
+
+    public Boolean cancelarReservaParking(ReservaParking res, String dniUsu) {
         Connection con;
         PreparedStatement stmRes = null;
         con = super.getConexion();
@@ -95,7 +127,7 @@ public class daoReservas extends AbstractDAO {
         return correcto;
     }
 
-    public Boolean cancelarReservaCoche(Reserva res, String dniUsu) {
+    public Boolean cancelarReservaCoche(ReservaCoche res, String dniUsu) {
         Connection con;
         PreparedStatement stmRes = null;
         con = super.getConexion();
@@ -124,7 +156,7 @@ public class daoReservas extends AbstractDAO {
         return correcto;
     }
 
-    public Boolean reservarParking(Reserva res, String dniUsu) {
+    public Boolean reservarParking(ReservaParking res, String dniUsu) {
         Connection con;
         PreparedStatement stmRes = null;
         con = super.getConexion();
@@ -146,7 +178,7 @@ public class daoReservas extends AbstractDAO {
             correcto = false;
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
-            
+
         } finally {
             try {
                 stmRes.close();
@@ -158,7 +190,7 @@ public class daoReservas extends AbstractDAO {
         return correcto;
     }
 
-    public Boolean reservarCoche(Reserva res, String dniUsu) {
+    public Boolean reservarCoche(ReservaCoche res, String dniUsu) {
         Connection con;
         PreparedStatement stmRes = null;
         con = super.getConexion();
@@ -187,14 +219,14 @@ public class daoReservas extends AbstractDAO {
         }
         return correcto;
     }
-    
-    public List<Reserva> obtenerReservasCocheUsuario(String dniUsuario){
-        List<Reserva> resultado = new ArrayList<>();
+
+    public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario) {
+        List<ReservaCoche> resultado = new ArrayList<>();
         Connection con;
         PreparedStatement stmRes = null;
         con = super.getConexion();
         ResultSet rsRes;
-        
+
         try {
             stmRes = con.prepareStatement("SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), res.cochealquiler as matricula, "
                     + "coche.preciopordia as preciodia, coche.modelo as modelo, "
@@ -219,9 +251,9 @@ public class daoReservas extends AbstractDAO {
                     + "           and res.usuario=alq.usuario) ");
             stmRes.setString(1, dniUsuario);
             stmRes.setString(2, dniUsuario);
-            rsRes=stmRes.executeQuery();
-            while(rsRes.next()){
-                Reserva reserva = new Reserva(rsRes.getTimestamp("fechainicioreserva"),rsRes.getTimestamp("fechafinreserva"), rsRes.getString("matricula"),rsRes.getString("modelo"),rsRes.getFloat("preciodia"), rsRes.getString("estado"));
+            rsRes = stmRes.executeQuery();
+            while (rsRes.next()) {
+                ReservaCoche reserva = new ReservaCoche(rsRes.getTimestamp("fechainicioreserva"), rsRes.getTimestamp("fechafinreserva"), rsRes.getString("matricula"), rsRes.getString("modelo"), rsRes.getFloat("preciodia"), rsRes.getString("estado"));
                 resultado.add(reserva);
             }
 
@@ -237,8 +269,8 @@ public class daoReservas extends AbstractDAO {
         }
         return resultado;
     }
-    
-    public Boolean introducirAlquiler(String matricula, Time fin, String dni){
+
+    public Boolean introducirAlquiler(String matricula, Time fin, String dni) {
         Connection con;
         PreparedStatement stmRes = null;
         con = super.getConexion();
@@ -266,12 +298,12 @@ public class daoReservas extends AbstractDAO {
         }
         return correcto;
     }
-    
-    public Reserva buscarAlquilerDevolucion(String matricula){
+
+    public ReservaCoche buscarAlquilerDevolucion(String matricula) {
         Connection con;
         PreparedStatement stmAlquiler = null;
         ResultSet rsAlquiler;
-        Reserva alquiler=null;
+        ReservaCoche alquiler = null;
 
         con = this.getConexion();
 
@@ -284,8 +316,8 @@ public class daoReservas extends AbstractDAO {
             rsAlquiler = stmAlquiler.executeQuery();
 
             if (rsAlquiler.next()) {
-                alquiler=new Reserva(new Time(rsAlquiler.getTimestamp("inicio")), new Time(rsAlquiler.getTimestamp("fin")),
-                matricula,rsAlquiler.getFloat("precioDia"),rsAlquiler.getString("usuario"));
+                alquiler = new ReservaCoche(new Time(rsAlquiler.getTimestamp("inicio")), new Time(rsAlquiler.getTimestamp("fin")),
+                        matricula, rsAlquiler.getFloat("precioDia"), rsAlquiler.getString("usuario"));
             }
 
         } catch (SQLException e) {
@@ -300,8 +332,8 @@ public class daoReservas extends AbstractDAO {
         }
         return alquiler;
     }
-    
-    public Boolean devolucionCoche(Reserva alquiler){
+
+    public Boolean devolucionCoche(Reserva alquiler) {
         Connection con;
         PreparedStatement stmUsuario = null;
         PreparedStatement stmBorrado = null;
@@ -318,7 +350,7 @@ public class daoReservas extends AbstractDAO {
             stmUsuario.setString(1, alquiler.getMatricula());
             stmUsuario.setTimestamp(2, alquiler.getInicio().toTimestamp());
             stmUsuario.setString(3, alquiler.getUsuario());
-            
+
             stmUsuario.executeUpdate();
             correcto = true;
 
