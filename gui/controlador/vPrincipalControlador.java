@@ -451,7 +451,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
                 if ((item != null) && (!empty)) {
                     if (item.getCancelado()) {
-                        setStyle("-fx-background-color: #b80c00");
+                        setStyle("-fx-background-color: #b80c00;");
+                    } else if (item.enCurso()) {
+                        setStyle("-fx-background-color: #11ad00;");
+                    } else {
+                        setStyle("");
                     }
                 }
             }
@@ -483,6 +487,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if ((item != null) && (!empty)) {
                     if (item.getCancelado()) {
                         setStyle("-fx-background-color: #b80c00");
+                    } else {
+                        setStyle("");
                     }
                 }
             }
@@ -503,9 +509,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if ((item != null) && (!empty)) {
                     if (item.getCancelado()) {
                         setStyle("-fx-background-color: #b80c00;");
-                    }
-                    if (item.enCurso()) {
+                    } else if (item.enCurso()) {
                         setStyle("-fx-background-color: #11ad00;");
+                    } else {
+                        setStyle("");
                     }
                 }
             }
