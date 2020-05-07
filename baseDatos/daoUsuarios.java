@@ -46,26 +46,21 @@ public class daoUsuarios extends AbstractDAO {
             correcto = true;
 
         } catch (SQLException e) {
-            String m=e.getMessage();
-            if(m.contains("usuario_dni_check") || m.contains("character(9)")){
+            String m = e.getMessage();
+            if (m.contains("usuario_dni_check") || m.contains("character(9)")) {
                 getFachadaAplicacion().mostrarError("Formato de dni incorrecto");
-            }
-            else if(m.contains("usuario_pkey")){
+            } else if (m.contains("usuario_pkey")) {
                 getFachadaAplicacion().mostrarError("Usuario ya registrado");
-            }
-            else if(m.contains("usuario_id_key")){
+            } else if (m.contains("usuario_id_key")) {
                 getFachadaAplicacion().mostrarError("El id elegido ya corresponde a otro usuario");
-            }
-            else if(m.contains("usuario_correoelectronico_key")){
+            } else if (m.contains("usuario_correoelectronico_key")) {
                 getFachadaAplicacion().mostrarError("Ya existe un usuario registrado con ese email");
-            }
-            else if(m.contains("demasiado largo")){
+            } else if (m.contains("demasiado largo")) {
                 getFachadaAplicacion().mostrarError("Uno de los campos contiene un valor demasiado largo. "
                         + "Revise los datos introducidos.");
-            }
-            else{
-            getFachadaAplicacion().mostrarError(e.getMessage());
-            
+            } else {
+                getFachadaAplicacion().mostrarError(e.getMessage());
+
             }
             correcto = false;
         } finally {
@@ -254,56 +249,50 @@ public class daoUsuarios extends AbstractDAO {
             }
             /*Si es admin se actualiza el curriculum*/
             if (us instanceof Administrador) {
-                try{
-                stmAdmin = con.prepareStatement("update administrador set curriculum=? where usuario=?");
-                stmAdmin.setString(1, ((Administrador) us).getCurriculum());
-                stmAdmin.setString(2, us.getDni());
-                stmAdmin.executeUpdate();
-                }
-                catch(SQLException e){
-                    if(e.getMessage().contains("demasiado largo")){
+                try {
+                    stmAdmin = con.prepareStatement("update administrador set curriculum=? where usuario=?");
+                    stmAdmin.setString(1, ((Administrador) us).getCurriculum());
+                    stmAdmin.setString(2, us.getDni());
+                    stmAdmin.executeUpdate();
+                } catch (SQLException e) {
+                    if (e.getMessage().contains("demasiado largo")) {
                         this.getFachadaAplicacion().mostrarError("El currículum no debe superar los 500 caracteres");
-                    }
-                    else{
+                    } else {
                         System.out.println(e.getMessage());
                         this.getFachadaAplicacion().mostrarError(e.getMessage());
                     }
-                    correcto=false;
-                }
-                finally{
-                    try{
+                    correcto = false;
+                } finally {
+                    try {
                         stmAdmin.close();
-                    }catch(SQLException e){
+                    } catch (SQLException e) {
                         System.out.println("Imposible cerrar cursores");
-                        correcto=false;
+                        correcto = false;
                     }
                 }
             }
 
         } catch (SQLException e) {
-            String m=e.getMessage();
-            if(m.contains("usuario_id_key")){
+            String m = e.getMessage();
+            if (m.contains("usuario_id_key")) {
                 getFachadaAplicacion().mostrarError("El id elegido ya corresponde a otro usuario");
-            }
-            else if(m.contains("usuario_correoelectronico_key")){
+            } else if (m.contains("usuario_correoelectronico_key")) {
                 getFachadaAplicacion().mostrarError("Ya existe un usuario registrado con ese email");
-            }
-            else if(m.contains("demasiado largo")){
+            } else if (m.contains("demasiado largo")) {
                 getFachadaAplicacion().mostrarError("Uno de los campos contiene un valor demasiado largo. "
                         + "Revise los datos introducidos.");
+            } else {
+                getFachadaAplicacion().mostrarError(e.getMessage());
+
             }
-            else{
-            getFachadaAplicacion().mostrarError(e.getMessage());
-            
-            }
-            correcto=false;
+            correcto = false;
 
         } finally {
             try {
                 stmUsuario.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
-                correcto=false;
+                correcto = false;
             }
         }
         return correcto;
@@ -448,7 +437,6 @@ public class daoUsuarios extends AbstractDAO {
                 resultado.anadirDestino(rsUsuario.getString("destino"));
                 resultado.anadirTarifa(rsUsuario.getString("tarifa"));
             }
-            System.out.println(resultado);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -770,8 +758,8 @@ public class daoUsuarios extends AbstractDAO {
         }
 
     }
-    
-    public Boolean comprobarRegistrado(String dni){
+
+    public Boolean comprobarRegistrado(String dni) {
         Connection con;
         PreparedStatement stmUsuario = null;
         ResultSet rsUsuario;
@@ -787,7 +775,7 @@ public class daoUsuarios extends AbstractDAO {
             rsUsuario = stmUsuario.executeQuery();
 
             if (rsUsuario.next()) {
-                registrado=true;
+                registrado = true;
             }
 
         } catch (SQLException e) {
