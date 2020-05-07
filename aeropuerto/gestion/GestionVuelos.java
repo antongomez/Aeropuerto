@@ -105,6 +105,7 @@ public class GestionVuelos {
             if(fbd.numeroMaletasDisponibles(dni, vuelo)<0){
                 precio+=aer.getPrecioBaseMaleta();
             }
+            /*Si se pasa del peso*/
             if(peso>aer.getPesoBaseMaleta()){
                 precio+=EXTRA_MALETA_KG*(peso-aer.getPesoBaseMaleta());
             }

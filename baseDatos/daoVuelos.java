@@ -604,13 +604,13 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select pesobasemaleta,preciobasemaleta "
+            stmVuelo = con.prepareStatement("select nombre pesobasemaleta,preciobasemaleta "
                     + "from vuelo v, avion av, aerolinea a "
                     + "where v.avion=av.codigo and av.aerolinea=a.nombre and numvuelo=?");
             stmVuelo.setString(1, num);
             rsVuelo = stmVuelo.executeQuery();
             if (rsVuelo.next()) {
-                result = new Aerolinea(null, rsVuelo.getFloat("preciobasemaleta"), rsVuelo.getFloat("pesobasemaleta"));
+                result = new Aerolinea(rsVuelo.getString("nombre"), rsVuelo.getFloat("preciobasemaleta"), rsVuelo.getFloat("pesobasemaleta"));
             }
         } catch (SQLException e) {
             getFachadaAplicacion().mostrarError(e.getMessage());
@@ -635,7 +635,7 @@ public class daoVuelos extends AbstractDAO {
 
         try {
             stmVuelo = con.prepareStatement("select nummaletasreserva-numfact as malDisp "
-                    + "from (select nummaletasreserva from comprarbillete \n"
+                    + "from (select nummaletasreserva from comprarbillete "
                     + "where vuelo=? and usuario=?) r, "
                     + "(select count(*) as numfact from facturarmaleta where vuelo=? and usuario=?) s");
             stmVuelo.setString(1, vuelo);
@@ -663,28 +663,63 @@ public class daoVuelos extends AbstractDAO {
         Connection con;
         PreparedStatement stmVuelo = null;
         Boolean correcto = true;
+        PreparedStatement stmComprobacion = null;
+        ResultSet rsComprobacion;
 
         con = super.getConexion();
 
         try {
+            //Solo se puede facturar si el vuelo no salió aún
+            stmComprobacion = con.prepareStatement("select numvuelo from vuelo where numvuelo=? and "
+                    + "fechasalidareal>NOW()");
+            stmComprobacion.setString(1, vuelo);
+            rsComprobacion = stmComprobacion.executeQuery();
+            if (rsComprobacion.next()) {
 
-            stmVuelo = con.prepareStatement("insert into facturarmaleta (usuario,vuelo,peso)"
-                    + " values (?,?,?)");
+                try {
+                    stmVuelo = con.prepareStatement("insert into facturarmaleta (usuario,vuelo,peso)"
+                            + " values (?,?,?)");
 
-            stmVuelo.setString(1, dni);
-            stmVuelo.setString(2, vuelo);
-            stmVuelo.setFloat(3, peso);
+                    stmVuelo.setString(1, dni);
+                    stmVuelo.setString(2, vuelo);
+                    stmVuelo.setFloat(3, peso);
 
-            stmVuelo.executeUpdate();
+                    stmVuelo.executeUpdate();
 
-        } catch (SQLException e) {
-            if (!e.getMessage().contains("(usuario, vuelo)")) {
+                } catch (SQLException e) {
 
-                System.out.println(e.getMessage());
-                this.getFachadaAplicacion().mostrarError(e.getMessage());
+                    if (e.getMessage().contains("(usuario, vuelo)")) {
+                        this.getFachadaAplicacion().mostrarError("Datos incorrectos");
+                    } else {
+                        System.out.println(e.getMessage());
+                        this.getFachadaAplicacion().mostrarError(e.getMessage());
+                    }
 
+                    correcto = false;
+                } finally {
+                    try {
+                        stmVuelo.close();
+                    } catch (SQLException e) {
+                        System.out.println("Imposible cerrar cursores");
+                    }
+                }
+            } else {
+                this.getFachadaAplicacion().mostrarError("Datos incorrectos");
+
+                correcto = false;
             }
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+
             correcto = false;
+        } finally {
+            try {
+                stmComprobacion.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
         }
         return correcto;
     }

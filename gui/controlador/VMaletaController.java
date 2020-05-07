@@ -66,9 +66,7 @@ public class VMaletaController extends Controlador implements Initializable {
                     txtFieldNumVuelo.setText("");
                     txtFieldPeso.setText("");
                 }
-                else{
-                    Modelo.getInstanceModelo().mostrarError("Datos incorrectos", this.getVenta());
-                }
+                
                 
             }
             catch(NumberFormatException e){
