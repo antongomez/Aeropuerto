@@ -10,7 +10,6 @@ import aeropuerto.elementos.Vuelo;
 import aeropuerto.util.EstadisticasAerolinea;
 import aeropuerto.util.EstadisticasUsuario;
 import aeropuerto.util.PorcentajeDisponibilidad;
-import aeropuerto.util.reservas.Reserva;
 import aeropuerto.util.Time;
 import aeropuerto.util.reservas.ReservaCoche;
 import aeropuerto.util.reservas.ReservaParking;
@@ -425,7 +424,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private AnchorPane panelPersLab;
 
-    //
     @FXML
     private Button btnDevolver;
     @FXML
@@ -542,6 +540,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         colMatriculaCoche.setCellValueFactory(new PropertyValueFactory<>("matricula"));
 
         btnCancelarReservaParking.setDisable(true);
+        btnCancelarReservaCoche.setDisable(true);
 
         //Definimos el panel de estadísticas
         btnMes.setSelected(true);
@@ -1138,9 +1137,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void seleccionarReservaCoche(MouseEvent event) {
         ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
         if (resSelect != null) {
-            //btnCancelarReservaParking.setDisable(false);
+            btnCancelarReservaCoche.setDisable(false);
         } else {
-            //btnCancelarReservaParking.setDisable(true);
+            btnCancelarReservaCoche.setDisable(true);
         }
     }
 
