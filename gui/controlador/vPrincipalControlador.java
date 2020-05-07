@@ -743,11 +743,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnDarseBaja(ActionEvent event) {
+       if(getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres darte de baja?", getVenta())==true){
         if (Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true) {
             super.getVenta().close();
             Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente", getVenta());
         
         }
+       }
         
     }
 

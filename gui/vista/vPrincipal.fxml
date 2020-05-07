@@ -663,7 +663,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab onSelectionChanged="#accionAbrirMisVuelos" text="Mis de vuelos">
+                  <Tab onSelectionChanged="#accionAbrirMisVuelos" text="Mis vuelos">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
                            <children>
