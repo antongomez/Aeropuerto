@@ -61,6 +61,9 @@ public class GestionVuelos {
     public Boolean vueloRealizado(String vuelo) {
         return fbd.vueloRealizado(vuelo);
     }
+    public Aerolinea obtenerDatosAerolinea(String numvuelo){
+        return fbd.obtenerDatosAerolinea(numvuelo);
+    }
 
     public Boolean devolverBillete(String vuelo, String dni) {
         return fbd.devolverBillete(vuelo, dni);

@@ -187,7 +187,7 @@ public class daoVuelos extends AbstractDAO {
                     + "from usuario u, vuelo v, comprarBillete c "
                     + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? "
                     + "  and v.fechallegadareal < now()"
-                    + "order by v.fechasalidateorica asc ");
+                    + "order by v.fechasalidateorica desc ");
             stmVuelo.setString(1, dniUs);
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {

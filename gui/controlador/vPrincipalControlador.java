@@ -833,19 +833,18 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (Modelo.getInstanceModelo().mostrarConfirmacion("Seguro que quieres devolver el vuelo?", getVenta())) {
             Vuelo vueloSelect = tablaFuturosVuelos.getSelectionModel().getSelectedItem();
             if (vueloSelect != null) {
-                Modelo.getInstanceModelo().obtenerDatosAvionVuelo(vueloSelect);
                 if (Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo()) || vueloSelect.getCancelado()) {
                     if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
                         vuelosFuturos.remove(vueloSelect);
                         Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
                     } else {
-                        Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
+                        Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelva a intentarlo", getVenta());
                     }
                 } else {
                     Modelo.getInstanceModelo().mostrarNotificacion("Nuestra política de devolución no "
                             + "nos permite realizar el reembolso de "
                             + "un billete en un plazo inferior a 15 días de la salida del vuelo. "
-                            + "Para más información contacte con " + vueloSelect.getAerolinea().getNombre() + ", la aerolínea encargada "
+                            + "Para más información contacte con " + getInstanceModelo().obtenerDatosAerolinea(vueloSelect.getNumVuelo()).getNombre() + ", la aerolínea encargada "
                             + "de operar este vuelo.", getVenta());
                 }
             }

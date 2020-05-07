@@ -1,5 +1,6 @@
 package aeropuerto;
 
+import aeropuerto.elementos.Aerolinea;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalLaboral;
@@ -291,6 +292,9 @@ public class FachadaAplicacion extends Application {
     
     public Boolean devolucionCoche(Reserva alquiler){
         return gr.devolucionCoche(alquiler);
+    }
+    public Aerolinea obtenerDatosAerolinea(String numvuelo){
+        return gv.obtenerDatosAerolinea(numvuelo);
     }
 
 }

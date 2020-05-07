@@ -1,5 +1,6 @@
 package aeropuerto.gestion;
 
+import aeropuerto.elementos.Aerolinea;
 import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.util.EstadisticasUsuario;
@@ -83,5 +84,6 @@ public class GestionUsuarios {
     public Boolean comprobarRegistrado(String dni){
         return fbd.comprobarRegistrado(dni);
     }
+    
 
 }

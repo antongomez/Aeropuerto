@@ -1,6 +1,7 @@
 package gui.modelo;
 
 import aeropuerto.FachadaAplicacion;
+import aeropuerto.elementos.Aerolinea;
 import aeropuerto.elementos.Coche;
 import aeropuerto.elementos.Parking;
 import aeropuerto.elementos.PersonalLaboral;
@@ -301,5 +302,8 @@ public class Modelo {
     
     public Boolean devolucionCoche(Reserva alquiler){
         return fa.devolucionCoche(alquiler);
+    }
+    public Aerolinea obtenerDatosAerolinea(String numvuelo){
+        return fa.obtenerDatosAerolinea(numvuelo);
     }
 }
