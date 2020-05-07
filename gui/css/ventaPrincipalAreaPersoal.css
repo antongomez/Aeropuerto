@@ -23,36 +23,8 @@
     -fx-text-fill: derive(white, -80%);
 }
 
-.vBoxFondoVuelosPasados{
-    -fx-background-radius: 9 9 3 3;
-    -fx-background-color: -cor-accent;
-}
-
-.vBoxFondoFuturosVuelos{
-    -fx-background-radius: 9 9 3 3;
-    -fx-background-color: -cor-accent;
-}
-
 .vBoxEstadisticas{
     -fx-background-radius: 10, 10;
     -fx-background-insets: 0, 2;
-    -fx-background-color: -cor-accent, #1d1d1d;
-}
-
-.hBoxCancelado{
-    -fx-background-color: #1d1d1d;
-}
-
-.labCanceladoTexto{
-    -fx-text-fill: -cor-bordes;
-}
-
-.labCanceladoCor{
-    -fx-background-color: -cor-bordes, -cor-cancelado;
-    -fx-background-insets: 0, 1;
-}
-
-.labEnCursoCor{
-    -fx-background-color: -cor-bordes, -cor-encurso;
-    -fx-background-insets: 0, 1;
+    -fx-background-color: -cor-accent, -cor-fondo;
 }

@@ -1,3 +1,13 @@
+*{
+    -cor-secundaria: #efedb8;
+    -cor-bordes: lightgray;
+    -cor-accent: lightblue;
+    -cor-fondo: #1d1d1d;
+    -cor-cancelado: #b80c00;
+    -cor-encurso: #11ad00;
+
+}
+
 .btnMenu {
     -fx-padding: 5 22 5 22;   
     -fx-border-width: 0;
@@ -68,3 +78,25 @@
     -fx-text-fill: red;
 }
 
+.hBoxCancelado{
+    -fx-background-color: #1d1d1d;
+}
+
+.labCanceladoTexto{
+    -fx-text-fill: -cor-bordes;
+}
+
+.labCanceladoCor{
+    -fx-background-color: -cor-bordes, -cor-cancelado;
+    -fx-background-insets: 0, 1;
+}
+
+.labEnCursoCor{
+    -fx-background-color: -cor-bordes, -cor-encurso;
+    -fx-background-insets: 0, 1;
+}
+
+.vBoxFondoTabla{
+    -fx-background-radius: 9 9 3 3;
+    -fx-background-color: -cor-accent;
+}
