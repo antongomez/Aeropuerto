@@ -900,7 +900,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         String tipo;
         Integer num;
         EstadisticasUsuario estadisticasUsuario;
-        String titulo = "Estadisticas ";
+        String titulo = "Estadísticas ";
         etqInfoEstadisticas1.setVisible(false);
 
         if (getInstanceModelo().usuarioViajado(usuario.getDni())) {

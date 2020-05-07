@@ -33,7 +33,7 @@ public class EstadisticasUsuario {
     }
 
     public void anadirDestino(String d) {
-        if (!destinosFav.contains(d)) {
+        if ((d != null) && (!destinosFav.contains(d))) {
             destinosFav.add(d);
         }
     }
@@ -65,6 +65,21 @@ public class EstadisticasUsuario {
 
     public Integer getVecesViajadas() {
         return vecesViajadas;
+    }
+
+    @Override
+    public String toString() {
+        String estadisticas = "Aerolíneas Favoritas: \n";
+        for (String aer : aerolineasFav) {
+            estadisticas += " - " + aer + "\n";
+        }
+        estadisticas += "\nDestinos Favoritos: \n";
+        for (String dest : destinosFav) {
+            estadisticas += " - " + dest + "\n";
+        }
+        estadisticas += "\nTarifa Favorita: \n - " + tarifaFav + ".\n";
+
+        return estadisticas;
     }
 
 }
