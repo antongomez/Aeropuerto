@@ -646,7 +646,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private void seleccionarVuelo(MouseEvent event) {
         Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
-        if (vueloSelect != null) {
+        if ((vueloSelect != null) && (!vueloSelect.getCancelado())) {
             if (Modelo.getInstanceModelo().obtenerVuelosUsuario(usuario.getDni()).contains(vueloSelect)) {
                 btnComprar.setDisable(true);
                 btnComprar.setVisible(false);
