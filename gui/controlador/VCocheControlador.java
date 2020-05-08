@@ -243,6 +243,11 @@ public class VCocheControlador extends Controlador implements Initializable {
                 Float precio = (float) (Math.round(duracionAlquiler * reserva.getPrecioDia() * 100d) / 100d);
                 reserva.setPrecio(precio);
                 textFieldPrecioFinalConReserva.setText(reserva.getPrecio().toString() + " €");
+                etqErrorFechaCR.setVisible(false);
+                btnAlquilarConReserva.setDisable(false);
+            } else{
+                etqErrorFechaCR.setVisible(true);
+                btnAlquilarConReserva.setDisable(true);
             }
         }
     }
