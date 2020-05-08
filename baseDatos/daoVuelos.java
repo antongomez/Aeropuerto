@@ -458,7 +458,8 @@ public class daoVuelos extends AbstractDAO {
 
         try {
             stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaSalidaReal, "
-                    + "fechaSalidaReal-fechaSalidaTeorica as retraso,terminal, puertaembarque, cancelado "
+                    + "fechaSalidaReal-fechaSalidaTeorica as retraso,terminal, puertaembarque, cancelado, "
+                    + "to_char(fechaSalidaReal-NOW(),'dd HH24:MI') as tiempoRestante "
                     + "from vuelo v "
                     + "where fechaSalidaReal>NOW() and v.origen=? "
                     + "ORDER BY fechaSalidaReal asc");
@@ -467,7 +468,7 @@ public class daoVuelos extends AbstractDAO {
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
                         rsVuelo.getTimestamp("fechaSalidaReal"), null, rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
-                        rsVuelo.getInt("terminal"), rsVuelo.getString("retraso"));;
+                        rsVuelo.getInt("terminal"), rsVuelo.getString("retraso"), new Time(rsVuelo.getString("tiempoRestante")));;
 
                 resultado.add(vueloActual);
             }
@@ -497,7 +498,8 @@ public class daoVuelos extends AbstractDAO {
 
         try {
             stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaLlegadaReal,"
-                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado "
+                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado, "
+                    + "to_char(fechaLlegadaReal-NOW(),'dd HH24:MI') as tiempoRestante "
                     + "from vuelo v "
                     + "where EXTRACT(YEAR FROM cast(v.fechaLlegadaReal as date))= EXTRACT(YEAR FROM cast(NOW()as date) ) and "
                     + "EXTRACT(MONTH FROM cast(v.fechaLlegadaReal as date))=EXTRACT(MONTH FROM cast(NOW()as date) ) "
@@ -509,7 +511,7 @@ public class daoVuelos extends AbstractDAO {
             while (rsVuelo.next()) {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
                         null, rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
-                        rsVuelo.getInt("terminal"), rsVuelo.getString("retraso"));
+                        rsVuelo.getInt("terminal"), rsVuelo.getString("retraso"), new Time(rsVuelo.getString("tiempoRestante")));
 
                 resultado.add(vueloActual);
             }

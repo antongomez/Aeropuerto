@@ -78,7 +78,8 @@ public class Vuelo {
     }
 
     /*Constructor para tabla salidas-llegadas*/
-    public Vuelo(String numVuelo, String origen, String destino, Timestamp fechaSalidaReal, Timestamp fechaLlegadaReal, Integer puertaEmbarque, Boolean cancelado, Integer terminal, String retraso) {
+    public Vuelo(String numVuelo, String origen, String destino, Timestamp fechaSalidaReal, Timestamp fechaLlegadaReal, Integer puertaEmbarque, 
+            Boolean cancelado, Integer terminal, String retraso, Time tiempoRestante) {
         this.numVuelo = numVuelo;
         this.origen = origen;
         this.destino = destino;
@@ -91,19 +92,18 @@ public class Vuelo {
         this.cancelado = cancelado;
         this.terminal = terminal;
         this.retraso = retraso;
-        this.tiempoRestante = generarTiempoRestante();
+        this.tiempoRestante = generarTiempoRestante(tiempoRestante);
     }
 
     public Boolean enCurso() {
         return ((!Time.fechaMayorIgualActual(fechasalidaReal)) && (Time.fechaMayorIgualActual(fechallegadaTeo)));
     }
 
-    private String generarTiempoRestante() {
+    private String generarTiempoRestante(Time tiempo) {
         String estado = "";
-        Integer dias = 0;
-        Integer horas = 0;
-        Integer minutos = 0;
-        Time dif = new Time();
+        Integer dias = tiempo.getDia();
+        Integer horas = tiempo.getHoras();
+        Integer minutos = tiempo.getMinutos();
 
         Time fecha;
         if (this.fechallegadaReal != null) {
@@ -111,11 +111,10 @@ public class Vuelo {
         } else {
             fecha = this.fechasalidaReal;
         }
-
-        dif.diferencia(Time.diaActual(), fecha);
-        dias = dif.getDia();
-        horas = dif.getHoras();
-        minutos = dif.getMinutos();
+        
+        dias = tiempo.getDia();
+        horas = tiempo.getHoras();
+        minutos = tiempo.getMinutos();
         if (dias > 1) {
             estado = dias.toString() + " días";
         } else {

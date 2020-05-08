@@ -61,6 +61,26 @@ public class Time {
 
         return datos;
     }
+    
+    public Time(String interval){
+        HashMap<String, Integer> datos = obtenerDatos(interval);
+        this.dia = datos.get("dias");
+        this.horas = datos.get("horas");
+        this.minutos = datos.get("minutos");
+    }
+    
+    private HashMap<String, Integer> obtenerDatos(String fecha) {
+        HashMap<String, Integer> datos = new HashMap<>();
+        
+        String[] dias_hmin = fecha.split(" ");
+        datos.put("dias", Integer.parseInt(dias_hmin[0]));
+        
+        String[] h_min = dias_hmin[1].split(":");
+        datos.put("horas", Integer.parseInt(h_min[0]));
+        datos.put("minutos", Integer.parseInt(h_min[1]));
+        
+        return datos;
+    }
 
     public Time(LocalDate fecha) {
         this.ano = fecha.getYear();
@@ -81,7 +101,7 @@ public class Time {
         this.segundos = 0;
         this.milis = 0;
     }
-
+    
     public String getStringSql() {
         String data = "%04d-%02d-%02d %02d:%02d:%02d.%d";
 
@@ -252,51 +272,6 @@ public class Time {
             minutos=Math.round(min);
         }
         
-        return true;
-    }
-    
-    public Boolean diferencia(Time fecha1, Time fecha2){
-        Time fechaMay;
-        Time fechaMen;
-        long dif;
-        Float min;
-        Float hor;
-        Float di;
-        
-        if(fecha1.toTimestamp().after(fecha2.toTimestamp())){
-            fechaMay=fecha1;
-            fechaMen=fecha2;
-        }
-        else if(fecha2.toTimestamp().after(fecha1.toTimestamp())){
-            fechaMay=fecha2;
-            fechaMen=fecha1;
-        }
-        else{
-            this.dia=0;
-            this.horas=0;
-            this.minutos=0;
-            return false;
-        }
-        dif=fechaMay.toTimestamp().getTime()-fechaMen.toTimestamp().getTime();
-        min=dif/(float)(60000);
-        if(min>=60){
-            hor=min/60;
-            if(hor>24){
-                di=hor/24;
-                this.dia=di.intValue();
-                hor=hor-this.dia*24;
-                this.horas=hor.intValue();
-                min=hor*60;
-                this.minutos=Math.round(min-60*this.horas);
-            }
-            else{
-               this.horas=hor.intValue();
-               this.minutos=Math.round(min-60*this.horas);
-            }
-        }
-        else{
-            this.minutos=Math.round(min);
-        }
         return true;
     }
 
