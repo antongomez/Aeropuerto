@@ -25,18 +25,20 @@ public class daoCoches extends AbstractDAO {
         Connection con = super.getConexion();
 
         try {
-            String consulta = "select *\n"
-                    + "from cocheAlquiler \n"
-                    + "where matricula not in ((select cochealquiler as matricula\n"
-                    + "						from reservar\n"
-                    + "						where fechainicioreserva <= ? \n"
-                    + "						  and fechafinreserva >= ?) \n"
-                    + "						UNION\n"
-                    + "						(select matricula\n"
-                    + "						from alquilar\n"
-                    + "						where fechaalquiler <= ? \n"
-                    + "						  and fechadevolucion is null))\n"
-                    + "  and retirado = false \n";
+            String consulta = "select *"
+                    + "from cocheAlquiler "
+                    + "where matricula not in ((select cochealquiler as matricula "
+                    + "						from reservar "
+                    + "						where cast(fechainicioreserva as date) <= cast(? as date)"
+                    + "						  and cast(fechafinreserva as date) >= cast(? as date)) "
+                    + "						UNION "
+                    + "						(select matricula "
+                    + "						from alquilar "
+                    + "						where cast(fechaalquiler as date) <= cast(? as date) "
+                    + "						  and (((cast(? as date)-cast (fechateoricadevolucion as date))<=5 " +
+"								and cast(? as date)>cast(fechateoricadevolucion as date)) " +
+"								or cast(? as date)<=cast(fechateoricadevolucion as date)))) "
+                    + " and retirado = false ";
             if (numPlazas != null) {
                 consulta += "  and nplazas = ? \n";
             }
@@ -46,9 +48,11 @@ public class daoCoches extends AbstractDAO {
             stmCoches.setTimestamp(1, retorno.toTimestamp());
             stmCoches.setTimestamp(2, llegada.toTimestamp());
             stmCoches.setTimestamp(3, retorno.toTimestamp());
-
+            stmCoches.setTimestamp(4, llegada.toTimestamp());
+            stmCoches.setTimestamp(5, llegada.toTimestamp());
+            stmCoches.setTimestamp(6, llegada.toTimestamp());
             if (numPlazas != null) {
-                stmCoches.setInt(4, numPlazas);
+                stmCoches.setInt(7, numPlazas);
             }
 
             rsCoches = stmCoches.executeQuery();
