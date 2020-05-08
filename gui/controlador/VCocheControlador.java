@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -129,6 +130,10 @@ public class VCocheControlador extends Controlador implements Initializable {
     private TextField textPrecioTotalD;
     @FXML
     private Button btnDevolver;
+    @FXML
+    private Label etqErrorFechaCR;
+    @FXML
+    private Label etqErrorFechaSR;
 
     /**
      * Initializes the controller class.

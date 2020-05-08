@@ -51,24 +51,24 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class vPrincipalControlador extends Controlador implements Initializable {
-    
+
     private final static String TITULO_VUELOS = "PRÓXIMOS VUELOS";
     private final static String TITULO_AREAP = "ÁREA PERSONAL";
     private final static String TITULO_SERV = "SERVICIOS";
     private final static String TITULO_INFO = "INFORMACIÓN";
     private final static String TITULO_PERSLAB = "PERSONAL LABORAL";
-    
+
     private final static String TXT_BTN_ADMIN = "Administrador";
     private final static String TXT_BTN_PL = "Personal";
-    
+
     private final static String TEXTO_ERROR_FECHAS = "Las fechas de salida y llegada deben ser mayores que la fecha actual";
     private final static String TEXTO_ERROR_PV = "La fecha de llegada del vuelo siempre será mayor que la de salida";
     private final static String TEXTO_INFO_PARKING_COCHES = "Introduce los datos de tu vuelo o de tu estancia";
     private final static String TEXTO_ERROR_PARKING_COCHES = "La fecha de regreso debe ser mayor que la de llegada";
     private final static String TEXTO_ERROR_COCHES_NUMERO = "El numero de plazas no es válido";
-    
+
     private final static Float PRECIO_DIA_PARKING = 10.0f;
-    
+
     private Usuario usuario;//usuario que está usando la ventana
     private Parking parking;//parking a reservar
     private ObservableList<Vuelo> vuelosFuturos;//Vuelos usuario
@@ -270,7 +270,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TableColumn<ReservaParking, Integer> colPlazaParking;
     @FXML
     private Button btnCancelarReservaParking;
-    
+
     @FXML
     private TableView<ReservaCoche> tablaReservasCoche;
     @FXML
@@ -430,19 +430,19 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Button btnHistorial;
     @FXML
     private AnchorPane panelPersLab;
-    
+
     @FXML
     private Button btnDevolver;
     @FXML
     private Button btnCancelar;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BtnMenu.selectToggle(btnVuelos);
         panelVuelos.toFront();
-        
+
         etqTitulo.setText(TITULO_VUELOS);
-        
+
         btnComprar.setDisable(true);
         btnComprar.toFront();
         btnDevolver.setDisable(true);
@@ -464,7 +464,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             @Override
             public void updateItem(Vuelo item, boolean empty) {
                 super.updateItem(item, empty);
-                
+
                 if ((item != null) && (!empty)) {
                     if (item.getCancelado()) {
                         setStyle("-fx-background-color: #b80c00;");
@@ -501,7 +501,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             @Override
             public void updateItem(Vuelo item, boolean empty) {
                 super.updateItem(item, empty);
-                
+
                 if ((item != null) && (!empty)) {
                     if (item.getCancelado()) {
                         setStyle("-fx-background-color: #b80c00");
@@ -511,7 +511,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 }
             }
         });
-        
+
         columnaNumeroFV.setCellValueFactory(new PropertyValueFactory<>("numVuelo"));
         columnaOrigenFV.setCellValueFactory(new PropertyValueFactory<>("origen"));
         columnaDestinoFV.setCellValueFactory(new PropertyValueFactory<>("destino"));
@@ -523,7 +523,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             @Override
             public void updateItem(Vuelo item, boolean empty) {
                 super.updateItem(item, empty);
-                
+
                 if ((item != null) && (!empty)) {
                     if (item.getCancelado()) {
                         setStyle("-fx-background-color: #b80c00;");
@@ -543,11 +543,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         colTerminalParking.setCellValueFactory(new PropertyValueFactory<>("terminal"));
         colPisoParking.setCellValueFactory(new PropertyValueFactory<>("piso"));
         colPlazaParking.setCellValueFactory(new PropertyValueFactory<>("numPlaza"));
-        
+
         colInicioReservaCoche.setCellValueFactory(new PropertyValueFactory<>("inicio"));
         colFinReservaCoche.setCellValueFactory(new PropertyValueFactory<>("fin"));
         colMatriculaCoche.setCellValueFactory(new PropertyValueFactory<>("matricula"));
-        
+
         btnCancelarReservaParking.setDisable(true);
         btnCancelarReservaCoche.setDisable(true);
 
@@ -584,7 +584,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaCombustibleCoche.setCellValueFactory(new PropertyValueFactory<>("tipoCombustible"));
         columnaCaballosCoche.setCellValueFactory(new PropertyValueFactory<>("caballos"));
         columnaPrecioDiaCoche.setCellValueFactory(new PropertyValueFactory<>("precioDia"));
-        
+
         btnBuscarParking.setDisable(true);
         btnBuscarCoches.setDisable(true);
         hBoxInfoDisponhibilidadeParking.setVisible(false);
@@ -593,7 +593,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaNomeTendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaTipoTendas.setCellValueFactory(new PropertyValueFactory<>("tipoVentas"));
         columnaTerminalTendas.setCellValueFactory(new PropertyValueFactory<>("terminal"));
-        
+
         ObservableList<String> terminais2 = FXCollections.observableArrayList("Todas");
         //Usamos a lista de terminais obtida de antes
         terminais.forEach((enteiro) -> {
@@ -601,12 +601,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         });
         cBoxTerminalTendas.setItems(terminais2);
         cBoxTerminalTendas.getSelectionModel().selectFirst();
-        
+
         ObservableList<String> tipoVentas = FXCollections.observableArrayList("Todos");
         tipoVentas.addAll(getInstanceModelo().obterTipoVentas());
         cBoxTipoTendas.setItems(tipoVentas);
         cBoxTipoTendas.getSelectionModel().selectFirst();
-        
+
         ObservableList<Tienda> tiendas = FXCollections.observableList(getInstanceModelo().buscarTiendas(txtNomeTendas.getText(),
                 cBoxTipoTendas.getSelectionModel().getSelectedItem(),
                 cBoxTerminalTendas.getSelectionModel().getSelectedItem()));
@@ -615,10 +615,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //Informacion
         infoVuelos.selectToggle(radioBtnSalidas);
     }
-    
+
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-        
+
         if (usuario instanceof Administrador) {
             btnPersonal.setText(TXT_BTN_ADMIN);
         } else if (usuario instanceof PersonalLaboral) {
@@ -644,21 +644,21 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //Engadimos a data actual nos datePickers
         dataPickLlegada.setValue(LocalDate.now());
         dataPickSalida.setValue(LocalDate.now());
-        
+
         btnComprar.setDisable(true);
         btnComprar.toFront();
     }
-    
+
     @FXML
     private void comprobarDatas(Event event) {
         Time salida = new Time(dataPickSalida.getValue());
         Time llegada = new Time(dataPickLlegada.getValue());
-        
+
         if ((!Time.fechaMayorIgualActual(salida)) || (!Time.fechaMayorIgualActual(llegada))) {
             btnBuscar.setDisable(true);
             etqInfoPV.setText(TEXTO_ERROR_FECHAS);
             etqInfoPV.setVisible(true);
-            
+
         } else if (Time.compararMayor(salida, llegada)) {
             btnBuscar.setDisable(true);
             etqInfoPV.setText(TEXTO_ERROR_PV);
@@ -668,11 +668,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             etqInfoPV.setVisible(false);
         }
     }
-    
+
     @FXML
     private void accionBtnBuscar(ActionEvent event) {
         Time salida, llegada;
-        
+
         if (dataPickSalida.getValue() != null) {
             salida = new Time(dataPickSalida.getValue());
         } else {
@@ -683,21 +683,21 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             llegada = Time.diaActual();
         }
-        
+
         if (((salida != null) && (!Time.fechaMayorIgualActual(salida)))
                 || ((llegada != null) && (!Time.fechaMayorIgualActual(llegada)))) {
             getInstanceModelo().mostrarError("Las fechas de salida y llegada deben "
                     + "ser mayores que la fecha actual", getVenta());
         } else {
-            
+
             ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
                     getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(),
                             txtDestino.getText(), salida, llegada));
             tablaProximosVuelos.setItems(vuelos);
         }
-        
+
     }
-    
+
     @FXML
     private void seleccionarVuelo(MouseEvent event) {
         Vuelo vueloSelect = tablaProximosVuelos.getSelectionModel().getSelectedItem();
@@ -717,7 +717,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
         }
     }
-    
+
     @FXML
     private void accionBtnComprar(ActionEvent event) {
         //Creamos unha venta filla da princiapl
@@ -728,7 +728,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         vComprarControlador controlador = ((vComprarControlador) loadWindow(getClass().getResource("/gui/vista/vComprar.fxml"), "Folgoso do Courel", stage));
         controlador.inicializarVComprar(vuelo, usuario);
         btnComprar.setDisable(true);
-        
+
     }
 
     /*
@@ -740,7 +740,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
      */
     @FXML
     private void accionBtnAreaP(ActionEvent event) {
-        
+
         panelAreaP.toFront();
         etqTitulo.setText(TITULO_AREAP);
 
@@ -780,7 +780,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<ReservaParking> resParking = FXCollections.observableArrayList(
                 getInstanceModelo().obterResParkingUsuario(usuario.getDni()));
         tablaReservasParking.setItems(resParking);
-        
+
         ObservableList<ReservaCoche> resCoche = FXCollections.observableArrayList(
                 getInstanceModelo().obterResCocheUsuario(usuario.getDni()));
         tablaReservasCoche.setItems(resCoche);
@@ -792,58 +792,29 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         textFieldContrasenha.setText("");
         textFieldRepetirContrasenha.setText("");
     }
-    
+
     @FXML
     private void accionBtnDarseBaja(ActionEvent event) {
         if (getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres darte de baja?", getVenta()) == true) {
             if (Modelo.getInstanceModelo().eliminarUsuario(usuario.getDni()) == true) {
                 super.getVenta().close();
                 Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente", getVenta());
-                
+
             }
         } else {
             Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
-        
+
     }
-    
+
     @FXML
     private void accionBtnGuardar(ActionEvent event) {
-<<<<<<< HEAD
-        if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
-            Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
-        } else {
-            Usuario us;
-            try {
-                if (usuario instanceof Administrador) {
-                    us = new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
-                            textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                            Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem(), txtAreaCurriculum.getText());
-                } else {
-                    us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
-                            textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
-                            Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
-                }
-                
-                if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
-                    Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente", getVenta());
-                    //No cambiamos los datos del usuario asociado a esta clase hasta que se cambien en la base
-                    usuario.setId(us.getId());
-                    usuario.setEmail(us.getEmail());
-                    usuario.setNombre(us.getNombre());
-                    usuario.setAp1(us.getAp1());
-                    usuario.setAp2(us.getAp2());
-                    usuario.setPaisProcedencia(us.getPaisProcedencia());
-                    usuario.setTelefono(us.getTelefono());
-                    usuario.setSexo(us.getSexo());
-=======
         if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres modificar tus datos?", getVenta())) {
             if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
                 Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
             } else {
                 Usuario us;
                 try {
->>>>>>> Ventanas de confirmación
                     if (usuario instanceof Administrador) {
                         us = new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
                                 textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
@@ -872,24 +843,17 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                             Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
                         }
                     }
-<<<<<<< HEAD
-                }
-                
-            } catch (NumberFormatException e) {
-                Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
-=======
 
                 } catch (NumberFormatException e) {
                     Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
                 }
->>>>>>> Ventanas de confirmación
             }
         } else {
             Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
+
         textFieldContrasenha.setText("");
         textFieldRepetirContrasenha.setText("");
-
     }
 
     /*Para comprobar que todos los campos estén cubiertos*/
@@ -901,7 +865,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             btnGuardar.setDisable(true);
         }
     }
-    
+
     private Boolean camposCompletos() {
         return !(textFieldID.getText().isEmpty()
                 || textFieldEmail.getText().isEmpty()
@@ -923,7 +887,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 = FXCollections.observableArrayList(getInstanceModelo().obtenerVuelosFuturosUsuario(usuario.getDni()));
         tablaFuturosVuelos.setItems(vuelosFuturos);
     }
-    
+
     @FXML
     private void cancelarViaje(ActionEvent event) {
         if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres devolver el vuelo?", getVenta())) {
@@ -949,7 +913,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
     }
-    
+
     @FXML
     private void seleccionarMiVuelo(MouseEvent event) {
         Vuelo vueloSelect = tablaFuturosVuelos.getSelectionModel().getSelectedItem();
@@ -1010,9 +974,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     + " aún no has viajado con nosotros! Dirígete al panel y "
                     + "déjate llevar por los destinos más increíbles.");
         }
-        
+
     }
-    
+
     private void buscarAnos() {
         //Ao entrar poñemos as estatisticas dos anos e seleccionamos o mais recente
         opVerVuelo.selectToggle(btnAno);
@@ -1028,14 +992,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             etqInfoEstadisticasEspecificas.setText("Estadísticas del 2020");
         }
     }
-    
+
     private void mostrarEstadisticas() {
         String tipo;
         Integer num;
         EstadisticasUsuario estadisticasUsuario;
         String titulo = "Estadísticas ";
         etqInfoEstadisticas1.setVisible(false);
-        
+
         if (getInstanceModelo().usuarioViajado(usuario.getDni())) {
             if (btnEstacion.isSelected()) {
                 tipo = "estacion";
@@ -1055,15 +1019,15 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 String mes_estacion = comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase();
                 etqInfoEstadisticas1.setText("En " + mes_estacion + " no has realizado vuelos que despegaran desde nuestro aeropuerto");
             }
-            
+
             estadisticasUsuario = Modelo.getInstanceModelo().mostrarEstadisticasUsuario(usuario.getDni(), tipo, num);
-            
+
             txtAreaNumViajes.setText("Has viajado " + estadisticasUsuario.getVecesViajadas()
                     + " veces en " + comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase() + "!");
-            
+
             titulo += comboBoxEstUsu.getSelectionModel().getSelectedItem().toLowerCase();
             etqInfoEstadisticasEspecificas.setText(titulo);
-            
+
             if (estadisticasUsuario.getAerolineasFav().isEmpty()) {
                 etqAerolineaFavEspecifica.setText(" - ");
             } else {
@@ -1086,7 +1050,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 }
                 etqDestinoFavEspecifico.setText(destinosFav);
             }
-            
+
             if (!estadisticasUsuario.getTarifaFav().isEmpty()) {
                 etqTarifaFavEspecifico.setText(estadisticasUsuario.getTarifaFav());
             } else {
@@ -1097,9 +1061,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             etqDestinoFavEspecifico.setText(" - ");
             etqTarifaFavEspecifico.setText(" - ");
         }
-        
+
     }
-    
+
     @FXML
     void accionEstacion(ActionEvent event) {
         ObservableList<String> estaciones = FXCollections.observableArrayList("Primavera", "Verano", "Otoño", "Invierno");
@@ -1107,7 +1071,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         comboBoxEstUsu.getSelectionModel().selectFirst();
         mostrarEstadisticas();
     }
-    
+
     @FXML
     void accionMes(ActionEvent event) {
         ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
@@ -1115,27 +1079,27 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         comboBoxEstUsu.getSelectionModel().selectFirst();
         mostrarEstadisticas();
     }
-    
+
     @FXML
     void accionAnho(ActionEvent event) {
         buscarAnos();
         mostrarEstadisticas();
     }
-    
+
     @FXML
     private void accionComboBox(ActionEvent event) {
         if (comboBoxEstUsu.getSelectionModel().getSelectedItem() != null) {
             mostrarEstadisticas();
         }
     }
-    
+
     @FXML
     private void cambiarAerolinea(ActionEvent event) {
         if (!comboBoxEstAer.getItems().isEmpty()) {
             accionCalculoEstAerolinea();
         }
     }
-    
+
     @FXML
     private void abrirPestanaEstAerolineas(Event event) {
         if (!comboBoxEstAer.getItems().isEmpty()) {
@@ -1144,9 +1108,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
             accionCalculoEstAerolinea();
         }
-        
+
     }
-    
+
     private void accionCalculoEstAerolinea() {
         EstadisticasAerolinea est = getInstanceModelo().obtenerEstadisticasAerolinea(comboBoxEstAer.getSelectionModel().getSelectedItem());
         txtFieldVuelosRetraso.setText(String.format("%.2f", est.getPorcVuelosRetraso()) + "%");
@@ -1158,7 +1122,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         txtFieldPaisSede.setText(est.getAerolinea().getPais());
         txtFieldPlazasAvion.setText(String.format("%.1f", (float) (Math.round(est.getPlazasMediasAvion() * 100f)) / 100f));
         txtFieldAnoAvion.setText(String.format("%.0f", (float) (Math.round(est.getAnoFabricMedioAvion() * 100f)) / 100f));
-        
+
         String paises = "";
         for (String pais : est.getNacionalidadPred()) {
             paises += pais + "  ";
@@ -1172,28 +1136,15 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<ReservaParking> resParking = FXCollections.observableArrayList(
                 getInstanceModelo().obterResParkingUsuario(usuario.getDni()));
         tablaReservasParking.setItems(resParking);
-        
+
         ObservableList<ReservaCoche> resCoche = FXCollections.observableArrayList(
                 getInstanceModelo().obterResCocheUsuario(usuario.getDni()));
         tablaReservasCoche.setItems(resCoche);
-        
+
     }
-    
+
     @FXML
     private void accionBtnCancelarReservaParking(ActionEvent event) {
-<<<<<<< HEAD
-        ReservaParking resSelect = tablaReservasParking.getSelectionModel().getSelectedItem();
-        Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
-        
-        btnCancelarReservaParking.setDisable(true);
-        
-        ObservableList<ReservaParking> res = FXCollections.observableArrayList(
-                getInstanceModelo().obterResParkingUsuario(usuario.getDni()));
-        tablaReservasParking.setItems(res);
-        Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
-                + "con éxito", getVenta());
-        
-=======
         if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres cancelar la reserva?", getVenta())) {
             ReservaParking resSelect = tablaReservasParking.getSelectionModel().getSelectedItem();
             if (resSelect != null) {
@@ -1210,23 +1161,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
->>>>>>> Ventanas de confirmación
     }
-    
+
     @FXML
     private void accionBtnCancelarReservaCoche(ActionEvent event) {
-<<<<<<< HEAD
-        ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
-        Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
-        
-        btnCancelarReservaCoche.setDisable(true);
-        
-        ObservableList<ReservaCoche> res = FXCollections.observableArrayList(
-                getInstanceModelo().obterResCocheUsuario(usuario.getDni()));
-        tablaReservasCoche.setItems(res);
-        Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
-                + "con éxito", getVenta());
-=======
         if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres cancelar la reserva?", getVenta())) {
             ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
             if (resSelect != null) {
@@ -1243,9 +1181,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
->>>>>>> Ventanas de confirmación
     }
-    
+
     @FXML
     private void seleccionarReservaParking(MouseEvent event) {
         ReservaParking resSelect = tablaReservasParking.getSelectionModel().getSelectedItem();
@@ -1255,7 +1192,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             btnCancelarReservaParking.setDisable(true);
         }
     }
-    
+
     @FXML
     private void seleccionarReservaCoche(MouseEvent event) {
         ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
@@ -1282,7 +1219,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         //Poñemos o panel diante
         etqTitulo.setText(TITULO_SERV);
         panelServicios.toFront();
-        
+
     }
 
     //PARKING
@@ -1290,7 +1227,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void abrirParking(Event event) {
         btnReservarParking.setDisable(true);
     }
-    
+
     @FXML
     private void accionBtnBuscarParking(ActionEvent event) {
         parking = getInstanceModelo().buscarParking(
@@ -1319,17 +1256,17 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             btnReservarParking.setDisable(false);
         }
     }
-    
+
     private String obterPrecioParking() {
         return String.format("%.2f", (Time.obtenerDias(dataFLlegadaParking.getValue(),
                 dataFRetornoParking.getValue()) * PRECIO_DIA_PARKING));
     }
-    
+
     private Integer asignarPlazaParking(Time llegada, Time retorno) {
         return getInstanceModelo().obterPrazaLibre(parking.getTerminal(),
                 parking.getPiso(), llegada, retorno);
     }
-    
+
     @FXML
     private void accionBtnReservarParking(ActionEvent event) {
         Time llegada = new Time(dataFLlegadaParking.getValue());
@@ -1357,13 +1294,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         etqErroMatricula.setVisible(false);
         btnBuscarParking.fire();
     }
-    
+
     @FXML
     private void comprobarBuscarParking(Event event) {
         if ((cboxTerminalParking.getSelectionModel().getSelectedItem() != null)
                 && (dataFLlegadaParking.getValue() != null)
                 && (dataFRetornoParking.getValue() != null)) {
-            
+
             if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaParking.getValue())))
                     || (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue())))
                     || (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue())))) {
@@ -1380,16 +1317,16 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 } else { //As datas son menores que a actual
                     etqInfoParking.setText(TEXTO_ERROR_FECHAS);
                 }
-                
+
             } else {
                 etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarParking.setDisable(false);
                 etqInfoParking.getStyleClass().remove("etqErro");
             }
-            
+
         } else if ((dataFLlegadaParking.getValue() != null)
                 && (dataFRetornoParking.getValue() != null)) {
-            
+
             if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaParking.getValue())))
                     || (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue())))
                     || (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue())))) {
@@ -1404,18 +1341,18 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 } else { //As datas son menores que a actual
                     etqInfoParking.setText(TEXTO_ERROR_FECHAS);
                 }
-                
+
             } else {
                 etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarParking.setDisable(true);
                 etqInfoParking.getStyleClass().remove("etqErro");
             }
-            
+
         } else if (dataFLlegadaParking.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFLlegadaParking.getValue()))) {
                 etqInfoParking.setText(TEXTO_ERROR_FECHAS);
                 btnBuscarParking.setDisable(true);
-                
+
                 if (etqInfoParking.getStyleClass().size() == 2) {
                     etqInfoParking.getStyleClass().add("etqErro");
                 }
@@ -1424,7 +1361,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 btnBuscarParking.setDisable(true);
                 etqInfoParking.getStyleClass().remove("etqErro");
             }
-            
+
         } else if (dataFRetornoParking.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue()))) {
                 etqInfoParking.setText(TEXTO_ERROR_FECHAS);
@@ -1437,19 +1374,19 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 btnBuscarParking.setDisable(true);
                 etqInfoParking.getStyleClass().remove("etqErro");
             }
-            
+
         } else {
             etqInfoParking.setText(TEXTO_INFO_PARKING_COCHES);
             btnBuscarParking.setDisable(true);
             etqInfoParking.getStyleClass().remove("etqErro");
         }
-        
+
         btnReservarParking.setDisable(true);
     }
-    
+
     private Boolean comprobarMatricula() {
         String matricula = txtMatriculaParking.getText();
-        
+
         if (matricula.length() == 7) {
             for (int i = 0; i < 4; i++) {
                 if (!Character.isDigit(matricula.charAt(i))) {
@@ -1466,9 +1403,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             return true;
         }
         return false;
-        
+
     }
-    
+
     @FXML
     private void comprobarReservarParking(KeyEvent event) {
         String matricula = txtMatriculaParking.getText();
@@ -1486,20 +1423,20 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             etqErroMatricula.setVisible(false);
             btnReservarParking.setDisable(true);
         }
-        
+
     }
 
     //COCHES
     @FXML
     private void abrirCoches(Event event) {
         btnReservarCoches.setDisable(true);
-        
+
     }
-    
+
     private void poderBuscarCoches() {
         if ((dataFLlegadaCoches.getValue() != null)
                 && (dataFRetornoCoches.getValue() != null)) {
-            
+
             if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue())))
                     || (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue())))
                     || (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue())))) {
@@ -1514,7 +1451,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 } else { //As datas son menores que a actual
                     etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
                 }
-                
+
             } else if (comprobarNumeroValido()) {
                 etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
                 btnBuscarCoches.setDisable(false);
@@ -1522,7 +1459,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             } else {
                 etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
             }
-            
+
         } else if (dataFRetornoCoches.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue()))) {
                 etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
@@ -1537,7 +1474,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             } else {
                 etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
             }
-            
+
         } else if (dataFLlegadaCoches.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue()))) {
                 etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
@@ -1552,7 +1489,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             } else {
                 etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
             }
-            
+
         } else if (comprobarNumeroValido()) {
             etqInfoCoches.setText(TEXTO_INFO_PARKING_COCHES);
             btnBuscarCoches.setDisable(true);
@@ -1560,15 +1497,15 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             etqInfoCoches.setText(TEXTO_ERROR_COCHES_NUMERO);
         }
-        
+
         btnReservarCoches.setDisable(true);
     }
-    
+
     @FXML
     private void comprobarBuscarCochesDteP(Event event) {
         poderBuscarCoches();
     }
-    
+
     private Boolean comprobarNumeroValido() {
         try {
             int num = Integer.parseInt(textNPrazas.getText());
@@ -1577,7 +1514,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             return textNPrazas.getText().isEmpty();
         }
     }
-    
+
     @FXML
     private void comprobarBuscarCochesTxt(KeyEvent event) {
         if (comprobarNumeroValido()) {
@@ -1590,7 +1527,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
         }
     }
-    
+
     @FXML
     private void accionBtnBuscarCoches(ActionEvent event) {
         Time llegada = new Time(dataFLlegadaCoches.getValue());
@@ -1603,13 +1540,13 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
         actualizarTaboa(llegada, salida, numPrazas);
     }
-    
+
     private void actualizarTaboa(Time llegada, Time salida, Integer numPrazas) {
         ObservableList<Coche> coches = FXCollections.observableList(getInstanceModelo()
                 .buscarCoches(llegada, salida, numPrazas));
         taboaReservarCoche.setItems(coches);
     }
-    
+
     @FXML
     private void seleccionCoche(MouseEvent event) {
         if ((taboaReservarCoche.getSelectionModel().getSelectedItem() != null)
@@ -1623,7 +1560,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             btnReservarCoches.setDisable(true);
         }
     }
-    
+
     @FXML
     private void accionBtnReservarCoches(ActionEvent event) {
         Coche coche = taboaReservarCoche.getSelectionModel().getSelectedItem();
@@ -1649,7 +1586,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             getInstanceModelo().mostrarError("Debe seleccionar un coche antes de "
                     + "reservar.", getVenta());
         }
-        
+
         Integer numPrazas;
         if (!textNPrazas.getText().isEmpty()) {
             numPrazas = Integer.parseInt(textNPrazas.getText());
@@ -1660,14 +1597,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 new Time(dataFRetornoCoches.getValue()),
                 numPrazas);
         btnReservarCoches.setDisable(true);
-        
+
     }
 
     //Tendas
     @FXML
     private void abrirTiendas(Event event) {
     }
-    
+
     @FXML
     private void accionBtnBuscarTendas(ActionEvent event) {
         ObservableList<Tienda> tiendas = FXCollections.observableList(getInstanceModelo().buscarTiendas(txtNomeTendas.getText(),
@@ -1687,22 +1624,22 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         etqTitulo.setText(TITULO_INFO);
         accionSalidas();
     }
-    
+
     @FXML
     private void abrirPestanaSL(Event event) {
         accionSalidas();
     }
-    
+
     @FXML
     private void pulsarSalidas(ActionEvent event) {
         accionSalidas();
     }
-    
+
     @FXML
     private void pulsarLlegadas(ActionEvent event) {
         accionLlegadas();
     }
-    
+
     @FXML
     private void actualizarSL(ActionEvent event) {
         if (radioBtnSalidas.isSelected()) {
@@ -1711,7 +1648,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             accionLlegadas();
         }
     }
-    
+
     private void accionSalidas() {
         colFechaSL.setText("Salida");
         colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
@@ -1719,7 +1656,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 getInstanceModelo().mostrarSalidas());
         tablaSalidasLlegadas.setItems(salidas);
     }
-    
+
     private void accionLlegadas() {
         colFechaSL.setText("Llegada");
         colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechallegadaReal"));
@@ -1739,23 +1676,23 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             panelPersLab.toFront();
             etqTitulo.setText(TITULO_PERSLAB);
             PersonalLaboral trabajador = (PersonalLaboral) usuario;
-            
+
             trabajador.setEstaDentro(Modelo.getInstanceModelo().estaDentroPersLab(trabajador));
-            
+
             actualizarBotonesPersLab();
-            
+
         } else if (usuario instanceof Administrador) {
             panelAdministrador.toFront();
         }
-        
+
     }
-    
+
     @FXML
     private void devolverBillete(ActionEvent event) {
         Modelo.getInstanceModelo().mostrarNotificacion("Dirigite a tu historial de vuelos, dentro de área personal, para realizar "
                 + "la devolución del billete.", getVenta());
     }
-    
+
     @FXML
     private void accionBtnControl(ActionEvent event) {
         //Creamos unha venta filla da princiapl
@@ -1765,7 +1702,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         VControlController controlador = ((VControlController) loadWindow(getClass().getResource("/gui/vista/vControl.fxml"), "AeroETSE", stage));
     }
-    
+
     @FXML
     private void accionBtnEntrarSalir(ActionEvent event) {
         PersonalLaboral trab = (PersonalLaboral) usuario;
@@ -1776,9 +1713,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         }
         actualizarBotonesPersLab();
     }
-    
+
     private void actualizarBotonesPersLab() {
-        
+
         if (!((PersonalLaboral) usuario).estaDentro()) {
             btnMaletas.setDisable(true);
             btnControl.setDisable(true);
@@ -1791,45 +1728,45 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             btnEntrarSalir.setText("Salir");
         }
     }
-    
+
     @FXML
     private void accionBtnTarea(ActionEvent event) {
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
-        
+
         VTareaController controlador = ((VTareaController) loadWindow(getClass().getResource("/gui/vista/vTarea.fxml"), "AeroETSE", stage));
         controlador.setTrabajador((PersonalLaboral) usuario);
     }
-    
+
     @FXML
     private void accionBtnCoches(ActionEvent event) {
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
-        
+
         VCocheControlador controlador = ((VCocheControlador) loadWindow(getClass().getResource("/gui/vista/vCoche.fxml"), "AeroETSE", stage));
     }
-    
+
     @FXML
     private void accionBtnMaletas(ActionEvent event) {
 
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
-        
+
         VMaletaController controlador = ((VMaletaController) loadWindow(getClass().getResource("/gui/vista/vMaleta.fxml"), "AeroETSE", stage));
-        
+
     }
-    
+
     @FXML
     private void accionBtnHistorial(ActionEvent event) {
         //Creamos unha venta filla da princiapl
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
-        
+
         VHistorialController controlador = ((VHistorialController) loadWindow(getClass().getResource("/gui/vista/vHistorial.fxml"), "AeroETSE", stage));
         controlador.setTrabajador((PersonalLaboral) usuario);
     }
-    
+
 }
