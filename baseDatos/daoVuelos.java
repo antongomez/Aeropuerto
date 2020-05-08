@@ -643,7 +643,8 @@ public class daoVuelos extends AbstractDAO {
         
 
         try {
-            stmVuelo = con.prepareStatement("select nombre pesobasemaleta,preciobasemaleta "
+            stmVuelo = con.prepareStatement("select a.nombre as nombre, a.pesobasemaleta "
+                    + "as pesobasemaleta, a.preciobasemaleta as preciobasemaleta "
                     + "from vuelo v, avion av, aerolinea a "
                     + "where v.avion=av.codigo and av.aerolinea=a.nombre and numvuelo=?");
             stmVuelo.setString(1, num);

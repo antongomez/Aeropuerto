@@ -801,12 +801,15 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 Modelo.getInstanceModelo().mostrarNotificacion("Usuario dado de baja correctamente", getVenta());
                 
             }
+        } else {
+            Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
         
     }
     
     @FXML
     private void accionBtnGuardar(ActionEvent event) {
+<<<<<<< HEAD
         if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
             Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
         } else {
@@ -833,20 +836,60 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     usuario.setPaisProcedencia(us.getPaisProcedencia());
                     usuario.setTelefono(us.getTelefono());
                     usuario.setSexo(us.getSexo());
+=======
+        if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres modificar tus datos?", getVenta())) {
+            if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
+                Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
+            } else {
+                Usuario us;
+                try {
+>>>>>>> Ventanas de confirmación
                     if (usuario instanceof Administrador) {
-                        ((Administrador) usuario).setCurriculum(((Administrador) us).getCurriculum());
+                        us = new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
+                                textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                                Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem(), txtAreaCurriculum.getText());
+                    } else {
+                        us = new Usuario(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
+                                textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
+                                Integer.parseInt(textFieldTlf.getText()), comboBoxSexo.getSelectionModel().getSelectedItem());
                     }
-                    if (!textFieldContrasenha.getText().isEmpty()) {
-                        Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
+
+                    if (Modelo.getInstanceModelo().modificarUsuario(us) == true) {  //comprobamos si cambio los datos correctamente
+                        Modelo.getInstanceModelo().mostrarNotificacion("Usuario modificado correctamente", getVenta());
+                        //No cambiamos los datos del usuario asociado a esta clase hasta que se cambien en la base
+                        usuario.setId(us.getId());
+                        usuario.setEmail(us.getEmail());
+                        usuario.setNombre(us.getNombre());
+                        usuario.setAp1(us.getAp1());
+                        usuario.setAp2(us.getAp2());
+                        usuario.setPaisProcedencia(us.getPaisProcedencia());
+                        usuario.setTelefono(us.getTelefono());
+                        usuario.setSexo(us.getSexo());
+                        if (usuario instanceof Administrador) {
+                            ((Administrador) usuario).setCurriculum(((Administrador) us).getCurriculum());
+                        }
+                        if (!textFieldContrasenha.getText().isEmpty()) {
+                            Modelo.getInstanceModelo().modificarContrasenha(usuario.getId(), textFieldContrasenha.getText());
+                        }
                     }
+<<<<<<< HEAD
                 }
                 
             } catch (NumberFormatException e) {
                 Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
+=======
+
+                } catch (NumberFormatException e) {
+                    Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
+                }
+>>>>>>> Ventanas de confirmación
             }
+        } else {
+            Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
         textFieldContrasenha.setText("");
         textFieldRepetirContrasenha.setText("");
+
     }
 
     /*Para comprobar que todos los campos estén cubiertos*/
@@ -883,7 +926,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     
     @FXML
     private void cancelarViaje(ActionEvent event) {
-        if (Modelo.getInstanceModelo().mostrarConfirmacion("Seguro que quieres devolver el vuelo?", getVenta())) {
+        if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres devolver el vuelo?", getVenta())) {
             Vuelo vueloSelect = tablaFuturosVuelos.getSelectionModel().getSelectedItem();
             if (vueloSelect != null) {
                 if (Time.obtenerDias(Time.diaActual().toLocalDate(), vueloSelect.getFechasalidaReal().toLocalDate()) >= 15
@@ -1138,6 +1181,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     
     @FXML
     private void accionBtnCancelarReservaParking(ActionEvent event) {
+<<<<<<< HEAD
         ReservaParking resSelect = tablaReservasParking.getSelectionModel().getSelectedItem();
         Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
         
@@ -1149,10 +1193,29 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
                 + "con éxito", getVenta());
         
+=======
+        if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres cancelar la reserva?", getVenta())) {
+            ReservaParking resSelect = tablaReservasParking.getSelectionModel().getSelectedItem();
+            if (resSelect != null) {
+                Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
+
+                btnCancelarReservaParking.setDisable(true);
+
+                ObservableList<ReservaParking> res = FXCollections.observableArrayList(
+                        getInstanceModelo().obterResParkingUsuario(usuario.getDni()));
+                tablaReservasParking.setItems(res);
+                Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
+                        + "con éxito", getVenta());
+            }
+        } else {
+            Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
+        }
+>>>>>>> Ventanas de confirmación
     }
     
     @FXML
     private void accionBtnCancelarReservaCoche(ActionEvent event) {
+<<<<<<< HEAD
         ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
         Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
         
@@ -1163,6 +1226,24 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         tablaReservasCoche.setItems(res);
         Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
                 + "con éxito", getVenta());
+=======
+        if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres cancelar la reserva?", getVenta())) {
+            ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
+            if (resSelect != null) {
+                Modelo.getInstanceModelo().cancelarReserva(resSelect, usuario.getDni());
+
+                btnCancelarReservaCoche.setDisable(true);
+
+                ObservableList<ReservaCoche> res = FXCollections.observableArrayList(
+                        getInstanceModelo().obterResCocheUsuario(usuario.getDni()));
+                tablaReservasCoche.setItems(res);
+                Modelo.getInstanceModelo().mostrarNotificacion("Su reserva ha sido cancelada "
+                        + "con éxito", getVenta());
+            }
+        } else {
+            Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
+        }
+>>>>>>> Ventanas de confirmación
     }
     
     @FXML
