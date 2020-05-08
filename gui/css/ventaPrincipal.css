@@ -69,15 +69,18 @@
     -fx-font-weight: bold;
 }
 
+/*Etiquetas de informacion*/
 .etqInfo{
     -fx-font-size: 10pt;
     -fx-text-fill: #dbdbdb;
 }
 
+/*Etiqueta de erro*/
 .etqErro{
     -fx-text-fill: red;
 }
 
+/*Lendas das táboas do voos*/
 .hBoxCancelado{
     -fx-background-color: #1d1d1d;
 }
@@ -96,7 +99,26 @@
     -fx-background-insets: 0, 1;
 }
 
+/*Marcos e Titulos das taboas*/
 .vBoxFondoTabla{
     -fx-background-radius: 9 9 3 3;
     -fx-background-color: -cor-accent;
+}
+
+.labTituloTabla{
+    -fx-font-size: 14pt;
+    -fx-text-fill: derive(white, -80%);
+}
+
+/*Marcos e titulos xerais*/
+.marco{
+    -fx-background-radius: 10, 10;
+    -fx-background-insets: 0, 2;
+    -fx-background-color: -cor-accent, -cor-fondo;
+}
+
+.etqTituloMarco{
+    -fx-font-size: 13pt;
+    -fx-text-fill: -cor-accent;
+    -fx-background-color: #1d1d1d;
 }

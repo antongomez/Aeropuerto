@@ -8,23 +8,6 @@
 
 }
 
-.etqInfoEstadisticas{
-    -fx-font-size: 13pt;
-    -fx-text-fill: -cor-accent;
-    -fx-background-color: #1d1d1d;
-}
-
 #etqInfoEstadisticasGlobales{
     -fx-text-fill: -cor-accent;
-}
-
-.labTituloTabla{
-    -fx-font-size: 14pt;
-    -fx-text-fill: derive(white, -80%);
-}
-
-.vBoxEstadisticas{
-    -fx-background-radius: 10, 10;
-    -fx-background-insets: 0, 2;
-    -fx-background-color: -cor-accent, -cor-fondo;
 }

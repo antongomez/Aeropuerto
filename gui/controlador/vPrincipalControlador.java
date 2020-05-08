@@ -61,9 +61,10 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TXT_BTN_ADMIN = "Administrador";
     private final static String TXT_BTN_PL = "Personal";
 
+    private final static String TEXTO_ERROR_FECHAS = "Las fechas de salida y llegada deben ser mayores que la fecha actual";
+    private final static String TEXTO_ERROR_PV = "La fecha de llegada del vuelo siempre será mayor que la de salida";
     private final static String TEXTO_INFO_PARKING_COCHES = "Introduce los datos de tu vuelo o de tu estancia";
     private final static String TEXTO_ERROR_PARKING_COCHES = "La fecha de regreso debe ser mayor que la de llegada";
-    private final static String TEXTO_ERROR_PARKING_COCHES_2 = "Las fechas de llegada y de retorno deben ser mayores que la actual";
     private final static String TEXTO_ERROR_COCHES_NUMERO = "El numero de plazas no es válido";
 
     private final static Float PRECIO_DIA_PARKING = 10.0f;
@@ -108,7 +109,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private AnchorPane panelAdministrador;
 
-    //Venta Vuelo
+    //Proximos vuelos
     @FXML
     private TextField txtNumVuelo;
     @FXML
@@ -123,6 +124,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private Button btnBuscar;
     @FXML
     private Button btnComprar;
+    @FXML
+    private Label etqInfoPV;
 
     //Venta Area Personal
     @FXML
@@ -473,6 +476,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 }
             }
         });
+        //Etiqueta que informa dos erros
+        etqInfoPV.setVisible(false);
 
         //Engadimos a data actual nos datePickers
         dataPickLlegada.setValue(LocalDate.now());
@@ -621,7 +626,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     /*
-    Compra de vuelos
+    
+    
+        Compra de vuelos
     
      */
     @FXML
@@ -637,6 +644,26 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         btnComprar.setDisable(true);
         btnComprar.toFront();
+    }
+
+    @FXML
+    private void comprobarDatas(Event event) {
+        Time salida = new Time(dataPickSalida.getValue());
+        Time llegada = new Time(dataPickLlegada.getValue());
+
+        if ((!Time.fechaMayorIgualActual(salida)) || (!Time.fechaMayorIgualActual(llegada))) {
+            btnBuscar.setDisable(true);
+            etqInfoPV.setText(TEXTO_ERROR_FECHAS);
+            etqInfoPV.setVisible(true);
+
+        } else if (!Time.compararMayor(llegada, salida)) {
+            btnBuscar.setDisable(true);
+            etqInfoPV.setText(TEXTO_ERROR_PV);
+            etqInfoPV.setVisible(true);
+        } else {
+            btnBuscar.setDisable(false);
+            etqInfoPV.setVisible(false);
+        }
     }
 
     @FXML
@@ -1083,7 +1110,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         txtFieldPesoMaleta.setText(est.getAerolinea().getPesoBaseMaleta().toString());
         txtFieldPrecioMaleta.setText(est.getAerolinea().getPrecioBaseMaleta().toString());
         txtFieldPaisSede.setText(est.getAerolinea().getPais());
-        txtFieldPlazasAvion.setText(String.format("%.1f", (float) (Math.round(est.getPlazasMediasAvion()* 100f)) / 100f));
+        txtFieldPlazasAvion.setText(String.format("%.1f", (float) (Math.round(est.getPlazasMediasAvion() * 100f)) / 100f));
         txtFieldAnoAvion.setText(String.format("%.0f", (float) (Math.round(est.getAnoFabricMedioAvion() * 100f)) / 100f));
 
         String paises = "";
@@ -1267,7 +1294,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue()))) {
                     etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
-                    etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                    etqInfoParking.setText(TEXTO_ERROR_FECHAS);
                 }
 
             } else {
@@ -1291,7 +1318,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue()))) {
                     etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
-                    etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                    etqInfoParking.setText(TEXTO_ERROR_FECHAS);
                 }
 
             } else {
@@ -1302,7 +1329,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         } else if (dataFLlegadaParking.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFLlegadaParking.getValue()))) {
-                etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                etqInfoParking.setText(TEXTO_ERROR_FECHAS);
                 btnBuscarParking.setDisable(true);
 
                 if (etqInfoParking.getStyleClass().size() == 2) {
@@ -1316,7 +1343,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         } else if (dataFRetornoParking.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue()))) {
-                etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                etqInfoParking.setText(TEXTO_ERROR_FECHAS);
                 btnBuscarParking.setDisable(true);
                 if (etqInfoParking.getStyleClass().size() == 2) {
                     etqInfoParking.getStyleClass().add("etqErro");
@@ -1401,7 +1428,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue()))) {
                     etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
-                    etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                    etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
                 }
 
             } else if (comprobarNumeroValido()) {
@@ -1414,7 +1441,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         } else if (dataFRetornoCoches.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue()))) {
-                etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
                 btnBuscarCoches.setDisable(true);
                 if (etqInfoCoches.getStyleClass().size() == 2) {
                     etqInfoCoches.getStyleClass().add("etqErro");
@@ -1429,7 +1456,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         } else if (dataFLlegadaCoches.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue()))) {
-                etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES_2);
+                etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
                 btnBuscarCoches.setDisable(true);
                 if (etqInfoCoches.getStyleClass().size() == 2) {
                     etqInfoCoches.getStyleClass().add("etqErro");
