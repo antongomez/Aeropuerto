@@ -1058,27 +1058,34 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void cambiarAerolinea(ActionEvent event) {
-        accionCalculoEstAerolinea();
+        if (!comboBoxEstAer.getItems().isEmpty()) {
+            accionCalculoEstAerolinea();
+        }
     }
 
     @FXML
     private void abrirPestanaEstAerolineas(Event event) {
+        if (!comboBoxEstAer.getItems().isEmpty()) {
+            if (comboBoxEstAer.getSelectionModel().getSelectedItem() == null) {
+                comboBoxEstAer.getSelectionModel().selectFirst();
+            }
+            accionCalculoEstAerolinea();
+        }
 
-        comboBoxEstAer.getSelectionModel().selectFirst();
-        accionCalculoEstAerolinea();
     }
 
     private void accionCalculoEstAerolinea() {
         EstadisticasAerolinea est = getInstanceModelo().obtenerEstadisticasAerolinea(comboBoxEstAer.getSelectionModel().getSelectedItem());
-        txtFieldVuelosRetraso.setText((float) (Math.round((est.getPorcVuelosRetraso() * 1.2f) * 100d) / 100d) + "%");
-        txtFieldOcNormal.setText((float) (Math.round((est.getPorcOcupNormal() * 1.2f) * 100d) / 100d) + "%");
-        txtFieldOcPremium.setText((float) (Math.round((est.getPorcOcupPremium() * 1.2f) * 100d) / 100d) + "%");
+        txtFieldVuelosRetraso.setText(String.format("%.2f", est.getPorcVuelosRetraso()) + "%");
+        txtFieldOcNormal.setText(String.format("%.2f", (float) (Math.round(est.getPorcOcupNormal() * 100f)) / 100f) + "%");
+        txtFieldOcPremium.setText(String.format("%.2f", (float) (Math.round(est.getPorcOcupPremium() * 100f)) / 100f) + "%");
         txtFieldTiempoRetraso.setText(est.getTiempoMedioRetraso());
         txtFieldPesoMaleta.setText(est.getAerolinea().getPesoBaseMaleta().toString());
         txtFieldPrecioMaleta.setText(est.getAerolinea().getPrecioBaseMaleta().toString());
         txtFieldPaisSede.setText(est.getAerolinea().getPais());
-        txtFieldPlazasAvion.setText((float) (Math.round((est.getPlazasMediasAvion() * 1.2f) * 100d) / 100d) + "");
-        txtFieldAnoAvion.setText((float) (Math.round((est.getAnoFabricMedioAvion() * 1.2f) * 100d) / 100d) + "");
+        txtFieldPlazasAvion.setText(String.format("%.1f", (float) (Math.round(est.getPlazasMediasAvion()* 100f)) / 100f));
+        txtFieldAnoAvion.setText(String.format("%.0f", (float) (Math.round(est.getAnoFabricMedioAvion() * 100f)) / 100f));
+
         String paises = "";
         for (String pais : est.getNacionalidadPred()) {
             paises += pais + "  ";

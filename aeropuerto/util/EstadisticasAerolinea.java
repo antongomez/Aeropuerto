@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aeropuerto.util;
 
 import aeropuerto.elementos.Aerolinea;
@@ -11,12 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- *
- * @author Esther
- */
 public class EstadisticasAerolinea {
-    
+
     private Aerolinea aerolinea;
     private Float porcVuelosRetraso;
     private String tiempoMedioRetraso;
@@ -26,7 +17,7 @@ public class EstadisticasAerolinea {
     private Float plazasMediasAvion;
     private ArrayList<String> nacionalidadPred;
 
-    public EstadisticasAerolinea(Aerolinea aerolinea,Float porcVuelosRetraso, String tiempoMedioRetraso, Float porcOcupNormal,
+    public EstadisticasAerolinea(Aerolinea aerolinea, Float porcVuelosRetraso, String tiempoMedioRetraso, Float porcOcupNormal,
             Float porcOcupPremium, Float anoFabricMedioAvion, Float plazasMediasAvion) {
         this.porcVuelosRetraso = porcVuelosRetraso;
         this.tiempoMedioRetraso = tiempoMedioRetraso;
@@ -34,13 +25,13 @@ public class EstadisticasAerolinea {
         this.porcOcupPremium = porcOcupPremium;
         this.anoFabricMedioAvion = anoFabricMedioAvion;
         this.plazasMediasAvion = plazasMediasAvion;
-        this.aerolinea=aerolinea;
-        nacionalidadPred=new ArrayList<>();
+        this.aerolinea = aerolinea;
+        nacionalidadPred = new ArrayList<>();
     }
-public void addNacionalidad(String nac){
-    nacionalidadPred.add(nac);
-}
-   
+
+    public void addNacionalidad(String nac) {
+        nacionalidadPred.add(nac);
+    }
 
     public Aerolinea getAerolinea() {
         return aerolinea;
@@ -64,8 +55,8 @@ public void addNacionalidad(String nac){
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
             try {
                 Calendar fecha = Calendar.getInstance();
-                
-                retraso=tiempoMedioRetraso.substring(0,8);
+
+                retraso = tiempoMedioRetraso.substring(0, 8);
                 Date tiempo = sdf.parse(retraso);
                 fecha.setTime(tiempo);
                 if (fecha.get(Calendar.HOUR) <= 1) {
@@ -103,9 +94,5 @@ public void addNacionalidad(String nac){
     public ArrayList<String> getNacionalidadPred() {
         return nacionalidadPred;
     }
-    
-    
-    
-    
-    
+
 }
