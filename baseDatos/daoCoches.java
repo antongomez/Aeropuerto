@@ -25,24 +25,24 @@ public class daoCoches extends AbstractDAO {
         Connection con = super.getConexion();
 
         try {
-            String consulta = "select *"
-                    + "from cocheAlquiler "
-                    + "where matricula not in ((select cochealquiler as matricula "
-                    + "						from reservar "
-                    + "						where cast(fechainicioreserva as date) <= cast(? as date)"
-                    + "						  and cast(fechafinreserva as date) >= cast(? as date)) "
-                    + "						UNION "
-                    + "						(select matricula "
-                    + "						from alquilar "
-                    + "						where cast(fechaalquiler as date) <= cast(? as date) "
-                    + "						  and (((cast(? as date)-cast (fechateoricadevolucion as date))<=5 " +
-"								and cast(? as date)>cast(fechateoricadevolucion as date)) " +
-"								or cast(? as date)<=cast(fechateoricadevolucion as date)))) "
-                    + " and retirado = false ";
+            String consulta = "SELECT * \n"
+                    + "FROM cocheAlquiler \n"
+                    + "WHERE matricula not in ((SELECT cochealquiler as matricula \n"
+                    + "			       FROM reservar \n"
+                    + "			       WHERE cast(fechainicioreserva as date) <= cast(? as date) \n"
+                    + "                         and cast(fechafinreserva as date) >= cast(? as date)) \n"
+                    + "                         UNION \n"
+                    + "                        (SELECT matricula \n"
+                    + "                         FROM alquilar \n"
+                    + "                         WHERE cast(fechaalquiler as date) <= cast(? as date) \n"
+                    + "                         and (((cast(? as date)-cast (fechateoricadevolucion as date))<=5 \n" +
+"                                               and cast(? as date)>cast(fechateoricadevolucion as date)) \n" +
+"                                               or cast(? as date)<=cast(fechateoricadevolucion as date)))) \n"
+                    + "and retirado = false \n";
             if (numPlazas != null) {
                 consulta += "  and nplazas = ? \n";
             }
-            consulta += "order by nplazas desc, precioPorDia asc, caballos desc, nPuertas asc";
+            consulta += "ORDER BY nplazas desc, precioPorDia asc, caballos desc, nPuertas asc";
             stmCoches = con.prepareStatement(consulta);
 
             stmCoches.setTimestamp(1, retorno.toTimestamp());
@@ -89,25 +89,25 @@ public class daoCoches extends AbstractDAO {
         Connection con = super.getConexion();
 
         try {
-            String consulta = "select *\n"
-                    + "from cocheAlquiler \n"
-                    + "where matricula not in ((select cochealquiler as matricula\n"
-                    + "						from reservar\n"
-                    + "						where fechainicioreserva <= ? \n"
-                    + "						  and fechafinreserva >= ?) \n"
-                    + "						UNION\n"
-                    + "						(select matricula\n"
-                    + "						from alquilar\n"
-                    + "						where fechaalquiler <= ? \n"
-                    + "						  and fechadevolucion is null))\n"
-                    + "  and retirado = false \n"
-                    + "  and modelo like ? \n"
-                    + "  and matricula like ? \n";
+            String consulta = "SELECT * \n"
+                    + "FROM cocheAlquiler \n"
+                    + "WHERE matricula not in ((SELECT cochealquiler as matricula \n"
+                    + "			       FROM reservar \n"
+                    + "                         WHERE fechainicioreserva <= ? \n"
+                    + "                         and fechafinreserva >= ?) \n"
+                    + "                         UNION\n"
+                    + "                        (SELECT matricula\n"
+                    + "                         FROM alquilar\n"
+                    + "                         WHERE fechaalquiler <= ? \n"
+                    + "                         and fechadevolucion is null)) \n"
+                    + "and retirado = false \n"
+                    + "and modelo like ? \n"
+                    + "and matricula like ? \n";
             if (numPlazas != null) {
                 consulta += "  and nplazas = ? \n";
             }
             
-            consulta += "order by nplazas desc, precioPorDia asc, caballos desc, nPuertas asc";
+            consulta += "ORDER BY nplazas desc, precioPorDia asc, caballos desc, nPuertas asc";
             stmCoches = con.prepareStatement(consulta);
 
             stmCoches.setTimestamp(1, retorno.toTimestamp());

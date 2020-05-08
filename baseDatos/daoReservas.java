@@ -252,7 +252,8 @@ public class daoReservas extends AbstractDAO {
                     + "           FROM alquilar as alq \n"
                     + "           WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 \n"
                     + "           and res.cochealquiler=alq.matricula "
-                    + "           and res.usuario=alq.usuario)");
+                    + "           and res.usuario=alq.usuario) \n"
+                    + "ORDER BY fechainicioreserva desc");
             stmRes.setString(1, dniUsuario);
             stmRes.setString(2, dniUsuario);
             rsRes = stmRes.executeQuery();
