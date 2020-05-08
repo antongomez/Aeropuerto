@@ -458,10 +458,10 @@ public class daoVuelos extends AbstractDAO {
 
         try {
             stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaSalidaReal, "
-                    + "fechaSalidaReal-fechaSalidaTeorica as retraso,terminal, puertaembarque, cancelado, "
+                    + "fechaSalidaReal-fechaSalidaTeorica as retraso, terminal, puertaembarque, cancelado, "
                     + "to_char(fechaSalidaReal-NOW(),'dd HH24:MI') as tiempoRestante "
                     + "from vuelo v "
-                    + "where fechaSalidaReal>NOW() and v.origen=? "
+                    + "where fechaSalidaReal > NOW() and v.origen = ? "
                     + "ORDER BY fechaSalidaReal asc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
@@ -501,10 +501,10 @@ public class daoVuelos extends AbstractDAO {
                     + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado, "
                     + "to_char(fechaLlegadaReal-NOW(),'dd HH24:MI') as tiempoRestante "
                     + "from vuelo v "
-                    + "where EXTRACT(YEAR FROM cast(v.fechaLlegadaReal as date))= EXTRACT(YEAR FROM cast(NOW()as date) ) and "
-                    + "EXTRACT(MONTH FROM cast(v.fechaLlegadaReal as date))=EXTRACT(MONTH FROM cast(NOW()as date) ) "
-                    + "and EXTRACT(DAY FROM cast(v.fechaLlegadaReal as date))=EXTRACT(DAY FROM cast(NOW()as date) ) "
-                    + "and v.destino=? "
+                    + "where EXTRACT(YEAR FROM cast(v.fechaLlegadaReal as date))= EXTRACT(YEAR FROM cast(NOW()as date) ) "
+                    //+ "  and EXTRACT(MONTH FROM cast(v.fechaLlegadaReal as date))=EXTRACT(MONTH FROM cast(NOW()as date) ) "
+                    //+ "and EXTRACT(DAY FROM cast(v.fechaLlegadaReal as date))=EXTRACT(DAY FROM cast(NOW()as date) ) "
+                    + "  and v.destino=? "
                     + "ORDER BY fechaLlegadaReal desc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();

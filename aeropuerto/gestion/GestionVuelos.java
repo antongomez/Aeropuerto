@@ -12,9 +12,9 @@ import javafx.collections.ObservableList;
 
 public class GestionVuelos {
 
-    FachadaGui fgui;
-    FachadaBaseDatos fbd;
-    static final float EXTRA_MALETA_KG=5;
+    private FachadaGui fgui;
+    private FachadaBaseDatos fbd;
+    private static final float EXTRA_MALETA_KG = 5;
 
     public GestionVuelos(FachadaGui fgui, FachadaBaseDatos fbd) {
         this.fgui = fgui;
@@ -32,11 +32,11 @@ public class GestionVuelos {
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
         return fbd.obtenerVuelosUsuario(dniUs);
     }
-    
+
     public List<Vuelo> obtenerVuelosRealizadosUsuario(String dniUs) {
         return fbd.obtenerVuelosRealizadosUsuario(dniUs);
     }
-    
+
     public List<Vuelo> obtenerVuelosFuturosUsuario(String dniUs) {
         return fbd.obtenerVuelosFuturosUsuario(dniUs);
     }
@@ -56,7 +56,8 @@ public class GestionVuelos {
     public Boolean vueloRealizado(String vuelo) {
         return fbd.vueloRealizado(vuelo);
     }
-    public Aerolinea obtenerDatosAerolinea(String numvuelo){
+
+    public Aerolinea obtenerDatosAerolinea(String numvuelo) {
         return fbd.obtenerDatosAerolinea(numvuelo);
     }
 
@@ -91,26 +92,28 @@ public class GestionVuelos {
     public List<String> obtenerAnhosViajados(String dni) {
         return fbd.obtenerAnhosViajados(dni);
     }
+
     /*Los tres primeros argumentos son de entrada y el último de salida.
     La función devuelve si fue posible facturar la maleta*/
-    public Boolean facturarMaleta(String dni, String vuelo, Float peso){
-       
+    public Boolean facturarMaleta(String dni, String vuelo, Float peso) {
+
         return fbd.facturarMaleta(dni, vuelo, peso);
 
     }
-    public Float getPrecioExtraDespuesFacturar(String dni, String vuelo, Float peso){
-        Float precio=(float)0;
-        Aerolinea aer=fbd.obtenerDatosAerolinea(vuelo);
-            /*Si después de facturar, el número de maletas disponibles es negativo*/
-            if(fbd.numeroMaletasDisponibles(dni, vuelo)<0){
-                precio+=aer.getPrecioBaseMaleta();
-            }
-            /*Si se pasa del peso*/
-            if(peso>aer.getPesoBaseMaleta()){
-                precio+=EXTRA_MALETA_KG*(peso-aer.getPesoBaseMaleta());
-            }
 
-            return precio;
+    public Float getPrecioExtraDespuesFacturar(String dni, String vuelo, Float peso) {
+        Float precio = (float) 0;
+        Aerolinea aer = fbd.obtenerDatosAerolinea(vuelo);
+        /*Si después de facturar, el número de maletas disponibles es negativo*/
+        if (fbd.numeroMaletasDisponibles(dni, vuelo) < 0) {
+            precio += aer.getPrecioBaseMaleta();
+        }
+        /*Si se pasa del peso*/
+        if (peso > aer.getPesoBaseMaleta()) {
+            precio += EXTRA_MALETA_KG * (peso - aer.getPesoBaseMaleta());
+        }
+
+        return precio;
     }
-    
+
 }

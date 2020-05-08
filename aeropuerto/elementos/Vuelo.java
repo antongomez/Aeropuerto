@@ -3,7 +3,6 @@ package aeropuerto.elementos;
 import aeropuerto.util.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -104,17 +103,7 @@ public class Vuelo {
         Integer dias = tiempo.getDia();
         Integer horas = tiempo.getHoras();
         Integer minutos = tiempo.getMinutos();
-
-        Time fecha;
-        if (this.fechallegadaReal != null) {
-            fecha = this.fechallegadaReal;
-        } else {
-            fecha = this.fechasalidaReal;
-        }
         
-        dias = tiempo.getDia();
-        horas = tiempo.getHoras();
-        minutos = tiempo.getMinutos();
         if (dias > 1) {
             estado = dias.toString() + " días";
         } else {
@@ -122,13 +111,13 @@ public class Vuelo {
                 horas += dias * 24;
             }
             if (horas >= 2) {
-                estado = horas.toString() + "h";
+                estado = horas.toString() + " h";
             } else {
                 if (horas != 0) {
                     minutos += horas * 60;
                 }
                 if (minutos >= 20) {
-                    estado = minutos.toString() + "min";
+                    estado = minutos.toString() + " min";
                 } else {
                     estado = "<20 min";
                 }
@@ -218,6 +207,13 @@ public class Vuelo {
         return puertaEmbarque;
     }
 
+    public String getPuerta() {
+        if(puertaEmbarque == 0){
+            return " - ";
+        }
+        return puertaEmbarque.toString();
+    }
+    
     public void setPuertaEmbarque(Integer puertaEmbarque) {
         this.puertaEmbarque = puertaEmbarque;
     }
