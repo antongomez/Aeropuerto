@@ -172,6 +172,7 @@ public class VCocheControlador extends Controlador implements Initializable {
         } else {
             Modelo.getInstanceModelo().mostrarError("Usuario no registrado.\n"
                     + "Debe registrarse antes de alquilar coches con nosotros.", getVenta());
+            tablaConReserva.getItems().clear();
         }
     }
 
