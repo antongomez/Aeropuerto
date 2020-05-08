@@ -268,8 +268,8 @@ public class FachadaBaseDatos {
         daoUsuarios.salirPersLaboral(dni);
     }
 
-    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
-        daoUsuarios.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
+    public Boolean obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
+       return daoUsuarios.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
     
     public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario){

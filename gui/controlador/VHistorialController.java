@@ -61,13 +61,14 @@ public class VHistorialController extends Controlador implements Initializable {
         colEntrada.setCellValueFactory(new PropertyValueFactory<>("fechaEntrada"));
         colSalida.setCellValueFactory(new PropertyValueFactory<>("fechaSalida"));
         trabajador.borrarHistorial();
-        Modelo.getInstanceModelo().obtenerHistorialPersLaboral(trabajador, Time.diaActual(), Time.diaActual());
+        if(Modelo.getInstanceModelo().obtenerHistorialPersLaboral(trabajador, Time.diaActual(), Time.diaActual())==true){
 
         ObservableList<ElemHistorial> hist = FXCollections.observableArrayList(trabajador.getHistorialTrabajo());
         tablaHistorial.setItems(hist);
         //Engadimos a data actual nos datePickers
         datePickerFechaInicio.setValue(LocalDate.now());
         datePickerFechaFin.setValue(LocalDate.now());
+        }
     }
 
     @FXML
@@ -85,9 +86,10 @@ public class VHistorialController extends Controlador implements Initializable {
             fin = Time.diaActual();
         }
 trabajador.borrarHistorial();
-        Modelo.getInstanceModelo().obtenerHistorialPersLaboral(trabajador, inicio, fin);
+        if(Modelo.getInstanceModelo().obtenerHistorialPersLaboral(trabajador, inicio, fin)==true){
 
         ObservableList<ElemHistorial> hist = FXCollections.observableArrayList(trabajador.getHistorialTrabajo());
         tablaHistorial.setItems(hist);
+        }
     }
 }

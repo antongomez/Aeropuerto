@@ -275,8 +275,8 @@ public class FachadaAplicacion extends Application {
         gu.salirPersLaboral(usu);
     }
 
-    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
-        gu.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
+    public Boolean obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
+        return gu.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
     
     public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario){

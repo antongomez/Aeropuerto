@@ -77,8 +77,8 @@ public class GestionUsuarios {
         fbd.salirPersLaboral(usu.getDni());
         usu.setEstaDentro(false);
     }
-    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
-        fbd.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
+    public Boolean obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin){
+        return fbd.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
     
     public Boolean comprobarRegistrado(String dni){

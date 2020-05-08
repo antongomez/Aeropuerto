@@ -735,11 +735,11 @@ public class daoUsuarios extends AbstractDAO {
         }
     }
 
-    public void obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
+    public Boolean obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
         Connection con;
         PreparedStatement stmHistorial = null;
         ResultSet rsHistorial;
-        Boolean result = null;
+        Boolean result = false;
 
         con = this.getConexion();
 
@@ -747,7 +747,7 @@ public class daoUsuarios extends AbstractDAO {
             stmHistorial = con.prepareStatement("select fechaentrada,fechasalida "
                     + " from historialtrabajo where personallaboral=? "
                     + "and cast(fechaentrada as date)>=? and cast(fechaentrada as date)<=? "
-                    + "order by fechaEntrada");
+                    + "order by fechaEntrada desc");
             stmHistorial.setString(1, usu.getDni());
             stmHistorial.setTimestamp(2, fechaInicio.toTimestamp());
             stmHistorial.setTimestamp(3, fechaFin.toTimestamp());
@@ -756,18 +756,22 @@ public class daoUsuarios extends AbstractDAO {
             while (rsHistorial.next()) {
                 usu.addElemHistorial(new ElemHistorial(new Time(rsHistorial.getTimestamp("fechaentrada")),
                         new Time(rsHistorial.getTimestamp("fechaentrada"))));
+                result=true;
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
+            result=false;
         } finally {
             try {
                 stmHistorial.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
+                result=false;
             }
         }
+        return result;
 
     }
 
