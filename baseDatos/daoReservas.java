@@ -31,10 +31,10 @@ public class daoReservas extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmRes = con.prepareStatement("select fechaentrada as fechainicio, fechafin, matricula, terminal, piso, numplaza \n"
-                    + "from reservarparking \n"
-                    + "where usuario = ? \n"
-                    + "  and fechaentrada > NOW()");
+            stmRes = con.prepareStatement("SELECT fechaentrada as fechainicio, fechafin, matricula, terminal, piso, numplaza \n"
+                    + "FROM reservarparking \n"
+                    + "WHERE usuario = ? "
+                    + "and fechaentrada > NOW()");
             stmRes.setString(1, dniUs);
             rsRes = stmRes.executeQuery();
 
@@ -70,10 +70,11 @@ public class daoReservas extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmRes = con.prepareStatement("select fechainicioreserva as fechainicio, fechafinreserva as fechafin, cocheAlquiler as matricula\n"
-                    + "from reservar \n"
-                    + "where usuario = ? \n"
-                    + "  and fechainicioreserva > NOW()");
+            stmRes = con.prepareStatement("SELECT fechainicioreserva as fechainicio, fechafinreserva as fechafin, "
+                    + "cocheAlquiler as matricula \n"
+                    + "FROM reservar \n"
+                    + "WHERE usuario = ? "
+                    + "and fechainicioreserva > NOW()");
             stmRes.setString(1, dniUs);
             rsRes = stmRes.executeQuery();
 
@@ -103,8 +104,9 @@ public class daoReservas extends AbstractDAO {
         Boolean correcto = true;
 
         try {
-            stmRes = con.prepareStatement("delete from reservarparking where usuario=? and"
-                    + " terminal=? and piso=? and numplaza=? and fechaEntrada=?");
+            stmRes = con.prepareStatement("DELETE from reservarparking \n"
+                    + "WHERE usuario=? "
+                    + "and terminal=? and piso=? and numplaza=? and fechaEntrada=?");
             stmRes.setString(1, dniUsu);
             stmRes.setInt(2, res.getTerminal());
             stmRes.setInt(3, res.getPiso());
@@ -134,8 +136,9 @@ public class daoReservas extends AbstractDAO {
         Boolean correcto = true;
 
         try {
-            stmRes = con.prepareStatement("delete from reservar where usuario=? and"
-                    + " cocheAlquiler=? and fechaInicioReserva=?");
+            stmRes = con.prepareStatement("DELETE from reservar \n"
+                    + "WHERE usuario=? "
+                    + "and cocheAlquiler=? and fechaInicioReserva=?");
             stmRes.setString(1, dniUsu);
             stmRes.setString(2, res.getMatricula());
             stmRes.setTimestamp(3, res.getInicio().toTimestamp());
@@ -163,8 +166,8 @@ public class daoReservas extends AbstractDAO {
         Boolean correcto = true;
 
         try {
-            stmRes = con.prepareStatement("insert into reservarParking values"
-                    + "(?, ?, ?, ?, ?, ?, ?)");
+            stmRes = con.prepareStatement("INSERT into reservarParking \n"
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?)");
             stmRes.setString(1, dniUsu);
             stmRes.setInt(2, res.getTerminal());
             stmRes.setInt(3, res.getPiso());
@@ -197,8 +200,8 @@ public class daoReservas extends AbstractDAO {
         Boolean correcto = true;
 
         try {
-            stmRes = con.prepareStatement("insert into reservar values"
-                    + "(?, ?, ?, ?)");
+            stmRes = con.prepareStatement("INSERT into reservar \n"
+                    + "VALUES(?, ?, ?, ?)");
             stmRes.setTimestamp(1, res.getInicio().toTimestamp());
             stmRes.setTimestamp(2, res.getFin().toTimestamp());
             stmRes.setString(3, dniUsu);
@@ -228,32 +231,34 @@ public class daoReservas extends AbstractDAO {
         ResultSet rsRes;
 
         try {
-            stmRes = con.prepareStatement("SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), res.cochealquiler as matricula, "
+            stmRes = con.prepareStatement("SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), \n"
+                    + "res.cochealquiler as matricula, coche.preciopordia as preciodia, coche.modelo as modelo, \n"
+                    + "'sin alquilar' as estado \n"
+                    + "FROM reservar as res, cochealquiler as coche \n"
+                    + "WHERE res.usuario=? and cast(fechainicioreserva as date)=cast(NOW() as date) "
+                    + "and coche.matricula=res.cochealquiler \n"
+                    + "and NOT EXISTS(SELECT * \n"
+                    + "               FROM alquilar as alq \n"
+                    + "               WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 \n"
+                    + "               and res.cochealquiler=alq.matricula \n"
+                    + "               and res.usuario=alq.usuario) \n"
+                    + "UNION \n"
+                    + "SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), res.cochealquiler as matricula, \n"
                     + "coche.preciopordia as preciodia, coche.modelo as modelo, "
-                    + "'sin alquilar' as estado "
-                    + "FROM reservar as res, cochealquiler as coche "
+                    + "'alquilado' as estado \n"
+                    + "FROM reservar as res, cochealquiler as coche \n"
                     + "WHERE res.usuario=? and cast(fechainicioreserva as date)=cast(NOW() as date) and coche.matricula=res.cochealquiler "
-                    + "and NOT EXISTS(SELECT * "
-                    + "           FROM alquilar as alq "
-                    + "           WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 "
+                    + "and EXISTS(SELECT * \n"
+                    + "           FROM alquilar as alq \n"
+                    + "           WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 \n"
                     + "           and res.cochealquiler=alq.matricula "
-                    + "           and res.usuario=alq.usuario) "
-                    + "UNION "
-                    + "SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), res.cochealquiler as matricula, "
-                    + "coche.preciopordia as preciodia, coche.modelo as modelo, "
-                    + "'alquilado' as estado "
-                    + "FROM reservar as res, cochealquiler as coche "
-                    + "WHERE res.usuario=? and cast(fechainicioreserva as date)=cast(NOW() as date) and coche.matricula=res.cochealquiler "
-                    + "and EXISTS(SELECT * "
-                    + "           FROM alquilar as alq "
-                    + "           WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 "
-                    + "           and res.cochealquiler=alq.matricula "
-                    + "           and res.usuario=alq.usuario) ");
+                    + "           and res.usuario=alq.usuario)");
             stmRes.setString(1, dniUsuario);
             stmRes.setString(2, dniUsuario);
             rsRes = stmRes.executeQuery();
             while (rsRes.next()) {
-                ReservaCoche reserva = new ReservaCoche(rsRes.getTimestamp("fechainicioreserva"), rsRes.getTimestamp("fechafinreserva"), rsRes.getString("matricula"), rsRes.getString("modelo"), rsRes.getFloat("preciodia"), rsRes.getString("estado"));
+                ReservaCoche reserva = new ReservaCoche(rsRes.getTimestamp("fechainicioreserva"), rsRes.getTimestamp("fechafinreserva"), 
+                        rsRes.getString("matricula"), rsRes.getString("modelo"), rsRes.getFloat("preciodia"), rsRes.getString("estado"));
                 resultado.add(reserva);
             }
 
@@ -277,8 +282,8 @@ public class daoReservas extends AbstractDAO {
         Boolean correcto = true;
 
         try {
-            stmRes = con.prepareStatement("insert into alquilar values"
-                    + "(NOW(),?, ?, ?, null,true)");
+            stmRes = con.prepareStatement("INSERT into alquilar \n"
+                    + "VALUES(NOW(),?, ?, ?, null,true)");
             stmRes.setString(1, dni);
             stmRes.setString(2, matricula);
             stmRes.setTimestamp(3, fin.toTimestamp());
@@ -308,10 +313,10 @@ public class daoReservas extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmAlquiler = con.prepareStatement("select alq.fechaAlquiler as inicio, alq.fechaTeoricaDevolucion as fin, "
-                    + "alq.usuario as usuario, coche.precioPorDia as precioDia "
-                    + "from alquilar as alq, cocheAlquiler as coche "
-                    + "where alq.matricula=? and alq.matricula=coche.matricula and alq.fechaDevolucion is null ");
+            stmAlquiler = con.prepareStatement("SELECT alq.fechaAlquiler as inicio, alq.fechaTeoricaDevolucion as fin, \n"
+                    + "alq.usuario as usuario, coche.precioPorDia as precioDia \n"
+                    + "FROM alquilar as alq, cocheAlquiler as coche \n"
+                    + "WHERE alq.matricula=? and alq.matricula=coche.matricula and alq.fechaDevolucion is null ");
             stmAlquiler.setString(1, matricula);
             rsAlquiler = stmAlquiler.executeQuery();
 
@@ -343,9 +348,9 @@ public class daoReservas extends AbstractDAO {
 
         try {
 
-            stmUsuario = con.prepareStatement("update alquilar "
-                    + "set fechaDevolucion=NOW() "
-                    + "where matricula=? and fechaAlquiler=? and usuario=? ");
+            stmUsuario = con.prepareStatement("UPDATE alquilar \n"
+                    + "SET fechaDevolucion=NOW() \n"
+                    + "EHERE matricula=? and fechaAlquiler=? and usuario=? ");
 
             stmUsuario.setString(1, alquiler.getMatricula());
             stmUsuario.setTimestamp(2, alquiler.getInicio().toTimestamp());
