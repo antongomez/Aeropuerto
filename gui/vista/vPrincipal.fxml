@@ -924,6 +924,23 @@
                 </Tab>
               </tabs>
             </TabPane>
+            <AnchorPane fx:id="panelAdministrador" prefHeight="200.0" prefWidth="200.0" styleClass="background">
+               <children>
+                  <VBox alignment="CENTER" layoutX="271.0" layoutY="110.0" prefHeight="620.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="TOP" prefHeight="205.0" prefWidth="429.0" text="Estamos trabajando en nuevas funcionalidades de la aplicación. Disculpe las molestias." textAlignment="CENTER" wrapText="true">
+                           <graphic>
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../recursos/LogoObras.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
          </children>
       </StackPane>
    </center>

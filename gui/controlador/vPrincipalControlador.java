@@ -105,6 +105,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private TabPane panelAreaP;
     @FXML
     private AnchorPane panelVuelos;
+    @FXML
+    private AnchorPane panelAdministrador;
 
     //Venta Vuelo
     @FXML
@@ -854,7 +856,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (Modelo.getInstanceModelo().mostrarConfirmacion("Seguro que quieres devolver el vuelo?", getVenta())) {
             Vuelo vueloSelect = tablaFuturosVuelos.getSelectionModel().getSelectedItem();
             if (vueloSelect != null) {
-                if (Time.obtenerDias(Time.diaActual().toLocalDate(), vueloSelect.getFechasalidaReal().toLocalDate())>=15 
+                if (Time.obtenerDias(Time.diaActual().toLocalDate(), vueloSelect.getFechasalidaReal().toLocalDate()) >= 15
                         || vueloSelect.getCancelado()) {
                     if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
                         vuelosFuturos.remove(vueloSelect);
@@ -1625,6 +1627,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
             actualizarBotonesPersLab();
 
+        } else if (usuario instanceof Administrador) {
+            panelAdministrador.toFront();
         }
 
     }
