@@ -290,5 +290,16 @@ public class Time {
 
         return dias;
     }
+    
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof Time)){
+            return false;
+        }
+        Time data = (Time) o;
+        
+        return ((data.getAno().equals(ano)) && (data.getMes().equals(mes)) && (data.getDia().equals(dia))
+                && (data.getHoras().equals(horas)) && (data.getMinutos().equals(minutos)));
+    }
 
 }

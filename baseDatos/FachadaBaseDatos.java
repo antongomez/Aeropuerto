@@ -106,11 +106,11 @@ public class FachadaBaseDatos {
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
         return daoVuelos.obtenerVuelosUsuario(dniUs);
     }
-    
+
     public List<Vuelo> obtenerVuelosRealizadosUsuario(String dniUs) {
         return daoVuelos.obtenerVuelosRealizadosUsuario(dniUs);
     }
-    
+
     public List<Vuelo> obtenerVuelosFuturosUsuario(String dniUs) {
         return daoVuelos.obtenerVuelosFuturosUsuario(dniUs);
     }
@@ -126,7 +126,7 @@ public class FachadaBaseDatos {
     public List<ReservaParking> obterResParkingUsuario(String dniUs) {
         return daoReservas.obterResParkingUsuario(dniUs);
     }
-    
+
     public List<ReservaCoche> obterResCocheUsuario(String dniUs) {
         return daoReservas.obterResCocheUsuario(dniUs);
     }
@@ -195,7 +195,7 @@ public class FachadaBaseDatos {
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
         return daoCoches.buscarCoches(llegada, retorno, numPlazas);
     }
-    
+
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas, String modelo, String matricula) {
         return daoCoches.buscarCoches(llegada, retorno, numPlazas, modelo, matricula);
     }
@@ -269,29 +269,30 @@ public class FachadaBaseDatos {
     }
 
     public Boolean obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
-       return daoUsuarios.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
+        return daoUsuarios.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
-    
-    public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario){
+
+    public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario) {
         return daoReservas.obtenerReservasCocheUsuario(dniUsuario);
     }
-    
-    public Boolean introducirAlquiler(String matricula, Time fin, String dni){
+
+    public Boolean introducirAlquiler(String matricula, Time fin, String dni) {
         return daoReservas.introducirAlquiler(matricula, fin, dni);
     }
-    
-    public Boolean comprobarRegistrado(String dni){
+
+    public Boolean comprobarRegistrado(String dni) {
         return daoUsuarios.comprobarRegistrado(dni);
     }
-    
-    public ReservaCoche buscarAlquilerDevolucion(String matricula){
+
+    public ReservaCoche buscarAlquilerDevolucion(String matricula) {
         return daoReservas.buscarAlquilerDevolucion(matricula);
     }
-    
-    public Boolean devolucionCoche(Reserva alquiler){
+
+    public Boolean devolucionCoche(Reserva alquiler) {
         return daoReservas.devolucionCoche(alquiler);
     }
-    public Boolean obtenerDatosPersLab(PersonalLaboral trab){
+
+    public Boolean obtenerDatosPersLab(PersonalLaboral trab) {
         return daoUsuarios.obtenerDatosPersLab(trab);
     }
 }

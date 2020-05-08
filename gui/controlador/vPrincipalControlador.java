@@ -62,7 +62,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TXT_BTN_PL = "Personal";
 
     private final static String TEXTO_ERROR_FECHAS = "Las fechas de salida y llegada deben ser mayores que la fecha actual";
-    private final static String TEXTO_ERROR_PV = "La fecha de llegada del vuelo siempre será mayor que la de salida";
     private final static String TEXTO_INFO_PARKING_COCHES = "Introduce los datos de tu vuelo o de tu estancia";
     private final static String TEXTO_ERROR_PARKING_COCHES = "La fecha de regreso debe ser mayor que la de llegada";
     private final static String TEXTO_ERROR_COCHES_NUMERO = "El numero de plazas no es válido";
@@ -654,15 +653,34 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Time salida = new Time(dataPickSalida.getValue());
         Time llegada = new Time(dataPickLlegada.getValue());
 
-        if ((!Time.fechaMayorIgualActual(salida)) || (!Time.fechaMayorIgualActual(llegada))) {
+        if (!Time.fechaMayorIgualActual(salida)) {
             btnBuscar.setDisable(true);
             etqInfoPV.setText(TEXTO_ERROR_FECHAS);
             etqInfoPV.setVisible(true);
+            if (Time.compararMayor(salida, llegada)) {
+                if (dataPickSalida.isFocused()) {
+                    dataPickLlegada.setValue(dataPickSalida.getValue());
+                } else {
+                    dataPickSalida.setValue(dataPickLlegada.getValue());
+                }
+            }
 
         } else if (Time.compararMayor(salida, llegada)) {
-            btnBuscar.setDisable(true);
-            etqInfoPV.setText(TEXTO_ERROR_PV);
-            etqInfoPV.setVisible(true);
+
+            etqInfoPV.setVisible(false);
+            btnBuscar.setDisable(false);
+
+            if (dataPickSalida.isFocused()) {
+                dataPickLlegada.setValue(dataPickSalida.getValue());
+            } else {
+                dataPickSalida.setValue(dataPickLlegada.getValue());
+                if (!Time.fechaMayorIgualActual(salida)) {
+                    btnBuscar.setDisable(true);
+                    etqInfoPV.setText(TEXTO_ERROR_FECHAS);
+                    etqInfoPV.setVisible(true);
+                }
+            }
+
         } else {
             btnBuscar.setDisable(false);
             etqInfoPV.setVisible(false);
@@ -809,12 +827,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnGuardar(ActionEvent event) {
+
         if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres modificar tus datos?", getVenta())) {
             if (!textFieldContrasenha.getText().equals(textFieldRepetirContrasenha.getText())) {
                 Modelo.getInstanceModelo().mostrarError("Las contraseñas no coinciden!", getVenta());
             } else {
                 Usuario us;
                 try {
+
                     if (usuario instanceof Administrador) {
                         us = new Administrador(usuario.getDni(), textFieldID.getText(), textFieldEmail.getText(), textFieldNombre.getText(),
                                 textFieldAp1.getText(), textFieldAp2.getText(), comboBoxPais.getSelectionModel().getSelectedItem(),
@@ -848,6 +868,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     Modelo.getInstanceModelo().mostrarError("Número de teléfono incorrecto", getVenta());
                 }
             }
+
         } else {
             Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
@@ -1145,6 +1166,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnCancelarReservaParking(ActionEvent event) {
+
         if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres cancelar la reserva?", getVenta())) {
             ReservaParking resSelect = tablaReservasParking.getSelectionModel().getSelectedItem();
             if (resSelect != null) {
@@ -1161,10 +1183,12 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
+
     }
 
     @FXML
     private void accionBtnCancelarReservaCoche(ActionEvent event) {
+
         if (Modelo.getInstanceModelo().mostrarConfirmacion("¿Estás seguro de que quieres cancelar la reserva?", getVenta())) {
             ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
             if (resSelect != null) {
@@ -1181,6 +1205,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         } else {
             Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
         }
+
     }
 
     @FXML

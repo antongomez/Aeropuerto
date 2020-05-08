@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui.controlador;
 
-import aeropuerto.elementos.PersonalLaboral;
 import gui.modelo.Modelo;
 import static java.lang.Float.parseFloat;
 import java.net.URL;
@@ -16,13 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-/**
- * FXML Controller class
- *
- * @author Esther
- */
 public class VMaletaController extends Controlador implements Initializable {
-    
 
     @FXML
     private TextField txtFieldNumVuelo;
@@ -33,48 +21,38 @@ public class VMaletaController extends Controlador implements Initializable {
     @FXML
     private Button btnFacturar;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        
-    }    
-   
+
+    }
 
     @FXML
     private void facturar(ActionEvent event) {
-        
-        if(txtFieldDni.getText().isEmpty()|| txtFieldNumVuelo.getText().isEmpty() || txtFieldPeso.getText().isEmpty()){
-          Modelo.getInstanceModelo().mostrarError("Debes rellenar todos los campos", this.getVenta());
-        }
-        else{
+
+        if (txtFieldDni.getText().isEmpty() || txtFieldNumVuelo.getText().isEmpty() || txtFieldPeso.getText().isEmpty()) {
+            Modelo.getInstanceModelo().mostrarError("Debes rellenar todos los campos", this.getVenta());
+        } else {
             Float peso;
-            try{
-                
-                peso=parseFloat(txtFieldPeso.getText());
-                if(Modelo.getInstanceModelo().facturarMaleta(txtFieldDni.getText(), txtFieldNumVuelo.getText(), peso)==true){
-                    Float extra=Modelo.getInstanceModelo().getPrecioExtraDespuesFacturar(txtFieldDni.getText(), txtFieldNumVuelo.getText(), peso);
-                    if(extra==(float)0){
+            try {
+
+                peso = parseFloat(txtFieldPeso.getText());
+                if (Modelo.getInstanceModelo().facturarMaleta(txtFieldDni.getText(), txtFieldNumVuelo.getText(), peso) == true) {
+                    Float extra = Modelo.getInstanceModelo().getPrecioExtraDespuesFacturar(txtFieldDni.getText(), txtFieldNumVuelo.getText(), peso);
+                    if (extra == (float) 0) {
                         Modelo.getInstanceModelo().mostrarNotificacion("Operación realizada con éxito", this.getVenta());
-                    }
-                    else{
-                        Modelo.getInstanceModelo().mostrarNotificacion("Operación realizada con éxito.\n Debes pagar "+extra+" € extra", this.getVenta());
+                    } else {
+                        Modelo.getInstanceModelo().mostrarNotificacion("Operación realizada con éxito.\n Debes pagar " + extra + " € extra", this.getVenta());
                     }
                     txtFieldDni.setText("");
                     txtFieldNumVuelo.setText("");
                     txtFieldPeso.setText("");
                 }
-                
-                
-            }
-            catch(NumberFormatException e){
+
+            } catch (NumberFormatException e) {
                 Modelo.getInstanceModelo().mostrarError("Valor incorrecto para peso", this.getVenta());
             }
         }
-        
-        
+
     }
-    
+
 }

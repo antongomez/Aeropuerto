@@ -26,6 +26,12 @@ public class GestionVuelos {
     }
 
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
+        if (fechaLlegada.equals(Time.diaActual())) {
+            return fbd.buscarVuelos(numVuelo, origen, destino, null, null);
+        } else if (fechaSalida.equals(Time.diaActual())) {
+            return fbd.buscarVuelos(numVuelo, origen, destino, null, fechaLlegada);
+        }
+
         return fbd.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
     }
 

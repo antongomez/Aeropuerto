@@ -118,8 +118,10 @@ public class Vuelo {
                 }
                 if (minutos >= 20) {
                     estado = minutos.toString() + " min";
-                } else {
+                } else if(minutos >= 0){
                     estado = "<20 min";
+                } else{
+                    estado = "despegando";
                 }
             }
         }

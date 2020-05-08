@@ -83,12 +83,16 @@ public class daoVuelos extends AbstractDAO {
 
             if (fechaSalida != null) {
                 consulta += "  and fechasalidateorica >= ? ";
+            } else {
+                consulta += "  and fechasalidateorica >= now() + '-30 min' ";
             }
             if (fechaLlegada != null) {
                 consulta += "  and fechallegadateorica >= ? ";
+            } else {
+                consulta += "  and fechallegadateorica >= now() + '-30 min' ";
             }
             //Ordenamos os voos por data de saida ascendente
-            consulta += "order by fechasalidateorica asc ";
+            consulta += "order by fechasalidateorica asc, fechallegadateorica desc";
 
             stmVuelo = con.prepareStatement(consulta);
             stmVuelo.setString(1, "%" + numVuelo + "%");
@@ -457,12 +461,13 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaSalidaReal, "
-                    + "fechaSalidaReal-fechaSalidaTeorica as retraso, terminal, puertaembarque, cancelado, "
-                    + "to_char(fechaSalidaReal-NOW(),'dd HH24:MI') as tiempoRestante "
-                    + "from vuelo v "
-                    + "where fechaSalidaReal > NOW() and v.origen = ? "
-                    + "ORDER BY fechaSalidaReal asc");
+            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaSalidaReal, \n"
+                    + "	fechaSalidaReal-fechaSalidaTeorica as retraso, terminal, puertaembarque, cancelado, \n"
+                    + "	to_char(fechaSalidaReal-now(),'dd HH24:MI') as tiempoRestante  \n"
+                    + "from vuelo v \n"
+                    + "where fechasalidareal between (now() + '-30 min') and (now() + '1 days')\n"
+                    + "  and v.origen = ? \n"
+                    + "order by fechasalidareal asc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
@@ -497,14 +502,13 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaLlegadaReal,"
-                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado, "
-                    + "to_char(fechaLlegadaReal-NOW(),'dd HH24:MI') as tiempoRestante "
-                    + "from vuelo v "
-                    + "where EXTRACT(YEAR FROM cast(v.fechaLlegadaReal as date))= EXTRACT(YEAR FROM cast(NOW()as date) ) "
-                    //+ "  and EXTRACT(MONTH FROM cast(v.fechaLlegadaReal as date))=EXTRACT(MONTH FROM cast(NOW()as date) ) "
-                    //+ "and EXTRACT(DAY FROM cast(v.fechaLlegadaReal as date))=EXTRACT(DAY FROM cast(NOW()as date) ) "
-                    + "  and v.destino=? "
+            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaLlegadaReal,\n"
+                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado, \n"
+                    + "to_char(fechaLlegadaReal-NOW(),'dd HH24:MI') as tiempoRestante \n"
+                    + "from vuelo v \n"
+                    + "where fechallegadareal between (now() + '-30 min')\n"
+                    + "    									  		 and (now() + '1 days')\n"
+                    + "  and v.destino = ? \n"
                     + "ORDER BY fechaLlegadaReal desc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
@@ -546,30 +550,30 @@ public class daoVuelos extends AbstractDAO {
             rsComprobacion = stmComprobacion.executeQuery();
             if (rsComprobacion.next()) {
 
-        try {
+                try {
 
-            stmUsuario = con.prepareStatement("update comprarbillete set pasarcontrol=true "
-                    + "where usuario=? and vuelo=?");
+                    stmUsuario = con.prepareStatement("update comprarbillete set pasarcontrol=true "
+                            + "where usuario=? and vuelo=?");
 
-            stmUsuario.setString(1, dni);
-            stmUsuario.setString(2, vuelo);
+                    stmUsuario.setString(1, dni);
+                    stmUsuario.setString(2, vuelo);
 
-            if (stmUsuario.executeUpdate() > 0) {
-                correcto = true;
-            }
+                    if (stmUsuario.executeUpdate() > 0) {
+                        correcto = true;
+                    }
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            this.getFachadaAplicacion().mostrarError(e.getMessage());
-            correcto = false;
-        } finally {
-            try {
-                stmUsuario.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-            }
-        }
-        } else {
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    this.getFachadaAplicacion().mostrarError(e.getMessage());
+                    correcto = false;
+                } finally {
+                    try {
+                        stmUsuario.close();
+                    } catch (SQLException e) {
+                        System.out.println("Imposible cerrar cursores");
+                    }
+                }
+            } else {
                 this.getFachadaAplicacion().mostrarError("Estos datos no corresponden con ningún billete actual");
 
                 correcto = false;
@@ -585,7 +589,7 @@ public class daoVuelos extends AbstractDAO {
                 stmComprobacion.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
-                correcto=false;
+                correcto = false;
             }
         }
         return correcto;
@@ -595,11 +599,10 @@ public class daoVuelos extends AbstractDAO {
         Connection con;
         PreparedStatement stmUsuario = null;
         Boolean correcto = false;
-        PreparedStatement stmComprobacion=null;
+        PreparedStatement stmComprobacion = null;
         ResultSet rsComprobacion;
 
         con = super.getConexion();
-        
 
         try {
 
@@ -611,8 +614,7 @@ public class daoVuelos extends AbstractDAO {
 
             if (stmUsuario.executeUpdate() > 0) {
                 correcto = true;
-            }
-            else{
+            } else {
                 this.getFachadaAplicacion().mostrarError("Estos datos no corresponden con ningún billete actual");
             }
 
@@ -625,10 +627,10 @@ public class daoVuelos extends AbstractDAO {
                 stmUsuario.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
-                correcto=false;
+                correcto = false;
             }
         }
-        
+
         return correcto;
     }
 
@@ -640,7 +642,6 @@ public class daoVuelos extends AbstractDAO {
         Aerolinea result = null;
 
         con = super.getConexion();
-        
 
         try {
             stmVuelo = con.prepareStatement("select a.nombre as nombre, a.pesobasemaleta "
