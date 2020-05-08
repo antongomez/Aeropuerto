@@ -71,9 +71,7 @@ public class VControlController extends Controlador implements Initializable {
                     txtFieldDni.setText("");
                     txtFieldNumVuelo.setText("");
                 }
-                else{
-                    Modelo.getInstanceModelo().mostrarError("Estos datos no corresponden con ningún billete", this.getVenta());
-                }
+                
             }
             else{
                 Modelo.getInstanceModelo().mostrarError("Debes cubrir todos los campos", this.getVenta());
@@ -105,9 +103,7 @@ public class VControlController extends Controlador implements Initializable {
                     txtFieldDni.setText("");
                     txtFieldNumVuelo.setText("");
                 }
-                else{
-                    Modelo.getInstanceModelo().mostrarError("Estos datos no corresponden con ningún billete", this.getVenta());
-                }
+                
             }
             else{
                 Modelo.getInstanceModelo().mostrarError("Debes cubrir todos los campos", this.getVenta());

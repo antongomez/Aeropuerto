@@ -291,4 +291,7 @@ public class FachadaBaseDatos {
     public Boolean devolucionCoche(Reserva alquiler){
         return daoReservas.devolucionCoche(alquiler);
     }
+    public Boolean obtenerDatosPersLab(PersonalLaboral trab){
+        return daoUsuarios.obtenerDatosPersLab(trab);
+    }
 }

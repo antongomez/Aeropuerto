@@ -84,6 +84,8 @@ public class GestionUsuarios {
     public Boolean comprobarRegistrado(String dni){
         return fbd.comprobarRegistrado(dni);
     }
-    
+    public Boolean obtenerDatosPersLab(PersonalLaboral trab){
+        return fbd.obtenerDatosPersLab(trab);
+    }
 
 }

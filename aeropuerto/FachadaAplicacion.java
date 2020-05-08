@@ -115,6 +115,9 @@ public class FachadaAplicacion extends Application {
     public EstadisticasUsuario obtenerEstadisticasGlobalesUsuario(String dniUs) {
         return gu.obtenerEstadisticasGlobalesUsuario(dniUs);
     }
+    public Boolean obtenerDatosPersLab(PersonalLaboral trab){
+        return gu.obtenerDatosPersLab(trab);
+    }
 
     /*Estas cuatro funciones devuelven false si no se encontró el usuario o el vuelo indicados*/
     public Boolean pasarControlPersExt(String dni) {

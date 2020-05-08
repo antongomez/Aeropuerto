@@ -532,8 +532,17 @@ public class daoVuelos extends AbstractDAO {
         Connection con;
         PreparedStatement stmUsuario = null;
         Boolean correcto = false;
+        PreparedStatement stmComprobacion = null;
+        ResultSet rsComprobacion;
 
         con = super.getConexion();
+        try {
+            //Solo se puede pasar el control si el vuelo no salió aún o faltan más de 12 horas para su salida
+            stmComprobacion = con.prepareStatement("select numvuelo from vuelo where numvuelo=? and "
+                    + "fechasalidareal between NOW() and (NOW()+'12 hr')");
+            stmComprobacion.setString(1, vuelo);
+            rsComprobacion = stmComprobacion.executeQuery();
+            if (rsComprobacion.next()) {
 
         try {
 
@@ -558,6 +567,25 @@ public class daoVuelos extends AbstractDAO {
                 System.out.println("Imposible cerrar cursores");
             }
         }
+        } else {
+                this.getFachadaAplicacion().mostrarError("Estos datos no corresponden con ningún billete actual");
+
+                correcto = false;
+            }
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+
+            correcto = false;
+        } finally {
+            try {
+                stmComprobacion.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+                correcto=false;
+            }
+        }
         return correcto;
     }
 
@@ -565,8 +593,11 @@ public class daoVuelos extends AbstractDAO {
         Connection con;
         PreparedStatement stmUsuario = null;
         Boolean correcto = false;
+        PreparedStatement stmComprobacion=null;
+        ResultSet rsComprobacion;
 
         con = super.getConexion();
+        
 
         try {
 
@@ -579,6 +610,9 @@ public class daoVuelos extends AbstractDAO {
             if (stmUsuario.executeUpdate() > 0) {
                 correcto = true;
             }
+            else{
+                this.getFachadaAplicacion().mostrarError("Estos datos no corresponden con ningún billete actual");
+            }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -589,8 +623,10 @@ public class daoVuelos extends AbstractDAO {
                 stmUsuario.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
+                correcto=false;
             }
         }
+        
         return correcto;
     }
 
@@ -602,6 +638,7 @@ public class daoVuelos extends AbstractDAO {
         Aerolinea result = null;
 
         con = super.getConexion();
+        
 
         try {
             stmVuelo = con.prepareStatement("select nombre pesobasemaleta,preciobasemaleta "
@@ -689,7 +726,7 @@ public class daoVuelos extends AbstractDAO {
                 } catch (SQLException e) {
 
                     if (e.getMessage().contains("(usuario, vuelo)")) {
-                        this.getFachadaAplicacion().mostrarError("Datos incorrectos");
+                        this.getFachadaAplicacion().mostrarError("Estos datos no se corresponden con ningún billete actual");
                     } else {
                         System.out.println(e.getMessage());
                         this.getFachadaAplicacion().mostrarError(e.getMessage());
@@ -704,7 +741,7 @@ public class daoVuelos extends AbstractDAO {
                     }
                 }
             } else {
-                this.getFachadaAplicacion().mostrarError("Datos incorrectos");
+                this.getFachadaAplicacion().mostrarError("Estos datos no se corresponden con ningún billete actual");
 
                 correcto = false;
             }

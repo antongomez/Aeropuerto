@@ -600,6 +600,9 @@ public class daoUsuarios extends AbstractDAO {
             if (stmUsuario.executeUpdate() > 0) {
                 correcto = true;
             }
+            else{
+                getFachadaAplicacion().mostrarError("Estos datos no corresponden con ningún personal externo");
+            }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -631,6 +634,9 @@ public class daoUsuarios extends AbstractDAO {
 
             if (stmUsuario.executeUpdate() > 0) {
                 correcto = true;
+            }
+            else{
+                getFachadaAplicacion().mostrarError("Estos datos no corresponden con ningún personal externo");
             }
 
         } catch (SQLException e) {
@@ -795,6 +801,41 @@ public class daoUsuarios extends AbstractDAO {
             }
         }
         return registrado;
+    }
+    public Boolean obtenerDatosPersLab(PersonalLaboral trab){
+        Connection con;
+        PreparedStatement stmUsu= null;
+        ResultSet rsUsu;
+        Boolean correcto = false;
+
+        con = this.getConexion();
+
+        try {
+            stmUsu = con.prepareStatement("select labor, descripciontarea "
+                    + "from personallaboral where usuario=?");
+            stmUsu.setString(1, trab.getDni());
+            rsUsu = stmUsu.executeQuery();
+
+            if (rsUsu.next()) {
+                trab.setLabor(rsUsu.getString("labor"));
+                trab.setDescripcionTarea(rsUsu.getString("descripciontarea"));
+                correcto=true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto=false;
+        } finally {
+            try {
+                stmUsu.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+                correcto=false;
+            }
+        }
+        return correcto;
+
     }
 
 }

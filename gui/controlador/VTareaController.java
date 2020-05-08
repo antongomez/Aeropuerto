@@ -41,8 +41,10 @@ public class VTareaController extends Controlador implements Initializable {
     }    
     public void setTrabajador(PersonalLaboral trab) {
         this.trabajador = trab;
+        if(Modelo.getInstanceModelo().obtenerDatosPersLab(trab)==true){
         txtFieldTarea.setText(trabajador.getLabor());
         txtAreaDescripcion.setText(trabajador.getDescripcionTarea());
+        }
     }
 
     

@@ -308,4 +308,7 @@ public class Modelo {
     public Aerolinea obtenerDatosAerolinea(String numvuelo) {
         return fa.obtenerDatosAerolinea(numvuelo);
     }
+    public Boolean obtenerDatosPersLab(PersonalLaboral trab){
+        return fa.obtenerDatosPersLab(trab);
+    }
 }
