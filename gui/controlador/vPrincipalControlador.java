@@ -465,7 +465,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if ((item != null) && (!empty)) {
                     if (item.getCancelado()) {
                         setStyle("-fx-background-color: #b80c00;");
-                    } else if (item.enCurso()) {
+                    } else if (item.getEnCurso()) {
                         setStyle("-fx-background-color: #11ad00;");
                     } else {
                         setStyle("");
@@ -523,7 +523,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if ((item != null) && (!empty)) {
                     if (item.getCancelado()) {
                         setStyle("-fx-background-color: #b80c00;");
-                    } else if (item.enCurso()) {
+                    } else if (item.getEnCurso()) {
                         setStyle("-fx-background-color: #11ad00;");
                     } else {
                         setStyle("");
@@ -688,6 +688,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 btnDevolver.toFront();
                 btnDevolver.setVisible(true);
                 btnDevolver.setDisable(false);
+            } else if (vueloSelect.getEnCurso()){
+                btnComprar.setDisable(true);
+                btnComprar.toFront();
             } else {
                 btnComprar.setDisable(false);
                 btnComprar.setVisible(true);

@@ -29,6 +29,7 @@ public class Vuelo {
     private String retraso;//Es un string que viene de un interval en java (hh:mm:ss)
     // private String estado;//Atributo para la tabla de Salidas-Llegadas
     private String tiempoRestante;
+    private Boolean enCurso;
 
     public Vuelo(String numVuelo, String origen, String destino,
             Time fechasalidaTeo, Time fechasalidaReal,
@@ -57,7 +58,7 @@ public class Vuelo {
             Timestamp fechasalidaTeo, Timestamp fechasalidaReal,
             Timestamp fechallegadaTeo, Timestamp fechallegadaReal,
             Float precioActual, Integer puertaEmbarque, Boolean cancelado,
-            Integer terminal, String codigoAvion) {
+            Integer terminal, String codigoAvion, Boolean enCurso) {
 
         this.numVuelo = numVuelo;
         this.origen = origen;
@@ -73,6 +74,7 @@ public class Vuelo {
         this.avion = new Avion(codigoAvion);
         this.asientosNormalesDisponibles = new HashMap<>();
         this.asientosPremiumDisponibles = new HashMap<>();
+        this.enCurso=enCurso;
 
     }
 
@@ -334,4 +336,7 @@ public class Vuelo {
         }
     }
 
+    public Boolean getEnCurso() {
+        return enCurso;
+    }
 }

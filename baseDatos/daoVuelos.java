@@ -74,7 +74,8 @@ public class daoVuelos extends AbstractDAO {
 
         try {
             String consulta = "select numvuelo,origen,destino,fechasalidateorica, fechasalidareal,"
-                    + " fechallegadateorica, fechallegadareal, precioactual, puertaembarque, cancelado,"
+                    + " fechallegadateorica, fechallegadareal, precioactual, puertaembarque, cancelado, \n"
+                    + " (CASE when fechasalidareal<=now() then true else false end) as enCurso, \n"
                     + " terminal, avion "
                     + "from vuelo "
                     + "where numvuelo like ? "
@@ -82,9 +83,9 @@ public class daoVuelos extends AbstractDAO {
                     + "  and destino like ? ";
 
             if (fechaSalida != null) {
-                consulta += "  and fechasalidareal >= ? ";
+                consulta += "  and fechallegadareal >= ? ";
             } else {
-                consulta += "  and fechasalidareal >= now() + '-30 min' ";
+                consulta += "  and fechallegadareal >= now()"; //+ '-30 min' ";
             }
             //Ordenamos os voos por data de saida ascendente
             consulta += "order by fechasalidateorica asc, fechallegadateorica desc";
@@ -106,7 +107,7 @@ public class daoVuelos extends AbstractDAO {
                         rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadateorica"),
                         rsVuelo.getTimestamp("fechallegadareal"), rsVuelo.getFloat("precioactual"),
                         rsVuelo.getInt("puertaembarque"), rsVuelo.getBoolean("cancelado"),
-                        rsVuelo.getInt("terminal"), rsVuelo.getString("avion"));
+                        rsVuelo.getInt("terminal"), rsVuelo.getString("avion"), rsVuelo.getBoolean("enCurso"));
 
                 resultado.add(vueloActual);
             }
@@ -145,7 +146,7 @@ public class daoVuelos extends AbstractDAO {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
                         rsVuelo.getTimestamp("fechasalidateorica"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadateorica"), rsVuelo.getTimestamp("fechallegadareal"),
                         rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
-                        null, null);
+                        null, null, null);
 
                 resultado.add(vueloActual);
             }
@@ -187,7 +188,7 @@ public class daoVuelos extends AbstractDAO {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
                         rsVuelo.getTimestamp("fechasalidateorica"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadateorica"), rsVuelo.getTimestamp("fechallegadareal"),
                         rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
-                        null, null);
+                        null, null, null);
 
                 resultado.add(vueloActual);
             }
@@ -218,7 +219,8 @@ public class daoVuelos extends AbstractDAO {
         try {
             stmVuelo = con.prepareStatement("select v.numvuelo, v.origen, "
                     + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, "
-                    + "c.preciobillete, v.cancelado "
+                    + "c.preciobillete, v.cancelado, "
+                    + "(CASE when fechasalidareal<=now() then true else false end) as enCurso "
                     + "from usuario u, vuelo v, comprarBillete c "
                     + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? "
                     + "  and v.fechallegadareal >= now()"
@@ -229,7 +231,7 @@ public class daoVuelos extends AbstractDAO {
                 vueloActual = new Vuelo(rsVuelo.getString("numvuelo"), rsVuelo.getString("origen"), rsVuelo.getString("destino"),
                         rsVuelo.getTimestamp("fechasalidateorica"), rsVuelo.getTimestamp("fechasalidareal"), rsVuelo.getTimestamp("fechallegadateorica"), rsVuelo.getTimestamp("fechallegadareal"),
                         rsVuelo.getFloat("preciobillete"), null, rsVuelo.getBoolean("cancelado"),
-                        null, null);
+                        null, null, rsVuelo.getBoolean("enCurso"));
 
                 resultado.add(vueloActual);
             }
