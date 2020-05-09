@@ -327,24 +327,20 @@ public class VCocheControlador extends Controlador implements Initializable {
         }
     }
 
-    private Boolean fechaVueltaCorrecta() {
-        Boolean correcto = false;
-        Time fecharetorno = new Time(datePickerFechaVueltaSinReserva.getValue());
-        if (!Time.fechaMayorIgualActual(fecharetorno)) {
-            return false;
-        } else if (Time.obtenerDias(fecharetorno.toLocalDate(), Time.diaActual().toLocalDate()) < 1) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     @FXML
     private void activarBuscar(ActionEvent event) {
-        btnBuscarSinReserva.setDisable(false);
-        textFieldPrecioSinReserva.clear();
+        if (!Time.compararMayor(Time.diaActual(), new Time(datePickerFechaVueltaSinReserva.getValue()))) {
+            btnBuscarSinReserva.setDisable(false);
+            etqErrorFechaSR.setVisible(false);
+        }
+        else{
+            btnBuscarSinReserva.setDisable(true);
+            etqErrorFechaSR.setText("La fecha de vuelta debe ser mayor o igual a la actual.");
+            etqErrorFechaSR.setVisible(true);
+        }
         tablaSinReservas.setItems(null);
         btnAlquilarSinReserva.setDisable(true);
+        textFieldPrecioSinReserva.clear();
     }
 
     @FXML
