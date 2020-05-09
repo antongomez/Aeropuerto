@@ -507,10 +507,6 @@ public class daoVuelos extends AbstractDAO {
                     + "where fechallegadareal between (now() + '-30 min') and (now() + '1 days')\n"
                     + "  and v.destino = ? \n"
                     + "ORDER BY fechaLlegadaReal asc");
-                    + "FROM vuelo v \n"
-                    + "WHERE fechallegadareal between (now() + '-30 min') and (now() + '1 days') \n"
-                    + "and v.destino = ? \n"
-                    + "ORDER BY fechaLlegadaReal desc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
