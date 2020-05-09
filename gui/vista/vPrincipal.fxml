@@ -37,15 +37,15 @@
          <children>
             <VBox layoutX="105.0" layoutY="102.0" prefHeight="600.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ToggleButton fx:id="btnVuelos" minWidth="140.0" mnemonicParsing="false" onAction="#accionBtnVuelos" prefHeight="50.0" prefWidth="200.0" selected="true" styleClass="btnMenu" text="Vuelos">
+                  <ToggleButton fx:id="btnVuelos" minWidth="140.0" mnemonicParsing="false" onAction="#accionBtnVuelos" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Vuelos">
                      <toggleGroup>
                         <ToggleGroup fx:id="BtnMenu" />
                      </toggleGroup>
                   </ToggleButton>
                   <ToggleButton fx:id="btnAreaP" mnemonicParsing="false" onAction="#accionBtnAreaP" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Área personal" toggleGroup="$BtnMenu" />
-                  <ToggleButton fx:id="btnServicios" mnemonicParsing="false" onAction="#accionBtnServicios" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Servicios" toggleGroup="$BtnMenu" />
+                  <ToggleButton fx:id="btnServicios" mnemonicParsing="false" onAction="#accionBtnServicios" prefHeight="50.0" prefWidth="200.0" selected="true" styleClass="btnMenu" text="Servicios" toggleGroup="$BtnMenu" />
                   <ToggleButton fx:id="btnInfo" mnemonicParsing="false" onAction="#accionBtnInfo" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Información" toggleGroup="$BtnMenu" />
-                  <ToggleButton fx:id="btnPersonal" mnemonicParsing="false" onAction="#accionBtnPersonal" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Personal" toggleGroup="$BtnMenu">
+                  <ToggleButton fx:id="btnPersonal" mnemonicParsing="false" onAction="#accionBtnPersonal" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Administrador" toggleGroup="$BtnMenu">
                      <effect>
                         <InnerShadow height="0.0" radius="2.0" width="10.0" />
                      </effect>
@@ -77,7 +77,7 @@
                   </HBox>
                   <AnchorPane HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" text="PRÓXIMOS VUELOS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" text="SERVICIOS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -181,245 +181,6 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <TabPane fx:id="panelServicios" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
-               <tabs>
-                  <Tab onSelectionChanged="#abrirParking" text="Parking">
-                     <content>
-                        <AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background">
-                           <children>
-                              <VBox alignment="TOP_CENTER" layoutX="38.0" layoutY="75.0" prefHeight="584.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <VBox spacing="125.0">
-                                       <children>
-                                          <VBox alignment="TOP_CENTER" spacing="40.0">
-                                             <children>
-                                                <VBox alignment="TOP_CENTER" spacing="15.0">
-                                                   <children>
-                                                      <VBox alignment="TOP_CENTER" spacing="10.0">
-                                                         <children>
-                                                            <HBox alignment="TOP_CENTER" spacing="20.0">
-                                                               <children>
-                                                                  <HBox spacing="10.0">
-                                                                     <children>
-                                                                        <Label minHeight="28.0" prefHeight="28.0" text="Terminal:" />
-                                                                        <ComboBox fx:id="cboxTerminalParking" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="130.0" />
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox spacing="10.0">
-                                                                     <children>
-                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de llegada:" />
-                                                                        <DatePicker fx:id="dataFLlegadaParking" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="120.0" />
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox spacing="10.0">
-                                                                     <children>
-                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de retorno:" />
-                                                                        <DatePicker fx:id="dataFRetornoParking" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="120.0" />
-                                                                     </children>
-                                                                  </HBox>
-                                                               </children>
-                                                            </HBox>
-                                                            <Label fx:id="etqInfoParking" styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
-                                                         </children>
-                                                      </VBox>
-                                                      <Button fx:id="btnBuscarParking" mnemonicParsing="false" onAction="#accionBtnBuscarParking" text="Buscar" />
-                                                   </children>
-                                                </VBox>
-                                                <HBox alignment="CENTER" spacing="120.0">
-                                                   <children>
-                                                      <HBox spacing="10.0">
-                                                         <children>
-                                                            <Label prefHeight="28.0" text="Plazas libres:" />
-                                                            <TextField fx:id="txtPlazasParking" editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="60.0" />
-                                                         </children>
-                                                      </HBox>
-                                                      <HBox spacing="10.0">
-                                                         <children>
-                                                            <Label prefHeight="28.0" text="Precio:" />
-                                                            <HBox spacing="3.0">
-                                                               <children>
-                                                                  <TextField fx:id="txtPrecioParking" editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="65.0" />
-                                                                  <Label minHeight="25.0" prefHeight="28.0" text="€" />
-                                                               </children>
-                                                            </HBox>
-                                                         </children>
-                                                      </HBox>
-                                                   </children>
-                                                </HBox>
-                                                <HBox fx:id="hBoxInfoDisponhibilidadeParking" alignment="CENTER">
-                                                   <children>
-                                                      <Label text="En esas fechas el parking estará disponible en un: " />
-                                                      <Label fx:id="etqInfoDisponhibilidadeParking" text="80%" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                          <VBox>
-                                             <children>
-                                                <HBox alignment="CENTER" spacing="200.0">
-                                                   <children>
-                                                      <Button fx:id="btnReservarParking" mnemonicParsing="false" onAction="#accionBtnReservarParking" text="Reservar" />
-                                                      <HBox spacing="15.0">
-                                                         <children>
-                                                            <HBox spacing="10.0">
-                                                               <children>
-                                                                  <Label minHeight="25.0" prefHeight="28.0" text="Matrícula:" />
-                                                                  <TextField fx:id="txtMatriculaParking" minHeight="25.0" minWidth="120.0" onKeyReleased="#comprobarReservarParking" prefHeight="28.0" prefWidth="150.0" />
-                                                               </children>
-                                                            </HBox>
-                                                            <Label fx:id="etqErroMatricula" minHeight="25.0" prefHeight="28.0" styleClass="etqErro" text="La matrícula no es válida!" visible="false" />
-                                                         </children>
-                                                      </HBox>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
-                                 </padding>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab onSelectionChanged="#abrirCoches" text="Coches">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
-                           <children>
-                              <VBox alignment="TOP_CENTER" layoutX="234.0" layoutY="23.0" prefHeight="584.0" prefWidth="810.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <children>
-                                    <VBox alignment="TOP_CENTER" minHeight="485.0" spacing="40.0">
-                                       <children>
-                                          <VBox alignment="TOP_CENTER" spacing="15.0">
-                                             <children>
-                                                <VBox alignment="TOP_CENTER" spacing="10.0">
-                                                   <children>
-                                                      <HBox alignment="TOP_CENTER" spacing="20.0">
-                                                         <children>
-                                                            <HBox alignment="CENTER" spacing="10.0">
-                                                               <children>
-                                                                  <Label minHeight="25.0" prefHeight="30.0" text="Fecha de llegada:" />
-                                                                  <DatePicker fx:id="dataFLlegadaCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCochesDteP" prefHeight="30.0" prefWidth="120.0" />
-                                                               </children>
-                                                            </HBox>
-                                                            <HBox alignment="CENTER" prefHeight="30.0" spacing="10.0">
-                                                               <children>
-                                                                  <Label minHeight="25.0" prefHeight="30.0" text="Fecha de retorno:" />
-                                                                  <DatePicker fx:id="dataFRetornoCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCochesDteP" prefHeight="30.0" prefWidth="120.0" />
-                                                               </children>
-                                                            </HBox>
-                                                            <HBox alignment="CENTER" prefHeight="30.0" spacing="10.0">
-                                                               <children>
-                                                                  <Label minHeight="28.0" prefHeight="30.0" text="Número de plazas:" />
-                                                                  <TextField fx:id="textNPrazas" minHeight="25.0" minWidth="30.0" onKeyReleased="#comprobarBuscarCochesTxt" prefHeight="30.0" prefWidth="60.0" />
-                                                               </children>
-                                                            </HBox>
-                                                         </children>
-                                                      </HBox>
-                                                      <Label fx:id="etqInfoCoches" styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
-                                                   </children>
-                                                </VBox>
-                                                <Button fx:id="btnBuscarCoches" mnemonicParsing="false" onAction="#accionBtnBuscarCoches" text="Buscar" />
-                                             </children>
-                                          </VBox>
-                                          <TableView fx:id="taboaReservarCoche" maxHeight="340.0" minHeight="300.0" onMouseClicked="#seleccionCoche" prefHeight="320.0">
-                                            <columns>
-                                              <TableColumn fx:id="columnaMatriculaCoche" minWidth="120.0" prefWidth="120.0" text="Matrícula" />
-                                              <TableColumn fx:id="columnaModeloCoche" minWidth="120.0" prefWidth="120.0" text="Modelo" />
-                                                <TableColumn fx:id="columnaPlazasCoche" minWidth="120.0" prefWidth="120.0" text="Plazas" />
-                                                <TableColumn fx:id="columnaPuertasCoche" minWidth="120.0" prefWidth="-1.0" text="Puertas" />
-                                                <TableColumn fx:id="columnaCombustibleCoche" minWidth="120.0" prefWidth="120.0" text="Combustible" />
-                                                <TableColumn fx:id="columnaCaballosCoche" minWidth="120.0" prefWidth="120.0" text="Caballos" />
-                                                <TableColumn fx:id="columnaPrecioDiaCoche" minWidth="120.0" prefWidth="120.0" text="Precio/Día" />
-                                            </columns>
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                       </children>
-                                    </VBox>
-                                    <HBox alignment="CENTER" spacing="30.0">
-                                       <children>
-                                          <HBox alignment="CENTER" prefHeight="34.0" spacing="10.0">
-                                             <children>
-                                                <Label prefHeight="34.0" text="Precio total:" />
-                                                <HBox alignment="CENTER" spacing="3.0">
-                                                   <children>
-                                                      <TextField fx:id="txtPrecioTotalCoches" editable="false" maxWidth="110.0" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="80.0" />
-                                                      <Label prefHeight="34.0" text="€" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </HBox>
-                                          <Button fx:id="btnReservarCoches" mnemonicParsing="false" onAction="#accionBtnReservarCoches" text="Reservar" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
-                                 </padding>
-                              </VBox>
-                           </children></AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab onSelectionChanged="#abrirTiendas" text="Tiendas">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
-                           <children>
-                              <VBox alignment="TOP_CENTER" layoutX="230.0" layoutY="79.0" prefHeight="584.0" prefWidth="1000.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <padding>
-                                    <Insets bottom="30.0" left="20.0" right="20.0" top="40.0" />
-                                 </padding>
-                                 <children>
-                                    <HBox alignment="CENTER" spacing="80.0">
-                                       <children>
-                                          <GridPane alignment="CENTER_LEFT" hgap="10.0" vgap="15.0">
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <Label minHeight="-Infinity" prefHeight="33.0" text="Nombre:" />
-                                                <Label minHeight="-Infinity" prefHeight="33.0" text="Terminal:" GridPane.rowIndex="1" />
-                                                <Label minHeight="-Infinity" prefHeight="33.0" text="Tipo de ventas:" GridPane.columnIndex="2" />
-                                                <TextField fx:id="txtNomeTendas" minHeight="-Infinity" minWidth="100.0" prefHeight="33.0" prefWidth="180.0" GridPane.columnIndex="1" />
-                                                <ComboBox fx:id="cBoxTerminalTendas" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="90.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <ComboBox fx:id="cBoxTipoTendas" minHeight="-Infinity" prefHeight="33.0" prefWidth="200.0" promptText="moda y complementos" GridPane.columnIndex="3" />
-                                             </children>
-                                          </GridPane>
-                                          <Button fx:id="btnBuscarTendas" mnemonicParsing="false" onAction="#accionBtnBuscarTendas" text="Buscar" />
-                                       </children>
-                                    </HBox>
-                                    <TableView fx:id="taboaTendas">
-                                      <columns>
-                                        <TableColumn fx:id="columnaNomeTendas" minWidth="180.0" prefWidth="190.0" text="Nombre" />
-                                        <TableColumn fx:id="columnaTipoTendas" minWidth="180.0" prefWidth="190.0" text="Tipo de ventas" />
-                                          <TableColumn fx:id="columnaTerminalTendas" minWidth="180.0" prefWidth="190.0" text="Terminal" />
-                                      </columns>
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                    </TableView>
-                                 </children>
-                              </VBox>
-                           </children></AnchorPane>
-                     </content>
-                  </Tab>
-               </tabs>
-            </TabPane>
             <AnchorPane fx:id="panelAdministrador" prefHeight="200.0" prefWidth="200.0" styleClass="background">
                <children>
                   <VBox alignment="CENTER" layoutX="271.0" layoutY="110.0" prefHeight="620.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -434,6 +195,267 @@
                            </graphic>
                         </Label>
                      </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <TabPane fx:id="panelInfo" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab onSelectionChanged="#abrirPestanaSL" text="Vuelos">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="1000.0" styleClass="root">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="584.0" prefWidth="1000.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox alignment="CENTER" spacing="90.0">
+                                       <children>
+                                          <RadioButton fx:id="radioBtnSalidas" mnemonicParsing="false" onAction="#pulsarSalidas" selected="true" text="Salidas">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="infoVuelos" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <RadioButton fx:id="radioBtnLlegadas" mnemonicParsing="false" onAction="#pulsarLlegadas" text="Llegadas" toggleGroup="$infoVuelos" />
+                                       </children>
+                                    </HBox>
+                                    <Button fx:id="btnActualizarSL" mnemonicParsing="false" onAction="#actualizarSL" text="Actualizar" />
+                                    <TableView fx:id="tablaSalidasLlegadas">
+                                      <columns>
+                                        <TableColumn fx:id="colVueloSL" minWidth="90.0" resizable="false" text="Vuelo" />
+                                        <TableColumn fx:id="colOrigenSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Origen" />
+                                          <TableColumn fx:id="colDestinoSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Destino" />
+                                          <TableColumn fx:id="colTerminalSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Terminal" />
+                                          <TableColumn fx:id="colPuertaSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Puerta" />
+                                          <TableColumn fx:id="colFechaSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Salida" />
+                                          <TableColumn fx:id="colEstadoSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Estado" />
+                                          <TableColumn fx:id="colTRestanteSL" prefWidth="105.0" resizable="false" text="Tiempo" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="40.0" left="30.0" right="30.0" top="50.0" />
+                                 </padding>
+                              </VBox>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                <Tab onSelectionChanged="#abrirPestanaEstAerolineas" text="Estadísticas Aerolíneas">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                           <children>
+                              <VBox alignment="CENTER" layoutX="80.0" layoutY="129.0" prefHeight="584.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox spacing="100.0">
+                                       <children>
+                                          <ComboBox fx:id="comboBoxEstAer" onAction="#cambiarAerolinea" prefHeight="31.0" prefWidth="195.0" styleClass="campos" />
+                                          <VBox alignment="CENTER" styleClass="arrow">
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" spacing="50.0">
+                                                   <children>
+                                                      <GridPane hgap="10.0" vgap="10.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Vuelos con retraso" />
+                                                            <TextField fx:id="txtFieldVuelosRetraso" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="81.0" styleClass="labTitulo" GridPane.columnIndex="1" />
+                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Ocupación vuelo normal" GridPane.rowIndex="1" />
+                                                            <TextField fx:id="txtFieldOcNormal" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="81.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Ocupación vuelo premium" GridPane.rowIndex="2" />
+                                                            <TextField fx:id="txtFieldOcPremium" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="78.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                         </children>
+                                                      </GridPane>
+                                                      <GridPane hgap="10.0" vgap="10.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <Label prefHeight="31.0" prefWidth="162.0" styleClass="labelRegistrar" text="Tiempo medio retraso:" />
+                                                            <TextField fx:id="txtFieldTiempoRetraso" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="85.0" styleClass="labTitulo" GridPane.columnIndex="1" />
+                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Precio facturar maleta(kg):" GridPane.rowIndex="2" />
+                                                            <TextField fx:id="txtFieldPrecioMaleta" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="83.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Peso base maleta (kg):" GridPane.rowIndex="1" />
+                                                            <TextField fx:id="txtFieldPesoMaleta" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="84.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER">
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT">
+                                                   <children>
+                                                      <GridPane hgap="10.0" vgap="10.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Plazas medias por avión:" GridPane.rowIndex="1" />
+                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Año fabricación medio avión:" GridPane.rowIndex="2" />
+                                                            <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                               <children>
+                                                                  <TextField fx:id="txtFieldPlazasAvion" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="60.0" styleClass="labTitulo" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                               <children>
+                                                                  <TextField fx:id="txtFieldAnoAvion" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="60.0" styleClass="labTitulo" />
+                                                               </children>
+                                                            </HBox>
+                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Nacionalidad predominante pasajeros:" GridPane.rowIndex="3" />
+                                                            <TextField fx:id="txtFieldNacionalidad" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="200.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                            <HBox GridPane.columnIndex="1">
+                                                               <children>
+                                                                  <TextField fx:id="txtFieldPaisSede" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="200.0" styleClass="labTitulo" />
+                                                               </children>
+                                                            </HBox>
+                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="País sede:" />
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="50.0" right="30.0" top="20.0" />
+                                 </padding>
+                              </VBox>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <AnchorPane fx:id="panelVuelos" prefHeight="550.0" prefWidth="800.0" styleClass="root">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <children>
+                        <VBox alignment="CENTER" spacing="20.0">
+                           <children>
+                              <VBox alignment="CENTER" spacing="15.0">
+                                 <children>
+                                    <HBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="500.0" spacing="15.0">
+                                       <children>
+                                          <VBox prefWidth="140.0" spacing="10.0">
+                                             <children>
+                                                <Label prefHeight="35.0" text="Número de vuelo:" />
+                                                <Label prefHeight="35.0" text="Origen:" />
+                                                <Label prefHeight="35.0" text="Salida:" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefWidth="150.0" spacing="10.0">
+                                             <children>
+                                                <TextField fx:id="txtNumVuelo" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                                <TextField fx:id="txtOrigen" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                                <DatePicker fx:id="dataPickSalida" editable="false" minHeight="30.0" minWidth="120.0" onHiding="#comprobarDatas" prefHeight="35.0" prefWidth="150.0" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefWidth="140.0" spacing="10.0">
+                                             <children>
+                                                <Label minHeight="35.0" prefHeight="35.0" />
+                                                <Label minHeight="35.0" prefHeight="35.0" text="Destino:" />
+                                                <Label minHeight="35.0" prefHeight="35.0" text="Llegada:" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefWidth="150.0" spacing="10.0">
+                                             <children>
+                                                <Label minHeight="35.0" prefHeight="35.0" />
+                                                <TextField fx:id="txtDestino" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
+                                                <DatePicker fx:id="dataPickLlegada" editable="false" minHeight="30.0" minWidth="120.0" onHiding="#comprobarDatas" prefHeight="35.0" prefWidth="150.0" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label fx:id="etqInfoPV" text="Las fechas de salida y llegada deben ser mayores que la fecha actual" visible="false">
+                                       <styleClass>
+                                          <String fx:value="etqInfo" />
+                                          <String fx:value="etqErro" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#accionBtnBuscar" text="Buscar" />
+                           </children>
+                           <padding>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" styleClass="vBoxFondoTabla">
+                           <children>
+                              <TableView fx:id="tablaProximosVuelos" minHeight="200.0" minWidth="800.0" onMouseClicked="#seleccionarVuelo">
+                                 <columns>
+                                    <TableColumn fx:id="columnaNumVuelo" prefWidth="120.0" text="Número" />
+                                    <TableColumn fx:id="columnaOrigen" prefWidth="120.0" text="Origen" />
+                                    <TableColumn fx:id="columnaDestino" prefWidth="120.0" text="Destino" />
+                                    <TableColumn fx:id="columnaSalida" prefWidth="120.0" text="Salida" />
+                                    <TableColumn fx:id="columnaLlegada" prefWidth="120.0" text="Llegada" />
+                                    <TableColumn fx:id="columnaPrecio" prefWidth="120.0" text="Precio" />
+                                    <TableColumn fx:id="columnaPrecioPremium" prefWidth="120.0" text="Premium" />
+                                 </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <HBox alignment="CENTER_LEFT" spacing="6.0" styleClass="hBoxCancelado">
+                                 <children>
+                                    <HBox alignment="CENTER" spacing="4.0">
+                                       <children>
+                                          <Label maxHeight="12.0" maxWidth="12.0" minHeight="12.0" minWidth="12.0" styleClass="labCanceladoCor" />
+                                          <Label prefHeight="21.0" styleClass="labCanceladoTexto" text="cancelado" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" layoutX="14.0" layoutY="10.0" spacing="4.0">
+                                       <children>
+                                          <Label maxHeight="12.0" maxWidth="12.0" minHeight="12.0" minWidth="12.0" styleClass="labEnCursoCor" />
+                                          <Label prefHeight="21.0" styleClass="labCanceladoTexto" text="en curso" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="4.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </VBox>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="btnDevolver" mnemonicParsing="false" onAction="#devolverBillete" text="Devolver" />
+                              <Button fx:id="btnComprar" mnemonicParsing="false" onAction="#accionBtnComprar" text="Comprar" />
+                           </children>
+                        </StackPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                     </padding>
                   </VBox>
                </children>
             </AnchorPane>
@@ -764,142 +786,102 @@
                   </Tab>
                </tabs>
             </TabPane>
-            <TabPane fx:id="panelInfo" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab onSelectionChanged="#abrirPestanaSL" text="Vuelos">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="140.0" prefWidth="1000.0" styleClass="root">
+            <TabPane fx:id="panelServicios" prefHeight="200.0" prefWidth="200.0" styleClass="root" stylesheets="@../css/ventaPrincipalAreaPersoal.css" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab onSelectionChanged="#abrirParking" text="Parking">
+                     <content>
+                        <AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="584.0" prefWidth="1000.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox alignment="TOP_CENTER" layoutX="38.0" layoutY="75.0" prefHeight="584.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="CENTER" spacing="90.0">
+                                    <VBox spacing="125.0">
                                        <children>
-                                          <RadioButton fx:id="radioBtnSalidas" mnemonicParsing="false" onAction="#pulsarSalidas" selected="true" text="Salidas">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="infoVuelos" />
-                                             </toggleGroup>
-                                          </RadioButton>
-                                          <RadioButton fx:id="radioBtnLlegadas" mnemonicParsing="false" onAction="#pulsarLlegadas" text="Llegadas" toggleGroup="$infoVuelos" />
-                                       </children>
-                                    </HBox>
-                                    <Button fx:id="btnActualizarSL" mnemonicParsing="false" onAction="#actualizarSL" text="Actualizar" />
-                                    <TableView fx:id="tablaSalidasLlegadas">
-                                      <columns>
-                                        <TableColumn fx:id="colVueloSL" minWidth="90.0" resizable="false" text="Vuelo" />
-                                        <TableColumn fx:id="colOrigenSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Origen" />
-                                          <TableColumn fx:id="colDestinoSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Destino" />
-                                          <TableColumn fx:id="colTerminalSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Terminal" />
-                                          <TableColumn fx:id="colPuertaSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Puerta" />
-                                          <TableColumn fx:id="colFechaSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Salida" />
-                                          <TableColumn fx:id="colEstadoSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Estado" />
-                                          <TableColumn fx:id="colTRestanteSL" prefWidth="105.0" resizable="false" text="Tiempo" />
-                                      </columns>
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                    </TableView>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="40.0" left="30.0" right="30.0" top="50.0" />
-                                 </padding>
-                              </VBox>
-                           </children></AnchorPane>
-                  </content>
-                </Tab>
-                <Tab onSelectionChanged="#abrirPestanaEstAerolineas" text="Estadísticas Aerolíneas">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
-                           <children>
-                              <VBox alignment="CENTER" layoutX="80.0" layoutY="129.0" prefHeight="584.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <VBox spacing="100.0">
-                                       <children>
-                                          <ComboBox fx:id="comboBoxEstAer" onAction="#cambiarAerolinea" prefHeight="31.0" prefWidth="195.0" styleClass="campos" />
-                                          <VBox alignment="CENTER" styleClass="arrow">
+                                          <VBox alignment="TOP_CENTER" spacing="40.0">
                                              <children>
-                                                <HBox alignment="CENTER_LEFT" spacing="50.0">
+                                                <VBox alignment="TOP_CENTER" spacing="15.0">
                                                    <children>
-                                                      <GridPane hgap="10.0" vgap="10.0">
-                                                         <columnConstraints>
-                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                         </columnConstraints>
-                                                         <rowConstraints>
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                         </rowConstraints>
+                                                      <VBox alignment="TOP_CENTER" spacing="10.0">
                                                          <children>
-                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Vuelos con retraso" />
-                                                            <TextField fx:id="txtFieldVuelosRetraso" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="81.0" styleClass="labTitulo" GridPane.columnIndex="1" />
-                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Ocupación vuelo normal" GridPane.rowIndex="1" />
-                                                            <TextField fx:id="txtFieldOcNormal" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="81.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Ocupación vuelo premium" GridPane.rowIndex="2" />
-                                                            <TextField fx:id="txtFieldOcPremium" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="78.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <HBox alignment="TOP_CENTER" spacing="20.0">
+                                                               <children>
+                                                                  <HBox spacing="10.0">
+                                                                     <children>
+                                                                        <Label minHeight="28.0" prefHeight="28.0" text="Terminal:" />
+                                                                        <ComboBox fx:id="cboxTerminalParking" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="130.0" />
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <HBox spacing="10.0">
+                                                                     <children>
+                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de llegada:" />
+                                                                        <DatePicker fx:id="dataFLlegadaParking" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="120.0" />
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <HBox spacing="10.0">
+                                                                     <children>
+                                                                        <Label minHeight="25.0" prefHeight="28.0" text="Fecha de retorno:" />
+                                                                        <DatePicker fx:id="dataFRetornoParking" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarParking" prefHeight="28.0" prefWidth="120.0" />
+                                                                     </children>
+                                                                  </HBox>
+                                                               </children>
+                                                            </HBox>
+                                                            <Label fx:id="etqInfoParking" styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
                                                          </children>
-                                                      </GridPane>
-                                                      <GridPane hgap="10.0" vgap="10.0">
-                                                         <columnConstraints>
-                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                         </columnConstraints>
-                                                         <rowConstraints>
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                         </rowConstraints>
+                                                      </VBox>
+                                                      <Button fx:id="btnBuscarParking" mnemonicParsing="false" onAction="#accionBtnBuscarParking" text="Buscar" />
+                                                   </children>
+                                                </VBox>
+                                                <HBox alignment="CENTER" spacing="120.0">
+                                                   <children>
+                                                      <HBox spacing="10.0">
                                                          <children>
-                                                            <Label prefHeight="31.0" prefWidth="162.0" styleClass="labelRegistrar" text="Tiempo medio retraso:" />
-                                                            <TextField fx:id="txtFieldTiempoRetraso" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="85.0" styleClass="labTitulo" GridPane.columnIndex="1" />
-                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Precio facturar maleta(kg):" GridPane.rowIndex="2" />
-                                                            <TextField fx:id="txtFieldPrecioMaleta" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="83.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Peso base maleta (kg):" GridPane.rowIndex="1" />
-                                                            <TextField fx:id="txtFieldPesoMaleta" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="84.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <Label prefHeight="28.0" text="Plazas libres:" />
+                                                            <TextField fx:id="txtPlazasParking" editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="60.0" />
                                                          </children>
-                                                      </GridPane>
+                                                      </HBox>
+                                                      <HBox spacing="10.0">
+                                                         <children>
+                                                            <Label prefHeight="28.0" text="Precio:" />
+                                                            <HBox spacing="3.0">
+                                                               <children>
+                                                                  <TextField fx:id="txtPrecioParking" editable="false" minHeight="25.0" minWidth="60.0" prefHeight="28.0" prefWidth="65.0" />
+                                                                  <Label minHeight="25.0" prefHeight="28.0" text="€" />
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </HBox>
+                                                <HBox fx:id="hBoxInfoDisponhibilidadeParking" alignment="CENTER">
+                                                   <children>
+                                                      <Label text="En esas fechas el parking estará disponible en un: " />
+                                                      <Label fx:id="etqInfoDisponhibilidadeParking" text="__%" />
                                                    </children>
                                                 </HBox>
                                              </children>
                                           </VBox>
-                                          <VBox alignment="CENTER">
+                                          <VBox>
                                              <children>
-                                                <HBox alignment="CENTER_LEFT">
+                                                <HBox alignment="CENTER" spacing="200.0">
                                                    <children>
-                                                      <GridPane hgap="10.0" vgap="10.0">
-                                                         <columnConstraints>
-                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                         </columnConstraints>
-                                                         <rowConstraints>
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                         </rowConstraints>
+                                                      <Button fx:id="btnReservarParking" mnemonicParsing="false" onAction="#accionBtnReservarParking" text="Reservar" />
+                                                      <HBox spacing="15.0">
                                                          <children>
-                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Plazas medias por avión:" GridPane.rowIndex="1" />
-                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Año fabricación medio avión:" GridPane.rowIndex="2" />
-                                                            <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                            <HBox spacing="10.0">
                                                                <children>
-                                                                  <TextField fx:id="txtFieldPlazasAvion" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="60.0" styleClass="labTitulo" />
+                                                                  <Label minHeight="25.0" prefHeight="28.0" text="Matrícula:" />
+                                                                  <TextField fx:id="txtMatriculaParking" minHeight="25.0" minWidth="120.0" onKeyReleased="#comprobarReservarParking" prefHeight="28.0" prefWidth="150.0" />
                                                                </children>
                                                             </HBox>
-                                                            <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                                               <children>
-                                                                  <TextField fx:id="txtFieldAnoAvion" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="60.0" styleClass="labTitulo" />
-                                                               </children>
-                                                            </HBox>
-                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="Nacionalidad predominante pasajeros:" GridPane.rowIndex="3" />
-                                                            <TextField fx:id="txtFieldNacionalidad" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="200.0" styleClass="labTitulo" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                            <HBox GridPane.columnIndex="1">
-                                                               <children>
-                                                                  <TextField fx:id="txtFieldPaisSede" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="200.0" styleClass="labTitulo" />
-                                                               </children>
-                                                            </HBox>
-                                                            <Label prefHeight="31.0" styleClass="labelRegistrar" text="País sede:" />
+                                                            <Label fx:id="etqErroMatricula" minHeight="25.0" prefHeight="28.0" styleClass="etqErro" text="La matrícula no es válida!" visible="false" />
                                                          </children>
-                                                      </GridPane>
+                                                      </HBox>
                                                    </children>
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                   <padding>
+                                                      <Insets left="169.0" />
+                                                   </padding>
                                                 </HBox>
                                              </children>
                                           </VBox>
@@ -907,124 +889,148 @@
                                     </VBox>
                                  </children>
                                  <padding>
-                                    <Insets bottom="20.0" left="50.0" right="30.0" top="20.0" />
+                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
                                  </padding>
                               </VBox>
-                           </children></AnchorPane>
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-            <AnchorPane fx:id="panelVuelos" prefHeight="550.0" prefWidth="800.0" styleClass="root">
-               <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                     <children>
-                        <VBox alignment="CENTER" spacing="20.0">
-                           <children>
-                              <VBox alignment="CENTER" spacing="15.0">
-                                 <children>
-                                    <HBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="500.0" spacing="15.0">
-                                       <children>
-                                          <VBox prefWidth="140.0" spacing="10.0">
-                                             <children>
-                                                <Label prefHeight="35.0" text="Número de vuelo:" />
-                                                <Label prefHeight="35.0" text="Origen:" />
-                                                <Label prefHeight="35.0" text="Salida:" />
-                                             </children>
-                                          </VBox>
-                                          <VBox prefWidth="150.0" spacing="10.0">
-                                             <children>
-                                                <TextField fx:id="txtNumVuelo" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                                <TextField fx:id="txtOrigen" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                                <DatePicker fx:id="dataPickSalida" editable="false" minHeight="30.0" minWidth="120.0" onHiding="#comprobarDatas" prefHeight="35.0" prefWidth="150.0" />
-                                             </children>
-                                          </VBox>
-                                          <VBox prefWidth="140.0" spacing="10.0">
-                                             <children>
-                                                <Label minHeight="35.0" prefHeight="35.0" />
-                                                <Label minHeight="35.0" prefHeight="35.0" text="Destino:" />
-                                                <Label minHeight="35.0" prefHeight="35.0" text="Llegada:" />
-                                             </children>
-                                          </VBox>
-                                          <VBox prefWidth="150.0" spacing="10.0">
-                                             <children>
-                                                <Label minHeight="35.0" prefHeight="35.0" />
-                                                <TextField fx:id="txtDestino" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                                <DatePicker fx:id="dataPickLlegada" editable="false" minHeight="30.0" minWidth="120.0" onHiding="#comprobarDatas" prefHeight="35.0" prefWidth="150.0" />
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <Label fx:id="etqInfoPV" text="Las fechas de salida y llegada deben ser mayores que la fecha actual">
-                                       <styleClass>
-                                          <String fx:value="etqInfo" />
-                                          <String fx:value="etqErro" />
-                                       </styleClass>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#accionBtnBuscar" text="Buscar" />
                            </children>
-                           <padding>
-                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                           </padding>
-                        </VBox>
-                        <VBox alignment="CENTER_LEFT" styleClass="vBoxFondoTabla">
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab onSelectionChanged="#abrirCoches" text="Coches">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
                            <children>
-                              <TableView fx:id="tablaProximosVuelos" minHeight="200.0" minWidth="800.0" onMouseClicked="#seleccionarVuelo">
-                                 <columns>
-                                    <TableColumn fx:id="columnaNumVuelo" prefWidth="120.0" text="Número" />
-                                    <TableColumn fx:id="columnaOrigen" prefWidth="120.0" text="Origen" />
-                                    <TableColumn fx:id="columnaDestino" prefWidth="120.0" text="Destino" />
-                                    <TableColumn fx:id="columnaSalida" prefWidth="120.0" text="Salida" />
-                                    <TableColumn fx:id="columnaLlegada" prefWidth="120.0" text="Llegada" />
-                                    <TableColumn fx:id="columnaPrecio" prefWidth="120.0" text="Precio" />
-                                    <TableColumn fx:id="columnaPrecioPremium" prefWidth="120.0" text="Premium" />
-                                 </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <HBox alignment="CENTER_LEFT" spacing="6.0" styleClass="hBoxCancelado">
+                              <VBox alignment="TOP_CENTER" layoutX="234.0" layoutY="23.0" prefHeight="584.0" prefWidth="810.0" spacing="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
                                  <children>
-                                    <HBox alignment="CENTER" spacing="4.0">
+                                    <VBox alignment="TOP_CENTER" minHeight="485.0" spacing="40.0">
                                        <children>
-                                          <Label maxHeight="12.0" maxWidth="12.0" minHeight="12.0" minWidth="12.0" styleClass="labCanceladoCor" />
-                                          <Label prefHeight="21.0" styleClass="labCanceladoTexto" text="cancelado" />
+                                          <VBox alignment="TOP_CENTER" spacing="15.0">
+                                             <children>
+                                                <VBox alignment="TOP_CENTER" spacing="10.0">
+                                                   <children>
+                                                      <HBox alignment="TOP_CENTER" spacing="20.0">
+                                                         <children>
+                                                            <HBox alignment="CENTER" spacing="10.0">
+                                                               <children>
+                                                                  <Label minHeight="25.0" prefHeight="30.0" text="Fecha de llegada:" />
+                                                                  <DatePicker fx:id="dataFLlegadaCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCochesDteP" prefHeight="30.0" prefWidth="120.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="CENTER" prefHeight="30.0" spacing="10.0">
+                                                               <children>
+                                                                  <Label minHeight="25.0" prefHeight="30.0" text="Fecha de retorno:" />
+                                                                  <DatePicker fx:id="dataFRetornoCoches" editable="false" minHeight="25.0" minWidth="100.0" onHiding="#comprobarBuscarCochesDteP" prefHeight="30.0" prefWidth="120.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="CENTER" prefHeight="30.0" spacing="10.0">
+                                                               <children>
+                                                                  <Label minHeight="28.0" prefHeight="30.0" text="Número de plazas:" />
+                                                                  <TextField fx:id="textNPrazas" minHeight="25.0" minWidth="30.0" onKeyReleased="#comprobarBuscarCochesTxt" prefHeight="30.0" prefWidth="60.0" />
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </HBox>
+                                                      <Label fx:id="etqInfoCoches" styleClass="etqInfo" text="Introduce los datos de tu vuelo o de tu estancia" />
+                                                   </children>
+                                                </VBox>
+                                                <Button fx:id="btnBuscarCoches" mnemonicParsing="false" onAction="#accionBtnBuscarCoches" text="Buscar" />
+                                             </children>
+                                          </VBox>
+                                          <TableView fx:id="taboaReservarCoche" maxHeight="340.0" minHeight="300.0" onMouseClicked="#seleccionCoche" prefHeight="320.0">
+                                            <columns>
+                                              <TableColumn fx:id="columnaMatriculaCoche" minWidth="120.0" prefWidth="120.0" text="Matrícula" />
+                                              <TableColumn fx:id="columnaModeloCoche" minWidth="120.0" prefWidth="120.0" text="Modelo" />
+                                                <TableColumn fx:id="columnaPlazasCoche" minWidth="120.0" prefWidth="120.0" text="Plazas" />
+                                                <TableColumn fx:id="columnaPuertasCoche" minWidth="120.0" prefWidth="-1.0" text="Puertas" />
+                                                <TableColumn fx:id="columnaCombustibleCoche" minWidth="120.0" prefWidth="120.0" text="Combustible" />
+                                                <TableColumn fx:id="columnaCaballosCoche" minWidth="120.0" prefWidth="120.0" text="Caballos" />
+                                                <TableColumn fx:id="columnaPrecioDiaCoche" minWidth="120.0" prefWidth="120.0" text="Precio/Día" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
                                        </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER" layoutX="14.0" layoutY="10.0" spacing="4.0">
+                                    </VBox>
+                                    <HBox alignment="CENTER" spacing="30.0">
                                        <children>
-                                          <Label maxHeight="12.0" maxWidth="12.0" minHeight="12.0" minWidth="12.0" styleClass="labEnCursoCor" />
-                                          <Label prefHeight="21.0" styleClass="labCanceladoTexto" text="en curso" />
+                                          <HBox alignment="CENTER" prefHeight="34.0" spacing="10.0">
+                                             <children>
+                                                <Label prefHeight="34.0" text="Precio total:" />
+                                                <HBox alignment="CENTER" spacing="3.0">
+                                                   <children>
+                                                      <TextField fx:id="txtPrecioTotalCoches" editable="false" maxWidth="110.0" minHeight="30.0" minWidth="60.0" prefHeight="30.0" prefWidth="80.0" />
+                                                      <Label prefHeight="34.0" text="€" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </HBox>
+                                          <Button fx:id="btnReservarCoches" mnemonicParsing="false" onAction="#accionBtnReservarCoches" text="Reservar" />
                                        </children>
                                     </HBox>
                                  </children>
                                  <padding>
-                                    <Insets left="4.0" />
+                                    <Insets bottom="20.0" left="20.0" right="5.0" top="40.0" />
                                  </padding>
-                              </HBox>
-                           </children>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </VBox>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                              </VBox>
+                           </children></AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab onSelectionChanged="#abrirTiendas" text="Tiendas">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
                            <children>
-                              <Button fx:id="btnComprar" mnemonicParsing="false" onAction="#accionBtnComprar" text="Comprar" />
-                              <Button fx:id="btnDevolver" mnemonicParsing="false" onAction="#devolverBillete" text="Devolver" />
-                           </children>
-                        </StackPane>
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" top="10.0" />
-                     </padding>
-                  </VBox>
-               </children>
-            </AnchorPane>
+                              <VBox alignment="TOP_CENTER" layoutX="230.0" layoutY="79.0" prefHeight="584.0" prefWidth="1000.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="30.0" left="20.0" right="20.0" top="40.0" />
+                                 </padding>
+                                 <children>
+                                    <HBox alignment="CENTER" spacing="80.0">
+                                       <children>
+                                          <GridPane alignment="CENTER_LEFT" hgap="10.0" vgap="15.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="-Infinity" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label minHeight="-Infinity" prefHeight="33.0" text="Nombre:" />
+                                                <Label minHeight="-Infinity" prefHeight="33.0" text="Terminal:" GridPane.rowIndex="1" />
+                                                <Label minHeight="-Infinity" prefHeight="33.0" text="Tipo de ventas:" GridPane.columnIndex="2" />
+                                                <TextField fx:id="txtNomeTendas" minHeight="-Infinity" minWidth="100.0" prefHeight="33.0" prefWidth="180.0" GridPane.columnIndex="1" />
+                                                <ComboBox fx:id="cBoxTerminalTendas" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="90.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <ComboBox fx:id="cBoxTipoTendas" minHeight="-Infinity" prefHeight="33.0" prefWidth="200.0" promptText="moda y complementos" GridPane.columnIndex="3" />
+                                             </children>
+                                          </GridPane>
+                                          <Button fx:id="btnBuscarTendas" mnemonicParsing="false" onAction="#accionBtnBuscarTendas" text="Buscar" />
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="taboaTendas">
+                                      <columns>
+                                        <TableColumn fx:id="columnaNomeTendas" minWidth="180.0" prefWidth="190.0" text="Nombre" />
+                                        <TableColumn fx:id="columnaTipoTendas" minWidth="180.0" prefWidth="190.0" text="Tipo de ventas" />
+                                          <TableColumn fx:id="columnaTerminalTendas" minWidth="180.0" prefWidth="190.0" text="Terminal" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
          </children>
       </StackPane>
    </center>
