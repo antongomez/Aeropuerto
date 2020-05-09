@@ -1283,8 +1283,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     }
 
     private String obterPrecioParking() {
-        return String.format("%.2f", (Time.obtenerDias(dataFLlegadaParking.getValue(),
-                dataFRetornoParking.getValue()) * PRECIO_DIA_PARKING));
+        return String.format("%.2f", ((Time.obtenerDias(dataFLlegadaParking.getValue(),
+                dataFRetornoParking.getValue())+1) * PRECIO_DIA_PARKING));
     }
 
     private Integer asignarPlazaParking(Time llegada, Time retorno) {
@@ -1576,7 +1576,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void seleccionCoche(MouseEvent event) {
         if ((taboaReservarCoche.getSelectionModel().getSelectedItem() != null)
                 && (!btnBuscarCoches.isDisable())) {
-            Integer dias = Time.obtenerDias(dataFRetornoCoches.getValue(), dataFLlegadaCoches.getValue());
+            Integer dias = Time.obtenerDias(dataFRetornoCoches.getValue(), dataFLlegadaCoches.getValue())+1;
             Coche coche = taboaReservarCoche.getSelectionModel().getSelectedItem();
             Float precioTotal = dias * coche.getPrecioDia();
             txtPrecioTotalCoches.setText(precioTotal.toString());
