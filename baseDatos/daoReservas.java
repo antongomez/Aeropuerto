@@ -351,7 +351,7 @@ public class daoReservas extends AbstractDAO {
 
             stmUsuario = con.prepareStatement("UPDATE alquilar \n"
                     + "SET fechaDevolucion=NOW() \n"
-                    + "EHERE matricula=? and fechaAlquiler=? and usuario=? ");
+                    + "WHERE matricula=? and fechaAlquiler=? and usuario=? ");
 
             stmUsuario.setString(1, alquiler.getMatricula());
             stmUsuario.setTimestamp(2, alquiler.getInicio().toTimestamp());

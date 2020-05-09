@@ -30,7 +30,9 @@ public class daoCoches extends AbstractDAO {
                     + "WHERE matricula not in ((SELECT cochealquiler as matricula \n"
                     + "			       FROM reservar \n"
                     + "			       WHERE cast(fechainicioreserva as date) <= cast(? as date) \n"
-                    + "                         and cast(fechafinreserva as date) >= cast(? as date)) \n"
+                    + "                         and (((cast(? as date)-cast (fechafinreserva as date))<=5 \n" +
+"                                               and cast(? as date)>cast(fechafinreserva as date)) \n" +
+"                                               or cast(? as date)<=cast(fechafinreserva as date))) \n"
                     + "                         UNION \n"
                     + "                        (SELECT matricula \n"
                     + "                         FROM alquilar \n"
@@ -47,12 +49,14 @@ public class daoCoches extends AbstractDAO {
 
             stmCoches.setTimestamp(1, retorno.toTimestamp());
             stmCoches.setTimestamp(2, llegada.toTimestamp());
-            stmCoches.setTimestamp(3, retorno.toTimestamp());
+            stmCoches.setTimestamp(3, llegada.toTimestamp());
             stmCoches.setTimestamp(4, llegada.toTimestamp());
-            stmCoches.setTimestamp(5, llegada.toTimestamp());
+            stmCoches.setTimestamp(5, retorno.toTimestamp());
             stmCoches.setTimestamp(6, llegada.toTimestamp());
+            stmCoches.setTimestamp(7, llegada.toTimestamp());
+            stmCoches.setTimestamp(8, llegada.toTimestamp());
             if (numPlazas != null) {
-                stmCoches.setInt(7, numPlazas);
+                stmCoches.setInt(9, numPlazas);
             }
 
             rsCoches = stmCoches.executeQuery();
@@ -94,7 +98,9 @@ public class daoCoches extends AbstractDAO {
                     + "WHERE matricula not in ((SELECT cochealquiler as matricula \n"
                     + "			       FROM reservar \n"
                     + "			       WHERE cast(fechainicioreserva as date) <= cast(? as date) \n"
-                    + "                         and cast(fechafinreserva as date) >= cast(? as date)) \n"
+                    + "                         and (((cast(? as date)-cast (fechafinreserva as date))<=5 \n" +
+"                                               and cast(? as date)>cast(fechafinreserva as date)) \n" +
+"                                               or cast(? as date)<=cast(fechafinreserva as date))) \n"
                     + "                         UNION \n"
                     + "                        (SELECT matricula \n"
                     + "                         FROM alquilar \n"
@@ -114,15 +120,17 @@ public class daoCoches extends AbstractDAO {
 
             stmCoches.setTimestamp(1, retorno.toTimestamp());
             stmCoches.setTimestamp(2, llegada.toTimestamp());
-            stmCoches.setTimestamp(3, retorno.toTimestamp());
+            stmCoches.setTimestamp(3, llegada.toTimestamp());
             stmCoches.setTimestamp(4, llegada.toTimestamp());
-            stmCoches.setTimestamp(5, llegada.toTimestamp());
+            stmCoches.setTimestamp(5, retorno.toTimestamp());
             stmCoches.setTimestamp(6, llegada.toTimestamp());
-            stmCoches.setString(7,"%"+modelo+"%");
-            stmCoches.setString(8, "%"+matricula+"%");
+            stmCoches.setTimestamp(7, llegada.toTimestamp());
+            stmCoches.setTimestamp(8, llegada.toTimestamp());
+            stmCoches.setString(9,"%"+modelo+"%");
+            stmCoches.setString(10, "%"+matricula+"%");
 
             if(numPlazas!=null){
-                stmCoches.setInt(9, numPlazas);
+                stmCoches.setInt(11, numPlazas);
             }
 
             rsCoches = stmCoches.executeQuery();
