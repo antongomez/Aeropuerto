@@ -948,7 +948,7 @@
                                                 <Label minHeight="-Infinity" prefHeight="35.0" text="Salida:" GridPane.columnIndex="2" />
                                                 <TextField fx:id="txtNumVuelo" minHeight="-Infinity" minWidth="120.0" prefHeight="35.0" prefWidth="180.0" GridPane.columnIndex="1" />
                                                 <TextField fx:id="txtOrigen" minHeight="-Infinity" minWidth="120.0" prefHeight="35.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <DatePicker fx:id="dataPickSalida" editable="false" minHeight="-Infinity" minWidth="120.0" onHiding="#comprobarDatas" prefHeight="35.0" prefWidth="180.0" GridPane.columnIndex="3" />
+                                                <DatePicker fx:id="dataPickSalida" editable="false" minHeight="-Infinity" minWidth="120.0" onHiding="#comprobarData" prefHeight="35.0" prefWidth="180.0" GridPane.columnIndex="3" />
                                                 <Label minHeight="-Infinity" prefHeight="35.0" text="Destino:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                 <TextField fx:id="txtDestino" minHeight="-Infinity" minWidth="120.0" prefHeight="35.0" prefWidth="180.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                              </children>
