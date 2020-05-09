@@ -273,7 +273,7 @@ public class Vuelo {
     }
 
     public Float getPrecioPremium() {
-        return ((float) (Math.round((precioActual * 1.2f) * 100d) / 100d));
+        return ((float) (Math.round((precioActual * 1.3f) * 100d) / 100d));
     }
 
     public HashMap<Integer, Boolean> getAsientosNormalesDisponibles() {

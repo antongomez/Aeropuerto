@@ -283,8 +283,8 @@ public class daoReservas extends AbstractDAO {
         Boolean correcto = true;
 
         try {
-            stmRes = con.prepareStatement("INSERT into alquilar \n"
-                    + "VALUES(NOW(),?, ?, ?, null,true)");
+            stmRes = con.prepareStatement("INSERT into alquilar "
+                    + "VALUES(NOW(),?, ?, ?, null)");
             stmRes.setString(1, dni);
             stmRes.setString(2, matricula);
             stmRes.setTimestamp(3, fin.toTimestamp());

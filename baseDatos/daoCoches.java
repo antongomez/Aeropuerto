@@ -93,13 +93,15 @@ public class daoCoches extends AbstractDAO {
                     + "FROM cocheAlquiler \n"
                     + "WHERE matricula not in ((SELECT cochealquiler as matricula \n"
                     + "			       FROM reservar \n"
-                    + "                         WHERE fechainicioreserva <= ? \n"
-                    + "                         and fechafinreserva >= ?) \n"
-                    + "                         UNION\n"
-                    + "                        (SELECT matricula\n"
-                    + "                         FROM alquilar\n"
-                    + "                         WHERE fechaalquiler <= ? \n"
-                    + "                         and fechadevolucion is null)) \n"
+                    + "			       WHERE cast(fechainicioreserva as date) <= cast(? as date) \n"
+                    + "                         and cast(fechafinreserva as date) >= cast(? as date)) \n"
+                    + "                         UNION \n"
+                    + "                        (SELECT matricula \n"
+                    + "                         FROM alquilar \n"
+                    + "                         WHERE cast(fechaalquiler as date) <= cast(? as date) \n"
+                    + "                         and (((cast(? as date)-cast (fechateoricadevolucion as date))<=5 \n" +
+"                                               and cast(? as date)>cast(fechateoricadevolucion as date)) \n" +
+"                                               or cast(? as date)<=cast(fechateoricadevolucion as date)))) \n"
                     + "and retirado = false \n"
                     + "and modelo like ? \n"
                     + "and matricula like ? \n";
@@ -113,11 +115,14 @@ public class daoCoches extends AbstractDAO {
             stmCoches.setTimestamp(1, retorno.toTimestamp());
             stmCoches.setTimestamp(2, llegada.toTimestamp());
             stmCoches.setTimestamp(3, retorno.toTimestamp());
-            stmCoches.setString(4,"%"+modelo+"%");
-            stmCoches.setString(5, "%"+matricula+"%");
+            stmCoches.setTimestamp(4, llegada.toTimestamp());
+            stmCoches.setTimestamp(5, llegada.toTimestamp());
+            stmCoches.setTimestamp(6, llegada.toTimestamp());
+            stmCoches.setString(7,"%"+modelo+"%");
+            stmCoches.setString(8, "%"+matricula+"%");
 
             if(numPlazas!=null){
-                stmCoches.setInt(6, numPlazas);
+                stmCoches.setInt(9, numPlazas);
             }
 
             rsCoches = stmCoches.executeQuery();

@@ -24,7 +24,7 @@ public class daoTiendas extends AbstractDAO {
         ArrayList<String> terminais = new ArrayList<>();
 
         try {
-            stmRes = con.prepareStatement("select distinct tipoVentas from tiendas");
+            stmRes = con.prepareStatement("select distinct tipoVentas from tienda");
             rsRes = stmRes.executeQuery();
             while (rsRes.next()) {
                 terminais.add(rsRes.getString("tipoVentas"));
@@ -55,7 +55,7 @@ public class daoTiendas extends AbstractDAO {
 
         try {
             String consulta = "select nombre, tipoventas, terminal\n"
-                    + "from tiendas\n"
+                    + "from tienda\n"
                     + "where nombre like ? \n";
 
             if (tipo != null) {
