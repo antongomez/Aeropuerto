@@ -20,6 +20,7 @@ public class daoVuelos extends AbstractDAO {
         super.setFachadaAplicacion(fa);
     }
 
+ 
     public Boolean insertarVuelo(Vuelo v) {//true si se insertó y false si no
         Connection con;
         PreparedStatement stmVuelo = null;
