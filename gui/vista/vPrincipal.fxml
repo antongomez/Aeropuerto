@@ -37,13 +37,13 @@
          <children>
             <VBox layoutX="105.0" layoutY="102.0" prefHeight="600.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ToggleButton fx:id="btnVuelos" minWidth="140.0" mnemonicParsing="false" onAction="#accionBtnVuelos" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Vuelos">
+                  <ToggleButton fx:id="btnVuelos" minWidth="140.0" mnemonicParsing="false" onAction="#accionBtnVuelos" prefHeight="50.0" prefWidth="200.0" selected="true" styleClass="btnMenu" text="Vuelos">
                      <toggleGroup>
                         <ToggleGroup fx:id="BtnMenu" />
                      </toggleGroup>
                   </ToggleButton>
                   <ToggleButton fx:id="btnAreaP" mnemonicParsing="false" onAction="#accionBtnAreaP" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Área personal" toggleGroup="$BtnMenu" />
-                  <ToggleButton fx:id="btnServicios" mnemonicParsing="false" onAction="#accionBtnServicios" prefHeight="50.0" prefWidth="200.0" selected="true" styleClass="btnMenu" text="Servicios" toggleGroup="$BtnMenu" />
+                  <ToggleButton fx:id="btnServicios" mnemonicParsing="false" onAction="#accionBtnServicios" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Servicios" toggleGroup="$BtnMenu" />
                   <ToggleButton fx:id="btnInfo" mnemonicParsing="false" onAction="#accionBtnInfo" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Información" toggleGroup="$BtnMenu" />
                   <ToggleButton fx:id="btnPersonal" mnemonicParsing="false" onAction="#accionBtnPersonal" prefHeight="50.0" prefWidth="200.0" styleClass="btnMenu" text="Administrador" toggleGroup="$BtnMenu">
                      <effect>
@@ -77,7 +77,7 @@
                   </HBox>
                   <AnchorPane HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" text="SERVICIOS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label fx:id="etqTitulo" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" text="PROXIMOS VUELOS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -929,32 +929,30 @@
                            <children>
                               <VBox alignment="CENTER" spacing="15.0">
                                  <children>
-                                    <HBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="500.0" spacing="15.0">
+                                    <HBox alignment="TOP_CENTER" minHeight="-Infinity" spacing="15.0">
                                        <children>
-                                          <VBox prefWidth="140.0" spacing="10.0">
+                                          <GridPane hgap="10.0" vgap="15.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
                                              <children>
-                                                <Label prefHeight="35.0" text="Número de vuelo:" />
-                                                <Label prefHeight="35.0" text="Origen:" />
-                                                <Label prefHeight="35.0" text="Salida:" />
+                                                <Label minHeight="-Infinity" prefHeight="35.0" text="Número de vuelo:" />
+                                                <Label minHeight="-Infinity" prefHeight="35.0" text="Origen:" GridPane.rowIndex="1" />
+                                                <Label minHeight="-Infinity" prefHeight="35.0" text="Salida:" GridPane.columnIndex="2" />
+                                                <TextField fx:id="txtNumVuelo" minHeight="-Infinity" minWidth="120.0" prefHeight="35.0" prefWidth="180.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="txtOrigen" minHeight="-Infinity" minWidth="120.0" prefHeight="35.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <DatePicker fx:id="dataPickSalida" editable="false" minHeight="-Infinity" minWidth="120.0" onHiding="#comprobarDatas" prefHeight="35.0" prefWidth="180.0" GridPane.columnIndex="3" />
+                                                <Label minHeight="-Infinity" prefHeight="35.0" text="Destino:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtDestino" minHeight="-Infinity" minWidth="120.0" prefHeight="35.0" prefWidth="180.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                              </children>
-                                          </VBox>
-                                          <VBox prefWidth="150.0" spacing="10.0">
-                                             <children>
-                                                <TextField fx:id="txtNumVuelo" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                                <TextField fx:id="txtOrigen" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                                <DatePicker fx:id="dataPickSalida" editable="false" minHeight="30.0" minWidth="120.0" onHiding="#comprobarDatas" prefHeight="35.0" prefWidth="150.0" />
-                                             </children>
-                                          </VBox>
-                                          <VBox prefWidth="140.0" spacing="10.0">
-                                             <children>
-                                                <Label minHeight="35.0" prefHeight="35.0" text="Destino:" />
-                                             </children>
-                                          </VBox>
-                                          <VBox prefWidth="150.0" spacing="10.0">
-                                             <children>
-                                                <TextField fx:id="txtDestino" minHeight="30.0" minWidth="120.0" prefHeight="35.0" prefWidth="150.0" />
-                                             </children>
-                                          </VBox>
+                                          </GridPane>
                                        </children>
                                     </HBox>
                                     <Label fx:id="etqInfoPV" text="Las fechas de salida y llegada deben ser mayores que la fecha actual" visible="false">
