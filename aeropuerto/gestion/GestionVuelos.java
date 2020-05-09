@@ -21,9 +21,6 @@ public class GestionVuelos {
         this.fbd = fbd;
     }
 
-    public Boolean insertarVuelo(Vuelo v) {
-        return fbd.insertarVuelo(v);
-    }
 
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
         if (fechaSalida.equals(Time.diaActual())) {

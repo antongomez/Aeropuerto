@@ -95,10 +95,6 @@ public class FachadaBaseDatos {
         return daoUsuarios.comprobarCredenciales(id, cont);
     }
 
-    public Boolean insertarVuelo(Vuelo v) {
-        return daoVuelos.insertarVuelo(v);
-    }
-
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
         return daoVuelos.buscarVuelos(numVuelo, origen, destino, fechaSalida);
     }

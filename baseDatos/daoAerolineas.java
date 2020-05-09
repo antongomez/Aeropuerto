@@ -21,7 +21,11 @@ public class daoAerolineas extends AbstractDAO {
 
         EstadisticasAerolinea resultado = null;
         Connection con;
-        PreparedStatement stmEst = null;
+        PreparedStatement stmEst1 = null;
+        PreparedStatement stmEst2 = null;
+        PreparedStatement stmEst3 = null;
+        PreparedStatement stmEst4 = null;
+        PreparedStatement stmEst5 = null;
         ResultSet rsAviones;
         ResultSet rsRetrasos;
         ResultSet rsOcupacion;
@@ -31,17 +35,17 @@ public class daoAerolineas extends AbstractDAO {
 
         try {
             //Estadisticas sobre las aerolineas y los aviones
-            stmEst = con.prepareStatement("SELECT (CASE count(*) when 0 then 0 else sum(anhofabricacion)/count(*) end) as anhomedio, \n"
+            stmEst1 = con.prepareStatement("SELECT (CASE count(*) when 0 then 0 else sum(anhofabricacion)/count(*) end) as anhomedio, \n"
                     + "(CASE count(*) when 0 then 0 else sum(capacidadpremium+capacidadnormal)/count(*) end) as capmedia, \n"
                     + "paissede, preciobasemaleta,pesobasemaleta \n"
                     + "FROM aerolinea a, avion av, modeloavion m \n"
                     + "WHERE a.nombre=av.aerolinea and m.nombre=av.modeloavion and aerolinea=? \n"
                     + "GROUP BY paissede, preciobasemaleta, pesobasemaleta");
-            stmEst.setString(1, aer);
-            rsAviones = stmEst.executeQuery();
+            stmEst1.setString(1, aer);
+            rsAviones = stmEst1.executeQuery();
 
             //Estadisticas sobre retrasos
-            stmEst = con.prepareStatement("SELECT (CASE nVuelos when 0 then 0 else (cast (nRetrasos as float)/nVuelos)*100 end) as porcRetrasos, \n"
+            stmEst2 = con.prepareStatement("SELECT (CASE nVuelos when 0 then 0 else (cast (nRetrasos as float)/nVuelos)*100 end) as porcRetrasos, \n"
                     + "(CASE nVuelos when 0 then '00:00:00' else tiempoRetraso/nVuelos end) as tiempoMedioRetraso \n"
                     + "FROM (SELECT count(*) as nRetrasos, (CASE count(*) when 0 then '00:00:00' else sum(fechasalidareal-fechasalidateorica) end) as tiempoRetraso \n"
                     + "      FROM aerolinea a, avion av, vuelo v \n"
@@ -50,12 +54,12 @@ public class daoAerolineas extends AbstractDAO {
                     + "     (SELECT count(*) as nVuelos from aerolinea a, avion av, vuelo v \n"
                     + "      WHERE av.aerolinea=a.nombre and v.avion=av.codigo and aerolinea=? \n"
                     + "      and v.fechallegadareal<NOW() and v.cancelado=false) as v \n");
-            stmEst.setString(1, aer);
-            stmEst.setString(2, aer);
-            rsRetrasos = stmEst.executeQuery();
+            stmEst2.setString(1, aer);
+            stmEst2.setString(2, aer);
+            rsRetrasos = stmEst2.executeQuery();
 
             //Estadisticas ocupacion
-            stmEst = con.prepareStatement("SELECT (CASE capNormal when 0 then 0 else (cast (ocNormal as float)/capNormal)*100 end) as porcOcNormal, \n"
+            stmEst3 = con.prepareStatement("SELECT (CASE capNormal when 0 then 0 else (cast (ocNormal as float)/capNormal)*100 end) as porcOcNormal, \n"
                     + "(CASE capPremium when 0 then 0 else (cast(ocPremium as float)/capPremium)*100 end) as porcOcPremium \n"
                     + "FROM (SELECT sum(capacidadNormal) as capNormal, sum(capacidadPremium) as capPremium \n"
                     + "      FROM avion av, aerolinea a, vuelo v, modeloavion m \n"
@@ -69,13 +73,13 @@ public class daoAerolineas extends AbstractDAO {
                     + "      FROM avion av, aerolinea a, vuelo v, comprarbillete c \n"
                     + "      WHERE av.aerolinea=a.nombre and av.codigo=v.avion and v.numvuelo=c.vuelo and aerolinea=? \n"
                     + "      and tipoasiento='premium' and v.fechallegadareal<NOW() and v.cancelado=false) as ocPremium");
-            stmEst.setString(1, aer);
-            stmEst.setString(2, aer);
-            stmEst.setString(3, aer);
-            rsOcupacion = stmEst.executeQuery();
+            stmEst3.setString(1, aer);
+            stmEst3.setString(2, aer);
+            stmEst3.setString(3, aer);
+            rsOcupacion = stmEst3.executeQuery();
 
             //Estadisticas pais predominante
-            stmEst = con.prepareStatement("SELECT paisprocedencia \n"
+            stmEst4 = con.prepareStatement("SELECT paisprocedencia \n"
                     + "FROM aerolinea a, avion av, vuelo v, comprarbillete c, usuario u \n"
                     + "WHERE a.nombre=av.aerolinea and av.codigo=v.avion and v.numvuelo=c.vuelo and u.dni=c.usuario \n"
                     + "and fechallegadareal<NOW() and cancelado=false and aerolinea=? \n"
@@ -85,9 +89,9 @@ public class daoAerolineas extends AbstractDAO {
                     + "                     WHERE a.nombre=av.aerolinea and av.codigo=v.avion and v.numvuelo=c.vuelo \n"
                     + "                     and u.dni=c.usuario and fechallegadareal<NOW() and cancelado=false \n"
                     + "                     and aerolinea=? group by paisprocedencia)");
-            stmEst.setString(1, aer);
-            stmEst.setString(2, aer);
-            rsPais = stmEst.executeQuery();
+            stmEst4.setString(1, aer);
+            stmEst4.setString(2, aer);
+            rsPais = stmEst4.executeQuery();
 
             if (rsAviones.next() && rsRetrasos.next() && rsOcupacion.next()) {
                 resultado = new EstadisticasAerolinea(new Aerolinea(aer, rsAviones.getString("paissede"), rsAviones.getFloat("preciobasemaleta"), rsAviones.getFloat("pesobasemaleta")),
@@ -98,13 +102,17 @@ public class daoAerolineas extends AbstractDAO {
                     resultado.addNacionalidad(rsPais.getString("paisprocedencia"));
                 }
             }
+            
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
         } finally {
             try {
-                stmEst.close();
+                stmEst1.close();
+                stmEst2.close();
+                stmEst3.close();
+                stmEst4.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }

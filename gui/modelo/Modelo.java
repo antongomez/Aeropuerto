@@ -107,9 +107,7 @@ public class Modelo {
     }
 
     //Vuelos
-    public Boolean insertarVuelo(Vuelo v) {
-        return fa.insertarVuelo(v);
-    }
+
 
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
         return fa.buscarVuelos(numVuelo, origen, destino, fechaSalida);

@@ -137,9 +137,7 @@ public class FachadaAplicacion extends Application {
     }
 
     //Vuelos
-    public Boolean insertarVuelo(Vuelo v) {
-        return gv.insertarVuelo(v);
-    }
+
 
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
         return gv.buscarVuelos(numVuelo, origen, destino, fechaSalida);
