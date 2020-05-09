@@ -1388,7 +1388,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
 
         } else if (dataFRetornoParking.getValue() != null) {
-            if (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue()))) {
+            if (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue()))){
                 etqInfoParking.setText(TEXTO_ERROR_FECHAS);
                 btnBuscarParking.setDisable(true);
                 if (etqInfoParking.getStyleClass().size() == 2) {

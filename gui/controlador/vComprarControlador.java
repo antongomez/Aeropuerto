@@ -30,6 +30,7 @@ public class vComprarControlador extends Controlador implements Initializable {
     private ObservableList<Usuario> pasajeros;
     private Integer plazasNormalesEnEspera;
     private Integer plazasPremiumEnEspera;
+    final static Integer CARGO_EXTRA_ACOMPANHANTE = 30;
 
     //Campos del vuelo
     @FXML
@@ -323,7 +324,7 @@ public class vComprarControlador extends Controlador implements Initializable {
             precioUsuario += vuelo.getPrecioActual();
         }
         if (usuario.getVueloEnEspera().getAcompanante()) {
-            precioUsuario += 30;
+            precioUsuario += CARGO_EXTRA_ACOMPANHANTE;
         }
         precioUsuario += usuario.getVueloEnEspera().getNumMaletas() * vuelo.getAerolinea().getPrecioBaseMaleta();
         precioUsuario = (float) (Math.round(precioUsuario * 100d) / 100d);
