@@ -63,7 +63,7 @@ public class daoVuelos extends AbstractDAO {
         return correcto;
     }
 
-    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
         List<Vuelo> resultado = new ArrayList<>();
         Vuelo vueloActual;
         Connection con;
@@ -82,14 +82,9 @@ public class daoVuelos extends AbstractDAO {
                     + "  and destino like ? ";
 
             if (fechaSalida != null) {
-                consulta += "  and fechasalidateorica >= ? ";
+                consulta += "  and fechasalidareal >= ? ";
             } else {
-                consulta += "  and fechasalidateorica >= now() + '-30 min' ";
-            }
-            if (fechaLlegada != null) {
-                consulta += "  and fechallegadateorica >= ? ";
-            } else {
-                consulta += "  and fechallegadateorica >= now() + '-30 min' ";
+                consulta += "  and fechasalidareal >= now() + '-30 min' ";
             }
             //Ordenamos os voos por data de saida ascendente
             consulta += "order by fechasalidateorica asc, fechallegadateorica desc";
@@ -99,15 +94,9 @@ public class daoVuelos extends AbstractDAO {
             stmVuelo.setString(2, "%" + origen + "%");
             stmVuelo.setString(3, "%" + destino + "%");
 
-            if ((fechaSalida != null) && (fechaLlegada != null)) {
-                stmVuelo.setTimestamp(4, fechaSalida.toTimestamp());
-                stmVuelo.setTimestamp(5, fechaLlegada.toTimestamp());
-
-            } else if ((fechaSalida != null) && (fechaLlegada == null)) {
+            if (fechaSalida != null) {
                 stmVuelo.setTimestamp(4, fechaSalida.toTimestamp());
 
-            } else if ((fechaSalida == null) && (fechaLlegada != null)) {
-                stmVuelo.setTimestamp(4, fechaLlegada.toTimestamp());
             }
 
             rsVuelo = stmVuelo.executeQuery();

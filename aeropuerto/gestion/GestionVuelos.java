@@ -25,14 +25,12 @@ public class GestionVuelos {
         return fbd.insertarVuelo(v);
     }
 
-    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
-        if (fechaLlegada.equals(Time.diaActual())) {
-            return fbd.buscarVuelos(numVuelo, origen, destino, null, null);
-        } else if (fechaSalida.equals(Time.diaActual())) {
-            return fbd.buscarVuelos(numVuelo, origen, destino, null, fechaLlegada);
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
+        if (fechaSalida.equals(Time.diaActual())) {
+            return fbd.buscarVuelos(numVuelo, origen, destino, null);
         }
 
-        return fbd.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
+        return fbd.buscarVuelos(numVuelo, origen, destino, fechaSalida);
     }
 
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {

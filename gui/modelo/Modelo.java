@@ -111,8 +111,8 @@ public class Modelo {
         return fa.insertarVuelo(v);
     }
 
-    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
-        return fa.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
+        return fa.buscarVuelos(numVuelo, origen, destino, fechaSalida);
     }
 
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {
@@ -308,10 +308,12 @@ public class Modelo {
     public Aerolinea obtenerDatosAerolinea(String numvuelo) {
         return fa.obtenerDatosAerolinea(numvuelo);
     }
-    public Boolean obtenerDatosPersLab(PersonalLaboral trab){
+
+    public Boolean obtenerDatosPersLab(PersonalLaboral trab) {
         return fa.obtenerDatosPersLab(trab);
     }
-    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula){
+
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula) {
         return fa.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula);
     }
 }

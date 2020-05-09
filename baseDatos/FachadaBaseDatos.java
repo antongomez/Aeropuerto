@@ -99,8 +99,8 @@ public class FachadaBaseDatos {
         return daoVuelos.insertarVuelo(v);
     }
 
-    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida, Time fechaLlegada) {
-        return daoVuelos.buscarVuelos(numVuelo, origen, destino, fechaSalida, fechaLlegada);
+    public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
+        return daoVuelos.buscarVuelos(numVuelo, origen, destino, fechaSalida);
     }
 
     public List<Vuelo> obtenerVuelosUsuario(String dniUs) {

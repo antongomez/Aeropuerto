@@ -61,7 +61,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private final static String TXT_BTN_ADMIN = "Administrador";
     private final static String TXT_BTN_PL = "Personal";
 
-    private final static String TEXTO_ERROR_FECHAS = "Las fechas de salida y llegada deben ser mayores que la fecha actual";
+    private final static String TEXTO_ERROR_FECHA = "La fecha de salida debe ser mayor que la fecha actual";
     private final static String TEXTO_INFO_PARKING_COCHES = "Introduce los datos de tu vuelo o de tu estancia";
     private final static String TEXTO_ERROR_PARKING_COCHES = "La fecha de regreso debe ser mayor o igual que la de llegada";
     private final static String TEXTO_ERROR_COCHES_NUMERO = "El numero de plazas no es válido";
@@ -117,8 +117,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private DatePicker dataPickSalida;
     @FXML
     private TextField txtDestino;
-    @FXML
-    private DatePicker dataPickLlegada;
     @FXML
     private Button btnBuscar;
     @FXML
@@ -456,7 +454,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precioActual"));
         columnaPrecioPremium.setCellValueFactory(new PropertyValueFactory<>("precioPremium"));
         ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
-                getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
+                getInstanceModelo().buscarVuelos("", "", "", Time.diaActual()));
         tablaProximosVuelos.setItems(vuelos);
         //A fila ponse en vermello en caso de estar cancelado o vuelo
         tablaProximosVuelos.setRowFactory(row -> new TableRow<Vuelo>() {
@@ -479,7 +477,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         etqInfoPV.setVisible(false);
 
         //Engadimos a data actual nos datePickers
-        dataPickLlegada.setValue(LocalDate.now());
         dataPickSalida.setValue(LocalDate.now());
 
         //Area Persoal Modificar Datos
@@ -638,49 +635,21 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         panelVuelos.toFront();
         etqTitulo.setText(TITULO_VUELOS);
         ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
-                getInstanceModelo().buscarVuelos("", "", "", Time.diaActual(), Time.diaActual()));
+                getInstanceModelo().buscarVuelos("", "", "", Time.diaActual()));
         tablaProximosVuelos.setItems(vuelos);
-        //Engadimos a data actual nos datePickers
-        dataPickLlegada.setValue(LocalDate.now());
-        dataPickSalida.setValue(LocalDate.now());
 
         btnComprar.setDisable(true);
         btnComprar.toFront();
     }
 
     @FXML
-    private void comprobarDatas(Event event) {
+    private void comprobarData(Event event) {
         Time salida = new Time(dataPickSalida.getValue());
-        Time llegada = new Time(dataPickLlegada.getValue());
 
         if (!Time.fechaMayorIgualActual(salida)) {
             btnBuscar.setDisable(true);
-            etqInfoPV.setText(TEXTO_ERROR_FECHAS);
+            etqInfoPV.setText(TEXTO_ERROR_FECHA);
             etqInfoPV.setVisible(true);
-            if (Time.compararMayor(salida, llegada)) {
-                if (dataPickSalida.isFocused()) {
-                    dataPickLlegada.setValue(dataPickSalida.getValue());
-                } else {
-                    dataPickSalida.setValue(dataPickLlegada.getValue());
-                }
-            }
-
-        } else if (Time.compararMayor(salida, llegada)) {
-
-            etqInfoPV.setVisible(false);
-            btnBuscar.setDisable(false);
-
-            if (dataPickSalida.isFocused()) {
-                dataPickLlegada.setValue(dataPickSalida.getValue());
-            } else {
-                dataPickSalida.setValue(dataPickLlegada.getValue());
-                if (!Time.fechaMayorIgualActual(salida)) {
-                    btnBuscar.setDisable(true);
-                    etqInfoPV.setText(TEXTO_ERROR_FECHAS);
-                    etqInfoPV.setVisible(true);
-                }
-            }
-
         } else {
             btnBuscar.setDisable(false);
             etqInfoPV.setVisible(false);
@@ -689,28 +658,21 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnBuscar(ActionEvent event) {
-        Time salida, llegada;
+        Time salida;
 
         if (dataPickSalida.getValue() != null) {
             salida = new Time(dataPickSalida.getValue());
         } else {
             salida = Time.diaActual();
         }
-        if (dataPickLlegada.getValue() != null) {
-            llegada = new Time(dataPickLlegada.getValue());
-        } else {
-            llegada = Time.diaActual();
-        }
 
-        if (((salida != null) && (!Time.fechaMayorIgualActual(salida)))
-                || ((llegada != null) && (!Time.fechaMayorIgualActual(llegada)))) {
-            getInstanceModelo().mostrarError("Las fechas de salida y llegada deben "
-                    + "ser mayores que la fecha actual", getVenta());
+        if ((salida != null) && (!Time.fechaMayorIgualActual(salida))) {
+            getInstanceModelo().mostrarError(TEXTO_ERROR_FECHA, getVenta());
         } else {
 
             ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
                     getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(),
-                            txtDestino.getText(), salida, llegada));
+                            txtDestino.getText(), salida));
             tablaProximosVuelos.setItems(vuelos);
         }
 
@@ -1284,7 +1246,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     private String obterPrecioParking() {
         return String.format("%.2f", ((Time.obtenerDias(dataFLlegadaParking.getValue(),
-                dataFRetornoParking.getValue())+1) * PRECIO_DIA_PARKING));
+                dataFRetornoParking.getValue()) + 1) * PRECIO_DIA_PARKING));
     }
 
     private Integer asignarPlazaParking(Time llegada, Time retorno) {
@@ -1340,7 +1302,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if (Time.compararMayor(new Time(dataFLlegadaParking.getValue()), new Time(dataFRetornoParking.getValue()))) {
                     etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
-                    etqInfoParking.setText(TEXTO_ERROR_FECHAS);
+                    etqInfoParking.setText(TEXTO_ERROR_FECHA);
                 }
 
             } else {
@@ -1364,7 +1326,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if (Time.compararMayor(new Time(dataFLlegadaParking.getValue()), new Time(dataFRetornoParking.getValue()))) {
                     etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
-                    etqInfoParking.setText(TEXTO_ERROR_FECHAS);
+                    etqInfoParking.setText(TEXTO_ERROR_FECHA);
                 }
 
             } else {
@@ -1375,7 +1337,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         } else if (dataFLlegadaParking.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFLlegadaParking.getValue()))) {
-                etqInfoParking.setText(TEXTO_ERROR_FECHAS);
+                etqInfoParking.setText(TEXTO_ERROR_FECHA);
                 btnBuscarParking.setDisable(true);
 
                 if (etqInfoParking.getStyleClass().size() == 2) {
@@ -1388,8 +1350,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
 
         } else if (dataFRetornoParking.getValue() != null) {
-            if (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue()))){
-                etqInfoParking.setText(TEXTO_ERROR_FECHAS);
+            if (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue()))) {
+                etqInfoParking.setText(TEXTO_ERROR_FECHA);
                 btnBuscarParking.setDisable(true);
                 if (etqInfoParking.getStyleClass().size() == 2) {
                     etqInfoParking.getStyleClass().add("etqErro");
@@ -1474,7 +1436,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if (Time.compararMayor(new Time(dataFLlegadaCoches.getValue()), new Time(dataFRetornoCoches.getValue()))) {
                     etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
-                    etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
+                    etqInfoCoches.setText(TEXTO_ERROR_FECHA);
                 }
 
             } else if (comprobarNumeroValido()) {
@@ -1487,7 +1449,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         } else if (dataFRetornoCoches.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue()))) {
-                etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
+                etqInfoCoches.setText(TEXTO_ERROR_FECHA);
                 btnBuscarCoches.setDisable(true);
                 if (etqInfoCoches.getStyleClass().size() == 2) {
                     etqInfoCoches.getStyleClass().add("etqErro");
@@ -1502,7 +1464,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         } else if (dataFLlegadaCoches.getValue() != null) {
             if (!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue()))) {
-                etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
+                etqInfoCoches.setText(TEXTO_ERROR_FECHA);
                 btnBuscarCoches.setDisable(true);
                 if (etqInfoCoches.getStyleClass().size() == 2) {
                     etqInfoCoches.getStyleClass().add("etqErro");
@@ -1576,7 +1538,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void seleccionCoche(MouseEvent event) {
         if ((taboaReservarCoche.getSelectionModel().getSelectedItem() != null)
                 && (!btnBuscarCoches.isDisable())) {
-            Integer dias = Time.obtenerDias(dataFRetornoCoches.getValue(), dataFLlegadaCoches.getValue())+1;
+            Integer dias = Time.obtenerDias(dataFRetornoCoches.getValue(), dataFLlegadaCoches.getValue()) + 1;
             Coche coche = taboaReservarCoche.getSelectionModel().getSelectedItem();
             Float precioTotal = dias * coche.getPrecioDia();
             txtPrecioTotalCoches.setText(precioTotal.toString());
