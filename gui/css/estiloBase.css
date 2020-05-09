@@ -233,7 +233,7 @@ RADIO-BUTTON
 .date-picker:focused {
     -fx-background-color: cor-secundaria, derive(white, -80%);
     -fx-background-insets: 0, 0 0 2 0;
-    -fx-background-radius: 0, 0;    
+    -fx-background-radius: 0, 0;
 }
 .combo-box-base:editable:focused > .text-field,
 .combo-box-base:editable > .text-field:focused,
@@ -563,14 +563,14 @@ RADIO-BUTTON
 }
 
 .tab {
-    -fx-padding: 5 10 5 10;   
+    -fx-padding: 5 10 5 10;
     -fx-background-color: #424242;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
 
 }
 
-.tab:selected{ 
+.tab:selected{
     -fx-background-color: #1d1d1d;
 }
 
@@ -624,4 +624,3 @@ RADIO-BUTTON
     -fx-background-color: derive(white, -80%);
     -fx-background-radius: 0;
 }
-

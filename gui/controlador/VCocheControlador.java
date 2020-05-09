@@ -235,26 +235,25 @@ public class VCocheControlador extends Controlador implements Initializable {
     //Cada vez que cambia la fecha se debe actualizar el precio, si la fecha está disponible
     @FXML
     private void actualizarPrecioConReserva(ActionEvent event) {
-        
+
         ReservaCoche reserva = tablaConReserva.getSelectionModel().getSelectedItem();
-        
+
         if (reserva != null) {
             Time fechaFin = new Time(datePickerConReserva.getValue());
-            if(Modelo.getInstanceModelo().sePuedeAmpliarReservaCoche(reserva.getFin(), fechaFin, reserva.getMatricula())){
-            Integer duracionAlquiler = Time.obtenerDias(reserva.getInicio().toLocalDate(), datePickerConReserva.getValue()) + 1;
-            if (Time.compararMayor(fechaFin, reserva.getInicio())) {
-                Float precio = (float) (Math.round(duracionAlquiler * reserva.getPrecioDia() * 100d) / 100d);
-                reserva.setPrecio(precio);
-                textFieldPrecioFinalConReserva.setText(reserva.getPrecio().toString() + " €");
-                etqErrorFechaCR.setVisible(false);
-                btnAlquilarConReserva.setDisable(false);
-            } else{
-                etqErrorFechaCR.setText("La fecha debe ser superior a la actual");
-                etqErrorFechaCR.setVisible(true);
-                btnAlquilarConReserva.setDisable(true);
-            }
-            }
-            else{
+            if (Modelo.getInstanceModelo().sePuedeAmpliarReservaCoche(reserva.getFin(), fechaFin, reserva.getMatricula())) {
+                Integer duracionAlquiler = Time.obtenerDias(reserva.getInicio().toLocalDate(), datePickerConReserva.getValue()) + 1;
+                if (!Time.compararMayor(reserva.getInicio(), fechaFin)) {
+                    Float precio = (float) (Math.round(duracionAlquiler * reserva.getPrecioDia() * 100d) / 100d);
+                    reserva.setPrecio(precio);
+                    textFieldPrecioFinalConReserva.setText(reserva.getPrecio().toString() + " €");
+                    etqErrorFechaCR.setVisible(false);
+                    btnAlquilarConReserva.setDisable(false);
+                } else {
+                    etqErrorFechaCR.setText("La fecha debe ser igual o superior a la actual");
+                    etqErrorFechaCR.setVisible(true);
+                    btnAlquilarConReserva.setDisable(true);
+                }
+            } else {
                 etqErrorFechaCR.setText("Este coche no está disponible para estas fechas");
                 etqErrorFechaCR.setVisible(true);
                 btnAlquilarConReserva.setDisable(true);
@@ -266,8 +265,6 @@ public class VCocheControlador extends Controlador implements Initializable {
     private void buscarCochesDisponibles(ActionEvent event) {
         if (!comprobarNumeroValido()) {
             Modelo.getInstanceModelo().mostrarError("El número de plazas debe ser un número entre 1 y 12.", getVenta());
-        } else if (!fechaVueltaCorrecta()) {
-            Modelo.getInstanceModelo().mostrarError("Debe de haber por lo menos un día de diferencia entre la fecha y actual y la de vuelta.", getVenta());
         } else {
             Integer numPlazas;
             if (!textFieldNPlazas.getText().isEmpty()) {
