@@ -72,11 +72,11 @@
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="225.0">
                                        <children>
                                           <Button fx:id="btnAlquilarConReserva" mnemonicParsing="false" onAction="#alquilarConReserva" text="Alquilar" />
-                                          <VBox alignment="CENTER" prefHeight="66.0" prefWidth="240.0" spacing="10.0">
+                                          <VBox alignment="CENTER" prefHeight="96.0" prefWidth="339.0" spacing="10.0">
                                              <children>
                                                 <RadioButton fx:id="cambiarFechaConReserva" mnemonicParsing="false" onAction="#activarDatePicker" text="Cambiar fecha" />
                                                 <DatePicker fx:id="datePickerConReserva" onAction="#actualizarPrecioConReserva" prefHeight="27.0" prefWidth="135.0" />
-                                                <Label fx:id="etqErrorFechaCR" style="-fx-text-fill: #f14a4a#f14a4a #f14a4a#f14a4a;" text="La fecha debe ser superior a la actual" visible="false" />
+                                                <Label fx:id="etqErrorFechaCR" prefHeight="21.0" prefWidth="332.0" style="-fx-text-fill: #f14a4a#f14a4a #f14a4a#f14a4a;" text="La fecha debe ser superior a la actual" visible="false" />
                                              </children>
                                           </VBox>
                                           <GridPane prefHeight="68.0" prefWidth="217.0">

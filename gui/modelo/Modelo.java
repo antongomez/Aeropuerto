@@ -311,4 +311,7 @@ public class Modelo {
     public Boolean obtenerDatosPersLab(PersonalLaboral trab){
         return fa.obtenerDatosPersLab(trab);
     }
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula){
+        return fa.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula);
+    }
 }

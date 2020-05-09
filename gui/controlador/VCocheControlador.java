@@ -232,12 +232,15 @@ public class VCocheControlador extends Controlador implements Initializable {
         }
     }
 
-    //Cada vez que cambia la fecha se debe actualizar el precio
+    //Cada vez que cambia la fecha se debe actualizar el precio, si la fecha está disponible
     @FXML
     private void actualizarPrecioConReserva(ActionEvent event) {
+        
         ReservaCoche reserva = tablaConReserva.getSelectionModel().getSelectedItem();
+        
         if (reserva != null) {
             Time fechaFin = new Time(datePickerConReserva.getValue());
+            if(Modelo.getInstanceModelo().sePuedeAmpliarReservaCoche(reserva.getFin(), fechaFin, reserva.getMatricula())){
             Integer duracionAlquiler = Time.obtenerDias(reserva.getInicio().toLocalDate(), datePickerConReserva.getValue()) + 1;
             if (Time.compararMayor(fechaFin, reserva.getInicio())) {
                 Float precio = (float) (Math.round(duracionAlquiler * reserva.getPrecioDia() * 100d) / 100d);
@@ -246,6 +249,13 @@ public class VCocheControlador extends Controlador implements Initializable {
                 etqErrorFechaCR.setVisible(false);
                 btnAlquilarConReserva.setDisable(false);
             } else{
+                etqErrorFechaCR.setText("La fecha debe ser superior a la actual");
+                etqErrorFechaCR.setVisible(true);
+                btnAlquilarConReserva.setDisable(true);
+            }
+            }
+            else{
+                etqErrorFechaCR.setText("Este coche no está disponible para estas fechas");
                 etqErrorFechaCR.setVisible(true);
                 btnAlquilarConReserva.setDisable(true);
             }

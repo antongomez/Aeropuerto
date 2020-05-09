@@ -231,28 +231,28 @@ public class daoReservas extends AbstractDAO {
         ResultSet rsRes;
 
         try {
-            stmRes = con.prepareStatement("SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), \n"
-                    + "res.cochealquiler as matricula, coche.preciopordia as preciodia, coche.modelo as modelo, \n"
-                    + "'sin alquilar' as estado \n"
-                    + "FROM reservar as res, cochealquiler as coche \n"
+            stmRes = con.prepareStatement("SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), "
+                    + "res.cochealquiler as matricula, coche.preciopordia as preciodia, coche.modelo as modelo, "
+                    + "'sin alquilar' as estado "
+                    + "FROM reservar as res, cochealquiler as coche "
                     + "WHERE res.usuario=? and cast(fechainicioreserva as date)=cast(NOW() as date) "
-                    + "and coche.matricula=res.cochealquiler \n"
-                    + "and NOT EXISTS(SELECT * \n"
-                    + "               FROM alquilar as alq \n"
-                    + "               WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 \n"
-                    + "               and res.cochealquiler=alq.matricula \n"
-                    + "               and res.usuario=alq.usuario) \n"
-                    + "UNION \n"
-                    + "SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), res.cochealquiler as matricula, \n"
+                    + "and coche.matricula=res.cochealquiler and coche.retirado=false "
+                    + "and NOT EXISTS(SELECT * "
+                    + "               FROM alquilar as alq "
+                    + "               WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 "
+                    + "               and res.cochealquiler=alq.matricula "
+                    + "               and res.usuario=alq.usuario) "
+                    + "UNION "
+                    + "SELECT cast(res.fechainicioreserva as date), cast(res.fechafinreserva as date), res.cochealquiler as matricula, "
                     + "coche.preciopordia as preciodia, coche.modelo as modelo, "
-                    + "'alquilado' as estado \n"
-                    + "FROM reservar as res, cochealquiler as coche \n"
+                    + "'alquilado' as estado "
+                    + "FROM reservar as res, cochealquiler as coche "
                     + "WHERE res.usuario=? and cast(fechainicioreserva as date)=cast(NOW() as date) and coche.matricula=res.cochealquiler "
-                    + "and EXISTS(SELECT * \n"
-                    + "           FROM alquilar as alq \n"
-                    + "           WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 \n"
+                    + "and EXISTS(SELECT * "
+                    + "           FROM alquilar as alq "
+                    + "           WHERE (cast(res.fechainicioreserva as date)-cast(alq.fechaalquiler as date))=0 "
                     + "           and res.cochealquiler=alq.matricula "
-                    + "           and res.usuario=alq.usuario) \n"
+                    + "           and res.usuario=alq.usuario) "
                     + "ORDER BY fechainicioreserva desc");
             stmRes.setString(1, dniUsuario);
             stmRes.setString(2, dniUsuario);
@@ -372,6 +372,47 @@ public class daoReservas extends AbstractDAO {
             }
         }
         return correcto;
+    }
+    
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula){
+        Connection con;
+        PreparedStatement stmAlquiler = null;
+        ResultSet rsAlquiler;
+        Boolean result=true;
+
+        con = this.getConexion();
+
+        try {
+            stmAlquiler = con.prepareStatement("(select cochealquiler " +
+            "from reservar where cast(fechainicioreserva as date) between cast(? as date) and cast(? as date) " +
+            "and cochealquiler=?) UNION " +
+            "(select matricula from alquilar where fechaalquiler between cast(? as date) and cast(? as date) " +
+            "and matricula=?) ");
+            stmAlquiler.setTimestamp(1, fechaFinOriginal.toTimestamp());
+            stmAlquiler.setTimestamp(2, fechaFinNueva.toTimestamp());
+            stmAlquiler.setString(3, matricula);
+            stmAlquiler.setTimestamp(4, fechaFinOriginal.toTimestamp());
+            stmAlquiler.setTimestamp(5, fechaFinNueva.toTimestamp());
+            stmAlquiler.setString(6, matricula);
+            rsAlquiler = stmAlquiler.executeQuery();
+
+            if (rsAlquiler.next()) {
+                result=false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            result=false;
+        } finally {
+            try {
+                stmAlquiler.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+                result=false;
+            }
+        }
+        return result;
     }
 
 }
