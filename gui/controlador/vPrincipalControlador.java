@@ -63,7 +63,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     private final static String TEXTO_ERROR_FECHAS = "Las fechas de salida y llegada deben ser mayores que la fecha actual";
     private final static String TEXTO_INFO_PARKING_COCHES = "Introduce los datos de tu vuelo o de tu estancia";
-    private final static String TEXTO_ERROR_PARKING_COCHES = "La fecha de regreso debe ser mayor que la de llegada";
+    private final static String TEXTO_ERROR_PARKING_COCHES = "La fecha de regreso debe ser mayor o igual que la de llegada";
     private final static String TEXTO_ERROR_COCHES_NUMERO = "El numero de plazas no es válido";
 
     private final static Float PRECIO_DIA_PARKING = 10.0f;
@@ -1328,7 +1328,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
             if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaParking.getValue())))
                     || (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue())))
-                    || (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue())))) {
+                    || (Time.compararMayor(new Time(dataFLlegadaParking.getValue()), new Time(dataFRetornoParking.getValue())))) {
                 btnBuscarParking.setDisable(true);
 
                 //Ao inicializarse ten dúas clases css: label e etqInfo
@@ -1337,7 +1337,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 }
 
                 //A data de chegada e maior que a de retorno
-                if (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue()))) {
+                if (Time.compararMayor(new Time(dataFLlegadaParking.getValue()), new Time(dataFRetornoParking.getValue()))) {
                     etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
                     etqInfoParking.setText(TEXTO_ERROR_FECHAS);
@@ -1354,14 +1354,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
             if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaParking.getValue())))
                     || (!Time.fechaMayorIgualActual(new Time(dataFRetornoParking.getValue())))
-                    || (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue())))) {
+                    || (Time.compararMayor(new Time(dataFLlegadaParking.getValue()), new Time(dataFRetornoParking.getValue())))) {
                 btnBuscarParking.setDisable(true);
                 if (etqInfoParking.getStyleClass().size() == 2) {
                     etqInfoParking.getStyleClass().add("etqErro");
                 }
 
                 //A data de chegada e maior que a de retorno
-                if (!Time.compararMayor(new Time(dataFRetornoParking.getValue()), new Time(dataFLlegadaParking.getValue()))) {
+                if (Time.compararMayor(new Time(dataFLlegadaParking.getValue()), new Time(dataFRetornoParking.getValue()))) {
                     etqInfoParking.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
                     etqInfoParking.setText(TEXTO_ERROR_FECHAS);
@@ -1464,14 +1464,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
             if ((!Time.fechaMayorIgualActual(new Time(dataFLlegadaCoches.getValue())))
                     || (!Time.fechaMayorIgualActual(new Time(dataFRetornoCoches.getValue())))
-                    || (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue())))) {
+                    || (Time.compararMayor(new Time(dataFLlegadaCoches.getValue()), new Time(dataFRetornoCoches.getValue())))) {
                 btnBuscarCoches.setDisable(true);
                 if (etqInfoCoches.getStyleClass().size() == 2) {
                     etqInfoCoches.getStyleClass().add("etqErro");
                 }
 
                 //A data de chegada e maior que a de retorno
-                if (!Time.compararMayor(new Time(dataFRetornoCoches.getValue()), new Time(dataFLlegadaCoches.getValue()))) {
+                if (Time.compararMayor(new Time(dataFLlegadaCoches.getValue()), new Time(dataFRetornoCoches.getValue()))) {
                     etqInfoCoches.setText(TEXTO_ERROR_PARKING_COCHES);
                 } else { //As datas son menores que a actual
                     etqInfoCoches.setText(TEXTO_ERROR_FECHAS);
