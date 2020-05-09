@@ -503,6 +503,10 @@ public class daoVuelos extends AbstractDAO {
             stmVuelo = con.prepareStatement("SELECT numVuelo, origen, destino, fechaLlegadaReal, \n"
                     + "fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado, \n"
                     + "to_char(fechaLlegadaReal-NOW(),'dd HH24:MI') as tiempoRestante \n"
+                    + "from vuelo v \n"
+                    + "where fechallegadareal between (now() + '-30 min') and (now() + '1 days')\n"
+                    + "  and v.destino = ? \n"
+                    + "ORDER BY fechaLlegadaReal asc");
                     + "FROM vuelo v \n"
                     + "WHERE fechallegadareal between (now() + '-30 min') and (now() + '1 days') \n"
                     + "and v.destino = ? \n"

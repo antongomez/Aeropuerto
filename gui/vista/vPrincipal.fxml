@@ -1002,7 +1002,7 @@
                                                             <Label prefHeight="31.0" styleClass="labelRegistrar" text="Nacionalidad predominante pasajeros:" GridPane.rowIndex="3" />
                                                             <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                                <children>
-                                                                  <TextField fx:id="txtFieldNacionalidad" alignment="CENTER" editable="false" prefHeight="31.0" />
+                                                                  <TextField fx:id="txtFieldNacionalidad" editable="false" prefHeight="31.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox GridPane.columnIndex="1">
