@@ -895,14 +895,14 @@
                                     <Button fx:id="btnActualizarSL" mnemonicParsing="false" onAction="#actualizarSL" text="Actualizar" />
                                     <TableView fx:id="tablaSalidasLlegadas">
                                       <columns>
-                                        <TableColumn fx:id="colVueloSL" minWidth="90.0" resizable="false" text="Vuelo" />
-                                        <TableColumn fx:id="colOrigenSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Origen" />
-                                          <TableColumn fx:id="colDestinoSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Destino" />
-                                          <TableColumn fx:id="colTerminalSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Terminal" />
-                                          <TableColumn fx:id="colPuertaSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Puerta" />
-                                          <TableColumn fx:id="colFechaSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Salida" />
-                                          <TableColumn fx:id="colEstadoSL" minWidth="120.0" prefWidth="120.0" resizable="false" text="Estado" />
-                                          <TableColumn fx:id="colTRestanteSL" prefWidth="-1.0" resizable="false" text="Tiempo" />
+                                        <TableColumn fx:id="colVueloSL" minWidth="100.0" prefWidth="-1.0" text="Vuelo" />
+                                        <TableColumn fx:id="colOrigenSL" minWidth="100.0" prefWidth="-1.0" text="Origen" />
+                                          <TableColumn fx:id="colDestinoSL" minWidth="100.0" prefWidth="-1.0" text="Destino" />
+                                          <TableColumn fx:id="colTerminalSL" minWidth="100.0" prefWidth="-1.0" text="Terminal" />
+                                          <TableColumn fx:id="colPuertaSL" minWidth="100.0" prefWidth="-1.0" text="Puerta" />
+                                          <TableColumn fx:id="colFechaSL" minWidth="100.0" prefWidth="-1.0" text="Salida" />
+                                          <TableColumn fx:id="colEstadoSL" minWidth="100.0" prefWidth="-1.0" text="Estado" />
+                                          <TableColumn fx:id="colTRestanteSL" minWidth="100.0" prefWidth="-1.0" text="Tiempo" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
