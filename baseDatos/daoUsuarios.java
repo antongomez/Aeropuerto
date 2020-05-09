@@ -28,9 +28,9 @@ public class daoUsuarios extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmUsuario = con.prepareStatement("insert into usuario(dni,id,correoElectronico,contrasenha, nombre,"
-                    + " primerApellido, segundoApellido, paisProcedencia, telefono, sexo) "
-                    + "values (?,?,?,crypt(?, gen_salt('md5')),?,?,?,?,?,?)");
+            stmUsuario = con.prepareStatement("INSERT into usuario(dni,id,correoElectronico,contrasenha, nombre, \n"
+                    + "primerApellido, segundoApellido, paisProcedencia, telefono, sexo) "
+                    + "VALUES(?,?,?,crypt(?, gen_salt('md5')),?,?,?,?,?,?)");
 
             stmUsuario.setString(1, u.getDni());
             stmUsuario.setString(2, u.getId());
@@ -87,10 +87,10 @@ public class daoUsuarios extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmUsuario = con.prepareStatement("select dni,id,correoElectronico,contrasenha, nombre,"
-                    + " primerApellido, segundoApellido, paisProcedencia, telefono, sexo "
-                    + "from usuario "
-                    + "where id = ? and contrasenha = crypt(?, contrasenha)");
+            stmUsuario = con.prepareStatement("SELECT dni,id,correoElectronico,contrasenha, nombre,\n"
+                    + "primerApellido, segundoApellido, paisProcedencia, telefono, sexo \n"
+                    + "FROM usuario \n"
+                    + "WHERE id = ? and contrasenha = crypt(?, contrasenha)");
             stmUsuario.setString(1, idUsuario);
             stmUsuario.setString(2, clave);
             rsUsuario = stmUsuario.executeQuery();
@@ -100,9 +100,9 @@ public class daoUsuarios extends AbstractDAO {
                 //Administrador
                 try {
 
-                    stmAdmin = con.prepareStatement("select usuario,fechainicio,curriculum "
-                            + "from administrador "
-                            + "where usuario = ? ");
+                    stmAdmin = con.prepareStatement("SELECT usuario,fechainicio,curriculum \n"
+                            + "FROM administrador \n"
+                            + "WHERE usuario = ? ");
                     stmAdmin.setString(1, rsUsuario.getString("dni"));
                     rsAdmin_PL = stmAdmin.executeQuery();
 
@@ -130,9 +130,9 @@ public class daoUsuarios extends AbstractDAO {
                 if (!esAdmin) {
                     try {
                         //Personal Laboral
-                        stmPL = con.prepareStatement("select usuario, labor, descripciontarea, fechainicio "
-                                + "from personallaboral "
-                                + "where usuario = ? ");
+                        stmPL = con.prepareStatement("SELECT usuario, labor, descripciontarea, fechainicio \n"
+                                + "FROM personallaboral \n"
+                                + "WHERE usuario = ? ");
                         stmPL.setString(1, rsUsuario.getString("dni"));
                         rsAdmin_PL = stmPL.executeQuery();
 
@@ -194,9 +194,9 @@ public class daoUsuarios extends AbstractDAO {
 
         try {
 
-            stmUsuario = con.prepareStatement("update usuario "
-                    + "set contrasenha=crypt(?,gen_salt('md5')) "
-                    + "where id=?");
+            stmUsuario = con.prepareStatement("UPDATE usuario \n"
+                    + "SET contrasenha=crypt(?,gen_salt('md5')) \n"
+                    + "WHERE id=?");
 
             stmUsuario.setString(1, clave);
             stmUsuario.setString(2, idUsuario);
@@ -228,11 +228,11 @@ public class daoUsuarios extends AbstractDAO {
 
         try {
 
-            stmUsuario = con.prepareStatement("update usuario "
-                    + "set id=?,correoElectronico=?, nombre=?,"
-                    + "primerApellido=?, segundoApellido=?, paisProcedencia=?,"
-                    + "telefono=?,sexo=? "
-                    + "where dni=?");
+            stmUsuario = con.prepareStatement("UPDATE usuario \n"
+                    + "SET id=?,correoElectronico=?, nombre=?, \n"
+                    + "primerApellido=?, segundoApellido=?, paisProcedencia=?, \n"
+                    + "telefono=?,sexo=? \n"
+                    + "WHERE dni=?");
 
             stmUsuario.setString(1, us.getId());
             stmUsuario.setString(2, us.getEmail());
@@ -250,7 +250,9 @@ public class daoUsuarios extends AbstractDAO {
             /*Si es admin se actualiza el curriculum*/
             if (us instanceof Administrador) {
                 try {
-                    stmAdmin = con.prepareStatement("update administrador set curriculum=? where usuario=?");
+                    stmAdmin = con.prepareStatement("UPDATE administrador \n"
+                            + "SET curriculum=? \n"
+                            + "WHERE usuario=?");
                     stmAdmin.setString(1, ((Administrador) us).getCurriculum());
                     stmAdmin.setString(2, us.getDni());
                     stmAdmin.executeUpdate();
@@ -306,7 +308,9 @@ public class daoUsuarios extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmUsuario = con.prepareStatement("delete from usuario where dni = ?");
+            stmUsuario = con.prepareStatement("DELETE \n"
+                    + "FROM usuario \n"
+                    + "WHERE dni = ?");
             stmUsuario.setString(1, dni);
             stmUsuario.executeUpdate();
             correcto = true;
@@ -349,64 +353,68 @@ public class daoUsuarios extends AbstractDAO {
             aux = "Estacion(v.fechaSalidaReal)";
         }
 
-        consulta = "select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa, billete.vecesViajadas as veces\n"
-                + "from \n"
-                + "(select cb.usuario as usuario, a.aerolinea as aerolineaFav\n"
-                + "from comprarbillete cb, vuelo v, avion a \n"
-                + "where cb.usuario = ?\n"
-                + " and cb.vuelo = v.numvuelo\n"
-                + " and v.avion = a.codigo\n"
-                + " and " + aux + " = ?\n"
-                + " and v.cancelado = false \n"
-                + "group by a.aerolinea, cb.usuario \n"
-                + "having count(*)>=all (select count(*)\n"
-                + "					from comprarbillete cb, vuelo v, avion a \n"
-                + "					where cb.usuario = ?\n"
-                + "					  and cb.vuelo = v.numvuelo \n"
-                + "					  and v.avion = a.codigo \n"
-                + "					  and " + aux + " = ?\n "
-                + "                                       and v.cancelado = false \n"
-                + "					group by a.aerolinea)) as aerolinea natural full join\n"
-                + "					\n"
-                + "(select cb.usuario as usuario, v.destino as destinoFav\n"
-                + "from comprarbillete cb, vuelo v \n"
-                + "where cb.usuario = ?\n"
-                + "  and v.destino != 'Folgoso do Courel'\n"
-                + "  and cb.vuelo = v.numvuelo\n"
-                + "  and " + aux + " = ?\n"
-                + "  and v.cancelado = false \n"
-                + "group by v.destino, cb.usuario\n"
-                + "having count(*)>=all(select count(*)\n"
-                + "					from comprarbillete cb, vuelo v \n"
-                + "					where cb.usuario = ?\n"
-                + "					  and v.destino != 'Folgoso do Courel'\n"
-                + "					  and cb.vuelo = v.numvuelo\n"
-                + "					  and " + aux + " = ?\n"
-                + "                                       and v.cancelado = false \n"
-                + "					group by v.destino)) as destino natural full join\n"
-                + "					\n"
-                + "(select cb.usuario as usuario, tipoAsiento as tarifaFav\n"
-                + "from comprarbillete cb, vuelo v \n"
-                + "where cb.usuario = ?\n"
-                + "  and cb.vuelo = v.numvuelo\n"
-                + "  and " + aux + " = ? \n"
-                + "  and v.cancelado = false \n"
-                + "group by tipoAsiento, cb.usuario\n"
-                + "having count(*)>=all(select count(*)\n"
-                + "					from comprarbillete cb, vuelo v \n"
-                + "					where cb.usuario = ?\n"
-                + "					  and cb.vuelo = v.numvuelo\n"
-                + "					  and " + aux + " = ?\n"
-                + "                                       and v.cancelado = false \n"
-                + "					group by cb.tipoAsiento)) as tarifa natural full join\n"
-                + "					\n"
-                + "(select cb.usuario as usuario, count(*) as vecesViajadas\n"
-                + "from comprarBillete cb, vuelo v \n"
-                + "where cb.usuario = ?\n"
-                + "  and cb.vuelo = v.numvuelo \n"
-                + "  and v.cancelado = false\n"
-                + "  and " + aux + " = ?\n"
-                + "group by cb.usuario) as billete";
+        consulta = "SELECT aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, \n"
+                + "tarifa.tarifaFav as tarifa, billete.vecesViajadas as veces \n"
+                + "FROM (SELECT cb.usuario as usuario, a.aerolinea as aerolineaFav \n"
+                + "      FROM comprarbillete cb, vuelo v, avion a \n"
+                + "      WHERE cb.usuario = ? \n"
+                + "      and cb.vuelo = v.numvuelo\n"
+                + "      and v.avion = a.codigo \n"
+                + "      and " + aux + " = ? \n"
+                + "      and v.cancelado = false \n"
+                + "      GROUP BY a.aerolinea, cb.usuario \n"
+                + "      HAVING count(*)>=all (SELECT count(*) \n"
+                + "                            FROM comprarbillete cb, vuelo v, avion a \n"
+                + "                            WHERE cb.usuario = ? \n"
+                + "                            and cb.vuelo = v.numvuelo \n"
+                + "                            and v.avion = a.codigo \n"
+                + "                            and " + aux + " = ? \n "
+                + "                            and v.cancelado = false \n"
+                + "                            GROUP BY a.aerolinea)) \n"
+                + "as aerolinea \n"
+                + "NATURAL FULL JOIN \n"
+                + "     (SELECT cb.usuario as usuario, v.destino as destinoFav \n"
+                + "      FROM comprarbillete cb, vuelo v \n"
+                + "      WHERE cb.usuario = ? \n"
+                + "      and v.destino != 'Folgoso do Courel' \n"
+                + "      and cb.vuelo = v.numvuelo \n"
+                + "      and " + aux + " = ? \n"
+                + "      and v.cancelado = false \n"
+                + "      GROUP BY v.destino, cb.usuario\n"
+                + "      HAVING count(*)>=all(SELECT count(*) \n"
+                + "                           FROM comprarbillete cb, vuelo v \n"
+                + "                           WHERE cb.usuario = ? \n"
+                + "                           and v.destino != 'Folgoso do Courel' \n"
+                + "                           and cb.vuelo = v.numvuelo \n"
+                + "                           and " + aux + " = ? \n"
+                + "                           and v.cancelado = false \n"
+                + "                           GROUP BY v.destino)) \n"
+                + "as destino \n"
+                + "NATURAL FULL JOIN \n"
+                + "     (SELECT cb.usuario as usuario, tipoAsiento as tarifaFav \n"
+                + "      FROM comprarbillete cb, vuelo v \n"
+                + "      WHERE cb.usuario = ? \n"
+                + "      and cb.vuelo = v.numvuelo \n"
+                + "      and " + aux + " = ? \n"
+                + "      and v.cancelado = false \n"
+                + "      GROUP BY tipoAsiento, cb.usuario \n"
+                + "      HAVING count(*)>=all(SELECT count(*) \n"
+                + "                           FROM comprarbillete cb, vuelo v \n"
+                + "                           WHERE cb.usuario = ? \n"
+                + "                           and cb.vuelo = v.numvuelo \n"
+                + "                           and " + aux + " = ? \n"
+                + "                           and v.cancelado = false \n"
+                + "                           GROUP BY cb.tipoAsiento)) \n"
+                + "as tarifa \n"
+                + "NATURAL FULL JOIN \n"
+                + "     (SELECT cb.usuario as usuario, count(*) as vecesViajadas \n"
+                + "      FROM comprarBillete cb, vuelo v \n"
+                + "      WHERE cb.usuario = ? \n"
+                + "      and cb.vuelo = v.numvuelo \n"
+                + "      and v.cancelado = false \n"
+                + "      and " + aux + " = ? \n"
+                + "      GROUP BY cb.usuario) \n"
+                + "as billete";
 
         try {
             stmUsuario = con.prepareStatement(consulta);
@@ -465,50 +473,52 @@ public class daoUsuarios extends AbstractDAO {
         String consulta;
         con = this.getConexion();
 
-        consulta = "select aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa \n"
-                + "from \n"
-                + "(select cb.usuario as usuario, a.aerolinea as aerolineaFav\n"
-                + "from comprarbillete cb, vuelo v, avion a \n"
-                + "where cb.usuario = ?\n"
-                + " and cb.vuelo = v.numvuelo\n"
-                + " and v.avion = a.codigo\n"
-                + " and v.cancelado = false \n"
-                + "group by a.aerolinea, cb.usuario\n"
-                + "having count(*)>=all (select count(*)\n"
-                + "					from comprarbillete cb, vuelo v, avion a \n"
-                + "					where cb.usuario = ?\n"
-                + "					  and cb.vuelo = v.numvuelo \n"
-                + "					  and v.avion = a.codigo \n"
-                + "                                       and v.cancelado = false \n"
-                + "					group by a.aerolinea)) as aerolinea natural full join\n"
-                + "					\n"
-                + "(select cb.usuario as usuario, v.destino as destinoFav\n"
-                + "from comprarbillete cb, vuelo v \n"
-                + "where cb.usuario = ?\n"
-                + "  and v.destino != 'Folgoso do Courel'\n"
-                + "  and cb.vuelo = v.numvuelo\n"
-                + "  and v.cancelado = false \n"
-                + "group by v.destino, cb.usuario\n"
-                + "having count(*)>=all(select count(*)\n"
-                + "					from comprarbillete cb, vuelo v \n"
-                + "					where cb.usuario = ?\n"
-                + "					  and v.destino != 'Folgoso do Courel'\n"
-                + "					  and cb.vuelo = v.numvuelo\n"
-                + "                                       and v.cancelado = false \n"
-                + "					group by v.destino)) as destino natural full join\n"
-                + "					\n"
-                + "(select cb.usuario as usuario, tipoAsiento as tarifaFav\n"
-                + "from comprarbillete cb, vuelo v \n"
-                + "where cb.usuario = ?\n"
-                + "  and cb.vuelo = v.numvuelo\n"
-                + "  and v.cancelado = false \n"
-                + "group by tipoAsiento, cb.usuario\n"
-                + "having count(*)>=all(select count(*)\n"
-                + "					from comprarbillete cb, vuelo v \n"
-                + "					where cb.usuario = ?\n"
-                + "					  and cb.vuelo = v.numvuelo \n"
-                + "                                       and v.cancelado = false \n"
-                + "					group by cb.tipoAsiento)) as tarifa ";
+        consulta ="SELECT aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa \n"
+                + "FROM (SELECT cb.usuario as usuario, a.aerolinea as aerolineaFav \n"
+                + "      FROM comprarbillete cb, vuelo v, avion a \n"
+                + "      WHERE cb.usuario = ? \n"
+                + "      and cb.vuelo = v.numvuelo \n"
+                + "      and v.avion = a.codigo \n"
+                + "      and v.cancelado = false \n"
+                + "      GROUP BY a.aerolinea, cb.usuario \n"
+                + "      HAVING count(*)>=all (SELECT count(*) \n"
+                + "                            FROM comprarbillete cb, vuelo v, avion a \n"
+                + "                            WHERE cb.usuario = ? \n"
+                + "                            and cb.vuelo = v.numvuelo \n"
+                + "                            and v.avion = a.codigo \n"
+                + "                            and v.cancelado = false \n"
+                + "                            GROUP BY a.aerolinea)) \n"
+                + "as aerolinea \n"
+                + "NATURAL FULL JOIN \n"
+                + "     (SELECT cb.usuario as usuario, v.destino as destinoFav \n"
+                + "      FROM comprarbillete cb, vuelo v \n"
+                + "      WHERE cb.usuario = ? \n"
+                + "      and v.destino != 'Folgoso do Courel' \n"
+                + "      and cb.vuelo = v.numvuelo\n"
+                + "      and v.cancelado = false \n"
+                + "      GROUP BY v.destino, cb.usuario \n"
+                + "      HAVING count(*)>=all(SELECT count(*) \n"
+                + "                           FROM comprarbillete cb, vuelo v \n"
+                + "                           WHERE cb.usuario = ? \n"
+                + "                           and v.destino != 'Folgoso do Courel' \n"
+                + "                           and cb.vuelo = v.numvuelo \n"
+                + "                           and v.cancelado = false \n"
+                + "                           GROUP BY v.destino)) \n"
+                + "as destino \n"
+                + "NATURAL FULL JOIN \n"
+                + "     (SELECT cb.usuario as usuario, tipoAsiento as tarifaFav \n"
+                + "      FROM comprarbillete cb, vuelo v \n"
+                + "      WHERE cb.usuario = ? \n"
+                + "      and cb.vuelo = v.numvuelo \n"
+                + "      and v.cancelado = false \n"
+                + "      GROUP BY tipoAsiento, cb.usuario \n"
+                + "      HAVING count(*)>=all(SELECT count(*) \n"
+                + "                           FROM comprarbillete cb, vuelo v \n"
+                + "                           WHERE cb.usuario = ? \n"
+                + "                           and cb.vuelo = v.numvuelo \n"
+                + "                           and v.cancelado = false \n"
+                + "                           GROUP BY cb.tipoAsiento)) \n"
+                + "as tarifa";
 
         try {
             stmUsuario = con.prepareStatement(consulta);
@@ -561,7 +571,9 @@ public class daoUsuarios extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmUsuario = con.prepareStatement("select dni, nombre from usuario where dni=?");
+            stmUsuario = con.prepareStatement("SELECT dni, nombre \n"
+                    + "FROM usuario \n"
+                    + "WHERE dni=?");
             stmUsuario.setString(1, dni);
             rsUsuario = stmUsuario.executeQuery();
 
@@ -592,8 +604,9 @@ public class daoUsuarios extends AbstractDAO {
 
         try {
 
-            stmUsuario = con.prepareStatement("update personalexterno set estardentro=true "
-                    + "where usuario=?");
+            stmUsuario = con.prepareStatement("UPDATE personalexterno \n"
+                    + "SET estardentro=true \n"
+                    + "WHERE usuario=?");
 
             stmUsuario.setString(1, dni);
 
@@ -627,8 +640,9 @@ public class daoUsuarios extends AbstractDAO {
 
         try {
 
-            stmUsuario = con.prepareStatement("update personalexterno set estardentro=false "
-                    + "where usuario=?");
+            stmUsuario = con.prepareStatement("UPDATE personalexterno \n"
+                    + "SET estardentro=false \n"
+                    + "WHERE usuario=?");
 
             stmUsuario.setString(1, dni);
 
@@ -662,8 +676,9 @@ public class daoUsuarios extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmHistorial = con.prepareStatement("select count(*)>0 as dentro "
-                    + "from historialtrabajo where personallaboral=? and fechasalida is null");
+            stmHistorial = con.prepareStatement("SELECT count(*)>0 as dentro \n"
+                    + "FROM historialtrabajo \n"
+                    + "WHERE personallaboral=? and fechasalida is null");
             stmHistorial.setString(1, dni);
             rsHistorial = stmHistorial.executeQuery();
 
@@ -692,7 +707,8 @@ public class daoUsuarios extends AbstractDAO {
 
         try {
 
-            stmHist = con.prepareStatement("insert into historialtrabajo(personallaboral) values (?)");
+            stmHist = con.prepareStatement("INSERT into historialtrabajo(personallaboral) \n"
+                    + "VALUES (?)");
 
             stmHist.setString(1, dni);
             stmHist.executeUpdate();
@@ -717,8 +733,9 @@ public class daoUsuarios extends AbstractDAO {
 
         try {
 
-            stmHist = con.prepareStatement("update historialtrabajo set fechasalida=NOW() "
-                    + " where fechasalida is null and personallaboral=?");
+            stmHist = con.prepareStatement("UPDATE historialtrabajo \n"
+                    + "SET fechasalida=NOW() \n"
+                    + "WHERE fechasalida is null and personallaboral=?");
 
             stmHist.setString(1, dni);
             stmHist.executeUpdate();
@@ -744,10 +761,10 @@ public class daoUsuarios extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmHistorial = con.prepareStatement("select fechaentrada,fechasalida "
-                    + " from historialtrabajo where personallaboral=? "
-                    + "and cast(fechaentrada as date)>=? and cast(fechaentrada as date)<=? "
-                    + "order by fechaEntrada desc");
+            stmHistorial = con.prepareStatement("SELECT fechaentrada,fechasalida \n"
+                    + "FROM historialtrabajo where personallaboral=? \n"
+                    + "and cast(fechaentrada as date)>=? and cast(fechaentrada as date)<=? \n"
+                    + "ORDER BY fechaEntrada desc");
             stmHistorial.setString(1, usu.getDni());
             stmHistorial.setTimestamp(2, fechaInicio.toTimestamp());
             stmHistorial.setTimestamp(3, fechaFin.toTimestamp());
@@ -784,9 +801,9 @@ public class daoUsuarios extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmUsuario = con.prepareStatement("select dni "
-                    + "from usuario "
-                    + "where dni=? ");
+            stmUsuario = con.prepareStatement("SELECT dni \n"
+                    + "FROM usuario \n"
+                    + "WHERE dni=? ");
             stmUsuario.setString(1, dni);
             rsUsuario = stmUsuario.executeQuery();
 
@@ -815,8 +832,9 @@ public class daoUsuarios extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmUsu = con.prepareStatement("select labor, descripciontarea "
-                    + "from personallaboral where usuario=?");
+            stmUsu = con.prepareStatement("SELECT labor, descripciontarea \n"
+                    + "FROM personallaboral \n"
+                    + "WHERE usuario=?");
             stmUsu.setString(1, trab.getDni());
             rsUsu = stmUsu.executeQuery();
 
