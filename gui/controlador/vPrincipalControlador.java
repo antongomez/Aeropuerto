@@ -716,7 +716,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 btnDevolver.toFront();
                 btnDevolver.setVisible(true);
                 btnDevolver.setDisable(false);
-            } else if (vueloSelect.getEnCurso()){
+            } else if (vueloSelect.getEnCurso()) {
                 btnComprar.setDisable(true);
                 btnComprar.toFront();
             } else {
@@ -1205,7 +1205,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void seleccionarReservaParking(MouseEvent event) {
         ReservaParking resSelect = tablaReservasParking.getSelectionModel().getSelectedItem();
         if (resSelect != null) {
-            btnCancelarReservaParking.setDisable(false);
+            if (resSelect.getEnCurso()) {
+                btnCancelarReservaParking.setDisable(true);
+            } else {
+                btnCancelarReservaParking.setDisable(false);
+            }
         } else {
             btnCancelarReservaParking.setDisable(true);
         }
@@ -1215,7 +1219,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void seleccionarReservaCoche(MouseEvent event) {
         ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
         if (resSelect != null) {
-            btnCancelarReservaCoche.setDisable(false);
+            if (resSelect.getEnCurso()) {
+                btnCancelarReservaParking.setDisable(true);
+            } else {
+                btnCancelarReservaParking.setDisable(false);
+            }
         } else {
             btnCancelarReservaCoche.setDisable(true);
         }
