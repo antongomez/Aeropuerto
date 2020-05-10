@@ -569,14 +569,16 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         btnBuscarParking.setDisable(true);
         btnBuscarCoches.setDisable(true);
+        btnReservarParking.setDisable(true);
+        btnReservarCoches.setDisable(true);
         hBoxInfoDisponhibilidadeParking.setVisible(false);
         btnCancelarReservaParking.setDisable(true);
         btnCancelarReservaCoche.setDisable(true);
 
-        //Definimos el panel de estadísticas
-        btnAno.setSelected(true);
-        ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-        comboBoxEstUsu.setItems(meses);
+        //Estadisticas
+        opVerVuelo.selectToggle(btnEstacion);
+        ObservableList<String> estaciones = FXCollections.observableArrayList("Primavera", "Verano", "Otoño", "Invierno");
+        comboBoxEstUsu.setItems(estaciones);
         comboBoxEstUsu.getSelectionModel().selectFirst();
 
         //Definimos tabla salidas-llegadas
@@ -803,6 +805,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<ReservaCoche> resCoche = FXCollections.observableArrayList(
                 getInstanceModelo().obterResCocheUsuario(usuario.getDni()));
         tablaReservasCoche.setItems(resCoche);
+        
+        //Estadisticas
+        mostrarEstadisticas();
     }
 
     //MODIFICAR DATOS
@@ -953,7 +958,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionAbrirEstadisticas(Event event) {
         etqInfoEstadisticas2.setVisible(false);
         //Ao entrar poñemos as estatisticas dos anos e seleccionamos o mais recente
-        buscarAnos();
+
         mostrarEstadisticas();
         //Estadisticas globais
         EstadisticasUsuario estadisticasUsuario = getInstanceModelo()
@@ -997,22 +1002,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     + "déjate llevar por los destinos más increíbles.");
         }
 
-    }
-
-    private void buscarAnos() {
-        //Ao entrar poñemos as estatisticas dos anos e seleccionamos o mais recente
-        opVerVuelo.selectToggle(btnAno);
-        ObservableList<String> anhos = FXCollections.observableList(getInstanceModelo().obtenerAnhosViajados(usuario.getDni()));
-        comboBoxEstUsu.setItems(anhos);
-        if (!comboBoxEstUsu.getItems().isEmpty()) {
-            comboBoxEstUsu.getSelectionModel().selectFirst();
-        }
-        String ano = comboBoxEstUsu.getSelectionModel().getSelectedItem();
-        if (ano != null) {
-            etqInfoEstadisticasEspecificas.setText("Estadísticas del " + ano);
-        } else {
-            etqInfoEstadisticasEspecificas.setText("Estadísticas del 2020");
-        }
     }
 
     private void mostrarEstadisticas() {
@@ -1106,6 +1095,21 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     void accionAnho(ActionEvent event) {
         buscarAnos();
         mostrarEstadisticas();
+    }
+
+    private void buscarAnos() {
+        opVerVuelo.selectToggle(btnAno);
+        ObservableList<String> anhos = FXCollections.observableList(getInstanceModelo().obtenerAnhosViajados(usuario.getDni()));
+        comboBoxEstUsu.setItems(anhos);
+        if (!comboBoxEstUsu.getItems().isEmpty()) {
+            comboBoxEstUsu.getSelectionModel().selectFirst();
+        }
+        String ano = comboBoxEstUsu.getSelectionModel().getSelectedItem();
+        if (ano != null) {
+            etqInfoEstadisticasEspecificas.setText("Estadísticas del " + ano);
+        } else {
+            etqInfoEstadisticasEspecificas.setText("Estadísticas del " + Time.diaActual().getAno());
+        }
     }
 
     @FXML
@@ -1257,6 +1261,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         etqTitulo.setText(TITULO_SERV);
         panelServicios.toFront();
 
+        btnReservarCoches.setDisable(true);
     }
 
     //PARKING
@@ -1476,6 +1481,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (!btnBuscarCoches.isDisable()) {
             btnBuscarCoches.fire();
         }
+        btnReservarCoches.setDisable(true);
     }
 
     private void poderBuscarCoches() {
@@ -1668,12 +1674,20 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnInfo(ActionEvent event) {
         panelInfo.toFront();
         etqTitulo.setText(TITULO_INFO);
-        accionSalidas();
+        if (radioBtnSalidas.isSelected()) {
+            accionSalidas();
+        } else {
+            accionLlegadas();
+        }
     }
 
     @FXML
     private void abrirPestanaSL(Event event) {
-        accionSalidas();
+        if (radioBtnSalidas.isSelected()) {
+            accionSalidas();
+        } else {
+            accionLlegadas();
+        }
     }
 
     @FXML
