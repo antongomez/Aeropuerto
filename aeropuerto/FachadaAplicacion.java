@@ -299,13 +299,8 @@ public class FachadaAplicacion extends Application {
     public Aerolinea obtenerDatosAerolinea(String numvuelo) {
         return gv.obtenerDatosAerolinea(numvuelo);
     }
-<<<<<<< HEAD
 
-    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula) {
-        return gr.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula);
-=======
-public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula, String usuario){
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula, String usuario) {
         return gr.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula, usuario);
->>>>>>> Solucion errores
     }
 }

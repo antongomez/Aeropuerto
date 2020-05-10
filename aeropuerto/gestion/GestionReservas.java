@@ -61,14 +61,9 @@ public class GestionReservas {
     public Boolean devolucionCoche(Reserva alquiler) {
         return fbd.devolucionCoche(alquiler);
     }
-<<<<<<< HEAD
-
-    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula) {
-        return fbd.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula);
-=======
+    
     public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula, String usuario){
         return fbd.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula, usuario);
->>>>>>> Solucion errores
     }
 
 }
