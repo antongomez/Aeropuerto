@@ -66,7 +66,7 @@ public class daoTiendas extends AbstractDAO {
                 consulta += "  and terminal = ? \n";
             }
             //Ordenamos os voos por data de saida ascendente
-            consulta += "ORDER BY terminal asc, tipoventas asc, nombre asc ";
+            consulta += "ORDER BY nombre asc, terminal asc ";
 
             stmTiendas = con.prepareStatement(consulta);
             stmTiendas.setString(1, "%" + nombre + "%");
