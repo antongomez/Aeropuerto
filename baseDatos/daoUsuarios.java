@@ -571,14 +571,15 @@ public class daoUsuarios extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmUsuario = con.prepareStatement("SELECT dni, nombre \n"
+            stmUsuario = con.prepareStatement("SELECT dni, nombre, primerApellido, segundoApellido\n"
                     + "FROM usuario \n"
                     + "WHERE dni=?");
             stmUsuario.setString(1, dni);
             rsUsuario = stmUsuario.executeQuery();
 
             if (rsUsuario.next()) {
-                us = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("nombre"));
+                us = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
+                rsUsuario.getString("segundoApellido"));
             }
 
         } catch (SQLException e) {

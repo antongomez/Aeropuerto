@@ -32,9 +32,11 @@ public class Usuario {
 
     }
 
-    public Usuario(String dni, String nombre) {
+    public Usuario(String dni, String nombre, String ap1, String ap2) {
         this.dni = dni;
         this.nombre = nombre;
+        this.ap1=ap1;
+        this.ap2=ap2;
     }
 
     public String getDni() {

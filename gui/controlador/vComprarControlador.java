@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
 public class vComprarControlador extends Controlador implements Initializable {
 
     private Vuelo vuelo;
+    private Usuario usuarioPrincipal;
     private ObservableList<Usuario> pasajeros;
     private Integer plazasNormalesEnEspera;
     private Integer plazasPremiumEnEspera;
@@ -125,6 +126,7 @@ public class vComprarControlador extends Controlador implements Initializable {
         datosVuelo();
         usuario.comprarVuelo(vuelo.getNumVuelo());
         if (comprobarAsientos(usuario)) {
+            this.usuarioPrincipal = usuario;
             pasajeros.add(usuario);
             tablaPasajeros.getSelectionModel().selectFirst();
             actualizarDatosUsu();
@@ -133,7 +135,7 @@ public class vComprarControlador extends Controlador implements Initializable {
             getVenta().close();
             Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan "
                     + "más plazas para este vuelo", getVenta());
-            
+
         }
     }
 
@@ -192,32 +194,33 @@ public class vComprarControlador extends Controlador implements Initializable {
     private void anhadirPasajero(ActionEvent event) {
         Usuario us = Modelo.getInstanceModelo().obtenerUsuario(textFieldDNI.getText());
         if (us != null) {
-            us.comprarVuelo(vuelo.getNumVuelo());
-            if (pasajeros.contains(us)) {
-                Modelo.getInstanceModelo().mostrarError("El usuario ya figura como pasajero", getVenta());
-            } else if (Modelo.getInstanceModelo().obtenerVuelosUsuario(us.getDni()).contains(vuelo)) {
-                Modelo.getInstanceModelo().mostrarError("El usuario ya dispone un billete para este vuelo", getVenta());
-            } else if (comprobarAsientos(us)) {
-                pasajeros.add(us);
-                if (pasajeros.size() == 1) {
-                    radioBtnPremium.setDisable(true);
-                    radioBtnAcompanhante.setDisable(true);
-                    comboBoxAsiento.setDisable(true);
-                    comboBoxNumMaletas.setDisable(true);
-                    btnPagar.setDisable(false);
+            if (Modelo.getInstanceModelo().mostrarConfirmacion("- Dni: " + us.getDni() + "\n"
+                    + "- Nombre: " + us.getNombre() + "\n"
+                    + "- Primer apellido: " + us.getAp1() + "\n"
+                    + "- Segundo apellido: " + us.getAp2() + "\n"
+                    + "¿Es este el usuario que quieres añadir a la lista de pasajeros?", getVenta())) {
+                us.comprarVuelo(vuelo.getNumVuelo());
+                if (pasajeros.contains(us)) {
+                    Modelo.getInstanceModelo().mostrarError("El usuario ya figura como pasajero", getVenta());
+                } else if (Modelo.getInstanceModelo().obtenerVuelosUsuario(us.getDni()).contains(vuelo)) {
+                    Modelo.getInstanceModelo().mostrarError("El usuario ya dispone un billete para este vuelo", getVenta());
+                } else if (comprobarAsientos(us)) {
+                    pasajeros.add(us);
+                    tablaPasajeros.getSelectionModel().selectLast();
+                    actualizarDatosUsu();
+                    actualizarPrecio();
+                } else {
+                    Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan "
+                            + "más plazas para este vuelo", getVenta());
                 }
-                tablaPasajeros.getSelectionModel().selectLast();
-                actualizarDatosUsu();
-                actualizarPrecio();
-            }
-            else{
-                Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan "
-                    + "más plazas para este vuelo", getVenta());
+            } else{
+                Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
             }
         } else {
             Modelo.getInstanceModelo().mostrarError("Usuario no registrado.\n"
                     + "Debe registrarse antes de volar con nostros.", getVenta());
         }
+        textFieldDNI.clear();
     }
 
     @FXML
@@ -348,7 +351,6 @@ public class vComprarControlador extends Controlador implements Initializable {
     //Función que comprueba disponibilidad de asientos 
     public boolean comprobarAsientos(Usuario usuario) {
         if (plazasPremiumEnEspera == 0 && plazasNormalesEnEspera == 0) {
-            
             return false;
         } else if (plazasPremiumEnEspera == 0) {
             radioBtnPremium.setSelected(false);
@@ -437,24 +439,40 @@ public class vComprarControlador extends Controlador implements Initializable {
     private void eliminarPasajero(ActionEvent event) {
         Usuario pasajeroSelect = tablaPasajeros.getSelectionModel().getSelectedItem();
         if (pasajeroSelect != null) {
-            if (pasajeroSelect.getVueloEnEspera().getPremium()) {
-                vuelo.getAsientosPremiumDisponibles().replace(pasajeroSelect.getVueloEnEspera().getAsiento(), true);
+            if (Modelo.getInstanceModelo().mostrarConfirmacion("- Dni: " + pasajeroSelect.getDni() + "\n"
+                    + "- Nombre: " + pasajeroSelect.getNombre() + "\n"
+                    + "- Primer apellido: " + pasajeroSelect.getAp1() + "\n"
+                    + "- Segundo apellido: " + pasajeroSelect.getAp2()+"\n"
+                    + "¿Estás seguro de que quieres eliminar de la lista de pasajeros a "
+                    + "este usuario?", getVenta())) {
+                if (!pasajeroSelect.equals(this.usuarioPrincipal)) {
+                    if (pasajeroSelect.getVueloEnEspera().getPremium()) {
+                        vuelo.getAsientosPremiumDisponibles().replace(pasajeroSelect.getVueloEnEspera().getAsiento(), true);
+                        this.plazasPremiumEnEspera += 1;
+                    } else {
+                        vuelo.getAsientosNormalesDisponibles().replace(pasajeroSelect.getVueloEnEspera().getAsiento(), true);
+                        this.plazasNormalesEnEspera += 1;
+                    }
+                    pasajeros.remove(pasajeroSelect);
+                    if (pasajeros.size() > 0) {
+                        tablaPasajeros.getSelectionModel().selectFirst();
+                        actualizarDatosUsu();
+                        actualizarPrecio();
+                    } else {
+                        Float precio = (float) (Math.round((float) 0 * 100d) / 100d);
+                        txtFieldPrecioTotal.setText("0");
+                        radioBtnPremium.setDisable(true);
+                        radioBtnAcompanhante.setDisable(true);
+                        comboBoxAsiento.setDisable(true);
+                        comboBoxNumMaletas.setDisable(true);
+                        btnPagar.setDisable(true);
+                    }
+                } else {
+                    Modelo.getInstanceModelo().mostrarNotificacion("No te puedes eliminar a ti mismo de la lista de pasajeros. "
+                            + "El usuario encargado de la compra debe figurar como pasajero.", getVenta());
+                }
             } else {
-                vuelo.getAsientosNormalesDisponibles().replace(pasajeroSelect.getVueloEnEspera().getAsiento(), true);
-            }
-            pasajeros.remove(pasajeroSelect);
-            if (pasajeros.size() > 0) {
-                tablaPasajeros.getSelectionModel().selectFirst();
-                actualizarDatosUsu();
-                actualizarPrecio();
-            } else {
-                Float precio = (float) (Math.round((float) 0 * 100d) / 100d);
-                txtFieldPrecioTotal.setText("0");
-                radioBtnPremium.setDisable(true);
-                radioBtnAcompanhante.setDisable(true);
-                comboBoxAsiento.setDisable(true);
-                comboBoxNumMaletas.setDisable(true);
-                btnPagar.setDisable(true);
+                Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
             }
         }
 
