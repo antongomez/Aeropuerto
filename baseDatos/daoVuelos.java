@@ -82,14 +82,18 @@ public class daoVuelos extends AbstractDAO {
                     + "WHERE numvuelo like ? \n"
                     + "and origen like ? \n"
                     + "and destino like ? \n";
+            
+/*Si se introdujo una fecha de salida distinta a la actual se filtra por esa fecha de salida. Si la fecha
+            es igual a la actual o no se introdujo ninguna (en este caso se pasa un null) filtramos por por fecha de llegada para poder mostrar
+            aquellos vuelos que están en curso*/
 
             if (fechaSalida != null) {
-                consulta += "  and fechallegadareal >= ? \n";
+                consulta += "  and fechasalidareal >= ? \n";
             } else {
-                consulta += "  and fechallegadareal >= now() \n"; //+ '-30 min' ";
+                consulta += "  and fechallegadareal >= now() \n"; 
             }
             //Ordenamos os voos por data de saida ascendente
-            consulta += "ORDER BY fechasalidateorica asc, fechallegadateorica desc";
+            consulta += "ORDER BY fechasalidareal asc, fechallegadareal desc";
 
             stmVuelo = con.prepareStatement(consulta);
             stmVuelo.setString(1, "%" + numVuelo + "%");
@@ -307,6 +311,7 @@ public class daoVuelos extends AbstractDAO {
         }
 
     }
+    /*Obtiene qué asientos están disponibles*/
 
     public void obtenerAsientos(Vuelo vuelo) {
         Connection con;
@@ -318,20 +323,14 @@ public class daoVuelos extends AbstractDAO {
         try {
             stmAsientos = con.prepareStatement("SELECT numAsiento \n"
                     + "FROM comprarbillete \n"
-                    + "WHERE vuelo = ? and tipoAsiento = 'normal' ");
+                    + "WHERE vuelo = ? ");
             stmAsientos.setString(1, vuelo.getNumVuelo());
             rsAsientos = stmAsientos.executeQuery();
             while (rsAsientos.next()) {
                 vuelo.getAsientosNormalesDisponibles().replace(rsAsientos.getInt("numAsiento"), false);
-            }
-            stmAsientos = con.prepareStatement("SELECT numAsiento \n"
-                    + "FROM comprarbillete \n"
-                    + "WHERE vuelo = ? and tipoAsiento = 'premium' ");
-            stmAsientos.setString(1, vuelo.getNumVuelo());
-            rsAsientos = stmAsientos.executeQuery();
-            while (rsAsientos.next()) {
                 vuelo.getAsientosPremiumDisponibles().replace(rsAsientos.getInt("numAsiento"), false);
             }
+            
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

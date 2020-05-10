@@ -94,7 +94,8 @@ public class FachadaBaseDatos {
     public Usuario comprobarCredenciales(String id, String cont) {
         return daoUsuarios.comprobarCredenciales(id, cont);
     }
-
+/*si fechaSalida es null se entenderá que se buscan a partir de la fecha actual incluidos aquellos vuelos
+    en curso*/
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
         return daoVuelos.buscarVuelos(numVuelo, origen, destino, fechaSalida);
     }

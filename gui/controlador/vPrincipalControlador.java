@@ -703,7 +703,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @FXML
     private void accionBtnComprar(ActionEvent event) {
-        //Creamos unha venta filla da princiapl
+        //Creamos unha venta filla da princiapal
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
         //Seleccionamos o voo que se vai comprar

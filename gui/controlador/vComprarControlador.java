@@ -131,6 +131,9 @@ public class vComprarControlador extends Controlador implements Initializable {
             actualizarPrecio();
         } else {
             getVenta().close();
+            Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan "
+                    + "más plazas para este vuelo", getVenta());
+            
         }
     }
 
@@ -206,6 +209,10 @@ public class vComprarControlador extends Controlador implements Initializable {
                 tablaPasajeros.getSelectionModel().selectLast();
                 actualizarDatosUsu();
                 actualizarPrecio();
+            }
+            else{
+                Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan "
+                    + "más plazas para este vuelo", getVenta());
             }
         } else {
             Modelo.getInstanceModelo().mostrarError("Usuario no registrado.\n"
@@ -341,8 +348,7 @@ public class vComprarControlador extends Controlador implements Initializable {
     //Función que comprueba disponibilidad de asientos 
     public boolean comprobarAsientos(Usuario usuario) {
         if (plazasPremiumEnEspera == 0 && plazasNormalesEnEspera == 0) {
-            Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan "
-                    + "más plazas para este vuelo", getVenta());
+            
             return false;
         } else if (plazasPremiumEnEspera == 0) {
             radioBtnPremium.setSelected(false);
