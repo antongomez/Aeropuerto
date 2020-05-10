@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 
 public class daoVuelos extends AbstractDAO {
@@ -20,49 +22,7 @@ public class daoVuelos extends AbstractDAO {
         super.setFachadaAplicacion(fa);
     }
 
-    public Boolean insertarVuelo(Vuelo v) {//true si se insertó y false si no
-        Connection con;
-        PreparedStatement stmVuelo = null;
-        Boolean correcto;
-
-        con = super.getConexion();
-
-        try {
-            stmVuelo = con.prepareStatement("INSERT into vuelo(numvuelo,origen,destino, \n"
-                    + "fechasalidateorica, fechasalidareal, fechallegadateorica, \n"
-                    + "fechallegadareal, precioactual, puertaembarque, cancelado, \n"
-                    + "terminal,avion) \n"
-                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
-            stmVuelo.setString(1, v.getNumVuelo());
-            stmVuelo.setString(2, v.getOrigen());
-            stmVuelo.setString(3, v.getDestino());
-            stmVuelo.setString(4, v.getFechasalidaTeo().getStringSql());
-            stmVuelo.setString(5, v.getFechasalidaReal().getStringSql());
-            stmVuelo.setString(6, v.getFechallegadaTeo().getStringSql());
-            stmVuelo.setString(7, v.getFechallegadaReal().getStringSql());
-            stmVuelo.setFloat(8, v.getPrecioActual());
-            stmVuelo.setInt(9, v.getPuertaEmbarque());
-            stmVuelo.setBoolean(10, v.getCancelado());
-            stmVuelo.setInt(11, v.getTerminal());
-            stmVuelo.setString(12, v.getAvion().getCodigo());
-
-            stmVuelo.executeUpdate();
-            correcto = true;
-
-        } catch (SQLException e) {
-            getFachadaAplicacion().mostrarError(e.getMessage());
-            correcto = false;
-        } finally {
-            try {
-                stmVuelo.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-                correcto = false;
-            }
-        }
-        return correcto;
-    }
-
+   
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
         List<Vuelo> resultado = new ArrayList<>();
         Vuelo vueloActual;
@@ -350,6 +310,7 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
+            con.setAutoCommit(false);
             stmBillete = con.prepareStatement("INSERT into comprarbillete(usuario,vuelo,numAsiento, \n"
                     + "tipoAsiento, numMaletasReserva, tenerAcompanhante, \n"
                     + "precioBillete) \n"
@@ -370,12 +331,25 @@ public class daoVuelos extends AbstractDAO {
                 stmBillete.executeUpdate();
             }
             correcto = true;
+            con.commit();
+            
         } catch (SQLException e) {
             getFachadaAplicacion().mostrarError(e.getMessage());
             correcto = false;
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
         } finally {
             try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+            try {
                 stmBillete.close();
+                
             } catch (SQLException e) {
                 correcto = false;
                 System.out.println("Imposible cerrar cursores");
@@ -540,7 +514,10 @@ public class daoVuelos extends AbstractDAO {
             //Solo se puede pasar el control si el vuelo no salió aún o faltan más de 12 horas para su salida
             stmComprobacion = con.prepareStatement("SELECT numvuelo \n"
                     + "FROM vuelo \n"
-                    + "WHERE numvuelo=? and fechasalidareal between NOW() and (NOW()+'12 hr')");
+                    + "WHERE numvuelo=? and fechasalidareal between NOW() and (NOW()+'12 hr') and cancelado=false ");
+            /*Nos interesa que los datos que se lean sean los mismos en el momento de hacer la inserción.
+            Por ejemplo, podría cancelarse el vuelo entre la lectura y la inserción y esto no puede */
+            con.setAutoCommit(false);
             stmComprobacion.setString(1, vuelo);
             rsComprobacion = stmComprobacion.executeQuery();
             if (rsComprobacion.next()) {
@@ -553,10 +530,13 @@ public class daoVuelos extends AbstractDAO {
 
                     stmUsuario.setString(1, dni);
                     stmUsuario.setString(2, vuelo);
+                    Integer actualizado=stmUsuario.executeUpdate();
+                    con.commit();
 
-                    if (stmUsuario.executeUpdate() > 0) {
+                    if (actualizado > 0) {
                         correcto = true;
                     }
+                    
 
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
@@ -570,6 +550,8 @@ public class daoVuelos extends AbstractDAO {
                     }
                 }
             } else {
+                /*En caso de que el vuelo no tenga permitido pasar el control debemos confirmar la transacción*/
+                con.commit();
                 this.getFachadaAplicacion().mostrarError("Estos datos no corresponden con ningún billete actual");
 
                 correcto = false;
@@ -581,6 +563,11 @@ public class daoVuelos extends AbstractDAO {
 
             correcto = false;
         } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
             try {
                 stmComprobacion.close();
             } catch (SQLException e) {
@@ -715,7 +702,8 @@ public class daoVuelos extends AbstractDAO {
             //Solo se puede facturar si el vuelo no salió aún
             stmComprobacion = con.prepareStatement("SELECT numvuelo \n"
                     + "FROM vuelo \n"
-                    + "WHERE numvuelo=? and fechasalidareal>NOW()");
+                    + "WHERE numvuelo=? and fechasalidareal>NOW() and cancelado=false ");
+            con.setAutoCommit(false);
             stmComprobacion.setString(1, vuelo);
             rsComprobacion = stmComprobacion.executeQuery();
             if (rsComprobacion.next()) {
@@ -729,6 +717,7 @@ public class daoVuelos extends AbstractDAO {
                     stmVuelo.setFloat(3, peso);
 
                     stmVuelo.executeUpdate();
+                    con.commit();
 
                 } catch (SQLException e) {
 
@@ -748,6 +737,7 @@ public class daoVuelos extends AbstractDAO {
                     }
                 }
             } else {
+                con.commit();
                 this.getFachadaAplicacion().mostrarError("Estos datos no se corresponden con ningún billete actual");
 
                 correcto = false;
@@ -759,6 +749,11 @@ public class daoVuelos extends AbstractDAO {
 
             correcto = false;
         } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
             try {
                 stmComprobacion.close();
             } catch (SQLException e) {

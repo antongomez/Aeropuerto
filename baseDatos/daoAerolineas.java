@@ -34,6 +34,8 @@ public class daoAerolineas extends AbstractDAO {
         con = super.getConexion();
 
         try {
+            
+            
             //Estadisticas sobre las aerolineas y los aviones
             stmEst1 = con.prepareStatement("SELECT (CASE count(*) when 0 then 0 else sum(anhofabricacion)/count(*) end) as anhomedio, \n"
                     + "(CASE count(*) when 0 then 0 else sum(capacidadpremium+capacidadnormal)/count(*) end) as capmedia, \n"

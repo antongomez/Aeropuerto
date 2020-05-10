@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class daoUsuarios extends AbstractDAO {
 
@@ -98,7 +100,8 @@ public class daoUsuarios extends AbstractDAO {
             if (rsUsuario.next()) {
                 //Administrador
                 try {
-
+                    /*Aunque haya varias consultas, todas son de lectura y ya tenemos garantizado que se hagan sobre los 
+                    mismos datos, pues en la aplicación no se permite cambiar nunca el dni del usuario (que es el dato empleado)*/
                     stmAdmin = con.prepareStatement("SELECT usuario,fechainicio,curriculum \n"
                             + "FROM administrador \n"
                             + "WHERE usuario = ? ");
@@ -232,7 +235,7 @@ public class daoUsuarios extends AbstractDAO {
                     + "primerApellido=?, segundoApellido=?, paisProcedencia=?, \n"
                     + "telefono=?,sexo=? \n"
                     + "WHERE dni=?");
-
+            con.setAutoCommit(false);
             stmUsuario.setString(1, us.getId());
             stmUsuario.setString(2, us.getEmail());
             stmUsuario.setString(3, us.getNombre());
@@ -255,7 +258,9 @@ public class daoUsuarios extends AbstractDAO {
                     stmAdmin.setString(1, ((Administrador) us).getCurriculum());
                     stmAdmin.setString(2, us.getDni());
                     stmAdmin.executeUpdate();
+                    con.commit();
                 } catch (SQLException e) {
+                    con.rollback();
                     if (e.getMessage().contains("demasiado largo")) {
                         this.getFachadaAplicacion().mostrarError("El currículum no debe superar los 500 caracteres");
                     } else {
@@ -271,6 +276,8 @@ public class daoUsuarios extends AbstractDAO {
                         correcto = false;
                     }
                 }
+            } else {
+                con.commit();
             }
 
         } catch (SQLException e) {
@@ -289,6 +296,11 @@ public class daoUsuarios extends AbstractDAO {
             correcto = false;
 
         } finally {
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
             try {
                 stmUsuario.close();
             } catch (SQLException e) {
