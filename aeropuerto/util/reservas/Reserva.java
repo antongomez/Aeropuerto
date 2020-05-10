@@ -10,6 +10,7 @@ public abstract class Reserva {
     private String matricula;
     private String usuario;
     private Boolean enCurso;
+    private Boolean devRetraso;
 
     final static Integer CARGO_EXTRA_RETRASO = 20;
 
@@ -33,7 +34,15 @@ public abstract class Reserva {
         this.matricula = matricula;
         this.enCurso = enCurso;
     }
-
+    
+    public Reserva(Timestamp inicio, Timestamp fin, String matricula, Boolean enCurso, Boolean devRetraso) {
+        this.inicio = new Time(inicio);
+        this.fin = new Time(fin);
+        this.matricula = matricula;
+        this.enCurso = enCurso;
+        this.devRetraso= devRetraso;
+    }
+    
     public Reserva(Timestamp inicio, Timestamp fin, String matricula) {
         this.inicio = new Time(inicio);
         this.fin = new Time(fin);
@@ -83,4 +92,9 @@ public abstract class Reserva {
     public String getIniciodate() {
         return inicio.toStringFecha();
     }
+
+    public Boolean getDevRetraso() {
+        return devRetraso;
+    }
+    
 }

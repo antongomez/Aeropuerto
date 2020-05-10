@@ -292,7 +292,7 @@ public class FachadaBaseDatos {
     public Boolean obtenerDatosPersLab(PersonalLaboral trab) {
         return daoUsuarios.obtenerDatosPersLab(trab);
     }
-    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula){
-        return daoReservas.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula);
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula, String usuario){
+        return daoReservas.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula, usuario);
     }
 }

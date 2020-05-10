@@ -254,9 +254,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private TableView<ReservaParking> tablaReservasParking;
     @FXML
-    private TableColumn<ReservaParking, Time> colInicioReservaParking;
+    private TableColumn<ReservaParking, String> colInicioReservaParking;
     @FXML
-    private TableColumn<ReservaParking, Time> colFinReservaParking;
+    private TableColumn<ReservaParking, String> colFinReservaParking;
     @FXML
     private TableColumn<ReservaParking, String> colMatriculaParking;
     @FXML
@@ -271,9 +271,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private TableView<ReservaCoche> tablaReservasCoche;
     @FXML
-    private TableColumn<ReservaCoche, Time> colInicioReservaCoche;
+    private TableColumn<ReservaCoche, String> colInicioReservaCoche;
     @FXML
-    private TableColumn<ReservaCoche, Time> colFinReservaCoche;
+    private TableColumn<ReservaCoche, String> colFinReservaCoche;
     @FXML
     private TableColumn<ReservaCoche, String> colMatriculaCoche;
     @FXML
@@ -560,8 +560,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if ((item != null) && (!empty)) {
                     if (item.getEnCurso()) {
                         setStyle("-fx-background-color: #11ad00;");
-                    } if (item.getDevRetraso()) {
-                        setStyle("-fx-background-color: #b80c00;");
+                        if(item.getDevRetraso()){
+                            setStyle("-fx-background-color: #b80c00;");
+                        }
                     } else {
                         setStyle("");
                     }

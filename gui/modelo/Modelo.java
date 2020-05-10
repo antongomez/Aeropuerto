@@ -311,7 +311,7 @@ public class Modelo {
         return fa.obtenerDatosPersLab(trab);
     }
 
-    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula) {
-        return fa.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula);
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula, String usuario) {
+        return fa.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula, usuario);
     }
 }

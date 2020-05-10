@@ -10,11 +10,10 @@ public class ReservaCoche extends Reserva {
     private Float precioDia;
     private String modelo;
     private Integer retraso;
-    private Boolean devRetraso;
+    
 
     public ReservaCoche(Timestamp inicio, Timestamp fin, String matricula, Boolean enCurso, Boolean devRetraso) {
-        super(inicio, fin, matricula, enCurso);
-        this.devRetraso=devRetraso;
+        super(inicio, fin, matricula, enCurso, devRetraso);
     }
 
     public ReservaCoche(Time inicio, Time fin, String matricula) {
@@ -84,9 +83,5 @@ public class ReservaCoche extends Reserva {
 
     public void setRetraso(Integer retraso) {
         this.retraso = retraso;
-    }
-
-    public Boolean getDevRetraso() {
-        return devRetraso;
     }
 }

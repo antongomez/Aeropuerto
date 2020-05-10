@@ -79,7 +79,7 @@ public class daoReservas extends AbstractDAO {
 
         try {
             stmRes = con.prepareStatement("SELECT r.fechainicioreserva as fechainicio, r.fechafinreserva as fechafin, \n"
-                    + "r.cocheAlquiler as matricula, false as enCurso \n"
+                    + "r.cocheAlquiler as matricula, false as enCurso, false as devRetraso \n"
                     + "FROM reservar as r \n"
                     + "WHERE usuario = ? \n"
                     + "and cast(fechainicioreserva as date)-cast(NOW() as date)>=0 \n"
@@ -91,7 +91,7 @@ public class daoReservas extends AbstractDAO {
                     + "UNION \n"
                     + "SELECT fechaAlquiler as fechainicio, fechaTeoricaDevolucion as fechafin, \n"
                     + "matricula as matricula, true as enCurso, "
-                    + "CASE when (cast(fechaTeoricaDevolucion as date)-(cast(NOW() as date))<0 then true else false end) as devRetraso \n"
+                    + "(CASE when (cast(fechaTeoricaDevolucion as date)-(cast(NOW() as date)))<0 then true else false end) as devRetraso \n"
                     + "FROM alquilar \n"
                     + "WHERE usuario = ? \n"
                     + "and fechaDevolucion is null");
@@ -397,8 +397,8 @@ public class daoReservas extends AbstractDAO {
         }
         return correcto;
     }
-
-    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula) {
+    
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula, String usuario){
         Connection con;
         PreparedStatement stmAlquiler = null;
         ResultSet rsAlquiler;
@@ -412,12 +412,21 @@ public class daoReservas extends AbstractDAO {
                     + "and cochealquiler=?) UNION "
                     + "(select matricula from alquilar where fechaalquiler between cast(? as date) and cast(? as date) "
                     + "and matricula=?) ");
+            stmAlquiler = con.prepareStatement("(select cochealquiler " +
+            "from reservar where cast(fechainicioreserva as date) between cast(? as date) and cast(? as date) " +
+            "and cochealquiler=? "
+          + "and usuario <> ?) UNION " +
+            "(select matricula from alquilar where fechaalquiler between cast(? as date) and cast(? as date) " +
+            "and matricula=?"
+          + "and usuario <> ?) ");
             stmAlquiler.setTimestamp(1, fechaFinOriginal.toTimestamp());
             stmAlquiler.setTimestamp(2, fechaFinNueva.toTimestamp());
             stmAlquiler.setString(3, matricula);
-            stmAlquiler.setTimestamp(4, fechaFinOriginal.toTimestamp());
-            stmAlquiler.setTimestamp(5, fechaFinNueva.toTimestamp());
-            stmAlquiler.setString(6, matricula);
+            stmAlquiler.setString(4, usuario);
+            stmAlquiler.setTimestamp(5, fechaFinOriginal.toTimestamp());
+            stmAlquiler.setTimestamp(6, fechaFinNueva.toTimestamp());
+            stmAlquiler.setString(7, matricula);
+            stmAlquiler.setString(8, usuario);
             rsAlquiler = stmAlquiler.executeQuery();
 
             if (rsAlquiler.next()) {

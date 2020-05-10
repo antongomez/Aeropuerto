@@ -48,11 +48,11 @@ public class VCocheControlador extends Controlador implements Initializable {
     @FXML
     private TableColumn<ReservaCoche, String> columnaMatriculaConReserva;
     @FXML
-    private TableColumn<ReservaCoche, Time> columnaFechaVueltaConReserva;
+    private TableColumn<ReservaCoche, String> columnaFechaVueltaConReserva;
     @FXML
     private TableColumn<ReservaCoche, Float> columnaPrecioConReserva;
     @FXML
-    private TableColumn<ReservaCoche, Time> columnaFechaRecogidaConReserva;
+    private TableColumn<ReservaCoche, String> columnaFechaRecogidaConReserva;
     @FXML
     private TableColumn<ReservaCoche, String> columnaEstadoConReserva;
     @FXML
@@ -224,7 +224,7 @@ public class VCocheControlador extends Controlador implements Initializable {
 
         if (reserva != null) {
             Time fechaFin = new Time(datePickerConReserva.getValue());
-            if (Modelo.getInstanceModelo().sePuedeAmpliarReservaCoche(reserva.getFin(), fechaFin, reserva.getMatricula())) {
+            if (Modelo.getInstanceModelo().sePuedeAmpliarReservaCoche(reserva.getFin(), fechaFin, reserva.getMatricula(), dniUsuarioActual)) {
                 Integer duracionAlquiler = Time.obtenerDias(reserva.getInicio().toLocalDate(), datePickerConReserva.getValue()) + 1;
                 if (!Time.compararMayor(reserva.getInicio(), fechaFin)) {
                     Float precio = (float) (Math.round(duracionAlquiler * reserva.getPrecioDia() * 100d) / 100d);
