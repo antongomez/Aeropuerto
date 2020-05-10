@@ -51,8 +51,9 @@ public class vAccederControlador extends Controlador implements Initializable {
         if (usuario != null) {
             //Creamos unha venta para asignarlla ao controlador
             Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setMaximized(true);
 
-            vPrincipalControlador controlador = ((vPrincipalControlador) loadWindow(getClass().getResource("/gui/vista/vPrincipal.fxml"), "AeroETSE", stage));
+            vPrincipalControlador controlador = ((vPrincipalControlador) loadWindow(getClass().getResource("/gui/vista/vPrincipal.fxml"), "Folgoso do Courel", stage));
 
             //Asignamoslle o usuario e a venta
             controlador.setUsuario(usuario);
@@ -76,7 +77,7 @@ public class vAccederControlador extends Controlador implements Initializable {
         //Creamos unha venta filla de vAcceder
         Stage vRexistrarse = new Stage(StageStyle.DECORATED);
         vRexistrarse.initOwner(getVenta());
-        loadWindow(getClass().getResource("/gui/vista/vRegistrarse.fxml"), "Registrarse", vRexistrarse);
+        loadWindow(getClass().getResource("/gui/vista/vRegistrarse.fxml"), "Folgoso do Courel", vRexistrarse);
         if (labErro.isVisible()) {
             labErro.setVisible(false);
         }

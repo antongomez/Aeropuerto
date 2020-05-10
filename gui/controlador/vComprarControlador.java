@@ -213,7 +213,7 @@ public class vComprarControlador extends Controlador implements Initializable {
                     Modelo.getInstanceModelo().mostrarNotificacion("Lo sentimos, no quedan "
                             + "más plazas para este vuelo", getVenta());
                 }
-            } else{
+            } else {
                 Modelo.getInstanceModelo().mostrarNotificacion("Operación cancelada.", getVenta());
             }
         } else {
@@ -348,7 +348,7 @@ public class vComprarControlador extends Controlador implements Initializable {
         return precio;
     }
 
-    //Función que comprueba disponibilidad de asientos 
+    //Función que comprueba disponibilidad de asientos
     public boolean comprobarAsientos(Usuario usuario) {
         if (plazasPremiumEnEspera == 0 && plazasNormalesEnEspera == 0) {
             return false;
@@ -442,7 +442,7 @@ public class vComprarControlador extends Controlador implements Initializable {
             if (Modelo.getInstanceModelo().mostrarConfirmacion("- Dni: " + pasajeroSelect.getDni() + "\n"
                     + "- Nombre: " + pasajeroSelect.getNombre() + "\n"
                     + "- Primer apellido: " + pasajeroSelect.getAp1() + "\n"
-                    + "- Segundo apellido: " + pasajeroSelect.getAp2()+"\n"
+                    + "- Segundo apellido: " + pasajeroSelect.getAp2() + "\n"
                     + "¿Estás seguro de que quieres eliminar de la lista de pasajeros a "
                     + "este usuario?", getVenta())) {
                 if (!pasajeroSelect.equals(this.usuarioPrincipal)) {

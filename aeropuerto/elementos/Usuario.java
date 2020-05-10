@@ -10,13 +10,11 @@ public class Usuario {
     private String ap2;
     private String paisProcedencia;
     private Integer telefono;
-    private String sexo; //Estaría mejor usar char, pero no se como pasar un char en el dao a la base de datos
-    /*este atributo sirve para guardar los datos de un vuelo concreto de un usuario(confirmado o en proceso)*/
+    private String sexo;
     private CompraVuelo vueloEnEspera;
 
     public Usuario(String dni, String id, String email, String nombre, String ap1, String ap2, String paisProcedencia, Integer telefono, String sexo) {
 
-        //No sé si hay que poner comprobaciones de que no sean nulos, dni correcto y sexo m/h/- si ya lo hace sql
         this.dni = dni;
         this.id = id;
         this.email = email;
@@ -35,8 +33,8 @@ public class Usuario {
     public Usuario(String dni, String nombre, String ap1, String ap2) {
         this.dni = dni;
         this.nombre = nombre;
-        this.ap1=ap1;
-        this.ap2=ap2;
+        this.ap1 = ap1;
+        this.ap2 = ap2;
     }
 
     public String getDni() {

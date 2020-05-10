@@ -26,14 +26,14 @@ public class PersonalLaboral extends Usuario {
     public ArrayList<ElemHistorial> getHistorialTrabajo() {
         return historialTrabajo;
     }
-    public void borrarHistorial(){
-       historialTrabajo.clear();
-    }
-    
-    public void addElemHistorial(ElemHistorial elem){
-        this.historialTrabajo.add(elem);
+
+    public void borrarHistorial() {
+        historialTrabajo.clear();
     }
 
+    public void addElemHistorial(ElemHistorial elem) {
+        this.historialTrabajo.add(elem);
+    }
 
     public String getLabor() {
         return labor;
@@ -58,11 +58,12 @@ public class PersonalLaboral extends Usuario {
     public void setFechaInicio(Time fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-    
-public void setEstaDentro(Boolean dentro){
-    this.estaDentro=dentro;
-}
-public Boolean estaDentro(){
-    return this.estaDentro;
-}
+
+    public void setEstaDentro(Boolean dentro) {
+        this.estaDentro = dentro;
+    }
+
+    public Boolean estaDentro() {
+        return this.estaDentro;
+    }
 }

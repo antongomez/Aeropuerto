@@ -2,7 +2,6 @@ package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Coche;
-import aeropuerto.util.reservas.Reserva;
 import aeropuerto.util.Time;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -85,7 +84,7 @@ public class daoCoches extends AbstractDAO {
 
         return coches;
     }
-    
+
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas, String modelo, String matricula) {
         PreparedStatement stmCoches = null;
         ResultSet rsCoches;
@@ -114,7 +113,7 @@ public class daoCoches extends AbstractDAO {
             if (numPlazas != null) {
                 consulta += "  and nplazas = ? \n";
             }
-            
+
             consulta += "ORDER BY nplazas desc, precioPorDia asc, caballos desc, nPuertas asc";
             stmCoches = con.prepareStatement(consulta);
 
@@ -126,10 +125,10 @@ public class daoCoches extends AbstractDAO {
             stmCoches.setTimestamp(6, llegada.toTimestamp());
             stmCoches.setTimestamp(7, llegada.toTimestamp());
             stmCoches.setTimestamp(8, llegada.toTimestamp());
-            stmCoches.setString(9,"%"+modelo+"%");
-            stmCoches.setString(10, "%"+matricula+"%");
+            stmCoches.setString(9, "%" + modelo + "%");
+            stmCoches.setString(10, "%" + matricula + "%");
 
-            if(numPlazas!=null){
+            if (numPlazas != null) {
                 stmCoches.setInt(11, numPlazas);
             }
 
@@ -159,6 +158,5 @@ public class daoCoches extends AbstractDAO {
 
         return coches;
     }
-    
-    
+
 }

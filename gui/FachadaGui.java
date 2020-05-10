@@ -1,7 +1,6 @@
 package gui;
 
 import aeropuerto.FachadaAplicacion;
-import aeropuerto.elementos.Vuelo;
 import gui.controlador.Controlador;
 import gui.controlador.vAccederControlador;
 import gui.modelo.Modelo;
@@ -28,7 +27,7 @@ public class FachadaGui {
         //Collemos o controlador de Acceder
         vAccederControlador contAcceder = loader.getController();
 
-        primaryStage.setTitle("Aeropuerto");
+        primaryStage.setTitle("Folgoso do Courel");
         primaryStage.setScene(new Scene(root));
 
         contAcceder.setVenta(primaryStage);

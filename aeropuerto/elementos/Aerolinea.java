@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aeropuerto.elementos;
 
-/**
- *
- * @author Esther
- */
 public class Aerolinea {
-    
+
     String nombre;
     String pais;
     Float precioBaseMaleta;
@@ -28,8 +19,9 @@ public class Aerolinea {
         this.precioBaseMaleta = (float) (Math.round(precioBaseMaleta * 100d) / 100d);
         this.pesoBaseMaleta = (float) (Math.round(pesoBaseMaleta * 100d) / 100d);
     }
-    public Aerolinea(String nombre){
-        this.nombre=nombre;
+
+    public Aerolinea(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getNombre() {
@@ -48,7 +40,4 @@ public class Aerolinea {
         return pesoBaseMaleta;
     }
 
-    
-    
-    
 }

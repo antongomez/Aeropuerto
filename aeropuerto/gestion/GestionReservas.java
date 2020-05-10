@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aeropuerto.gestion;
 
 import aeropuerto.util.reservas.Reserva;
@@ -66,7 +61,8 @@ public class GestionReservas {
     public Boolean devolucionCoche(Reserva alquiler) {
         return fbd.devolucionCoche(alquiler);
     }
-    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula){
+
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula) {
         return fbd.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula);
     }
 

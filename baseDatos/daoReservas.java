@@ -1,7 +1,6 @@
 package baseDatos;
 
 import aeropuerto.FachadaAplicacion;
-import aeropuerto.elementos.Coche;
 import aeropuerto.util.reservas.Reserva;
 import aeropuerto.util.Time;
 import aeropuerto.util.reservas.ReservaCoche;
@@ -101,7 +100,7 @@ public class daoReservas extends AbstractDAO {
             rsRes = stmRes.executeQuery();
 
             while (rsRes.next()) {
-                resActual = new ReservaCoche(rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"), 
+                resActual = new ReservaCoche(rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"),
                         rsRes.getString("matricula"), rsRes.getBoolean("enCurso"), rsRes.getBoolean("devRetraso"));
                 resultado.add(resActual);
             }
@@ -281,7 +280,7 @@ public class daoReservas extends AbstractDAO {
             stmRes.setString(2, dniUsuario);
             rsRes = stmRes.executeQuery();
             while (rsRes.next()) {
-                ReservaCoche reserva = new ReservaCoche(rsRes.getTimestamp("fechainicioreserva"), rsRes.getTimestamp("fechafinreserva"), 
+                ReservaCoche reserva = new ReservaCoche(rsRes.getTimestamp("fechainicioreserva"), rsRes.getTimestamp("fechafinreserva"),
                         rsRes.getString("matricula"), rsRes.getString("modelo"), rsRes.getFloat("preciodia"), rsRes.getString("estado"));
                 resultado.add(reserva);
             }
@@ -398,21 +397,21 @@ public class daoReservas extends AbstractDAO {
         }
         return correcto;
     }
-    
-    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula){
+
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula) {
         Connection con;
         PreparedStatement stmAlquiler = null;
         ResultSet rsAlquiler;
-        Boolean result=true;
+        Boolean result = true;
 
         con = this.getConexion();
 
         try {
-            stmAlquiler = con.prepareStatement("(select cochealquiler " +
-            "from reservar where cast(fechainicioreserva as date) between cast(? as date) and cast(? as date) " +
-            "and cochealquiler=?) UNION " +
-            "(select matricula from alquilar where fechaalquiler between cast(? as date) and cast(? as date) " +
-            "and matricula=?) ");
+            stmAlquiler = con.prepareStatement("(select cochealquiler "
+                    + "from reservar where cast(fechainicioreserva as date) between cast(? as date) and cast(? as date) "
+                    + "and cochealquiler=?) UNION "
+                    + "(select matricula from alquilar where fechaalquiler between cast(? as date) and cast(? as date) "
+                    + "and matricula=?) ");
             stmAlquiler.setTimestamp(1, fechaFinOriginal.toTimestamp());
             stmAlquiler.setTimestamp(2, fechaFinNueva.toTimestamp());
             stmAlquiler.setString(3, matricula);
@@ -422,19 +421,19 @@ public class daoReservas extends AbstractDAO {
             rsAlquiler = stmAlquiler.executeQuery();
 
             if (rsAlquiler.next()) {
-                result=false;
+                result = false;
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
-            result=false;
+            result = false;
         } finally {
             try {
                 stmAlquiler.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
-                result=false;
+                result = false;
             }
         }
         return result;

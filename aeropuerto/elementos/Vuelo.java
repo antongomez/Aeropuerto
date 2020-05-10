@@ -27,7 +27,6 @@ public class Vuelo {
     private HashMap<Integer, Boolean> asientosNormalesDisponibles;
     private HashMap<Integer, Boolean> asientosPremiumDisponibles;
     private String retraso;//Es un string que viene de un interval en java (hh:mm:ss)
-    // private String estado;//Atributo para la tabla de Salidas-Llegadas
     private String tiempoRestante;
     private Boolean enCurso;
 
@@ -74,12 +73,12 @@ public class Vuelo {
         this.avion = new Avion(codigoAvion);
         this.asientosNormalesDisponibles = new HashMap<>();
         this.asientosPremiumDisponibles = new HashMap<>();
-        this.enCurso=enCurso;
+        this.enCurso = enCurso;
 
     }
 
     /*Constructor para tabla salidas-llegadas*/
-    public Vuelo(String numVuelo, String origen, String destino, Timestamp fechaSalidaReal, Timestamp fechaLlegadaReal, Integer puertaEmbarque, 
+    public Vuelo(String numVuelo, String origen, String destino, Timestamp fechaSalidaReal, Timestamp fechaLlegadaReal, Integer puertaEmbarque,
             Boolean cancelado, Integer terminal, String retraso, Time tiempoRestante) {
         this.numVuelo = numVuelo;
         this.origen = origen;
@@ -105,7 +104,7 @@ public class Vuelo {
         Integer dias = tiempo.getDia();
         Integer horas = tiempo.getHoras();
         Integer minutos = tiempo.getMinutos();
-        
+
         if (dias > 1) {
             estado = dias.toString() + " días";
         } else {
@@ -120,9 +119,9 @@ public class Vuelo {
                 }
                 if (minutos >= 20) {
                     estado = minutos.toString() + " min";
-                } else if(minutos >= 0){
+                } else if (minutos >= 0) {
                     estado = "<20 min";
-                } else{
+                } else {
                     estado = "despegando";
                 }
             }
@@ -212,12 +211,12 @@ public class Vuelo {
     }
 
     public String getPuerta() {
-        if(puertaEmbarque == 0){
+        if (puertaEmbarque == 0) {
             return " - ";
         }
         return puertaEmbarque.toString();
     }
-    
+
     public void setPuertaEmbarque(Integer puertaEmbarque) {
         this.puertaEmbarque = puertaEmbarque;
     }

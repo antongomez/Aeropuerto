@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aeropuerto.util.reservas;
 
 import aeropuerto.util.Time;
@@ -38,7 +33,7 @@ public abstract class Reserva {
         this.matricula = matricula;
         this.enCurso = enCurso;
     }
-    
+
     public Reserva(Timestamp inicio, Timestamp fin, String matricula) {
         this.inicio = new Time(inicio);
         this.fin = new Time(fin);
@@ -80,11 +75,11 @@ public abstract class Reserva {
     public Boolean getEnCurso() {
         return enCurso;
     }
-    
+
     public String getFindate() {
         return fin.toStringFecha();
     }
-    
+
     public String getIniciodate() {
         return inicio.toStringFecha();
     }

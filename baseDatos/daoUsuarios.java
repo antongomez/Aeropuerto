@@ -3,7 +3,6 @@ package baseDatos;
 import aeropuerto.FachadaAplicacion;
 import aeropuerto.elementos.Administrador;
 import aeropuerto.elementos.ElemHistorial;
-import aeropuerto.elementos.PersonalExterno;
 import aeropuerto.elementos.PersonalLaboral;
 import aeropuerto.elementos.Usuario;
 import aeropuerto.util.EstadisticasUsuario;
@@ -315,13 +314,12 @@ public class daoUsuarios extends AbstractDAO {
             stmUsuario.executeUpdate();
             correcto = true;
         } catch (SQLException e) {
-            String m=e.getMessage();
-            if(m.contains("fkey")){
-               this.getFachadaAplicacion().mostrarError("Ya has disfrutado de nuestros servicios. No puedes darte de baja."); 
-            }
-            else{
-            System.out.println(e.getMessage());
-            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            String m = e.getMessage();
+            if (m.contains("fkey")) {
+                this.getFachadaAplicacion().mostrarError("Ya has disfrutado de nuestros servicios. No puedes darte de baja.");
+            } else {
+                System.out.println(e.getMessage());
+                this.getFachadaAplicacion().mostrarError(e.getMessage());
             }
             correcto = false;
         } finally {
@@ -473,7 +471,7 @@ public class daoUsuarios extends AbstractDAO {
         String consulta;
         con = this.getConexion();
 
-        consulta ="SELECT aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa \n"
+        consulta = "SELECT aerolinea.aerolineaFav as aerolinea, destino.destinoFav as destino, tarifa.tarifaFav as tarifa \n"
                 + "FROM (SELECT cb.usuario as usuario, a.aerolinea as aerolineaFav \n"
                 + "      FROM comprarbillete cb, vuelo v, avion a \n"
                 + "      WHERE cb.usuario = ? \n"
@@ -579,7 +577,7 @@ public class daoUsuarios extends AbstractDAO {
 
             if (rsUsuario.next()) {
                 us = new Usuario(rsUsuario.getString("dni"), rsUsuario.getString("nombre"), rsUsuario.getString("primerApellido"),
-                rsUsuario.getString("segundoApellido"));
+                        rsUsuario.getString("segundoApellido"));
             }
 
         } catch (SQLException e) {
@@ -613,8 +611,7 @@ public class daoUsuarios extends AbstractDAO {
 
             if (stmUsuario.executeUpdate() > 0) {
                 correcto = true;
-            }
-            else{
+            } else {
                 getFachadaAplicacion().mostrarError("Estos datos no corresponden con ningún personal externo");
             }
 
@@ -649,8 +646,7 @@ public class daoUsuarios extends AbstractDAO {
 
             if (stmUsuario.executeUpdate() > 0) {
                 correcto = true;
-            }
-            else{
+            } else {
                 getFachadaAplicacion().mostrarError("Estos datos no corresponden con ningún personal externo");
             }
 
@@ -774,19 +770,19 @@ public class daoUsuarios extends AbstractDAO {
             while (rsHistorial.next()) {
                 usu.addElemHistorial(new ElemHistorial(new Time(rsHistorial.getTimestamp("fechaentrada")),
                         new Time(rsHistorial.getTimestamp("fechaentrada"))));
-                result=true;
+                result = true;
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
-            result=false;
+            result = false;
         } finally {
             try {
                 stmHistorial.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
-                result=false;
+                result = false;
             }
         }
         return result;
@@ -824,9 +820,10 @@ public class daoUsuarios extends AbstractDAO {
         }
         return registrado;
     }
-    public Boolean obtenerDatosPersLab(PersonalLaboral trab){
+
+    public Boolean obtenerDatosPersLab(PersonalLaboral trab) {
         Connection con;
-        PreparedStatement stmUsu= null;
+        PreparedStatement stmUsu = null;
         ResultSet rsUsu;
         Boolean correcto = false;
 
@@ -842,19 +839,19 @@ public class daoUsuarios extends AbstractDAO {
             if (rsUsu.next()) {
                 trab.setLabor(rsUsu.getString("labor"));
                 trab.setDescripcionTarea(rsUsu.getString("descripciontarea"));
-                correcto=true;
+                correcto = true;
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().mostrarError(e.getMessage());
-            correcto=false;
+            correcto = false;
         } finally {
             try {
                 stmUsu.close();
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
-                correcto=false;
+                correcto = false;
             }
         }
         return correcto;

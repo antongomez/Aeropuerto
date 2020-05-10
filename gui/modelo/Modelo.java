@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 public class Modelo {
 
     private static Modelo mod = null; //Instancia do modelo
-    private final FachadaAplicacion fa; //Desde aqui llamaremos a la fachada
+    private final FachadaAplicacion fa;
     private final FachadaGui fgui;
 
     private Modelo(FachadaAplicacion fa) {
@@ -36,7 +36,7 @@ public class Modelo {
         this.fgui = fa.getFgui();
     }
 
-    //Desta forma, creamos unha vez a clase modelo e podemola ir obtendo a traves das clases
+    //Singleton
     public static Modelo newModelo(FachadaAplicacion fa) {
         if (mod == null) {
             mod = new Modelo(fa);

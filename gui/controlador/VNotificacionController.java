@@ -12,9 +12,6 @@ public class VNotificacionController extends Controlador implements Initializabl
     @FXML
     private Label mensaje;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 

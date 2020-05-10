@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aeropuerto.elementos;
 
-/**
- *
- * @author Esther
- */
 public class CompraVuelo {
-    
+
     String numVuelo;
     Boolean acompanante;
     Integer numMaletas;
@@ -19,10 +10,10 @@ public class CompraVuelo {
     Float precio;
 
     public CompraVuelo(String numVuelo) {
-        this.numVuelo=numVuelo;
-        acompanante=false;
-        numMaletas=0;
-        premium=false;
+        this.numVuelo = numVuelo;
+        acompanante = false;
+        numMaletas = 0;
+        premium = false;
     }
 
     public void setAcompanante(Boolean acompanante) {
@@ -72,7 +63,5 @@ public class CompraVuelo {
     public void setNumVuelo(String numVuelo) {
         this.numVuelo = numVuelo;
     }
-    
-    
-      
+
 }

@@ -1,7 +1,6 @@
 package aeropuerto.elementos;
 
 import aeropuerto.util.Time;
-import java.util.Date;
 
 //clase creada para guardar el formato de los elementos del historial de trabajo del personal laboral
 public class ElemHistorial {
@@ -22,7 +21,5 @@ public class ElemHistorial {
     public Time getFechaSalida() {
         return fechaSalida;
     }
-
-    
 
 }

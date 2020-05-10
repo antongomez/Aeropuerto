@@ -1730,7 +1730,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         stage.initOwner(getVenta());
         //Seleccionamos o voo que se vai comprar
 
-        VControlController controlador = ((VControlController) loadWindow(getClass().getResource("/gui/vista/vControl.fxml"), "AeroETSE", stage));
+        VControlController controlador = ((VControlController) loadWindow(getClass().getResource("/gui/vista/vControl.fxml"), "Folgoso do Courel", stage));
     }
 
     @FXML
@@ -1765,7 +1765,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
 
-        VTareaController controlador = ((VTareaController) loadWindow(getClass().getResource("/gui/vista/vTarea.fxml"), "AeroETSE", stage));
+        VTareaController controlador = ((VTareaController) loadWindow(getClass().getResource("/gui/vista/vTarea.fxml"), "Folgoso do Courel", stage));
         controlador.setTrabajador((PersonalLaboral) usuario);
     }
 
@@ -1775,7 +1775,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
 
-        VCocheControlador controlador = ((VCocheControlador) loadWindow(getClass().getResource("/gui/vista/vCoche.fxml"), "AeroETSE", stage));
+        VCocheControlador controlador = ((VCocheControlador) loadWindow(getClass().getResource("/gui/vista/vCoche.fxml"), "Folgoso do Courel", stage));
     }
 
     @FXML
@@ -1785,7 +1785,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
 
-        VMaletaController controlador = ((VMaletaController) loadWindow(getClass().getResource("/gui/vista/vMaleta.fxml"), "AeroETSE", stage));
+        VMaletaController controlador = ((VMaletaController) loadWindow(getClass().getResource("/gui/vista/vMaleta.fxml"), "Folgoso do Courel", stage));
 
     }
 
@@ -1795,7 +1795,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.initOwner(getVenta());
 
-        VHistorialController controlador = ((VHistorialController) loadWindow(getClass().getResource("/gui/vista/vHistorial.fxml"), "AeroETSE", stage));
+        VHistorialController controlador = ((VHistorialController) loadWindow(getClass().getResource("/gui/vista/vHistorial.fxml"), "Folgoso do Courel", stage));
         controlador.setTrabajador((PersonalLaboral) usuario);
     }
 

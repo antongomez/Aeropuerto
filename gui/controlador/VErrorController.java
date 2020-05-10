@@ -12,9 +12,7 @@ public class VErrorController extends Controlador implements Initializable {
     @FXML
     private Label mensaje;
 
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 

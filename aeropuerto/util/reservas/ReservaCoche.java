@@ -16,7 +16,7 @@ public class ReservaCoche extends Reserva {
         super(inicio, fin, matricula, enCurso);
         this.devRetraso=devRetraso;
     }
-    
+
     public ReservaCoche(Time inicio, Time fin, String matricula) {
         super(inicio, fin, matricula);
     }
@@ -89,6 +89,4 @@ public class ReservaCoche extends Reserva {
     public Boolean getDevRetraso() {
         return devRetraso;
     }
-    
-    
 }

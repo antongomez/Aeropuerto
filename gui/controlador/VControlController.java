@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gui.controlador;
 
-import aeropuerto.elementos.PersonalLaboral;
 import gui.modelo.Modelo;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,11 +12,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-/**
- * FXML Controller class
- *
- * @author Esther
- */
 public class VControlController extends Controlador implements Initializable {
 
 

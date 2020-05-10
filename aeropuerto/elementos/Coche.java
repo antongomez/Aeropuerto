@@ -21,11 +21,11 @@ public class Coche {
         this.tipoCombustible = tipoCombustible;
         this.retirado = retirado;
     }
-    
-    public Coche(String matricula, String modelo, Float precioDia){
-        this.matricula=matricula;
-        this.modelo=modelo;
-        this.precioDia=precioDia;
+
+    public Coche(String matricula, String modelo, Float precioDia) {
+        this.matricula = matricula;
+        this.modelo = modelo;
+        this.precioDia = precioDia;
     }
 
     public String getMatricula() {

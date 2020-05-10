@@ -99,11 +99,11 @@ public class FachadaAplicacion extends Application {
     public List<Vuelo> obtenerVuelosRealizadosUsuario(String dniUs) {
         return gv.obtenerVuelosRealizadosUsuario(dniUs);
     }
-    
+
     public List<Vuelo> obtenerVuelosFuturosUsuario(String dniUs) {
         return gv.obtenerVuelosFuturosUsuario(dniUs);
     }
-    
+
     /*tipo: año/mes/estación
     tipo=anho => num= año concreto
     tipo=mes => num=1,...,12 dependiendo del mes concreto
@@ -115,7 +115,8 @@ public class FachadaAplicacion extends Application {
     public EstadisticasUsuario obtenerEstadisticasGlobalesUsuario(String dniUs) {
         return gu.obtenerEstadisticasGlobalesUsuario(dniUs);
     }
-    public Boolean obtenerDatosPersLab(PersonalLaboral trab){
+
+    public Boolean obtenerDatosPersLab(PersonalLaboral trab) {
         return gu.obtenerDatosPersLab(trab);
     }
 
@@ -137,12 +138,10 @@ public class FachadaAplicacion extends Application {
     }
 
     //Vuelos
-
-
     public List<Vuelo> buscarVuelos(String numVuelo, String origen, String destino, Time fechaSalida) {
         return gv.buscarVuelos(numVuelo, origen, destino, fechaSalida);
     }
-    
+
     public List<Tienda> buscarTiendas(String nombre, String tipo, String terminal) {
         return gt.buscarTiendas(nombre, tipo, terminal);
     }
@@ -168,7 +167,7 @@ public class FachadaAplicacion extends Application {
     public List<ReservaParking> obterResParkingUsuario(String dniUs) {
         return gr.obterResParkingUsuario(dniUs);
     }
-    
+
     public List<ReservaCoche> obterResCocheUsuario(String dniUs) {
         return gr.obterResCocheUsuario(dniUs);
     }
@@ -208,7 +207,7 @@ public class FachadaAplicacion extends Application {
     public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return gv.comprarBilletes(usuarios);
     }
-    
+
     public Boolean vueloRealizado(String vuelo) {
         return gv.vueloRealizado(vuelo);
     }
@@ -232,7 +231,7 @@ public class FachadaAplicacion extends Application {
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas) {
         return fbd.buscarCoches(llegada, retorno, numPlazas);
     }
-    
+
     public List<Coche> buscarCoches(Time llegada, Time retorno, Integer numPlazas, String modelo, String matricula) {
         return fbd.buscarCoches(llegada, retorno, numPlazas, modelo, matricula);
     }
@@ -276,30 +275,32 @@ public class FachadaAplicacion extends Application {
     public Boolean obtenerHistorialPersLaboral(PersonalLaboral usu, Time fechaInicio, Time fechaFin) {
         return gu.obtenerHistorialPersLaboral(usu, fechaInicio, fechaFin);
     }
-    
-    public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario){
+
+    public List<ReservaCoche> obtenerReservasCocheUsuario(String dniUsuario) {
         return gr.obtenerReservasCocheUsuario(dniUsuario);
     }
-    
-    public Boolean introducirAlquiler(String matricula, Time fin, String dni){
+
+    public Boolean introducirAlquiler(String matricula, Time fin, String dni) {
         return gr.introducirAlquiler(matricula, fin, dni);
     }
-    
-    public Boolean comprobarRegistrado(String dni){
+
+    public Boolean comprobarRegistrado(String dni) {
         return gu.comprobarRegistrado(dni);
     }
-    
-    public ReservaCoche buscarAlquilerDevolucion(String matricula){
+
+    public ReservaCoche buscarAlquilerDevolucion(String matricula) {
         return gr.buscarAlquilerDevolucion(matricula);
     }
-    
-    public Boolean devolucionCoche(Reserva alquiler){
+
+    public Boolean devolucionCoche(Reserva alquiler) {
         return gr.devolucionCoche(alquiler);
     }
-    public Aerolinea obtenerDatosAerolinea(String numvuelo){
+
+    public Aerolinea obtenerDatosAerolinea(String numvuelo) {
         return gv.obtenerDatosAerolinea(numvuelo);
     }
-public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula){
+
+    public Boolean sePuedeAmpliarReservaCoche(Time fechaFinOriginal, Time fechaFinNueva, String matricula) {
         return gr.sePuedeAmpliarReservaCoche(fechaFinOriginal, fechaFinNueva, matricula);
     }
 }

@@ -20,7 +20,6 @@ public class daoVuelos extends AbstractDAO {
         super.setFachadaAplicacion(fa);
     }
 
- 
     public Boolean insertarVuelo(Vuelo v) {//true si se insertó y false si no
         Connection con;
         PreparedStatement stmVuelo = null;
@@ -82,15 +81,14 @@ public class daoVuelos extends AbstractDAO {
                     + "WHERE numvuelo like ? \n"
                     + "and origen like ? \n"
                     + "and destino like ? \n";
-            
-/*Si se introdujo una fecha de salida distinta a la actual se filtra por esa fecha de salida. Si la fecha
+
+            /*Si se introdujo una fecha de salida distinta a la actual se filtra por esa fecha de salida. Si la fecha
             es igual a la actual o no se introdujo ninguna (en este caso se pasa un null) filtramos por por fecha de llegada para poder mostrar
             aquellos vuelos que están en curso*/
-
             if (fechaSalida != null) {
                 consulta += "  and fechasalidareal >= ? \n";
             } else {
-                consulta += "  and fechallegadareal >= now() \n"; 
+                consulta += "  and fechallegadareal >= now() \n";
             }
             //Ordenamos os voos por data de saida ascendente
             consulta += "ORDER BY fechasalidareal asc, fechallegadareal desc";
@@ -311,6 +309,7 @@ public class daoVuelos extends AbstractDAO {
         }
 
     }
+
     /*Obtiene qué asientos están disponibles*/
 
     public void obtenerAsientos(Vuelo vuelo) {
@@ -330,7 +329,6 @@ public class daoVuelos extends AbstractDAO {
                 vuelo.getAsientosNormalesDisponibles().replace(rsAsientos.getInt("numAsiento"), false);
                 vuelo.getAsientosPremiumDisponibles().replace(rsAsientos.getInt("numAsiento"), false);
             }
-            
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
