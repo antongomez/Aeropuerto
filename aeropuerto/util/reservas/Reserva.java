@@ -14,6 +14,7 @@ public abstract class Reserva {
     private Time fin;
     private String matricula;
     private String usuario;
+    private Boolean enCurso;
 
     final static Integer CARGO_EXTRA_RETRASO = 20;
 
@@ -31,6 +32,13 @@ public abstract class Reserva {
         this.usuario = usuario;
     }
 
+    public Reserva(Timestamp inicio, Timestamp fin, String matricula, Boolean enCurso) {
+        this.inicio = new Time(inicio);
+        this.fin = new Time(fin);
+        this.matricula = matricula;
+        this.enCurso = enCurso;
+    }
+    
     public Reserva(Timestamp inicio, Timestamp fin, String matricula) {
         this.inicio = new Time(inicio);
         this.fin = new Time(fin);
@@ -69,4 +77,7 @@ public abstract class Reserva {
         this.usuario = usuario;
     }
 
+    public Boolean getEnCurso() {
+        return enCurso;
+    } 
 }

@@ -355,7 +355,7 @@ public class VCocheControlador extends Controlador implements Initializable {
             this.textPrecioTotalD.setText(devolucion.getPrecio().toString() + " €");
             this.textActualD.setText(Time.diaActual().toStringFecha());
         } else {
-            Modelo.getInstanceModelo().mostrarError("No se ha encontrado ningún alquiler pendiente para esa matrícula.");
+            Modelo.getInstanceModelo().mostrarError("No se ha encontrado ninguna devolución pendiente para esa matrícula.");
         }
         this.btnDevolver.setDisable(false);
     }

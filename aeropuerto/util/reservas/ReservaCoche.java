@@ -11,8 +11,8 @@ public class ReservaCoche extends Reserva {
     private String modelo;
     private Integer retraso;
 
-    public ReservaCoche(Timestamp inicio, Timestamp fin, String matricula) {
-        super(inicio, fin, matricula);
+    public ReservaCoche(Timestamp inicio, Timestamp fin, String matricula, Boolean enCurso) {
+        super(inicio, fin, matricula, enCurso);
     }
     
     public ReservaCoche(Time inicio, Time fin, String matricula) {
@@ -36,7 +36,7 @@ public class ReservaCoche extends Reserva {
 
         this.precioDia = precioDia;
         if (!Time.fechaMayorIgualActual(fin)) {
-            this.retraso = Time.obtenerDias(getInicio().toLocalDate(), Time.diaActual().toLocalDate());
+            this.retraso = Time.obtenerDias(this.getFin().toLocalDate(), Time.diaActual().toLocalDate());
         } else {
             this.retraso = 0;
         }

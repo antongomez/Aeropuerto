@@ -31,16 +31,25 @@ public class daoReservas extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmRes = con.prepareStatement("SELECT fechaentrada as fechainicio, fechafin, matricula, terminal, piso, numplaza \n"
+            stmRes = con.prepareStatement("SELECT fechaentrada as fechainicio, fechafin, matricula, terminal, piso, numplaza, \n"
+                    + "false as enCurso \n"
                     + "FROM reservarparking \n"
-                    + "WHERE usuario = ? "
-                    + "and fechaentrada > NOW()");
+                    + "WHERE usuario = ? \n"
+                    + "and cast(fechaEntrada as date)-cast(NOW() as date)>0 \n"
+                    + "UNION \n"
+                    + "SELECT fechaentrada as fechainicio, fechafin, matricula, terminal, piso, numplaza, \n"
+                    + "true as enCurso \n"
+                    + "FROM reservarparking \n"
+                    + "WHERE usuario = ? \n"
+                    + "and cast(fechaEntrada as date)-cast(NOW() as date)<=0 \n"
+                    + "and cast(fechaFin as date)-cast(NOW() as date)>=0 \n");
             stmRes.setString(1, dniUs);
+            stmRes.setString(2, dniUs);
             rsRes = stmRes.executeQuery();
 
             while (rsRes.next()) {
                 resActual = new ReservaParking(rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"), rsRes.getString("matricula"),
-                        rsRes.getInt("terminal"), rsRes.getInt("piso"), rsRes.getInt("numplaza"));
+                        rsRes.getInt("terminal"), rsRes.getInt("piso"), rsRes.getInt("numplaza"), rsRes.getBoolean("enCurso"));
 
                 resultado.add(resActual);
             }
@@ -70,16 +79,29 @@ public class daoReservas extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmRes = con.prepareStatement("SELECT fechainicioreserva as fechainicio, fechafinreserva as fechafin, "
-                    + "cocheAlquiler as matricula \n"
-                    + "FROM reservar \n"
-                    + "WHERE usuario = ? "
-                    + "and fechainicioreserva > NOW()");
+            stmRes = con.prepareStatement("SELECT r.fechainicioreserva as fechainicio, r.fechafinreserva as fechafin, \n"
+                    + "r.cocheAlquiler as matricula, false as enCurso \n"
+                    + "FROM reservar as r \n"
+                    + "WHERE usuario = ? \n"
+                    + "and cast(fechainicioreserva as date)-cast(NOW() as date)>=0 \n"
+                    + "and NOT EXISTS (SELECT * \n"
+                    + "                FROM alquilar as a \n"
+                    + "                WHERE (cast(r.fechainicioreserva as date)-cast(a.fechaalquiler as date))=0 \n"
+                    + "                and r.cochealquiler=a.matricula \n"
+                    + "                and r.usuario=a.usuario) \n"
+                    + "UNION \n"
+                    + "SELECT fechaAlquiler as fechainicio, fechaTeoricaDevolucion as fechafin, \n"
+                    + "matricula as matricula, true as enCurso \n"
+                    + "FROM alquilar \n"
+                    + "WHERE usuario = ? \n"
+                    + "and fechaDevolucion is null");
             stmRes.setString(1, dniUs);
+            stmRes.setString(2, dniUs);
             rsRes = stmRes.executeQuery();
 
             while (rsRes.next()) {
-                resActual = new ReservaCoche(rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"), rsRes.getString("matricula"));
+                resActual = new ReservaCoche(rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"), 
+                        rsRes.getString("matricula"), rsRes.getBoolean("enCurso"));
                 resultado.add(resActual);
             }
 
@@ -351,7 +373,9 @@ public class daoReservas extends AbstractDAO {
 
             stmUsuario = con.prepareStatement("UPDATE alquilar \n"
                     + "SET fechaDevolucion=NOW() \n"
-                    + "WHERE matricula=? and fechaAlquiler=? and usuario=? ");
+                    + "WHERE matricula=? \n"
+                    + "and cast(fechaAlquiler as date)-cast(? as date)=0 \n"
+                    + "and usuario=? ");
 
             stmUsuario.setString(1, alquiler.getMatricula());
             stmUsuario.setTimestamp(2, alquiler.getInicio().toTimestamp());

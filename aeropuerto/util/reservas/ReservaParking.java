@@ -17,6 +17,15 @@ public class ReservaParking extends Reserva {
         this.piso = piso;
         this.numPlaza = numPlaza;
     }
+    
+    public ReservaParking(Timestamp inicio, Timestamp fin, String matricula, Integer terminal, Integer piso, Integer numPlaza, 
+            Boolean enCurso) {
+        super(inicio, fin, matricula, enCurso);
+
+        this.terminal = terminal;
+        this.piso = piso;
+        this.numPlaza = numPlaza;
+    }
 
     public ReservaParking(Time inicio, Time fin, String matricula, Integer terminal, Integer piso, Integer numPlaza) {
         super(inicio, fin, matricula);

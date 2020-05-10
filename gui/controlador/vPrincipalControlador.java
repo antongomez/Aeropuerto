@@ -539,10 +539,38 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         colTerminalParking.setCellValueFactory(new PropertyValueFactory<>("terminal"));
         colPisoParking.setCellValueFactory(new PropertyValueFactory<>("piso"));
         colPlazaParking.setCellValueFactory(new PropertyValueFactory<>("numPlaza"));
+        tablaReservasParking.setRowFactory(row -> new TableRow<ReservaParking>() {
+            @Override
+            public void updateItem(ReservaParking item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if ((item != null) && (!empty)) {
+                    if (item.getEnCurso()) {
+                        setStyle("-fx-background-color: #11ad00;");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            }
+        });
 
         colInicioReservaCoche.setCellValueFactory(new PropertyValueFactory<>("inicio"));
         colFinReservaCoche.setCellValueFactory(new PropertyValueFactory<>("fin"));
         colMatriculaCoche.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        tablaReservasCoche.setRowFactory(row -> new TableRow<ReservaCoche>() {
+            @Override
+            public void updateItem(ReservaCoche item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if ((item != null) && (!empty)) {
+                    if (item.getEnCurso()) {
+                        setStyle("-fx-background-color: #11ad00;");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            }
+        });
 
         btnCancelarReservaParking.setDisable(true);
         btnCancelarReservaCoche.setDisable(true);
