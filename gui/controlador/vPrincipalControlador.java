@@ -435,11 +435,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        BtnMenu.selectToggle(btnVuelos);
-        panelVuelos.toFront();
-
-        etqTitulo.setText(TITULO_VUELOS);
-
         btnComprar.setDisable(true);
         btnComprar.toFront();
         btnDevolver.setDisable(true);
@@ -572,11 +567,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
         });
 
+        btnBuscarParking.setDisable(true);
+        btnBuscarCoches.setDisable(true);
+        hBoxInfoDisponhibilidadeParking.setVisible(false);
         btnCancelarReservaParking.setDisable(true);
         btnCancelarReservaCoche.setDisable(true);
 
         //Definimos el panel de estadísticas
-        btnMes.setSelected(true);
+        btnAno.setSelected(true);
         ObservableList<String> meses = FXCollections.observableArrayList("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         comboBoxEstUsu.setItems(meses);
         comboBoxEstUsu.getSelectionModel().selectFirst();
@@ -609,10 +607,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         columnaCaballosCoche.setCellValueFactory(new PropertyValueFactory<>("caballos"));
         columnaPrecioDiaCoche.setCellValueFactory(new PropertyValueFactory<>("precioDia"));
 
-        btnBuscarParking.setDisable(true);
-        btnBuscarCoches.setDisable(true);
-        hBoxInfoDisponhibilidadeParking.setVisible(false);
-
         //Tendas, taboa, comboBox terminais, comboBox tipoVentas
         columnaNomeTendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaTipoTendas.setCellValueFactory(new PropertyValueFactory<>("tipoVentas"));
@@ -638,6 +632,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
 
         //Informacion
         infoVuelos.selectToggle(radioBtnSalidas);
+
+        //Configuracion inicial
+        etqTitulo.setText(TITULO_VUELOS);
+        BtnMenu.selectToggle(btnVuelos);
+        panelVuelos.toFront();
     }
 
     public void setUsuario(Usuario usuario) {
@@ -662,10 +661,19 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     private void accionBtnVuelos(ActionEvent event) {
         panelVuelos.toFront();
         etqTitulo.setText(TITULO_VUELOS);
-        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
-                getInstanceModelo().buscarVuelos("", "", "", Time.diaActual()));
-        tablaProximosVuelos.setItems(vuelos);
 
+        //Non sei se actualizar os voos cando se pulsa o este boton ou mellor so canod s epulsa buscar
+        /*Time salida;
+
+        if (dataPickSalida.getValue() != null) {
+            salida = new Time(dataPickSalida.getValue());
+        } else {
+            salida = Time.diaActual();
+        }
+        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
+                getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(),
+                        txtDestino.getText(), salida));
+        tablaProximosVuelos.setItems(vuelos);*/
         btnComprar.setDisable(true);
         btnComprar.toFront();
     }
@@ -1236,11 +1244,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
      */
     @FXML
     private void accionBtnServicios(ActionEvent event) {
-        //PARKING
-        btnReservarParking.setDisable(true);
 
-        //COCHES
-        btnReservarCoches.setDisable(true);
+        if (!btnBuscarParking.isDisable()) {
+            btnBuscarParking.fire();
+        }
+
+        if (!btnBuscarCoches.isDisable()) {
+            btnBuscarCoches.fire();
+        }
 
         //Poñemos o panel diante
         etqTitulo.setText(TITULO_SERV);
@@ -1251,7 +1262,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //PARKING
     @FXML
     private void abrirParking(Event event) {
-        btnReservarParking.setDisable(true);
+        if (btnServicios.isSelected()) {
+            if (!btnBuscarParking.isDisable()) {
+                btnBuscarParking.fire();
+            }
+        }
     }
 
     @FXML
@@ -1270,6 +1285,11 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             txtPrecioParking.setText(obterPrecioParking());
             etqInfoDisponhibilidadeParking.setText(String.format("%.2f", pd.calcularPorcentajeDisp()) + "%.");
             hBoxInfoDisponhibilidadeParking.setVisible(true);
+            if (pd.getPlazasLibres() > 0) {
+                if (comprobarMatricula()) {
+                    btnReservarParking.setDisable(false);
+                }
+            }
         } else {
             hBoxInfoDisponhibilidadeParking.setVisible(false);
             txtPrecioParking.clear();
@@ -1278,9 +1298,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                     + "plazas disponibles en el parking de la terminal. "
                     + "Inténtelo en otro momento.", getVenta());
         }
-        if (comprobarMatricula()) {
-            btnReservarParking.setDisable(false);
-        }
+
     }
 
     private String obterPrecioParking() {
@@ -1455,8 +1473,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //COCHES
     @FXML
     private void abrirCoches(Event event) {
-        btnReservarCoches.setDisable(true);
-
+        if (!btnBuscarCoches.isDisable()) {
+            btnBuscarCoches.fire();
+        }
     }
 
     private void poderBuscarCoches() {
@@ -1629,6 +1648,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //Tendas
     @FXML
     private void abrirTiendas(Event event) {
+        btnBuscarTendas.fire();
     }
 
     @FXML
