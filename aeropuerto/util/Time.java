@@ -301,6 +301,4 @@ public class Time {
         return ((data.getAno().equals(ano)) && (data.getMes().equals(mes)) && (data.getDia().equals(dia))
                 && (data.getHoras().equals(horas)) && (data.getMinutos().equals(minutos)));
     }
-    
-
 }

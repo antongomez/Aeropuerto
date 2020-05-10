@@ -79,5 +79,13 @@ public abstract class Reserva {
 
     public Boolean getEnCurso() {
         return enCurso;
-    } 
+    }
+    
+    public String getFindate() {
+        return fin.toStringFecha();
+    }
+    
+    public String getIniciodate() {
+        return inicio.toStringFecha();
+    }
 }

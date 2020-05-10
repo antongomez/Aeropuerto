@@ -528,8 +528,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         });
 
         //Definimos el tipo de dato de cada columna de la tablaReservasParking y tablaReservasCoche
-        colInicioReservaParking.setCellValueFactory(new PropertyValueFactory<>("inicio"));
-        colFinReservaParking.setCellValueFactory(new PropertyValueFactory<>("fin"));
+        colInicioReservaParking.setCellValueFactory(new PropertyValueFactory<>("iniciodate"));
+        colFinReservaParking.setCellValueFactory(new PropertyValueFactory<>("findate"));
         colMatriculaParking.setCellValueFactory(new PropertyValueFactory<>("matricula"));
         colTerminalParking.setCellValueFactory(new PropertyValueFactory<>("terminal"));
         colPisoParking.setCellValueFactory(new PropertyValueFactory<>("piso"));
@@ -549,8 +549,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
             }
         });
 
-        colInicioReservaCoche.setCellValueFactory(new PropertyValueFactory<>("inicio"));
-        colFinReservaCoche.setCellValueFactory(new PropertyValueFactory<>("fin"));
+        colInicioReservaCoche.setCellValueFactory(new PropertyValueFactory<>("iniciodate"));
+        colFinReservaCoche.setCellValueFactory(new PropertyValueFactory<>("findate"));
         colMatriculaCoche.setCellValueFactory(new PropertyValueFactory<>("matricula"));
         tablaReservasCoche.setRowFactory(row -> new TableRow<ReservaCoche>() {
             @Override
@@ -1220,9 +1220,9 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ReservaCoche resSelect = tablaReservasCoche.getSelectionModel().getSelectedItem();
         if (resSelect != null) {
             if (resSelect.getEnCurso()) {
-                btnCancelarReservaParking.setDisable(true);
+                btnCancelarReservaCoche.setDisable(true);
             } else {
-                btnCancelarReservaParking.setDisable(false);
+                btnCancelarReservaCoche.setDisable(false);
             }
         } else {
             btnCancelarReservaCoche.setDisable(true);

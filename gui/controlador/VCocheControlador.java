@@ -147,10 +147,10 @@ public class VCocheControlador extends Controlador implements Initializable {
         btnAlquilarConReserva.setDisable(true);
 
         columnaMatriculaConReserva.setCellValueFactory(new PropertyValueFactory<>("matricula"));
-        columnaFechaVueltaConReserva.setCellValueFactory(new PropertyValueFactory<>("fin"));
+        columnaFechaVueltaConReserva.setCellValueFactory(new PropertyValueFactory<>("findate"));
         columnaPrecioConReserva.setCellValueFactory(new PropertyValueFactory<>("precio"));
         columnaModeloConReserva.setCellValueFactory(new PropertyValueFactory<>("modelo"));
-        columnaFechaRecogidaConReserva.setCellValueFactory(new PropertyValueFactory<>("inicio"));
+        columnaFechaRecogidaConReserva.setCellValueFactory(new PropertyValueFactory<>("iniciodate"));
         columnaEstadoConReserva.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
         //Apartado sin reserva
