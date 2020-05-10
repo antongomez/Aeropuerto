@@ -664,18 +664,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         panelVuelos.toFront();
         etqTitulo.setText(TITULO_VUELOS);
 
-        //Non sei se actualizar os voos cando se pulsa o este boton ou mellor so canod s epulsa buscar
-        /*Time salida;
-
-        if (dataPickSalida.getValue() != null) {
-            salida = new Time(dataPickSalida.getValue());
-        } else {
-            salida = Time.diaActual();
-        }
-        ObservableList<Vuelo> vuelos = FXCollections.observableArrayList(
-                getInstanceModelo().buscarVuelos(txtNumVuelo.getText(), txtOrigen.getText(),
-                        txtDestino.getText(), salida));
-        tablaProximosVuelos.setItems(vuelos);*/
         btnComprar.setDisable(true);
         btnComprar.toFront();
     }
@@ -805,7 +793,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         ObservableList<ReservaCoche> resCoche = FXCollections.observableArrayList(
                 getInstanceModelo().obterResCocheUsuario(usuario.getDni()));
         tablaReservasCoche.setItems(resCoche);
-        
+
         //Estadisticas
         mostrarEstadisticas();
     }
@@ -1248,30 +1236,14 @@ public class vPrincipalControlador extends Controlador implements Initializable 
      */
     @FXML
     private void accionBtnServicios(ActionEvent event) {
-
-        if (!btnBuscarParking.isDisable()) {
-            btnBuscarParking.fire();
-        }
-
-        if (!btnBuscarCoches.isDisable()) {
-            btnBuscarCoches.fire();
-        }
-
         //Poñemos o panel diante
         etqTitulo.setText(TITULO_SERV);
         panelServicios.toFront();
-
-        btnReservarCoches.setDisable(true);
     }
 
     //PARKING
     @FXML
     private void abrirParking(Event event) {
-        if (btnServicios.isSelected()) {
-            if (!btnBuscarParking.isDisable()) {
-                btnBuscarParking.fire();
-            }
-        }
     }
 
     @FXML
@@ -1478,10 +1450,6 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     //COCHES
     @FXML
     private void abrirCoches(Event event) {
-        if (!btnBuscarCoches.isDisable()) {
-            btnBuscarCoches.fire();
-        }
-        btnReservarCoches.setDisable(true);
     }
 
     private void poderBuscarCoches() {
