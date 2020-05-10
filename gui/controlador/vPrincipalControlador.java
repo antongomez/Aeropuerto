@@ -560,6 +560,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
                 if ((item != null) && (!empty)) {
                     if (item.getEnCurso()) {
                         setStyle("-fx-background-color: #11ad00;");
+                    } if (item.getDevRetraso()) {
+                        setStyle("-fx-background-color: #b80c00;");
                     } else {
                         setStyle("");
                     }

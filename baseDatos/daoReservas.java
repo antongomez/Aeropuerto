@@ -91,7 +91,8 @@ public class daoReservas extends AbstractDAO {
                     + "                and r.usuario=a.usuario) \n"
                     + "UNION \n"
                     + "SELECT fechaAlquiler as fechainicio, fechaTeoricaDevolucion as fechafin, \n"
-                    + "matricula as matricula, true as enCurso \n"
+                    + "matricula as matricula, true as enCurso, "
+                    + "CASE when (cast(fechaTeoricaDevolucion as date)-(cast(NOW() as date))<0 then true else false end) as devRetraso \n"
                     + "FROM alquilar \n"
                     + "WHERE usuario = ? \n"
                     + "and fechaDevolucion is null");
@@ -101,7 +102,7 @@ public class daoReservas extends AbstractDAO {
 
             while (rsRes.next()) {
                 resActual = new ReservaCoche(rsRes.getTimestamp("fechainicio"), rsRes.getTimestamp("fechafin"), 
-                        rsRes.getString("matricula"), rsRes.getBoolean("enCurso"));
+                        rsRes.getString("matricula"), rsRes.getBoolean("enCurso"), rsRes.getBoolean("devRetraso"));
                 resultado.add(resActual);
             }
 
