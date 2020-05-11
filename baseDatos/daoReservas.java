@@ -306,10 +306,11 @@ public class daoReservas extends AbstractDAO {
 
         try {
             stmRes = con.prepareStatement("INSERT into alquilar "
-                    + "VALUES(NOW(),?, ?, ?, null)");
-            stmRes.setString(1, dni);
-            stmRes.setString(2, matricula);
-            stmRes.setTimestamp(3, fin.toTimestamp());
+                    + "VALUES(?,?, ?, ?, null)");
+            stmRes.setTimestamp(1, Time.diaActual().toTimestamp());
+            stmRes.setString(2, dni);
+            stmRes.setString(3, matricula);
+            stmRes.setTimestamp(4, fin.toTimestamp());
             stmRes.executeUpdate();
 
         } catch (SQLException e) {
