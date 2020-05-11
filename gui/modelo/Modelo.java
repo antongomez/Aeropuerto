@@ -87,14 +87,6 @@ public class Modelo {
 
     }
 
-    /*public void mostrarConfirmacion(String mensaje, Stage pai) {
-        Stage stage = new Stage();
-        stage.initOwner(pai);
-        vConfirmacionControlador controlador = ((vConfirmacionControlador) loadWindow(getClass().
-                getResource("/gui/vista/vConfirmacion.fxml"), "Confirmación", stage));
-        controlador.mostrarMensaje(mensaje);
-        controlador.getVenta().setResizable(false);
-    }*/
     public Boolean mostrarConfirmacion(String mensaje, Stage pai) {
         Stage stage = new Stage();
         stage.initOwner(pai);
