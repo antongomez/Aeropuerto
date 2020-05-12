@@ -15,6 +15,7 @@ public class Reserva {
     private Time fin;
     private String tipo;
     private String matricula;
+    private String usuario;
     /*Atributos solo válidos para reserva de parking*/
     private Integer terminal;
     private Integer piso;
@@ -24,6 +25,8 @@ public class Reserva {
     private String estado;
     private Float precioDia;
     private String modelo;
+    private Integer retraso;
+    private final static Integer CARGO_EXTRA_RETRASO = 20;
 
     /*Constructor reserva coche*/
     public Reserva(String tipo, Timestamp inicio, Timestamp fin, String matricula) {
@@ -61,24 +64,36 @@ public class Reserva {
         this.matricula = matricula;
     }
     
-    public Reserva(Timestamp inicio, Timestamp fin, String tipo, String matricula, String modelo, Float precioDia, String estado) {
+    /*Constructor para alquiler de coche con reserva*/
+    public Reserva(Timestamp inicio, Timestamp fin, String matricula, String modelo, Float precioDia, String estado) {
         this.inicio = new Time(inicio);
         this.fin = new Time(fin);
-        this.tipo = tipo;
-        this.precio = (float)(Math.round(((Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate()))*precioDia) * 100d) / 100d);
+        this.tipo = "coche";
+        Integer duracionAlquiler=Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate());
+        this.precio = (float)(Math.round((duracionAlquiler*precioDia) * 100d) / 100d);
         this.modelo=modelo;
         this.precioDia=precioDia;
         this.estado=estado;
         this.matricula=matricula;
     }
     
-    public Reserva(Time inicio, Time fin, String matricula, Float precioDia){
-        this.inicio=inicio;
-        this.fin=fin;
+    /*Constructor de alquiler de coche sin reserva y devolución*/
+    public Reserva(Time inicio, Time fin, String matricula, Float precioDia, String usuario){
+        this.inicio = inicio;
+        this.fin = fin;
+        this.usuario = usuario;
+        this.precioDia = precioDia;
         this.matricula=matricula;
-        this.precio = (float)(Math.round(((Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate()))*precioDia) * 100d) / 100d);
+        if(!Time.fechaMayorIgualActual(fin)){
+            this.retraso=Time.obtenerDias(this.fin.toLocalDate(), Time.diaActual().toLocalDate());
+        }
+        else{
+            this.retraso=0;
+        }
+        Integer duracionAlquiler=Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate());
+        this.precio=duracionAlquiler*this.precioDia+retraso*(this.precioDia+CARGO_EXTRA_RETRASO);
     }
-
+    
     public Integer getTerminal() {
         return terminal;
     }
@@ -135,6 +150,14 @@ public class Reserva {
         return modelo;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public Integer getRetraso() {
+        return retraso;
+    }
     
     
+       
 }

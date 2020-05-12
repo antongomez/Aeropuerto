@@ -281,4 +281,12 @@ public class FachadaBaseDatos {
     public Boolean comprobarRegistrado(String dni){
         return daoUsuarios.comprobarRegistrado(dni);
     }
+    
+    public Reserva buscarAlquilerDevolucion(String matricula){
+        return daoReservas.buscarAlquilerDevolucion(matricula);
+    }
+    
+    public Boolean devolucionCoche(Reserva alquiler){
+        return daoReservas.devolucionCoche(alquiler);
+    }
 }

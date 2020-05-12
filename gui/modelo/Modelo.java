@@ -282,4 +282,12 @@ public class Modelo {
     public Boolean comprobarRegistrado(String dni){
         return fa.comprobarRegistrado(dni);
     }
+    
+    public Reserva buscarAlquilerDevolucion(String matricula){
+        return fa.buscarAlquilerDevolucion(matricula);
+    }
+    
+    public Boolean devolucionCoche(Reserva alquiler){
+        return fa.devolucionCoche(alquiler);
+    }
 }

@@ -284,5 +284,13 @@ public class FachadaAplicacion extends Application {
     public Boolean comprobarRegistrado(String dni){
         return gu.comprobarRegistrado(dni);
     }
+    
+    public Reserva buscarAlquilerDevolucion(String matricula){
+        return gr.buscarAlquilerDevolucion(matricula);
+    }
+    
+    public Boolean devolucionCoche(Reserva alquiler){
+        return gr.devolucionCoche(alquiler);
+    }
 
 }

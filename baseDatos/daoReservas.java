@@ -221,8 +221,7 @@ public class daoReservas extends AbstractDAO {
             stmRes.setString(2, dniUsuario);
             rsRes=stmRes.executeQuery();
             while(rsRes.next()){
-                Reserva reserva = new Reserva(rsRes.getTimestamp("fechainicioreserva"),rsRes.getTimestamp("fechafinreserva"),
-                "coche", rsRes.getString("matricula"),rsRes.getString("modelo"),rsRes.getFloat("preciodia"), rsRes.getString("estado"));
+                Reserva reserva = new Reserva(rsRes.getTimestamp("fechainicioreserva"),rsRes.getTimestamp("fechafinreserva"), rsRes.getString("matricula"),rsRes.getString("modelo"),rsRes.getFloat("preciodia"), rsRes.getString("estado"));
                 resultado.add(reserva);
             }
 
@@ -247,7 +246,7 @@ public class daoReservas extends AbstractDAO {
 
         try {
             stmRes = con.prepareStatement("insert into alquilar values"
-                    + "(NOW(),?, ?, ?, null)");
+                    + "(NOW(),?, ?, ?, null,true)");
             stmRes.setString(1, dni);
             stmRes.setString(2, matricula);
             stmRes.setTimestamp(3, fin.toTimestamp());
@@ -262,6 +261,75 @@ public class daoReservas extends AbstractDAO {
                 stmRes.close();
             } catch (SQLException e) {
                 correcto = false;
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return correcto;
+    }
+    
+    public Reserva buscarAlquilerDevolucion(String matricula){
+        Connection con;
+        PreparedStatement stmAlquiler = null;
+        ResultSet rsAlquiler;
+        Reserva alquiler=null;
+
+        con = this.getConexion();
+
+        try {
+            stmAlquiler = con.prepareStatement("select alq.fechaAlquiler as inicio, alq.fechaTeoricaDevolucion as fin, "
+                    + "alq.usuario as usuario, coche.precioPorDia as precioDia "
+                    + "from alquilar as alq, cocheAlquiler as coche "
+                    + "where alq.matricula=? and alq.matricula=coche.matricula and alq.fechaDevolucion is null ");
+            stmAlquiler.setString(1, matricula);
+            rsAlquiler = stmAlquiler.executeQuery();
+
+            if (rsAlquiler.next()) {
+                alquiler=new Reserva(new Time(rsAlquiler.getTimestamp("inicio")), new Time(rsAlquiler.getTimestamp("fin")),
+                matricula,rsAlquiler.getFloat("precioDia"),rsAlquiler.getString("usuario"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+        } finally {
+            try {
+                stmAlquiler.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return alquiler;
+    }
+    
+    public Boolean devolucionCoche(Reserva alquiler){
+        Connection con;
+        PreparedStatement stmUsuario = null;
+        PreparedStatement stmBorrado = null;
+        Boolean correcto;
+
+        con = super.getConexion();
+
+        try {
+
+            stmUsuario = con.prepareStatement("update alquilar "
+                    + "set fechaDevolucion=NOW() "
+                    + "where matricula=? and fechaAlquiler=? and usuario=? ");
+
+            stmUsuario.setString(1, alquiler.getMatricula());
+            stmUsuario.setTimestamp(2, alquiler.getInicio().toTimestamp());
+            stmUsuario.setString(3, alquiler.getUsuario());
+            
+            stmUsuario.executeUpdate();
+            correcto = true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().mostrarError(e.getMessage());
+            correcto = false;
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
         }

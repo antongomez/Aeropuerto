@@ -50,5 +50,13 @@ public class GestionReservas {
     public Boolean introducirAlquiler(String matricula, Time fin, String dni){
         return fbd.introducirAlquiler(matricula, fin, dni);
     }
+    
+    public Reserva buscarAlquilerDevolucion(String matricula){
+        return fbd.buscarAlquilerDevolucion(matricula);
+    }
+    
+    public Boolean devolucionCoche(Reserva alquiler){
+        return fbd.devolucionCoche(alquiler);
+    }
 
 }
