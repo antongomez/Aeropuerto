@@ -33,7 +33,8 @@ public class daoAerolineas extends AbstractDAO {
             //Estadisticas sobre las aerolineas y los aviones
             stmEst = con.prepareStatement("SELECT (CASE count(*) when 0 then 0 else sum(anhofabricacion)/count(*) end) as anhomedio, \n"
                     + "(CASE count(*) when 0 then 0 else sum(capacidadpremium+capacidadnormal)/count(*) end) as capmedia, \n"
-                    + "paissede, preciobasemaleta,pesobasemaleta from aerolinea a, avion av, modeloavion m \n"
+                    + "paissede, preciobasemaleta,pesobasemaleta \n"
+                    + "FROM aerolinea a, avion av, modeloavion m \n"
                     + "WHERE a.nombre=av.aerolinea and m.nombre=av.modeloavion and aerolinea=? \n"
                     + "GROUP BY paissede, preciobasemaleta, pesobasemaleta");
             stmEst.setString(1, aer);

@@ -28,11 +28,11 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("insert into vuelo(numvuelo,origen,destino,"
-                    + "fechasalidateorica, fechasalidareal, fechallegadateorica,"
-                    + " fechallegadareal, precioactual, puertaembarque, cancelado,"
-                    + "terminal,avion) "
-                    + "values (?,?,?,?,?,?,?,?,?,?,?,?)");
+            stmVuelo = con.prepareStatement("INSERT into vuelo(numvuelo,origen,destino, \n"
+                    + "fechasalidateorica, fechasalidareal, fechallegadateorica, \n"
+                    + "fechallegadareal, precioactual, puertaembarque, cancelado, \n"
+                    + "terminal,avion) \n"
+                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
             stmVuelo.setString(1, v.getNumVuelo());
             stmVuelo.setString(2, v.getOrigen());
             stmVuelo.setString(3, v.getDestino());
@@ -73,22 +73,22 @@ public class daoVuelos extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            String consulta = "select numvuelo,origen,destino,fechasalidateorica, fechasalidareal,"
-                    + " fechallegadateorica, fechallegadareal, precioactual, puertaembarque, cancelado, \n"
-                    + " (CASE when fechasalidareal<=now() then true else false end) as enCurso, \n"
-                    + " terminal, avion "
-                    + "from vuelo "
-                    + "where numvuelo like ? "
-                    + "  and origen like ? "
-                    + "  and destino like ? ";
+            String consulta = "SELECT numvuelo,origen,destino,fechasalidateorica, fechasalidareal, \n"
+                    + "fechallegadateorica, fechallegadareal, precioactual, puertaembarque, cancelado, \n"
+                    + "(CASE when fechasalidareal<=now() then true else false end) as enCurso, \n"
+                    + "terminal, avion \n"
+                    + "FROM vuelo \n"
+                    + "WHERE numvuelo like ? \n"
+                    + "and origen like ? \n"
+                    + "and destino like ? \n";
 
             if (fechaSalida != null) {
-                consulta += "  and fechallegadareal >= ? ";
+                consulta += "  and fechallegadareal >= ? \n";
             } else {
-                consulta += "  and fechallegadareal >= now()"; //+ '-30 min' ";
+                consulta += "  and fechallegadareal >= now() \n"; //+ '-30 min' ";
             }
             //Ordenamos os voos por data de saida ascendente
-            consulta += "order by fechasalidateorica asc, fechallegadateorica desc";
+            consulta += "ORDER BY fechasalidateorica asc, fechallegadateorica desc";
 
             stmVuelo = con.prepareStatement(consulta);
             stmVuelo.setString(1, "%" + numVuelo + "%");
@@ -134,12 +134,12 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select v.numvuelo, v.origen, "
-                    + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, "
-                    + "c.preciobillete as preciobillete, v.cancelado as cancelado "
-                    + "from usuario u, vuelo v, comprarBillete c "
-                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? "
-                    + "order by v.fechasalidateorica asc ");
+            stmVuelo = con.prepareStatement("SELECT v.numvuelo, v.origen, \n"
+                    + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, \n"
+                    + "c.preciobillete as preciobillete, v.cancelado as cancelado \n"
+                    + "FROM usuario u, vuelo v, comprarBillete c \n"
+                    + "WHERE u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? \n"
+                    + "ORDER BY v.fechasalidateorica asc");
             stmVuelo.setString(1, dniUs);
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
@@ -175,13 +175,13 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select v.numvuelo, v.origen, "
-                    + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, "
-                    + "c.preciobillete, v.cancelado "
-                    + "from usuario u, vuelo v, comprarBillete c "
-                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? "
-                    + "  and v.fechallegadareal < now()"
-                    + "order by v.fechasalidateorica desc ");
+            stmVuelo = con.prepareStatement("SELECT v.numvuelo, v.origen, \n"
+                    + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, \n"
+                    + "c.preciobillete, v.cancelado \n"
+                    + "FROM usuario u, vuelo v, comprarBillete c \n"
+                    + "WHERE u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? \n"
+                    + "and v.fechallegadareal < now() \n"
+                    + "ORDER BY v.fechasalidateorica desc ");
             stmVuelo.setString(1, dniUs);
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
@@ -217,14 +217,14 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select v.numvuelo, v.origen, "
-                    + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, "
-                    + "c.preciobillete, v.cancelado, "
-                    + "(CASE when fechasalidareal<=now() then true else false end) as enCurso "
-                    + "from usuario u, vuelo v, comprarBillete c "
-                    + "where u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? "
-                    + "  and v.fechallegadareal >= now()"
-                    + "order by v.fechasalidateorica asc ");
+            stmVuelo = con.prepareStatement("SELECT v.numvuelo, v.origen, \n"
+                    + "v.destino, v.fechasalidateorica, v.fechasalidareal, v.fechallegadateorica, v.fechallegadareal, \n"
+                    + "c.preciobillete, v.cancelado, \n"
+                    + "(CASE when fechasalidareal<=now() then true else false end) as enCurso \n"
+                    + "FROM usuario u, vuelo v, comprarBillete c \n"
+                    + "WHERE u.dni=c.usuario and v.numVuelo=c.vuelo and u.dni=? \n"
+                    + "and v.fechallegadareal >= now() \n"
+                    + "ORDER BY v.fechasalidateorica asc");
             stmVuelo.setString(1, dniUs);
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
@@ -259,18 +259,23 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select distinct vuelo.aerolinea as aerolinea, "
-                    + "vuelo.preciobasemaleta as precioMaleta, vuelo.pesoBaseMaleta as pesoMaleta, "
-                    + "cN-nN as plazasRestantesNormal, cP-nP as plazasRestantesPremium, cN as plazasNormal, "
-                    + "cP as plazasPremium from "
-                    + "(select count(*) as nN from vuelo v, comprarbillete c "
-                    + "where v.numvuelo=c.vuelo and v.numvuelo=? and tipoasiento='normal') as nN,"
-                    + "(select count(*) as nP from vuelo v, comprarbillete c "
-                    + "where v.numvuelo=c.vuelo and v.numvuelo=? and tipoasiento='premium') as nP,"
-                    + "(select aerolinea, precioBaseMaleta, pesoBaseMaleta, m.capacidadnormal as cN, m.capacidadPremium as cP "
-                    + "from vuelo v, aerolinea a, avion av, modeloAvion m "
-                    + "where avion=av.codigo and av.aerolinea=a.nombre and m.nombre=av.modeloavion "
-                    + "and v.numvuelo=?) as vuelo");
+            stmVuelo = con.prepareStatement("SELECT distinct vuelo.aerolinea as aerolinea, \n"
+                    + "vuelo.preciobasemaleta as precioMaleta, vuelo.pesoBaseMaleta as pesoMaleta, \n"
+                    + "cN-nN as plazasRestantesNormal, cP-nP as plazasRestantesPremium, cN as plazasNormal, \n"
+                    + "cP as plazasPremium \n"
+                    + "FROM (SELECT count(*) as nN \n"
+                    + "      FROM vuelo v, comprarbillete c \n"
+                    + "      WHERE v.numvuelo=c.vuelo and v.numvuelo=? and tipoasiento='normal') \n"
+                    + "as nN, \n"
+                    + "     (SELECT count(*) as nP \n"
+                    + "      FROM vuelo v, comprarbillete c \n"
+                    + "      WHERE v.numvuelo=c.vuelo and v.numvuelo=? and tipoasiento='premium') \n"
+                    + "as nP, \n"
+                    + "     (SELECT aerolinea, precioBaseMaleta, pesoBaseMaleta, m.capacidadnormal as cN, m.capacidadPremium as cP \n"
+                    + "      FROM vuelo v, aerolinea a, avion av, modeloAvion m \n"
+                    + "      WHERE avion=av.codigo and av.aerolinea=a.nombre and m.nombre=av.modeloavion \n"
+                    + "      and v.numvuelo=?) \n"
+                    + "as vuelo");
             stmVuelo.setString(1, v.getNumVuelo());
             stmVuelo.setString(2, v.getNumVuelo());
             stmVuelo.setString(3, v.getNumVuelo());
@@ -310,17 +315,17 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmAsientos = con.prepareStatement("select numAsiento "
-                    + "from comprarbillete "
-                    + "where vuelo = ? and tipoAsiento = 'normal' ");
+            stmAsientos = con.prepareStatement("SELECT numAsiento \n"
+                    + "FROM comprarbillete \n"
+                    + "WHERE vuelo = ? and tipoAsiento = 'normal' ");
             stmAsientos.setString(1, vuelo.getNumVuelo());
             rsAsientos = stmAsientos.executeQuery();
             while (rsAsientos.next()) {
                 vuelo.getAsientosNormalesDisponibles().replace(rsAsientos.getInt("numAsiento"), false);
             }
-            stmAsientos = con.prepareStatement("select numAsiento "
-                    + "from comprarbillete "
-                    + "where vuelo = ? and tipoAsiento = 'premium' ");
+            stmAsientos = con.prepareStatement("SELECT numAsiento \n"
+                    + "FROM comprarbillete \n"
+                    + "WHERE vuelo = ? and tipoAsiento = 'premium' ");
             stmAsientos.setString(1, vuelo.getNumVuelo());
             rsAsientos = stmAsientos.executeQuery();
             while (rsAsientos.next()) {
@@ -347,10 +352,10 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmBillete = con.prepareStatement("insert into comprarbillete(usuario,vuelo,numAsiento,"
-                    + "tipoAsiento, numMaletasReserva, tenerAcompanhante, "
-                    + "precioBillete) "
-                    + "values (?,?,?,?,?,?,?)");
+            stmBillete = con.prepareStatement("INSERT into comprarbillete(usuario,vuelo,numAsiento, \n"
+                    + "tipoAsiento, numMaletasReserva, tenerAcompanhante, \n"
+                    + "precioBillete) \n"
+                    + "VALUES(?,?,?,?,?,?,?)");
             for (Usuario usuario : usuarios) {
                 stmBillete.setString(1, usuario.getDni());
                 stmBillete.setString(2, usuario.getVueloEnEspera().getNumVuelo());
@@ -391,9 +396,9 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select * "
-                    + "from vuelo "
-                    + "where numvuelo=? and fechasalidareal<NOW()");
+            stmVuelo = con.prepareStatement("SELECT * \n"
+                    + "FROM vuelo \n"
+                    + "WHERE numvuelo=? and fechasalidareal<NOW()");
             stmVuelo.setString(1, vuelo);
             rsVuelo = stmVuelo.executeQuery();
             if (rsVuelo.next()) {
@@ -422,8 +427,9 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmBillete = con.prepareStatement("delete from comprarbillete "
-                    + "where vuelo=? and usuario=?");
+            stmBillete = con.prepareStatement("DELETE \n"
+                    + "FROM comprarbillete \n"
+                    + "WHERE vuelo=? and usuario=?");
             stmBillete.setString(1, vuelo);
             stmBillete.setString(2, dni);
             stmBillete.executeUpdate();
@@ -452,13 +458,13 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaSalidaReal, \n"
-                    + "	fechaSalidaReal-fechaSalidaTeorica as retraso, terminal, puertaembarque, cancelado, \n"
-                    + "	to_char(fechaSalidaReal-now(),'dd HH24:MI') as tiempoRestante  \n"
-                    + "from vuelo v \n"
-                    + "where fechasalidareal between (now() + '-30 min') and (now() + '1 days')\n"
-                    + "  and v.origen = ? \n"
-                    + "order by fechasalidareal asc");
+            stmVuelo = con.prepareStatement("SELECT numVuelo, origen, destino, fechaSalidaReal, \n"
+                    + "fechaSalidaReal-fechaSalidaTeorica as retraso, terminal, puertaembarque, cancelado, \n"
+                    + "to_char(fechaSalidaReal-now(),'dd HH24:MI') as tiempoRestante  \n"
+                    + "FROM vuelo v \n"
+                    + "WHERE fechasalidareal between (now() + '-30 min') and (now() + '1 days') \n"
+                    + "and v.origen = ? \n"
+                    + "ORDER BY fechasalidareal asc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
             while (rsVuelo.next()) {
@@ -493,13 +499,12 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select numVuelo, origen, destino, fechaLlegadaReal,\n"
-                    + " fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado, \n"
+            stmVuelo = con.prepareStatement("SELECT numVuelo, origen, destino, fechaLlegadaReal, \n"
+                    + "fechaLlegadaReal-fechaLlegadaTeorica as retraso,terminal, puertaembarque, cancelado, \n"
                     + "to_char(fechaLlegadaReal-NOW(),'dd HH24:MI') as tiempoRestante \n"
-                    + "from vuelo v \n"
-                    + "where fechallegadareal between (now() + '-30 min')\n"
-                    + "    									  		 and (now() + '1 days')\n"
-                    + "  and v.destino = ? \n"
+                    + "FROM vuelo v \n"
+                    + "WHERE fechallegadareal between (now() + '-30 min') and (now() + '1 days') \n"
+                    + "and v.destino = ? \n"
                     + "ORDER BY fechaLlegadaReal desc");
             stmVuelo.setString(1, "Folgoso do Courel");
             rsVuelo = stmVuelo.executeQuery();
@@ -535,16 +540,18 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
         try {
             //Solo se puede pasar el control si el vuelo no salió aún o faltan más de 12 horas para su salida
-            stmComprobacion = con.prepareStatement("select numvuelo from vuelo where numvuelo=? and "
-                    + "fechasalidareal between NOW() and (NOW()+'12 hr')");
+            stmComprobacion = con.prepareStatement("SELECT numvuelo \n"
+                    + "FROM vuelo \n"
+                    + "WHERE numvuelo=? and fechasalidareal between NOW() and (NOW()+'12 hr')");
             stmComprobacion.setString(1, vuelo);
             rsComprobacion = stmComprobacion.executeQuery();
             if (rsComprobacion.next()) {
 
                 try {
 
-                    stmUsuario = con.prepareStatement("update comprarbillete set pasarcontrol=true "
-                            + "where usuario=? and vuelo=?");
+                    stmUsuario = con.prepareStatement("UPDATE comprarbillete \n"
+                            + "SET pasarcontrol=true \n"
+                            + "WHERE usuario=? and vuelo=?");
 
                     stmUsuario.setString(1, dni);
                     stmUsuario.setString(2, vuelo);
@@ -597,8 +604,9 @@ public class daoVuelos extends AbstractDAO {
 
         try {
 
-            stmUsuario = con.prepareStatement("update comprarbillete set pasarcontrol=false "
-                    + "where usuario=? and vuelo=?");
+            stmUsuario = con.prepareStatement("UPDATE comprarbillete \n"
+                    + "SET pasarcontrol=false \n"
+                    + "WHERE usuario=? and vuelo=?");
 
             stmUsuario.setString(1, dni);
             stmUsuario.setString(2, vuelo);
@@ -635,10 +643,10 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select a.nombre as nombre, a.pesobasemaleta "
-                    + "as pesobasemaleta, a.preciobasemaleta as preciobasemaleta "
-                    + "from vuelo v, avion av, aerolinea a "
-                    + "where v.avion=av.codigo and av.aerolinea=a.nombre and numvuelo=?");
+            stmVuelo = con.prepareStatement("SELECT a.nombre as nombre, a.pesobasemaleta \n"
+                    + "as pesobasemaleta, a.preciobasemaleta as preciobasemaleta \n"
+                    + "FROM vuelo v, avion av, aerolinea a \n"
+                    + "WHERE v.avion=av.codigo and av.aerolinea=a.nombre and numvuelo=?");
             stmVuelo.setString(1, num);
             rsVuelo = stmVuelo.executeQuery();
             if (rsVuelo.next()) {
@@ -666,10 +674,15 @@ public class daoVuelos extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            stmVuelo = con.prepareStatement("select nummaletasreserva-numfact as malDisp "
-                    + "from (select nummaletasreserva from comprarbillete "
-                    + "where vuelo=? and usuario=?) r, "
-                    + "(select count(*) as numfact from facturarmaleta where vuelo=? and usuario=?) s");
+            stmVuelo = con.prepareStatement("SELECT nummaletasreserva-numfact as malDisp \n"
+                    + "FROM (SELECT nummaletasreserva \n"
+                    + "      FROM comprarbillete \n"
+                    + "      WHERE vuelo=? and usuario=?) \n"
+                    + "as r, \n"
+                    + "      (SELECT count(*) as numfact \n"
+                    + "       FROM facturarmaleta \n"
+                    + "       WHERE vuelo=? and usuario=?) \n"
+                    + "as s");
             stmVuelo.setString(1, vuelo);
             stmVuelo.setString(2, dni);
             stmVuelo.setString(3, vuelo);
@@ -702,15 +715,16 @@ public class daoVuelos extends AbstractDAO {
 
         try {
             //Solo se puede facturar si el vuelo no salió aún
-            stmComprobacion = con.prepareStatement("select numvuelo from vuelo where numvuelo=? and "
-                    + "fechasalidareal>NOW()");
+            stmComprobacion = con.prepareStatement("SELECT numvuelo \n"
+                    + "FROM vuelo \n"
+                    + "WHERE numvuelo=? and fechasalidareal>NOW()");
             stmComprobacion.setString(1, vuelo);
             rsComprobacion = stmComprobacion.executeQuery();
             if (rsComprobacion.next()) {
 
                 try {
-                    stmVuelo = con.prepareStatement("insert into facturarmaleta (usuario,vuelo,peso)"
-                            + " values (?,?,?)");
+                    stmVuelo = con.prepareStatement("INSERT into facturarmaleta(usuario,vuelo,peso) \n"
+                            + "VALUES(?,?,?)");
 
                     stmVuelo.setString(1, dni);
                     stmVuelo.setString(2, vuelo);
@@ -765,12 +779,12 @@ public class daoVuelos extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            String consulta = "select distinct date_part('year',fechasalidateorica) as anhos\n"
-                    + "from vuelo\n"
-                    + "where numvuelo in (select vuelo\n"
-                    + "					from comprarbillete\n"
-                    + "					where usuario = ?)\n"
-                    + "order by anhos desc";
+            String consulta = "SELECT distinct date_part('year',fechasalidateorica) as anhos \n"
+                    + "FROM vuelo \n"
+                    + "WHERE numvuelo in (SELECT vuelo \n"
+                    + "                   FROM comprarbillete \n"
+                    + "                   WHERE usuario = ?) \n"
+                    + "ORDER BY anhos desc";
 
             stmVuelo = con.prepareStatement(consulta);
             stmVuelo.setString(1, dni);
