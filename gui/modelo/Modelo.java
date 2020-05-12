@@ -14,6 +14,7 @@ import aeropuerto.util.Reserva;
 import aeropuerto.util.Time;
 import gui.FachadaGui;
 import static gui.controlador.Controlador.loadWindow;
+import static gui.controlador.Controlador.loadWindowConfirm;
 import gui.controlador.VErrorController;
 import gui.controlador.VNotificacionController;
 import gui.controlador.vConfirmacionControlador;
@@ -82,14 +83,25 @@ public class Modelo {
         controlador.getVenta().setResizable(false);
         
     }
-
-    public void mostrarConfirmacion(String mensaje, Stage pai) {
+    
+    /*public void mostrarConfirmacion(String mensaje, Stage pai) {
         Stage stage = new Stage();
         stage.initOwner(pai);
         vConfirmacionControlador controlador = ((vConfirmacionControlador) loadWindow(getClass().
                 getResource("/gui/vista/vConfirmacion.fxml"), "Confirmación", stage));
         controlador.mostrarMensaje(mensaje);
         controlador.getVenta().setResizable(false);
+    }*/
+
+    public Boolean mostrarConfirmacion(String mensaje, Stage pai) {
+        Stage stage = new Stage();
+        stage.initOwner(pai);
+        vConfirmacionControlador controlador = ((vConfirmacionControlador) loadWindowConfirm(getClass().
+                getResource("/gui/vista/vConfirmacion.fxml"), "Confirmación", stage));
+        controlador.mostrarMensaje(mensaje);
+        controlador.getVenta().setResizable(false);
+        controlador.getVenta().showAndWait();
+        return controlador.getConfirmado();
     }
 
     //Vuelos

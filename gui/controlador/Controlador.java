@@ -54,6 +54,34 @@ public abstract class Controlador {
         }
         return controller;
     }
+    
+    public static Controlador loadWindowConfirm(URL loc, String title, Stage stageCreado) {
+        Controlador controller = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(loc);
+            Parent parent = loader.load();
+            controller = loader.getController();
+            Stage stage;
+            if (stageCreado != null) {
+                stage = stageCreado;
+            } else {
+                stage = new Stage(StageStyle.DECORATED);
+            }
+            stage.setTitle(title);
+            stage.setScene(new Scene(parent));
+
+            //Ponhemoslle un icono
+            setStageIcon(stage);
+
+            //Asignamoslle a venta ao controlador
+            controller.setVenta(stage);
+
+        } catch (IOException ex) {
+            System.out.println("Error en la apertura de la ventana");
+        }
+        return controller;
+    }
+    
 
     //Getters
     public Stage getVenta() {

@@ -40,7 +40,7 @@
                            </image>
                         </ImageView>
                      </graphic></Button>
-                  <Button mnemonicParsing="false" text="CANCELAR">
+                  <Button mnemonicParsing="false" onAction="#accionBtnCancelar" text="CANCELAR">
                      <styleClass>
                         <String fx:value="boton" />
                         <String fx:value="cancel-button" />
