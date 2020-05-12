@@ -5,6 +5,7 @@ import aeropuerto.elementos.Vuelo;
 import gui.modelo.Modelo;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -190,10 +191,9 @@ public class vComprarControlador extends Controlador implements Initializable {
             us.comprarVuelo(vuelo.getNumVuelo());
             if (pasajeros.contains(us)) {
                 Modelo.getInstanceModelo().mostrarError("El usuario ya figura como pasajero", getVenta());
-            } else if(Modelo.getInstanceModelo().obtenerVuelosUsuario(us.getDni()).contains(vuelo)){
-                 Modelo.getInstanceModelo().mostrarError("El usuario ya dispone un billete para este vuelo", getVenta());
-            }
-            else if (comprobarAsientos(us)) {
+            } else if (Modelo.getInstanceModelo().obtenerVuelosUsuario(us.getDni()).contains(vuelo)) {
+                Modelo.getInstanceModelo().mostrarError("El usuario ya dispone un billete para este vuelo", getVenta());
+            } else if (comprobarAsientos(us)) {
                 pasajeros.add(us);
                 if (pasajeros.size() == 1) {
                     radioBtnPremium.setDisable(true);
@@ -382,8 +382,23 @@ public class vComprarControlador extends Controlador implements Initializable {
     private void pagar(MouseEvent event) {
         if (Modelo.getInstanceModelo().comprarBilletes(pasajeros)) {
             getVenta().close();
-            Modelo.getInstanceModelo().mostrarNotificacion("Vuelo comprado con éxito.\n "
-                    + "Precio total: " + actualizarPrecio().toString() + ".", getVenta());
+            String dniUsuarios = "";
+            Iterator<Usuario> it = pasajeros.iterator();
+            while (it.hasNext()) {
+                Usuario usuario = it.next();
+                if (it.hasNext()) {
+                    dniUsuarios += usuario.getDni() + ", ";
+                } else {
+                    dniUsuarios += usuario.getDni();
+                }
+            }
+            Modelo.getInstanceModelo().mostrarNotificacion("Compra realizada con éxito.\n"
+                    + "- Dni de los pasajeros: " + dniUsuarios + "\n"
+                    + "- Origen: " + vuelo.getOrigen() + "\n"
+                    + "- Destino: " + vuelo.getDestino() + "\n"
+                    + "- Fecha salida: " + vuelo.getFechasalidaTeo().toString() + "\n"
+                    + "- Precio total: " + actualizarPrecio().toString() + " €.",
+                    getVenta());
         } else {
             Modelo.getInstanceModelo().mostrarError("Hubo un error en la compra, lo sentimos.\n"
                     + "Trataremos de arreglarlo lo antes posible.", getVenta());

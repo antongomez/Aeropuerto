@@ -398,7 +398,7 @@ public class daoVuelos extends AbstractDAO {
         try {
             stmVuelo = con.prepareStatement("select * "
                     + "from vuelo "
-                    + "where numvuelo=? and fechasalidareal<(SELECT DATEADD(DAY,15,NOW()))");
+                    + "where numvuelo=? and cast(fechasalidareal as date)-cast(NOW() as date)<15");
             stmVuelo.setString(1, vuelo);
             rsVuelo = stmVuelo.executeQuery();
             if (rsVuelo.next()) {

@@ -799,21 +799,22 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private void cancelarViaje(ActionEvent event) {
         Vuelo vueloSelect = tablaFuturosVuelos.getSelectionModel().getSelectedItem();
+        Modelo.getInstanceModelo().obtenerDatosAvionVuelo(vueloSelect);
         if (vueloSelect != null) {
-            //if(Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo())){
-            if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
-                vuelosFuturos.remove(vueloSelect);
-                Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
+            if (Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo()) || vueloSelect.getCancelado()) {
+                if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
+                    vuelosFuturos.remove(vueloSelect);
+                    Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());
+                } else {
+                    Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
+                }
             } else {
-                Modelo.getInstanceModelo().mostrarError("No se ha podido completar la devolución del billete. Vuelta a intentarlo", getVenta());
-            }
-            //}
-            /*else{
-                Modelo.getInstanceModelo().mostrarNotificacion("Nuestra política de devolución no permite devolver "
+                Modelo.getInstanceModelo().mostrarNotificacion("Nuestra política de devolución no "
+                        + "nos permite realizar el reembolso de "
                         + "un billete en un plazo inferior a 15 días de la salida del vuelo. "
-                        + "Para más información contacte con "+vueloSelect.getAerolinea().getNombre()+", la aerolínea encargada "
-                                + "de operar este vuelo.", getVenta());
-            }*/
+                        + "Para más información contacte con " + vueloSelect.getAerolinea().getNombre() + ", la aerolínea encargada "
+                        + "de operar este vuelo.", getVenta());
+            }
         }
     }
 
