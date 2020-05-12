@@ -182,7 +182,7 @@ public class VCocheControlador extends Controlador implements Initializable {
                 cambiarFechaConReserva.setDisable(false);
                 datePickerConReserva.setValue(reserva.getFin().toLocalDate());
                 btnAlquilarConReserva.setDisable(false);
-                textFieldPrecioFinalConReserva.setText(reserva.getPrecio().toString());
+                textFieldPrecioFinalConReserva.setText(reserva.getPrecio().toString()+" €");
             } else {
                 cambiarFechaConReserva.setDisable(true);
                 datePickerConReserva.setValue(reserva.getFin().toLocalDate());
@@ -238,9 +238,9 @@ public class VCocheControlador extends Controlador implements Initializable {
     private void actualizarPrecioConReserva(ActionEvent event) {
         Reserva reserva = tablaConReserva.getSelectionModel().getSelectedItem();
         if (reserva != null) {
-            Integer duracionAlquiler = Time.obtenerDias(reserva.getInicio().toLocalDate(), datePickerConReserva.getValue());
+            Integer duracionAlquiler = Time.obtenerDias(reserva.getInicio().toLocalDate(), datePickerConReserva.getValue())+1;
             Float precio = (float) (Math.round(duracionAlquiler * reserva.getPrecioDia() * 100d) / 100d);
-            textFieldPrecioFinalConReserva.setText(precio.toString());
+            textFieldPrecioFinalConReserva.setText(precio.toString()+" €");
         }
     }
 
@@ -270,9 +270,9 @@ public class VCocheControlador extends Controlador implements Initializable {
         cocheActual = tablaSinReservas.getSelectionModel().getSelectedItem();
         if (cocheActual != null) {
             Integer duracionAlquiler = Time.obtenerDias(Time.diaActual().toLocalDate(),
-                    datePickerFechaVueltaSinReserva.getValue());
+                    datePickerFechaVueltaSinReserva.getValue())+1;
             Float precio = (float) (Math.round(duracionAlquiler * cocheActual.getPrecioDia() * 100d) / 100d);
-            textFieldPrecioSinReserva.setText(precio.toString());
+            textFieldPrecioSinReserva.setText(precio.toString()+" €");
         }
     }
 
@@ -341,7 +341,7 @@ public class VCocheControlador extends Controlador implements Initializable {
             this.textFinD.setText(devolucion.getFin().toStringFecha());
             this.textRetrasoD.setText(devolucion.getRetraso().toString());
             this.textPrecioDiaD.setText(devolucion.getPrecioDia().toString());
-            this.textPrecioTotalD.setText(devolucion.getPrecio().toString());
+            this.textPrecioTotalD.setText(devolucion.getPrecio().toString()+" €");
             this.textActualD.setText(Time.diaActual().toStringFecha());
         } else {
             Modelo.getInstanceModelo().mostrarError("No se ha encontrado ningún alquiler pendiente para esa matrícula.");

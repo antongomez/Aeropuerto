@@ -69,7 +69,7 @@ public class Reserva {
         this.inicio = new Time(inicio);
         this.fin = new Time(fin);
         this.tipo = "coche";
-        Integer duracionAlquiler=Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate());
+        Integer duracionAlquiler=Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate())+1;
         this.precio = (float)(Math.round((duracionAlquiler*precioDia) * 100d) / 100d);
         this.modelo=modelo;
         this.precioDia=precioDia;
@@ -90,7 +90,7 @@ public class Reserva {
         else{
             this.retraso=0;
         }
-        Integer duracionAlquiler=Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate());
+        Integer duracionAlquiler=Time.obtenerDias(this.inicio.toLocalDate(), this.fin.toLocalDate())+1;
         this.precio=duracionAlquiler*this.precioDia+retraso*(this.precioDia+CARGO_EXTRA_RETRASO);
     }
     
