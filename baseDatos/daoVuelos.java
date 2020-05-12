@@ -679,9 +679,9 @@ public class daoVuelos extends AbstractDAO {
                     + "      FROM comprarbillete \n"
                     + "      WHERE vuelo=? and usuario=?) \n"
                     + "as r, \n"
-                    + "      (SELECT count(*) as numfact \n"
-                    + "       FROM facturarmaleta \n"
-                    + "       WHERE vuelo=? and usuario=?) \n"
+                    + "     (SELECT count(*) as numfact \n"
+                    + "      FROM facturarmaleta \n"
+                    + "      WHERE vuelo=? and usuario=?) \n"
                     + "as s");
             stmVuelo.setString(1, vuelo);
             stmVuelo.setString(2, dni);

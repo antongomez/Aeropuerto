@@ -24,7 +24,8 @@ public class daoTiendas extends AbstractDAO {
         ArrayList<String> terminais = new ArrayList<>();
 
         try {
-            stmRes = con.prepareStatement("select distinct tipoVentas from tienda");
+            stmRes = con.prepareStatement("SELECT distinct tipoVentas \n"
+                    + "FROM tienda");
             rsRes = stmRes.executeQuery();
             while (rsRes.next()) {
                 terminais.add(rsRes.getString("tipoVentas"));
@@ -54,9 +55,9 @@ public class daoTiendas extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            String consulta = "select nombre, tipoventas, terminal\n"
-                    + "from tienda\n"
-                    + "where nombre like ? \n";
+            String consulta = "SELECT nombre, tipoventas, terminal \n"
+                    + "FROM tienda \n"
+                    + "WHERE nombre like ? \n";
 
             if (tipo != null) {
                 consulta += "  and tipoventas = ? \n";
@@ -65,7 +66,7 @@ public class daoTiendas extends AbstractDAO {
                 consulta += "  and terminal = ? \n";
             }
             //Ordenamos os voos por data de saida ascendente
-            consulta += "order by terminal asc, tipoventas asc, nombre asc ";
+            consulta += "ORDER BY terminal asc, tipoventas asc, nombre asc ";
 
             stmTiendas = con.prepareStatement(consulta);
             stmTiendas.setString(1, "%" + nombre + "%");

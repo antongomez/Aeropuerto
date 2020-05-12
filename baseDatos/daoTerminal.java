@@ -31,15 +31,17 @@ public class daoTerminal extends AbstractDAO {
         Parking parking = null;
 
         try {
-            stmParking = con.prepareStatement("select p.piso, p.numplazas\n"
-                    + "from parking as p natural left outer join (select terminal, piso, count(*) as plazasOc\n"
-                    + "								from reservarParking\n"
-                    + "								where fechaentrada <= ?\n"
-                    + "  								  and fechafin >= ?\n"
-                    + "								group by terminal, piso) as c\n"
-                    + "where terminal = ?\n"
-                    + "group by p.piso, p.numplazas, c.plazasOc\n"
-                    + "having (p.numplazas - coalesce(c.plazasOc, 0)) = max(p.numplazas - coalesce(c.plazasOc, 0))");
+            stmParking = con.prepareStatement("SELECT p.piso, p.numplazas \n"
+                    + "from parking as p \n"
+                    + "NATURAL LEFT OUTER JOIN \n"
+                    + "     (SELECT terminal, piso, count(*) as plazasOc \n"
+                    + "      FROM reservarParking \n"
+                    + "      WHERE fechaentrada <= ? \n"
+                    + "      and fechafin >= ? \n"
+                    + "      GROUP BY terminal, piso) as c \n"
+                    + "WHERE terminal = ? \n"
+                    + "GROUP BY p.piso, p.numplazas, c.plazasOc \n"
+                    + "HAVING (p.numplazas - coalesce(c.plazasOc, 0)) = max(p.numplazas - coalesce(c.plazasOc, 0))");
             stmParking.setTimestamp(1, fin.toTimestamp());
             stmParking.setTimestamp(2, inicio.toTimestamp());
             stmParking.setInt(3, terminal);
@@ -71,13 +73,15 @@ public class daoTerminal extends AbstractDAO {
         PorcentajeDisponibilidad per = null;
 
         try {
-            stmParking = con.prepareStatement("select sum(numPlazas) as totalPlazas, sum(p.numplazas - coalesce(c.plazasOc, 0)) as plazasLibres\n"
-                    + "from parking as p natural left outer join (select terminal, piso, count(*) as plazasOc\n"
-                    + "								from reservarParking\n"
-                    + "								where fechaentrada <= ?\n"
-                    + "								  and fechafin >= ?\n"
-                    + "								group by terminal, piso) as c\n"
-                    + "where terminal = ?");
+            stmParking = con.prepareStatement("SELECT sum(numPlazas) as totalPlazas, sum(p.numplazas - coalesce(c.plazasOc, 0)) as plazasLibres \n"
+                    + "FROM parking as p \n"
+                    + "NATURAL LEFT OUTER JOIN \n"
+                    + "     (SELECT terminal, piso, count(*) as plazasOc \n"
+                    + "      FROM reservarParking \n"
+                    + "      WHERE fechaentrada <= ? \n"
+                    + "      and fechafin >= ? \n"
+                    + "      GROUP BY terminal, piso) as c \n"
+                    + "WHERE terminal = ?");
             stmParking.setTimestamp(1, fin.toTimestamp());
             stmParking.setTimestamp(2, inicio.toTimestamp());
             stmParking.setInt(3, numTerminal);
@@ -109,12 +113,12 @@ public class daoTerminal extends AbstractDAO {
         List<Integer> plazas = new ArrayList<>();
 
         try {
-            stmParking = con.prepareStatement("select numPlaza as plazasOcupadas\n"
-                    + "from reservarParking \n"
-                    + "where fechaentrada <= ? \n"
-                    + "  and fechafin >= ? \n"
-                    + "  and terminal = ?\n"
-                    + "  and piso = ?");
+            stmParking = con.prepareStatement("SELECT numPlaza as plazasOcupadas \n"
+                    + "FROM reservarParking \n"
+                    + "WHERE fechaentrada <= ? \n"
+                    + "and fechafin >= ? \n"
+                    + "and terminal = ? \n"
+                    + "and piso = ?");
             stmParking.setTimestamp(1, fin.toTimestamp());
             stmParking.setTimestamp(2, inicio.toTimestamp());
             stmParking.setInt(3, numTerminal);
@@ -147,10 +151,10 @@ public class daoTerminal extends AbstractDAO {
         Integer numPlazas = null;
 
         try {
-            stmParking = con.prepareStatement("select numPlazas \n"
-                    + "from parking \n"
-                    + "where terminal = ? \n"
-                    + "  and piso = ? \n");
+            stmParking = con.prepareStatement("SELECT numPlazas \n"
+                    + "FROM parking \n"
+                    + "WHERE terminal = ? \n"
+                    + "and piso = ? \n");
             stmParking.setInt(1, numTerminal);
             stmParking.setInt(2, piso);
 
@@ -181,7 +185,8 @@ public class daoTerminal extends AbstractDAO {
         ArrayList<Integer> terminais = new ArrayList<>();
 
         try {
-            stmRes = con.prepareStatement("select numero from terminal");
+            stmRes = con.prepareStatement("SELECT numero \n"
+                    + "FROM terminal");
             rsRes = stmRes.executeQuery();
             while (rsRes.next()) {
                 terminais.add(rsRes.getInt("numero"));

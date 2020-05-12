@@ -30,16 +30,16 @@ public class daoCoches extends AbstractDAO {
                     + "WHERE matricula not in ((SELECT cochealquiler as matricula \n"
                     + "			       FROM reservar \n"
                     + "			       WHERE cast(fechainicioreserva as date) <= cast(? as date) \n"
-                    + "                         and (((cast(? as date)-cast (fechafinreserva as date))<=5 \n" +
-"                                               and cast(? as date)>cast(fechafinreserva as date)) \n" +
-"                                               or cast(? as date)<=cast(fechafinreserva as date))) \n"
+                    + "                         and (((cast(? as date)-cast (fechafinreserva as date))<=5 \n"
+                    + "                         and cast(? as date)>cast(fechafinreserva as date)) \n"
+                    + "                         or cast(? as date)<=cast(fechafinreserva as date))) \n"
                     + "                         UNION \n"
                     + "                        (SELECT matricula \n"
                     + "                         FROM alquilar \n"
                     + "                         WHERE cast(fechaalquiler as date) <= cast(? as date) \n"
-                    + "                         and (((cast(? as date)-cast (fechateoricadevolucion as date))<=5 \n" +
-"                                               and cast(? as date)>cast(fechateoricadevolucion as date)) \n" +
-"                                               or cast(? as date)<=cast(fechateoricadevolucion as date)))) \n"
+                    + "                         and (((cast(? as date)-cast (fechateoricadevolucion as date))<=5 \n"
+                    + "                         and cast(? as date)>cast(fechateoricadevolucion as date)) \n"
+                    + "                         or cast(? as date)<=cast(fechateoricadevolucion as date)))) \n"
                     + "and retirado = false \n";
             if (numPlazas != null) {
                 consulta += "  and nplazas = ? \n";
@@ -98,16 +98,16 @@ public class daoCoches extends AbstractDAO {
                     + "WHERE matricula not in ((SELECT cochealquiler as matricula \n"
                     + "			       FROM reservar \n"
                     + "			       WHERE cast(fechainicioreserva as date) <= cast(? as date) \n"
-                    + "                         and (((cast(? as date)-cast (fechafinreserva as date))<=5 \n" +
-"                                               and cast(? as date)>cast(fechafinreserva as date)) \n" +
-"                                               or cast(? as date)<=cast(fechafinreserva as date))) \n"
+                    + "                         and (((cast(? as date)-cast (fechafinreserva as date))<=5 \n"
+                    + "                         and cast(? as date)>cast(fechafinreserva as date)) \n"
+                    + "                         or cast(? as date)<=cast(fechafinreserva as date))) \n"
                     + "                         UNION \n"
                     + "                        (SELECT matricula \n"
                     + "                         FROM alquilar \n"
                     + "                         WHERE cast(fechaalquiler as date) <= cast(? as date) \n"
-                    + "                         and (((cast(? as date)-cast (fechateoricadevolucion as date))<=5 \n" +
-"                                               and cast(? as date)>cast(fechateoricadevolucion as date)) \n" +
-"                                               or cast(? as date)<=cast(fechateoricadevolucion as date)))) \n"
+                    + "                         and (((cast(? as date)-cast (fechateoricadevolucion as date))<=5 \n"
+                    + "                         and cast(? as date)>cast(fechateoricadevolucion as date)) \n"
+                    + "                         or cast(? as date)<=cast(fechateoricadevolucion as date)))) \n"
                     + "and retirado = false \n"
                     + "and modelo like ? \n"
                     + "and matricula like ? \n";
