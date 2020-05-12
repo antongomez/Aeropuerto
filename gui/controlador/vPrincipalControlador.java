@@ -833,7 +833,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         if (Modelo.getInstanceModelo().mostrarConfirmacion("Seguro que quieres devolver el vuelo?", getVenta())) {
             Vuelo vueloSelect = tablaFuturosVuelos.getSelectionModel().getSelectedItem();
             if (vueloSelect != null) {
-                if (Modelo.getInstanceModelo().plazoDevolucion(vueloSelect.getNumVuelo()) || vueloSelect.getCancelado()) {
+                if (Time.obtenerDias(Time.diaActual().toLocalDate(), vueloSelect.getFechasalidaReal().toLocalDate())>=15 
+                        || vueloSelect.getCancelado()) {
                     if (Modelo.getInstanceModelo().devolverBillete(vueloSelect.getNumVuelo(), usuario.getDni())) {
                         vuelosFuturos.remove(vueloSelect);
                         Modelo.getInstanceModelo().mostrarNotificacion("El billete se ha devuelto con éxito", getVenta());

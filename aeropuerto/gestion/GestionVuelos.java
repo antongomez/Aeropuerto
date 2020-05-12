@@ -42,7 +42,6 @@ public class GestionVuelos {
     }
 
     public void obtenerDatosAvionVuelo(Vuelo v) {
-
         fbd.obtenerDatosAvionVuelo(v);
     }
 
@@ -52,10 +51,6 @@ public class GestionVuelos {
 
     public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return fbd.comprarBilletes(usuarios);
-    }
-
-    public Boolean plazoDevolucion(String vuelo) {
-        return fbd.plazoDevolucion(vuelo);
     }
 
     public Boolean vueloRealizado(String vuelo) {

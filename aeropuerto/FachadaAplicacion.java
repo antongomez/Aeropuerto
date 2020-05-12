@@ -201,11 +201,7 @@ public class FachadaAplicacion extends Application {
     public Boolean comprarBilletes(ObservableList<Usuario> usuarios) {
         return gv.comprarBilletes(usuarios);
     }
-
-    public Boolean plazoDevolucion(String vuelo) {
-        return gv.plazoDevolucion(vuelo);
-    }
-
+    
     public Boolean vueloRealizado(String vuelo) {
         return gv.vueloRealizado(vuelo);
     }

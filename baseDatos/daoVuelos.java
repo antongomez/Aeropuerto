@@ -386,39 +386,6 @@ public class daoVuelos extends AbstractDAO {
         return correcto;
     }
 
-    public Boolean plazoDevolucion(String vuelo) {
-        Connection con;
-        PreparedStatement stmVuelo = null;
-        ResultSet rsVuelo;
-
-        Boolean enPlazo = false;
-
-        con = super.getConexion();
-
-        try {
-            stmVuelo = con.prepareStatement("select * "
-                    + "from vuelo "
-                    + "where numvuelo=? and cast(fechasalidareal as date)-cast(NOW() as date)<15");
-            stmVuelo.setString(1, vuelo);
-            rsVuelo = stmVuelo.executeQuery();
-            if (rsVuelo.next()) {
-                enPlazo = false;
-            } else {
-                enPlazo = true;
-            }
-        } catch (SQLException e) {
-            getFachadaAplicacion().mostrarError(e.getMessage());
-        } finally {
-            try {
-                stmVuelo.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-            }
-        }
-
-        return enPlazo;
-    }
-
     public Boolean vueloRealizado(String vuelo) {
         Connection con;
         PreparedStatement stmVuelo = null;

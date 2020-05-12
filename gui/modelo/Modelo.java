@@ -163,10 +163,6 @@ public class Modelo {
         return fa.comprarBilletes(usuarios);
     }
 
-    public Boolean plazoDevolucion(String vuelo) {
-        return fa.plazoDevolucion(vuelo);
-    }
-
     public Boolean vueloRealizado(String vuelo) {
         return fa.vueloRealizado(vuelo);
     }

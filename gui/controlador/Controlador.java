@@ -75,6 +75,8 @@ public abstract class Controlador {
 
             //Asignamoslle a venta ao controlador
             controller.setVenta(stage);
+            
+            //Neste caso no facemos show() aínda, xa que faremos máis tarde un showAndWait()
 
         } catch (IOException ex) {
             System.out.println("Error en la apertura de la ventana");

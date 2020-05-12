@@ -146,10 +146,6 @@ public class FachadaBaseDatos {
         return daoVuelos.comprarBilletes(usuarios);
     }
 
-    public Boolean plazoDevolucion(String vuelo) {
-        return daoVuelos.plazoDevolucion(vuelo);
-    }
-
     public Boolean vueloRealizado(String vuelo) {
         return daoVuelos.vueloRealizado(vuelo);
     }
