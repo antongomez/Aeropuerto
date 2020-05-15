@@ -3,6 +3,7 @@ package aeropuerto.elementos;
 import aeropuerto.util.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class Vuelo {
     private HashMap<Integer, Boolean> asientosPremiumDisponibles;
     private String retraso;//Es un string que viene de un interval en java (hh:mm:ss)
     // private String estado;//Atributo para la tabla de Salidas-Llegadas
+    private String tiempoRestante;
 
     public Vuelo(String numVuelo, String origen, String destino,
             Time fechasalidaTeo, Time fechasalidaReal,
@@ -89,10 +91,52 @@ public class Vuelo {
         this.cancelado = cancelado;
         this.terminal = terminal;
         this.retraso = retraso;
+        this.tiempoRestante = generarTiempoRestante();
     }
-    
-    public Boolean enCurso(){
+
+    public Boolean enCurso() {
         return ((!Time.fechaMayorIgualActual(fechasalidaReal)) && (Time.fechaMayorIgualActual(fechallegadaTeo)));
+    }
+
+    private String generarTiempoRestante() {
+        String estado = "";
+        Integer dias = 0;
+        Integer horas = 0;
+        Integer minutos = 0;
+        Time dif = new Time();
+
+        Time fecha;
+        if (this.fechallegadaReal != null) {
+            fecha = this.fechallegadaReal;
+        } else {
+            fecha = this.fechasalidaReal;
+        }
+
+        dif.diferencia(Time.diaActual(), fecha);
+        dias = dif.getDia();
+        horas = dif.getHoras();
+        minutos = dif.getMinutos();
+        if (dias > 1) {
+            estado = dias.toString() + " días";
+        } else {
+            if (dias != 0) {
+                horas += dias * 24;
+            }
+            if (horas >= 2) {
+                estado = horas.toString() + "h";
+            } else {
+                if (horas != 0) {
+                    minutos += horas * 60;
+                }
+                if (minutos >= 20) {
+                    estado = minutos.toString() + "min";
+                } else {
+                    estado = "<20 min";
+                }
+            }
+        }
+
+        return estado;
     }
 
     public Aerolinea getAerolinea() {
@@ -209,6 +253,10 @@ public class Vuelo {
 
     public String getRetraso() {
         return retraso;
+    }
+
+    public String getTiempoRestante() {
+        return tiempoRestante;
     }
 
     public void setPlazasNormal(Integer plazasNormal) {

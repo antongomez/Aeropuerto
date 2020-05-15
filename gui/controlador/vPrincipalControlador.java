@@ -327,6 +327,8 @@ public class vPrincipalControlador extends Controlador implements Initializable 
     @FXML
     private TableColumn<Vuelo, String> colEstadoSL;
     @FXML
+    private TableColumn<Vuelo, String> colTRestanteSL;
+    @FXML
     private TabPane panelInfo;
     @FXML
     private RadioButton radioBtnSalidas;
@@ -556,6 +558,7 @@ public class vPrincipalControlador extends Controlador implements Initializable 
         colPuertaSL.setCellValueFactory(new PropertyValueFactory<>("puertaEmbarque"));
         colFechaSL.setCellValueFactory(new PropertyValueFactory<>("fechasalidaReal"));
         colEstadoSL.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        colTRestanteSL.setCellValueFactory(new PropertyValueFactory<>("tiempoRestante"));
 
         //Lista de terminais para mostrar no comboBox da venta reservar parking
         ObservableList<Integer> terminais = FXCollections.observableArrayList(getInstanceModelo().buscarTerminais());
