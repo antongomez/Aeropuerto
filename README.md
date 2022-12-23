@@ -6,10 +6,15 @@ Usamos PostgrSQL como xestor de bases de datos. Para replicar a base de datos ba
 A conexión coa base de datos faise a través dun arquivo "baseDatos.properties" similar ao seguinte:
 
 gestor=postgresql
+
 servidor=localhost
+
 puerto=5432
+
 baseDatos=Aeropuerto
+
 usuario=username
+
 clave=password
 
-onde "usuario" e "clave" deben ser as credenciais do usuario de PostgreSQL.
+"usuario" e "clave" deben ser as credenciais do usuario de PostgreSQL.
